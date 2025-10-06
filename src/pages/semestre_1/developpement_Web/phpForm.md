@@ -1,10 +1,9 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP Complet : PHP et Formulaires"
+title: "TP : PHP et Formulaires"
 type: "TP"
 ---
 
-# TP : Mini-Chat en PHP (sans base de données)
 
 ---
 
