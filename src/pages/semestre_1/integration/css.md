@@ -1,6 +1,6 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Sélecteurs CSS & Flexbox — Cours CSS (rendus visuels aux couleurs du site)"
+title: "Sélecteurs CSS & Flexbox — Cours CSS"
 type: "CM"
 ---
 
