@@ -85,7 +85,7 @@ if (Astro.request.method === "POST") {
         answers[questionIndex] = parseInt(answerIndex);
       }
       else{
-        answers[questionIndex] = 66;
+        answers[questionIndex] = -1;
         console.log("annulation de la réponse");
       }
       Astro.session?.set(cookieKey, JSON.stringify(answers));
