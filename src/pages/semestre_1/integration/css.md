@@ -1,7 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
 title: "Sélecteurs CSS & Flexbox — Cours CSS (rendus visuels aux couleurs du site)"
-type: "TD"
+type: "CM"
 ---
 
 CSS (Cascading Style Sheets) permet de **styliser** les pages HTML. On décrit **où** appliquer un style (le **sélecteur**) et **quoi** appliquer (les **propriétés** et leurs **valeurs**).
