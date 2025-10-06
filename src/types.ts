@@ -16,4 +16,5 @@ export type APIResponse = {
 	questionsPerTest: number;
   timeByQuestionInSeconds: number;
   name: string;
+  uid:string|undefined;
 };

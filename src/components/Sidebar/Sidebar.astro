@@ -51,10 +51,14 @@ const sidebarData = createSidebar(allBlogPosts, null);
 ---
 <script is:inline>
   function handleClick() {
-    document.getElementById("sidebar").classList.toggle("-translate-x-full");
+    document.getElementById("sidebar")?.classList.toggle("-translate-x-full");
+  }
+  function closeSidebar() {
+    document.getElementById("sidebar")?.classList.add("-translate-x-full");
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    // 1) Restaurer l'état des <details> (ton code existant)
     const detailsElements = document.querySelectorAll("details");
     const localStorageKey = "openDetails";
 
@@ -70,13 +74,24 @@ const sidebarData = createSidebar(allBlogPosts, null);
       details.addEventListener("toggle", () => {
         const state = {};
         detailsElements.forEach((el) => {
-          if (el.id) {
-            state[el.id] = el.open;
-          }
+          if (el.id) state[el.id] = el.open;
         });
         localStorage.setItem(localStorageKey, JSON.stringify(state));
       });
     });
+
+    // 2) Fermer la sidebar quand on clique sur un lien à l'intérieur
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) {
+      sidebar.addEventListener("click", (e) => {
+        const link = e.target.closest("a");
+        // Évite de fermer si on clique sur le bouton "Close sidebar"
+        const isToggleBtn = e.target.closest('[aria-controls="sidebar"]');
+        if (link && !isToggleBtn) {
+          closeSidebar();
+        }
+      });
+    }
   });
 </script>
 

@@ -3,6 +3,8 @@ import { CheckIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Question } from "types";
 import { isNullOrUndefined } from "utils/isNullOrUndefined";
+import pkg from "he";
+const { decode } = pkg;
 
 type AnswerFormProps = {
   answers: Question["answers"];
@@ -100,7 +102,7 @@ const QuestionRow = ({
       >
         {String.fromCharCode(64 + currentIndex + 1)}
       </span>
-      <span className="flex-grow">{answer}</span>
+      <span className="flex-grow">{decode(answer)}</span>
       <div>
         <QuestionIcon
           correctAnswerIndex={correctAnswerIndex}

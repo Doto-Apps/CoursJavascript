@@ -26,7 +26,7 @@ if (!quizData) {
 
 if (quizData.mode === "close") {
   return Astro.redirect(
-    PATHS.quiz(quizId, "closed"),
+    "closed",
   );
 }
 
@@ -51,6 +51,24 @@ const meta = {
   description: `Testez vos compétences avec ce questionnaire`,
 };
 
+const totalAnswers = Object.keys(answers).length;
+
+const timeByQuestionInSeconds = quizData.mode === 'exam' ? quizData.timeByQuestionInSeconds : 0;
+
+const deadlineKey = `${quizData.uid ?? ""}:${questionIndex}`;
+let endingTime = 0;
+
+if (timeByQuestionInSeconds > 0) {
+  const saved = await Astro.session?.get(deadlineKey);
+  if (saved) {
+    endingTime = Number(saved);
+  } else {
+    endingTime = Date.now() + timeByQuestionInSeconds * 1000; // ms
+    Astro.session?.set(deadlineKey, String(endingTime));
+  }
+}
+
+
 // When an answer is submitted
 if (Astro.request.method === "POST") {
   try {
@@ -62,7 +80,14 @@ if (Astro.request.method === "POST") {
       answers[questionIndex] === null ||
       answers[questionIndex] === undefined
     ) {
-      answers[questionIndex] = parseInt(answerIndex);
+      if ( Date.now() < endingTime + 3000 ) // je met trois seconde d'ecart on ne sait jamais
+      {
+        answers[questionIndex] = parseInt(answerIndex);
+      }
+      else{
+        answers[questionIndex] = 66;
+        console.log("annulation de la réponse");
+      }
       Astro.session?.set(cookieKey, JSON.stringify(answers));
     }
   } catch (error) {
@@ -78,9 +103,7 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
   Astro.session?.set(cookieKey, JSON.stringify(answers));
 }
 
-const totalAnswers = Object.keys(answers).length;
 
-const timeByQuestionInSeconds = quizData.mode === 'exam' ? quizData.timeByQuestionInSeconds : 0;
 ---
 
 <Layout title={""}>
