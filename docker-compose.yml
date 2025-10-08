@@ -1,60 +1,10 @@
-version: "3.9"
-
 services:
-  traefik:
-    image: traefik:v3.1
-    restart: unless-stopped
-    command:
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      # ACME / Let's Encrypt (HTTP challenge sur :80)
-      - --certificatesresolvers.myresolver.acme.email=${LETSENCRYPT_EMAIL}
-      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesresolvers.myresolver.acme.httpchallenge=true
-      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
-      # (optionnel) dashboard Traefik
-      - --api.dashboard=true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./data/letsencrypt:/letsencrypt
-    networks:
-      - proxy
-
   web:
     build: .
     restart: always
+    ports:
+      - "80:4321"
     environment:
       NODE_ENV: production
     env_file:
       - .env
-    # Pas de "ports:" ici — Traefik s'en charge
-    labels:
-      - traefik.enable=true
-
-      # Service interne: le conteneur Astro écoute sur 4321
-      - traefik.http.services.astro.loadbalancer.server.port=4321
-
-      # Route HTTPS
-      - traefik.http.routers.astro.rule=Host(`${DOMAIN}`)
-      - traefik.http.routers.astro.entrypoints=websecure
-      - traefik.http.routers.astro.tls=true
-      - traefik.http.routers.astro.tls.certresolver=myresolver
-
-      # Redirection HTTP -> HTTPS
-      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
-      - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
-      - traefik.http.routers.astro-web.rule=Host(`${DOMAIN}`)
-      - traefik.http.routers.astro-web.entrypoints=web
-      - traefik.http.routers.astro-web.middlewares=redirect-to-https
-
-    networks:
-      - proxy
-
-networks:
-  proxy:
-    driver: bridge
