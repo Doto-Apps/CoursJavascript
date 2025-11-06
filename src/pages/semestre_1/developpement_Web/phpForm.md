@@ -1,6 +1,6 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP : PHP et Formulaires"
+title: "TP : PHP Minichat 1"
 type: "TP"
 ---
 
