@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Top Creators - Style Insta</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #ffe6f3 0, #f9fafb 40%, #e5ecff 100%);
+      color: #111827;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.9rem 5vw;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      font-size: 1.6rem;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #6b7280;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid transparent;
+      background: #f3f4f6;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: linear-gradient(135deg, #ff9a62, #ff5f91);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* CONTENT */
+    main {
+      flex: 1;
+      padding: 2rem 5vw 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.3rem;
+    }
+
+    .page-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: #6b7280;
+      max-width: 520px;
+    }
+
+    /* SECTION CREATOR */
+    .creator-section {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1.5rem;
+      padding: 1.6rem 1.6rem 1.4rem;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 15px 30px rgba(148, 163, 184, 0.20);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-icon {
+      font-size: 1.4rem;
+    }
+
+    .section-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+    }
+
+    .section-description {
+      font-size: 0.88rem;
+      color: #6b7280;
+      max-width: 460px;
+    }
+
+    /* GRID DE PROFILS */
+    .profiles-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+    }
+
+    /* CARTE CREATOR */
+    .creator-card {
+      background: #ffffff;
+      border-radius: 1.2rem;
+      padding: 1.2rem 1.2rem 1rem;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      flex: 1 1 240px;
+      max-width: 310px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 26px rgba(148, 163, 184, 0.35);
+      border-color: #f97316;
+    }
+
+    .creator-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+
+    .creator-main {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Avatar style "stories" insta */
+    .avatar-ring {
+      padding: 2px;
+      border-radius: 999px;
+      background: conic-gradient(from 220deg, #ff9a62, #ff5f91, #ffcd71, #ff9a62);
+    }
+
+    .creator-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #6b21a8;
+    }
+
+    .creator-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .creator-name {
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    .creator-handle {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .creator-pill {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #fef3c7;
+      color: #92400e;
+      white-space: nowrap;
+    }
+
+    .creator-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+
+    .meta-icon {
+      font-size: 0.85rem;
+    }
+
+    /* MINI STATS */
+    .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.2rem;
+    }
+
+    .stat-card {
+      flex: 1 1 85px;
+      min-width: 85px;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.7rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .stat-icon {
+      font-size: 0.78rem;
+    }
+
+    .stat-value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header {
+        padding: 0.8rem 1.1rem;
+      }
+
+      main {
+        padding: 1.5rem 1.1rem 2.5rem;
+      }
+
+      .creator-section {
+        padding: 1.3rem 1.2rem 1.2rem;
+      }
+
+      .creator-card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon">📸</div>
+          <div class="logo-text">Creator Highlights</div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#music">Musique</a></li>
+          <li><a href="#art">Art &amp; Design</a></li>
+          <li><a href="#gaming">Gaming</a></li>
+          <li><a href="#lifestyle">Lifestyle</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h1 class="page-title">Top profils créateurs</h1>
+        <p class="page-subtitle">
+          Mise en page style “Insta” : avatars ronds, ambiance claire, cartes alignées en Flexbox
+          avec les stats principales de chaque créateur.
+        </p>
+      </section>
+
+      <!-- MUSIQUE -->
+      <section id="music" class="creator-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🎵</span>
+            <h2 class="section-name">Créateurs musique</h2>
+          </div>
+          <span class="section-tag">Reprises, covers &amp; prod</span>
+          <p class="section-description">
+            Chanteurs, beatmakers et guitar heroes qui font des reels et des shorts à la chaîne.
+          </p>
+        </div>
+
+        <div class="profiles-grid">
+          <!-- Profil 1 -->
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">LM</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Lila Moon</div>
+                  <div class="creator-handle">@lila.sings</div>
+                </div>
+              </div>
+              <div class="creator-pill">Vocal covers</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">📅</span>
+                <span>3 posts / semaine</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📍</span>
+                <span>Lyon, FR</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">42,3 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">▶️</span>
+                  <span>Vues moy.</span>
+                </div>
+                <div class="stat-value">18,5 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">❤️</span>
+                  <span>Likes / post</span>
+                </div>
+                <div class="stat-value">2,1 k</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Profil 2 -->
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">JN</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Jay Notes</div>
+                  <div class="creator-handle">@jay.beats</div>
+                </div>
+              </div>
+              <div class="creator-pill">Beatmaker</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">⏱</span>
+                <span>1 reel / jour</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">🎧</span>
+                <span>Lo-fi &amp; trap</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">67,8 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">💾</span>
+                  <span>Sons utilisés</span>
+                </div>
+                <div class="stat-value">3,4 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">💬</span>
+                  <span>Comm. / post</span>
+                </div>
+                <div class="stat-value">280</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ART & DESIGN -->
+      <section id="art" class="creator-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🎨</span>
+            <h2 class="section-name">Art &amp; Illustration</h2>
+          </div>
+          <span class="section-tag">Digital painting &amp; sketch</span>
+          <p class="section-description">
+            Illustrateurs, chara designers et artistes qui postent leurs WIP et timelapses.
+          </p>
+        </div>
+
+        <div class="profiles-grid">
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">AK</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Akira Draws</div>
+                  <div class="creator-handle">@akira.sketch</div>
+                </div>
+              </div>
+              <div class="creator-pill">Charadesign</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">📅</span>
+                <span>4 posts / semaine</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">🎞</span>
+                <span>Timelapse &amp; reels</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">31,2 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">⭐</span>
+                  <span>Enreg.</span>
+                </div>
+                <div class="stat-value">1,4 k / post</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">📌</span>
+                  <span>Collabs</span>
+                </div>
+                <div class="stat-value">19</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">MF</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Mono Frame</div>
+                  <div class="creator-handle">@mono.frame</div>
+                </div>
+              </div>
+              <div class="creator-pill">Photo urbaine</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">📷</span>
+                <span>Street &amp; nuit</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📍</span>
+                <span>Paris, FR</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">54,7 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">❤️</span>
+                  <span>Likes / post</span>
+                </div>
+                <div class="stat-value">3,2 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">📊</span>
+                  <span>Reach</span>
+                </div>
+                <div class="stat-value">89 k / mois</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- GAMING CONTENT -->
+      <section id="gaming" class="creator-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🎮</span>
+            <h2 class="section-name">Gaming &amp; streaming</h2>
+          </div>
+          <span class="section-tag">Clips &amp; highlights</span>
+          <p class="section-description">
+            Clips courts, best-of de streams et montages rapides pour TikTok &amp; Insta.
+          </p>
+        </div>
+
+        <div class="profiles-grid">
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">NX</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Nexa Plays</div>
+                  <div class="creator-handle">@nexa.plays</div>
+                </div>
+              </div>
+              <div class="creator-pill">Clips FPS</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">⏱</span>
+                <span>Live 4x / sem.</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📺</span>
+                <span>Multi Twitch / YT</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Followers</span>
+                </div>
+                <div class="stat-value">23,9 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👀</span>
+                  <span>Viewers moy.</span>
+                </div>
+                <div class="stat-value">310</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">⭐</span>
+                  <span>Clips viraux</span>
+                </div>
+                <div class="stat-value">18 &gt; 100 k</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">PL</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">PixLyn</div>
+                  <div class="creator-handle">@pixlyn.gg</div>
+                </div>
+              </div>
+              <div class="creator-pill">Montage &amp; edit</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">🎞</span>
+                <span>Edits courts</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">🎯</span>
+                <span>Valorant &amp; LoL</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">39,4 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">▶️</span>
+                  <span>Vues / reel</span>
+                </div>
+                <div class="stat-value">27,3 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">💬</span>
+                  <span>Comm. / reel</span>
+                </div>
+                <div class="stat-value">190</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- LIFESTYLE -->
+      <section id="lifestyle" class="creator-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🌈</span>
+            <h2 class="section-name">Lifestyle &amp; vlog</h2>
+          </div>
+          <span class="section-tag">Daily life &amp; aesthetic</span>
+          <p class="section-description">
+            Vlogs du quotidien, outfits, organisation, études, journaling et petits moments de vie.
+          </p>
+        </div>
+
+        <div class="profiles-grid">
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">CN</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Café Notes</div>
+                  <div class="creator-handle">@cafe.notes</div>
+                </div>
+              </div>
+              <div class="creator-pill">Study vlog</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">📚</span>
+                <span>Étudiante</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">☕</span>
+                <span>Desk aesthetic</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">21,7 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">⭐</span>
+                  <span>Enreg.</span>
+                </div>
+                <div class="stat-value">980 / post</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">📔</span>
+                  <span>Guides</span>
+                </div>
+                <div class="stat-value">12 ressources</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="creator-card">
+            <div class="creator-header">
+              <div class="creator-main">
+                <div class="avatar-ring">
+                  <div class="creator-avatar">RX</div>
+                </div>
+                <div class="creator-info">
+                  <div class="creator-name">Rex Moves</div>
+                  <div class="creator-handle">@rex.moves</div>
+                </div>
+              </div>
+              <div class="creator-pill">Sport &amp; lifestyle</div>
+            </div>
+
+            <div class="creator-meta">
+              <div class="meta-item">
+                <span class="meta-icon">🏃</span>
+                <span>Workout / jour</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📆</span>
+                <span>Challenge 30 j</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">👥</span>
+                  <span>Abonnés</span>
+                </div>
+                <div class="stat-value">48,1 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">▶️</span>
+                  <span>Vues moy.</span>
+                </div>
+                <div class="stat-value">22,4 k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">
+                  <span class="stat-icon">🔥</span>
+                  <span>Stories / jour</span>
+                </div>
+                <div class="stat-value">6–8</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
