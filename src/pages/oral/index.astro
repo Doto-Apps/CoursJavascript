@@ -1,53 +1,59 @@
 ---
 import Layout from "layouts/Layout.astro";
-import OpenAI from 'openai';
-import { z } from 'zod';
-import { zodResponseFormat } from 'openai/helpers/zod';
+import OpenAI from "openai";
+import { z } from "zod";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { getCookieName } from "utils/getCookieName";
 import type { APIResponse } from "types";
 import { PATHS } from "paths";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-export const prefetch = false
+export const prefetch = false;
 
-const authKey = btoa(`${import.meta.env.LLM_USERNAME}:${import.meta.env.LLM_PASSWORD}`)
+const authKey = btoa(
+  `${import.meta.env.LLM_USERNAME}:${import.meta.env.LLM_PASSWORD}`
+);
 const openai = new OpenAI({
-  apiKey: '',
+  apiKey: "",
   baseURL: `http://${import.meta.env.LLM_HOSTNAME}/v1`,
   defaultHeaders: {
-    Authorization: `Basic ${authKey}`
-  }
+    Authorization: `Basic ${authKey}`,
+  },
 });
-console.log("URL", import.meta.env.LLM_HOSTNAME)
+console.log("URL", import.meta.env.LLM_HOSTNAME);
 
 // Définition du schéma Zod pour la validation du quiz
-const quizSchema = z.array(
-  z.object({
-    question: z.string(),
-    answers: z.array(z.string().min(1, "La réponse ne peut pas être vide")).length(4),
-    correctAnswerIndex: z.number().min(0).max(3),
-  }).required()
-).min(1).max(50);
+const quizSchema = z
+  .array(
+    z
+      .object({
+        question: z.string(),
+        answers: z
+          .array(z.string().min(1, "La réponse ne peut pas être vide"))
+          .length(4),
+        correctAnswerIndex: z.number().min(0).max(3),
+      })
+      .required()
+  )
+  .min(1)
+  .max(50);
 
 let quizData: APIResponse = {
-  mode:"exam",
-  questionsPerTest:0,
-  questions:[],
-  timeByQuestionInSeconds:20,
+  mode: "exam",
+  questionsPerTest: 0,
+  questions: [],
+  timeByQuestionInSeconds: 20,
   name: "Easy Anti Chat GPT",
-  uid: uuidv4()
+  uid: uuidv4(),
 };
 
-let errorMessage = '';
+let errorMessage = "";
 
 if (Astro.request.method === "POST") {
-
-  if (await Astro.session?.has(getCookieName("generated")))
-  {
+  if (await Astro.session?.has(getCookieName("generated"))) {
     Astro.session?.delete(getCookieName("generated"));
   }
-  if (await Astro.session?.has("generatedQuiz"))
-  {
+  if (await Astro.session?.has("generatedQuiz")) {
     Astro.session?.delete("generatedQuiz");
   }
 
@@ -59,117 +65,144 @@ if (Astro.request.method === "POST") {
       errorMessage = "Code invalide ou manquant.";
     } else {
       // Envoi à OpenAI
+
+      const systemPrompt = `
+      Tu es un générateur de quiz pour des étudiants débutants en HTML, CSS et JavaScript.
+
+      Ton rôle :
+      - Analyser UNIQUEMENT le code fourni par l'utilisateur.
+      - Imaginer le rendu de la page (structure, styles, interactions) à partir de ce code.
+      - Générer un quiz qui vérifie la compréhension des concepts réellement utilisés dans ce code.
+
+      Règles GLOBALES (toujours vraies) :
+
+      1. Tu ne parles que d'éléments présents dans le code :
+        - balises HTML réellement utilisées,
+        - attributs présents,
+        - propriétés CSS utilisées,
+        - fonctions JavaScript, événements et méthodes réellement présentes.
+        Si une balise, une propriété CSS ou une fonction n'apparaît pas dans le code, tu n'en parles pas.
+
+      2. Les questions testent la COMPRÉHENSION, pas la mémoire :
+        - OK : "À quoi sert l'attribut \`alt\` dans une balise \`img\` utilisée dans ce code ?"
+        - OK : "Dans ce code, à quoi sert la propriété CSS \`display: flex\` appliquée à ce conteneur ?"
+        - PAS OK : "Quelle couleur exacte a été utilisée ?" ou "Quel texte exact est affiché dans le titre ?"
+
+      3. Tu te bases sur le rendu de l'étudiant :
+        - structure de la page,
+        - disposition des éléments,
+        - interactions (click, hover, etc.) définies dans le code,
+        mais toujours en restant sur les concepts (balises, propriétés, fonctions utilisées), jamais sur des valeurs littérales précises.
+
+      4. Tu génères EXACTEMENT 10 questions à choix multiples.
+        - Chaque question a :
+          - "question": une chaîne de caractères en français,
+          - "answers": un tableau de 4 réponses possibles en français,
+          - "correctAnswerIndex": un entier entre 0 et 3.
+
+      5. Tu varies la position de la bonne réponse :
+        - Ne mets pas toujours la bonne réponse en position 0.
+        - Répartis les \`correctAnswerIndex\` le plus équitablement possible entre 0, 1, 2 et 3.
+
+      6. Les questions doivent être :
+        - claires,
+        - précises,
+        - sans ambiguïté,
+        - adaptées à des débutants.
+
+      7. Tu réponds STRICTEMENT au format JSON attendu par le schéma \`quizSchema\` :
+        [
+          {
+            "question": "...",
+            "answers": ["...", "...", "...", "..."],
+            "correctAnswerIndex": 0
+          },
+          ...
+        ]
+
+      8. Tu ne renvoies AUCUN autre texte en dehors de ce JSON.
+      `;
+      const userPrompt = `
+      Voici le code d'un étudiant.
+
+      Analyse UNIQUEMENT ce code, imagine le rendu de la page, et génère un quiz conformément aux règles données dans le message système.
+
+      Code de l'étudiant :
+      \`\`\`html
+      ${codeSnippet}
+      \`\`\`
+      `;
+
       const response = await openai.chat.completions.parse({
         model: import.meta.env.LLM_MODEL,
         temperature: 0.7,
         top_p: 0.8,
         response_format: zodResponseFormat(quizSchema, "quizSchema"),
-        max_tokens:4000,
-        stream:false,
+        stream: false,
         messages: [
           {
             role: "system",
-            content: "Tu es un générateur de quiz pour des étudiants.",
+            content: systemPrompt,
           },
           {
             role: "user",
-            content: `
-            Tu es chargé de générer exactement 10 questions en JSON strictement valide qui respectent le schéma ci-dessous.  
-Les questions doivent être exclusivement basées sur le code fourni plus bas et vérifier la compréhension des concepts HTML, CSS ou JavaScript utilisés, pas la mémorisation de valeurs littérales.
-
-Règles obligatoires
-
-1. Base-toi uniquement sur le code fourni : ne pose aucune question sur des éléments, bibliothèques, APIs, fichiers ou fonctionnalités absentes du code.
-2. Les questions doivent tester la compréhension, par exemple :
-   - Quelle propriété CSS permet de changer la couleur du texte
-   - A quoi sert l attribut alt dans une balise img
-   - Quelle balise HTML est utilisée pour créer un lien cliquable
-   et non la mémoire exacte (pas de Quelle couleur a été utilisée).
-3. Les questions doivent être claires, précises et sans ambiguïté.
-4. Le JSON doit être strictement valide et conforme au schéma donné.
-5. Fait en sorte que ca ne soit pas toujours la reponse 1 qui soit la bonne, essaye d'etaler.
-
-            
-            Exemple de retour:
-            [
-              {
-                "question": "Texte de la question",
-                "answers": ["Réponse A", "Réponse B", "Réponse C", "Réponse D"],
-                "correctAnswerIndex": 1
-              },
-              {
-                "question": "Texte de la question",
-                "answers": ["Réponse A", "Réponse B", "Réponse C", "Réponse D"],
-                "correctAnswerIndex": 3
-              },
-            ]
-              
-            Code spécifique: 
-            \`\`\`
-            ${codeSnippet}
-            \`\`\`
-            `,
-            
+            content: userPrompt,
           },
         ],
-
-        
       });
 
       // Validation de la réponse
-      quizData.questions = response.choices[0].message.parsed as APIResponse["questions"] || [];
-
+      quizData.questions =
+        (response.choices[0].message.parsed as APIResponse["questions"]) || [];
 
       if (!quizData) {
         errorMessage = "Erreur : Aucune donnée valide reçue de OpenAI.";
-      }
-      else
-      {
-        quizData.questionsPerTest= quizData.questions.length;
+      } else {
+        quizData.questionsPerTest = quizData.questions.length;
         Astro.session?.delete("mmiquiz-generated");
         Astro.session?.set("generatedQuiz", quizData);
-        
-        
+
         return Astro.redirect(PATHS.quiz("generated"));
       }
     }
   } catch (error) {
     errorMessage = `Erreur API: ${error instanceof Error ? error.message : "Erreur inconnue"}`;
-    console.log(errorMessage )
+    console.log(errorMessage);
   }
 }
 ---
 
 <Layout title="Générer votre quiz personnalisé !">
   <div class="flex flex-col min-h-screen p-4">
-    
     <form method="POST" class="w-full p-6" onsubmit="showLoader()">
-      <label for="codeSnippet" class="block font-medium mb-2">Collez votre code :</label>
-      <textarea 
-        name="codeSnippet" 
-        id="codeSnippet" 
-        class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300" 
+      <label for="codeSnippet" class="block font-medium mb-2"
+        >Collez votre code :</label
+      >
+      <textarea
+        name="codeSnippet"
+        id="codeSnippet"
+        class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
         placeholder="Écrivez votre code ici..."
-        rows="10"
-      ></textarea>
+        rows="10"></textarea>
 
-      <button 
+      <button
         id="submitButton"
-        type="submit" 
+        type="submit"
         class="btn mt-4 w-full btn-primary"
       >
-      <span id="loader" class="loading loading-spinner hidden"></span>
-      Générer votre Quiz
+        <span id="loader" class="loading loading-spinner hidden"></span>
+        Générer votre Quiz
       </button>
     </form>
   </div>
 
-<script is:inline>
-  function showLoader() {
-    document.getElementById("submitButton").disabled = true;
-    document.getElementById("submitButton").classList.add("cursor-not-allowed");
-    document.getElementById("loader").classList.remove("hidden");
-  }
-</script>
+  <script is:inline>
+    function showLoader() {
+      document.getElementById("submitButton").disabled = true;
+      document
+        .getElementById("submitButton")
+        .classList.add("cursor-not-allowed");
+      document.getElementById("loader").classList.remove("hidden");
+    }
+  </script>
 </Layout>
-
