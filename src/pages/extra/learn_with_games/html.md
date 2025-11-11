@@ -4,8 +4,6 @@ title: "Apprendre le HTML avec des exercices"
 type: "TP"
 ---
 
-# Apprendre le HTML avec des exercices
-
 Ce TP vous propose une série d’exercices en ligne pour vous entraîner à écrire du **HTML** de base.
 
 ## HTML débutants

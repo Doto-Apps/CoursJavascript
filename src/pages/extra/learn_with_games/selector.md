@@ -4,8 +4,6 @@ title: "Apprendre les sélecteurs CSS avec des jeux"
 type: "TP"
 ---
 
-# Apprendre les sélecteurs CSS avec des jeux
-
 Ce TP vous propose un jeu en ligne pour vous entraîner à manipuler les **sélecteurs CSS** et à écrire du code de mise en forme de manière ludique.
 
 ## CSS Battle

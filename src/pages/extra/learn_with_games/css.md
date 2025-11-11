@@ -4,7 +4,7 @@ title: "Apprendre le CSS avec des jeux"
 type: "TP"
 ---
 
-# Apprendre les flexbox avec des jeux
+
 
 Ce TP vous propose deux petits jeux en ligne pour vous entraîner à manipuler **Flexbox** tout en vous amusant.
 
