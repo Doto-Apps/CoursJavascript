@@ -20,23 +20,16 @@ const openai = new OpenAI({
     Authorization: `Basic ${authKey}`,
   },
 });
-console.log("URL", import.meta.env.LLM_HOSTNAME);
 
-// Définition du schéma Zod pour la validation du quiz
 const quizSchema = z
   .array(
-    z
-      .object({
-        question: z.string(),
-        answers: z
-          .array(z.string().min(1, "La réponse ne peut pas être vide"))
-          .length(4),
-        correctAnswerIndex: z.number().min(0).max(3),
-      })
-      .required()
+    z.object({
+      question: z.string(),
+      answers: z.array(z.string().min(1)).length(4),
+      correctAnswerIndex: z.number().min(0).max(3),
+    })
   )
-  .min(1)
-  .max(50);
+  .length(10); // Force exactement 10 questions
 
 let quizData: APIResponse = {
   mode: "exam",
@@ -49,6 +42,95 @@ let quizData: APIResponse = {
 
 let errorMessage = "";
 
+// ---------------------
+// Extraction et réduction du code
+// ---------------------
+
+const MAX_LINES_OF_CODE = 150;
+
+type BlockType = "php" | "js" | "css" | "html";
+
+const truncateBlock = (code: string, maxLines: number): string => {
+  const lines = code.split(/\r?\n/);
+  if (lines.length <= maxLines) return code.trim();
+  return lines.slice(0, maxLines).join("\n").trim();
+};
+
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
+
+
+const extractBlocks = (rawCode: string): Partial<Record<BlockType, string>> => {
+  const blocks: Partial<Record<BlockType, string>> = {};
+
+  // PHP
+  const phpMatches = Array.from(rawCode.matchAll(/<\?php[\s\S]*?\?>/gi)).map(m => m[0]);
+  shuffle(phpMatches)
+  if (phpMatches.length > 0) blocks.php = phpMatches.join("\n\n");
+
+  // JS
+  const scriptMatches = Array.from(rawCode.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi)).map(m => m[0]);
+  shuffle(scriptMatches)
+  if (scriptMatches.length > 0) blocks.js = scriptMatches.join("\n\n");
+
+  // CSS
+  const cssMatches = Array.from(
+    rawCode.matchAll(/(^|\n)\s*(?:[.#][a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9_-]*)\s*[^{};()\n]*\{[\s\S]*?\}/g)
+  ).map(m => m[0]);
+  shuffle(cssMatches)
+  if (cssMatches.length > 0) blocks.css = cssMatches.join("\n\n");
+
+  // HTML
+  const bodyMatch = rawCode.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  if (bodyMatch && bodyMatch[1].trim().length > 0) {
+    blocks.html = bodyMatch[1];
+  } else if (/<\s*\w+[^>]*>/.test(rawCode)) {
+    blocks.html = rawCode;
+  }
+
+  return blocks;
+};
+
+
+
+
+const buildTruncatedSnippet = (rawCode: string, maxLines = MAX_LINES_OF_CODE): string => {
+  const blocks = extractBlocks(rawCode);
+  const orderedTypes: BlockType[] = ["php", "js", "css", "html"];
+  const presentTypes = orderedTypes.filter(t => Boolean(blocks[t]));
+
+  if (presentTypes.length === 0) return truncateBlock(rawCode, maxLines);
+
+  const linesPerBlock = Math.max(15, Math.floor(maxLines / presentTypes.length));
+  const parts: string[] = [];
+
+  for (const type of presentTypes) {
+    const code = blocks[type];
+    if (!code) continue;
+    parts.push(`/* --- ${type.toUpperCase()} --- */`);
+    parts.push(truncateBlock(code, linesPerBlock));
+  }
+
+  return truncateBlock(parts.join("\n\n"), maxLines);
+};
+
+// ---------------------
+// Handler POST
+// ---------------------
+
 if (Astro.request.method === "POST") {
   if (await Astro.session?.has(getCookieName("generated"))) {
     Astro.session?.delete(getCookieName("generated"));
@@ -59,110 +141,98 @@ if (Astro.request.method === "POST") {
 
   try {
     const data = await Astro.request.formData();
-    const codeSnippet = data.get("codeSnippet");
+    const rawCodeSnippet = data.get("codeSnippet");
 
-    if (!codeSnippet || typeof codeSnippet !== "string") {
+    if (!rawCodeSnippet || typeof rawCodeSnippet !== "string") {
       errorMessage = "Code invalide ou manquant.";
     } else {
-      // Envoi à OpenAI
+      const codeSnippet = buildTruncatedSnippet(rawCodeSnippet);
 
-      const systemPrompt = `
-      Tu es un générateur de quiz pour des étudiants débutants en HTML, CSS et JavaScript.
+      const systemPrompt = `Tu es un prof qui crée des quiz pour étudiant en web (HTML/CSS/JS/PHP).
 
-      Ton rôle :
-      - Analyser UNIQUEMENT le code fourni par l'utilisateur.
-      - Imaginer le rendu de la page (structure, styles, interactions) à partir de ce code.
-      - Générer un quiz qui vérifie la compréhension des concepts réellement utilisés dans ce code.
+Ton job : générer EXACTEMENT 10 questions DIFFÉRENTES sur le code fourni.
 
-      Règles GLOBALES (toujours vraies) :
+RÈGLES SIMPLES :
+1. Une question = un concept du code (attribut HTML, propriété CSS, fonction JS, structure PHP)
+2. Vocabulaire pour des étudiants
+3. Réponses COURTES (10 mots max par réponse)
+4. Chaque question doit être DIFFÉRENTE des autres
+5. Toujours poser les questions sur les element les plus compliquer du code
 
-      1. Tu ne parles que d'éléments présents dans le code :
-        - balises HTML réellement utilisées,
-        - attributs présents,
-        - propriétés CSS utilisées,
-        - fonctions JavaScript, événements et méthodes réellement présentes.
-        Si une balise, une propriété CSS ou une fonction n'apparaît pas dans le code, tu n'en parles pas.
 
-      2. Les questions testent la COMPRÉHENSION, pas la mémoire :
-        - OK : "À quoi sert l'attribut \`alt\` dans une balise \`img\` utilisée dans ce code ?"
-        - OK : "Dans ce code, à quoi sert la propriété CSS \`display: flex\` appliquée à ce conteneur ?"
-        - PAS OK : "Quelle couleur exacte a été utilisée ?" ou "Quel texte exact est affiché dans le titre ?"
+EXEMPLES DE BONNES QUESTIONS :
+- "Que fait position: absolute ?"
+- "À quoi sert l'attribut action ?"
+- "Que fait display: flex ?"
+- "À quoi sert $_POST ?"
+- "Que fait addEventListener ?"
 
-      3. Tu te bases sur le rendu de l'étudiant :
-        - structure de la page,
-        - disposition des éléments,
-        - interactions (click, hover, etc.) définies dans le code,
-        mais toujours en restant sur les concepts (balises, propriétés, fonctions utilisées), jamais sur des valeurs littérales précises.
+INTERDICTIONS :
+- Jamais demander un nom de classe, variable, ID, couleur ou texte du code
+- Jamais utiliser de mots compliqués
+- Jamais poser 2 fois la même question
 
-      4. Tu génères EXACTEMENT 10 questions à choix multiples.
-        - Chaque question a :
-          - "question": une chaîne de caractères en français,
-          - "answers": un tableau de 4 réponses possibles en français,
-          - "correctAnswerIndex": un entier entre 0 et 3.
+FORMAT : Exactement 10 questions en JSON :
+[
+  {
+    "question": "Que fait X ?",
+    "answers": ["Réponse courte 1", "Réponse courte 2", "Réponse courte 3", "Réponse courte 4"],
+    "correctAnswerIndex": 2
+  }
+]`;
 
-      5. Tu varies la position de la bonne réponse :
-        - Ne mets pas toujours la bonne réponse en position 0.
-        - Répartis les \`correctAnswerIndex\` le plus équitablement possible entre 0, 1, 2 et 3.
+      const userPrompt = `Code de l'étudiant :
+\`\`\`
+${codeSnippet}
+\`\`\`
 
-      6. Les questions doivent être :
-        - claires,
-        - précises,
-        - sans ambiguïté,
-        - adaptées à des débutants.
-
-      7. Tu réponds STRICTEMENT au format JSON attendu par le schéma \`quizSchema\` :
-        [
-          {
-            "question": "...",
-            "answers": ["...", "...", "...", "..."],
-            "correctAnswerIndex": 0
-          },
-          ...
-        ]
-
-      8. Tu ne renvoies AUCUN autre texte en dehors de ce JSON.
-      `;
-      const userPrompt = `
-      Voici le code d'un étudiant.
-
-      Analyse UNIQUEMENT ce code, imagine le rendu de la page, et génère un quiz conformément aux règles données dans le message système.
-
-      Code de l'étudiant :
-      \`\`\`html
-      ${codeSnippet}
-      \`\`\`
-      `;
+Génère 10 questions DIFFÉRENTES sur les concepts utilisés dans CE code.`;
 
       const response = await openai.chat.completions.parse({
         model: import.meta.env.LLM_MODEL,
-        temperature: 0.7,
-        top_p: 0.8,
+        temperature: 0.3,
+        top_p: 0.85,
+        max_tokens: 6000,
         response_format: zodResponseFormat(quizSchema, "quizSchema"),
         stream: false,
         messages: [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
-          {
-            role: "user",
-            content: userPrompt,
-          },
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt },
         ],
       });
 
-      // Validation de la réponse
       quizData.questions =
         (response.choices[0].message.parsed as APIResponse["questions"]) || [];
 
-      if (!quizData) {
-        errorMessage = "Erreur : Aucune donnée valide reçue de OpenAI.";
+      if (!quizData || quizData.questions.length === 0) {
+        errorMessage = "Erreur : Aucune question générée.";
       } else {
-        quizData.questionsPerTest = quizData.questions.length;
-        Astro.session?.delete("mmiquiz-generated");
-        Astro.session?.set("generatedQuiz", quizData);
+        // Vérification : au moins 10 questions
+        if (quizData.questions.length < 10) {
+          errorMessage = `Seulement ${quizData.questions.length} questions générées au lieu de 10.`;
+        } else {
+          // Mélanger aléatoirement les réponses pour chaque question
+          quizData.questions = quizData.questions.map(q => {
+            const correctAnswer = q.answers[q.correctAnswerIndex];
+            
+            // Mélanger les réponses
+            const shuffled = [...q.answers].sort(() => Math.random() - 0.5);
+            
+            // Trouver la nouvelle position de la bonne réponse
+            const newCorrectIndex = shuffled.indexOf(correctAnswer);
+            
+            return {
+              ...q,
+              answers: shuffled,
+              correctAnswerIndex: newCorrectIndex
+            };
+          });
 
-        return Astro.redirect(PATHS.quiz("generated"));
+          quizData.questionsPerTest = quizData.questions.length;
+          Astro.session?.delete("mmiquiz-generated");
+          Astro.session?.set("generatedQuiz", quizData);
+          return Astro.redirect(PATHS.quiz("generated"));
+        }
       }
     }
   } catch (error) {
@@ -174,16 +244,24 @@ if (Astro.request.method === "POST") {
 
 <Layout title="Générer votre quiz personnalisé !">
   <div class="flex flex-col min-h-screen p-4">
+    {errorMessage && (
+      <div class="alert alert-error mb-4">
+        <span>{errorMessage}</span>
+      </div>
+    )}
+    
     <form method="POST" class="w-full p-6" onsubmit="showLoader()">
-      <label for="codeSnippet" class="block font-medium mb-2"
-        >Collez votre code :</label
-      >
+      <label for="codeSnippet" class="block font-medium mb-2">
+        Collez votre code HTML/CSS/JS/PHP :
+      </label>
       <textarea
         name="codeSnippet"
         id="codeSnippet"
         class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
-        placeholder="Écrivez votre code ici..."
-        rows="10"></textarea>
+        placeholder="Collez votre code ici..."
+        rows="10"
+        required
+      ></textarea>
 
       <button
         id="submitButton"
@@ -191,7 +269,7 @@ if (Astro.request.method === "POST") {
         class="btn mt-4 w-full btn-primary"
       >
         <span id="loader" class="loading loading-spinner hidden"></span>
-        Générer votre Quiz
+        Générer le Quiz (10 questions)
       </button>
     </form>
   </div>
@@ -199,10 +277,9 @@ if (Astro.request.method === "POST") {
   <script is:inline>
     function showLoader() {
       document.getElementById("submitButton").disabled = true;
-      document
-        .getElementById("submitButton")
-        .classList.add("cursor-not-allowed");
+      document.getElementById("submitButton").classList.add("cursor-not-allowed");
       document.getElementById("loader").classList.remove("hidden");
     }
   </script>
 </Layout>
+</document_content>

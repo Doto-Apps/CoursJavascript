@@ -17,7 +17,8 @@ if (!quizId || !questionNumberString) {
 }
 
 const cookieKey = getCookieName(quizId);
-const questionIndex = Number.parseInt(questionNumberString);
+const questionIndex = Number.parseInt(questionNumberString, 10);
+const isPost = Astro.request.method === "POST";
 
 const quizData = await getQuiz(quizId, Astro.session);
 if (!quizData) {
@@ -25,22 +26,22 @@ if (!quizData) {
 }
 
 if (quizData.mode === "close") {
-  return Astro.redirect(
-    "closed",
-  );
+  return Astro.redirect("closed");
 }
 
 const totalQuestions = quizData.questionsPerTest;
 const currentQuestion = quizData.questions[questionIndex];
-if (!questionNumberString || Number.isNaN(questionIndex)) {
+
+if (!questionNumberString || Number.isNaN(questionIndex) || !currentQuestion) {
   return Astro.redirect("/404");
 }
 
 let answers: Answers = {};
 if (await Astro.session?.has(cookieKey)) {
   const answersCookie = await Astro.session?.get(cookieKey);
-  answers = answersCookie ? JSON.parse(answersCookie) as Answers : {};
+  answers = answersCookie ? (JSON.parse(answersCookie) as Answers) : {};
 }
+
 const [_, nextQuestionIndex] = getRandomQuestion(
   quizData.questions,
   Object.keys(answers).map(Number),
@@ -53,41 +54,76 @@ const meta = {
 
 const totalAnswers = Object.keys(answers).length;
 
-const timeByQuestionInSeconds = quizData.mode === 'exam' ? quizData.timeByQuestionInSeconds : 0;
+// ---------- Gestion du temps par question (SERVER-SIDE) ----------
 
-const deadlineKey = `${quizData.uid ?? ""}:${questionIndex}`;
-let endingTime = 0;
+const timeByQuestionInSeconds =
+  quizData.mode === "exam" ? quizData.timeByQuestionInSeconds : 0;
+
+// Clé unique pour le deadline de CETTE question
+const deadlineKey = `${quizData.uid ?? ""}:deadline:${questionIndex}`;
+
+let deadline = 0;
+let remainingSeconds = 0;
 
 if (timeByQuestionInSeconds > 0) {
-  const saved = await Astro.session?.get(deadlineKey);
-  if (saved) {
-    endingTime = Number(saved);
+  const savedDeadline = await Astro.session?.get(deadlineKey);
+  const now = Date.now();
+
+  if (savedDeadline) {
+    // On réutilise toujours le même deadline => refresh ne reset pas le temps
+    deadline = Number(savedDeadline);
   } else {
-    endingTime = Date.now() + timeByQuestionInSeconds * 1000; // ms
-    Astro.session?.set(deadlineKey, String(endingTime));
+    // Première fois qu'on arrive sur cette question
+    deadline = now + timeByQuestionInSeconds * 1000;
+    Astro.session?.set(deadlineKey, String(deadline));
+  }
+
+  // Temps restant en secondes, jamais négatif
+  remainingSeconds = Math.max(0, Math.floor((deadline - now) / 1000));
+
+  // Si on arrive sur la page alors que le temps est déjà écoulé
+  // et que l'étudiant n'a jamais répondu, on marque directement la question comme ratée
+  if (remainingSeconds <= 0 && isNullOrUndefined(answers[questionIndex])) {
+    answers[questionIndex] = -1;
+    Astro.session?.set(cookieKey, JSON.stringify(answers));
   }
 }
 
+// ---------- Quand une réponse est soumise (POST) ----------
 
-// When an answer is submitted
-if (Astro.request.method === "POST") {
+if (isPost) {
   try {
     const data = await Astro.request.formData();
     const answerIndex = data.get("answerIndex");
     if (typeof answerIndex !== "string") throw new Error("No answer provided");
 
-    if (
-      answers[questionIndex] === null ||
-      answers[questionIndex] === undefined
-    ) {
-      if ( Date.now() < endingTime + 3000 ) // je met trois seconde d'ecart on ne sait jamais
-      {
-        answers[questionIndex] = parseInt(answerIndex);
+    // On ne modifie la réponse que si la question n'a jamais été "fixée"
+    if (isNullOrUndefined(answers[questionIndex])) {
+      let stillInTime = true;
+
+      if (timeByQuestionInSeconds > 0) {
+        const savedDeadline = await Astro.session?.get(deadlineKey);
+        const now = Date.now();
+
+        if (!savedDeadline) {
+          // Pas de deadline enregistré => on refuse par sécurité
+          stillInTime = false;
+        } else {
+          const deadlineFromSession = Number(savedDeadline);
+          // Petite marge de 3 secondes comme tu le faisais
+          stillInTime = now <= deadlineFromSession + 3000;
+        }
       }
-      else{
+
+      if (timeByQuestionInSeconds > 0 && !stillInTime) {
+        // Trop tard => on force la question en -1
         answers[questionIndex] = -1;
-        console.log("annulation de la réponse");
+        console.log("Réponse refusée (délai dépassé)");
+      } else {
+        // Réponse dans les temps
+        answers[questionIndex] = Number.parseInt(answerIndex, 10);
       }
+
       Astro.session?.set(cookieKey, JSON.stringify(answers));
     }
   } catch (error) {
@@ -96,6 +132,7 @@ if (Astro.request.method === "POST") {
     }
   }
 }
+
 // For malicious student that want the same question
 // We already set the cookie in case they change the url for another question it will be count as a false response
 if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
@@ -103,34 +140,55 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
   Astro.session?.set(cookieKey, JSON.stringify(answers));
 }
 
-
 ---
 
 <Layout title={""}>
-{isNullOrUndefined(answers[questionIndex]) && timeByQuestionInSeconds > 0 && (
-  <div
-      class="fixed top-0 left-0 right-0 h-2 bg-primary w-full animate-timer"
-      id="timer"
-      style=`animation-duration: ${timeByQuestionInSeconds}s; animation-fill-mode: forwards;`
-    >
-    </div>
-    <script is:inline>
-      document.getElementById("timer").addEventListener("animationend", () => {
-        document.getElementById("answerForm").submit();
-      });
-  </script>
+  {isNullOrUndefined(answers[questionIndex]) &&
+  timeByQuestionInSeconds > 0 &&
+  remainingSeconds > 0 && (
+
+      <div
+        id="quiz-timer"
+        class="absolute top-0 left-0 right-0 h-2 bg-primary w-screen z-[1000] quiz-timer-bar"
+        data-duration={remainingSeconds}
+      ></div>
+
+      <script is:inline>
+        (() => {
+          const bar = document.getElementById("quiz-timer");
+          if (!bar) return;
+          const duration = Number(bar.dataset.duration || "0");
+          if (!duration || duration <= 0) return;
+
+          // On applique l’animation avec la bonne durée
+          bar.style.animation = `quiz-timer ${duration}s linear forwards`;
+
+          bar.addEventListener("animationend", () => {
+            const form = document.getElementById("answerForm");
+            if (form && typeof form.submit === "function") {
+              form.submit();
+            }
+          });
+        })();
+      </script>
   )}
   <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-4">
       <div class="text-sm font-semibold">
-        <span class="text-white text-xl">Question {totalAnswers} sur {totalQuestions}</span> du quizz {quizData.name}
+        <span class="text-white text-xl">
+          Question {totalAnswers} sur {totalQuestions}
+        </span>{" "}
+        du quizz {quizData.name}
       </div>
       <progress
         class="progress progress-primary w-full max-w-lg"
         value={totalAnswers}
-        max={totalQuestions}></progress>
+        max={totalQuestions}
+      ></progress>
     </div>
-    <Code code={currentQuestion.question} lang='markdown' />
+
+    <Code code={currentQuestion.question} lang="markdown" />
+
     <AnswerForm
       hasMoreQuestions={totalAnswers < totalQuestions}
       answerIndex={answers[questionIndex]}
@@ -143,3 +201,18 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
     />
   </div>
 </Layout>
+
+<style is:global>
+  @keyframes quiz-timer {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  .quiz-timer-bar {
+    transform-origin: left;
+  }
+</style>
