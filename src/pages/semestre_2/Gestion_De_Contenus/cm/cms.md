@@ -3,8 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Introduction à WordPress et Installation Locale"
 ---
 
-# Introduction à WordPress
-
 **WordPress** est un système de gestion de contenu (CMS) open source qui permet de créer facilement des sites web dynamiques et personnalisés. Il est largement utilisé pour les blogs, les sites vitrines, les boutiques en ligne, et bien plus.
 
 ---

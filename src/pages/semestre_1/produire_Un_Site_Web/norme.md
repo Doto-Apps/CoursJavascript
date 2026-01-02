@@ -4,8 +4,6 @@ title: "TP : Comprendre et Appliquer les Normes W3C et WCAG sur le Site Birbone"
 type: "TP"
 ---
 
-# TP : Comprendre et Appliquer les Normes W3C et WCAG sur le Site Birbone
-
 ## Objectif
 
 L'objectif de ce TP est de vous familiariser avec les normes W3C et WCAG, essentielles pour la création de sites web accessibles et conformes aux standards. Vous allez apprendre à valider votre site **Birbone** en utilisant ces normes et à corriger les erreurs identifiées pour obtenir une validation complète.

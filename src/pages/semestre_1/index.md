@@ -3,8 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Introduction aux cours d'Antoine Dominici"
 ---
 
-# Introduction aux cours d'Antoine Dominici
-
 Bienvenue dans mes cours ! Je suis Antoine Dominici, votre professeur, et je suis ravi de vous guider à travers l'apprentissage des technologies web et de la programmation. Nous allons couvrir plusieurs sujets clés qui vous permettront de développer des compétences solides et de créer des projets intéressants.
 
 ## Notre Discord

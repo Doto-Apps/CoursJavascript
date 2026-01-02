@@ -4,8 +4,6 @@ title: "Introduction à Figma"
 type: "TD"
 ---
 
-# Introduction à Figma
-
 ## Qu'est-ce que Figma ?
 
 Figma est un outil de conception d'interface utilisateur (UI) et d'expérience utilisateur (UX) basé sur le cloud. Il permet aux concepteurs de créer des prototypes interactifs et de collaborer en temps réel avec d'autres membres de leur équipe. Figma est particulièrement apprécié pour sa facilité d'utilisation, ses puissantes fonctionnalités de collaboration et sa compatibilité multiplateforme.

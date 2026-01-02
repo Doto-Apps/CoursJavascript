@@ -4,8 +4,6 @@ title: "TP : Création d'une Page d'Inscription"
 type: "TP"
 ---
 
-# TP 3 : Page d'Inscription Statique avec HTML et CSS
-
 ## Objectifs
 
 1. Comprendre comment structurer un formulaire HTML.

@@ -4,9 +4,6 @@ title: "TP HTML pour Étudiants de Première Année en Informatique"
 type: "TP"
 ---
 
-
-# TP 1 : HTML 
-
 ## Objectifs
 
 1. Apprendre la structure de base d'un document HTML.

@@ -4,8 +4,6 @@ title: "TP : Héberger un Site Web sur GitHub Pages"
 type: "TP"
 ---
 
-# TP : Héberger un Site Web sur GitHub Pages
-
 ## Objectif
 
 L'objectif de ce TP est de vous apprendre à héberger votre site web sur GitHub Pages. Ce TP est conçu pour les débutants, sans aucune connaissance préalable en programmation ou en ligne de commande. À la fin de ce TP, votre site web sera en ligne, accessible à tous, et vous saurez comment le mettre à jour.

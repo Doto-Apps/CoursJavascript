@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "TD : Créer un Site de Restaurant avec WordPress et Elementor"
 ---
 
-# TD – Créer un site vitrine de restaurant 🍝  
 ## Objectif : Installer un thème, personnaliser avec Elementor, enrichir avec des plugins
 
 ---

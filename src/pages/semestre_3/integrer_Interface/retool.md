@@ -4,8 +4,6 @@ title: "TD : Connexion de Retool à l'API de Gestion du Stock de Birbone"
 type : "td"
 ---
 
-# TD : Connexion de Retool à l'API de Gestion du Stock de Birbone
-
 ## Objectif
 
 L'objectif de ce TD est de vous permettre de connecter Retool à l'API de gestion du stock du site **Birbone**. Vous devrez utiliser les compétences acquises au cours des précédents TP pour créer une interface de gestion efficace.

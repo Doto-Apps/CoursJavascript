@@ -4,8 +4,6 @@ title: "TP : Transformation de la Maquette Figma en Site Statique"
 type: "TP"
 ---
 
-# TP : Transformation de la Maquette Figma en Site Statique
-
 ## Objectif
 
 L'objectif de ce TP est de transformer la maquette Figma que vous avez réalisée pour le site **Birbone** en un site statique. Ce TP est conçu pour durer 4 heures, au terme desquelles je passerai dans la salle pour évaluer votre travail. Vous devez avoir mis en place le squelette de votre site avec un placement des éléments en Flexbox.

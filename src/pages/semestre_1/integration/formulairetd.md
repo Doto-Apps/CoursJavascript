@@ -4,8 +4,6 @@ title: "Introduction aux Formulaires HTML et CSS"
 type: "TD"
 ---
 
-# Introduction aux Formulaires HTML et CSS
-
 ## Qu'est-ce qu'un formulaire HTML ?
 
 Un formulaire HTML est un moyen pour les utilisateurs d'interagir avec une page web en envoyant des informations via des champs de saisie. Les formulaires peuvent être utilisés pour recueillir des informations telles que des noms, des adresses e-mail, des mots de passe, etc.

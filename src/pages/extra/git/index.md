@@ -3,8 +3,6 @@ layout: "layouts/Layout.astro"
 title: Introduction au Git CLI
 ---
 
-# Introduction au Git CLI
-
 Ce cours vous apprend les bases de Git CLI. Nous couvrirons l'installation, la configuration, SSH, les opérations de base, la gestion des conflits, Git Flow et les conventions de commit.
 
 ## 1. Installation et Configuration de Git

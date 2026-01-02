@@ -1,9 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Tailwindcss"
+title: "Introduction à Tailwind CSS"
 ---
-
-# Introduction à Tailwind CSS
 
 ## 1. Présentation de Tailwind CSS
 

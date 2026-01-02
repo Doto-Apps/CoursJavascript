@@ -1,9 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Développemennt du mockup"
+title: "🛠️ TP WordPress – Séance 1 : Installation et découverte"
 ---
-
-# 🛠️ TP WordPress – Séance 1 : Installation et découverte de WordPress + WooCommerce
 
 ## 🎯 Objectifs de la séance
 - Installer un site WordPress (en local ou via un hébergeur)

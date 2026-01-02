@@ -1,9 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Développemennt du mockup"
+title: "🛠️ TP WordPress – Séance 3 : Personnalisation et finalisation"
 ---
-
-# 🛠️ TP WordPress – Séance 3 : Personnalisation et finalisation du site e-commerce
 
 ## 🎯 Objectifs de la séance
 - Personnaliser l’apparence générale du site

@@ -4,8 +4,6 @@ title: "TD : Création de la Maquette Figma pour le Site Birbone"
 type: "TD"
 ---
 
-# TD : Création de la Maquette Figma pour le Site Birbone
-
 ## Objectif
 
 L'objectif de ce TD est de vous guider dans la création de la maquette de votre site **Birbone** en utilisant Figma. Vous apprendrez à structurer efficacement votre design, à choisir entre un site one-page ou multipage, et à utiliser les fonctionnalités de Figma pour créer une maquette professionnelle.

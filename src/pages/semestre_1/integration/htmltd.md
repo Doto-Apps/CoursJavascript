@@ -4,8 +4,6 @@ title: "HTML5"
 type: "TD"
 ---
 
-# Introduction à HTML5
-
 ## Qu'est-ce que HTML5 ?
 
 HTML5 est la dernière version du langage HTML (HyperText Markup Language). Il est utilisé pour structurer et présenter le contenu sur le Web. HTML5 introduit de nouvelles balises et fonctionnalités qui facilitent la création de sites Web modernes et interactifs.

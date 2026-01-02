@@ -4,8 +4,6 @@ title: "Base de l'algorithmique à partir de PHP"
 type: "TD"
 ---
 
-# Base de l'algorithmique à partir de PHP
-
 ## Introduction
 
 Dans ce TD, nous allons explorer les bases de l'algorithmique en utilisant PHP. Vous apprendrez à utiliser des variables, des tableaux, et des structures conditionnelles pour écrire des scripts PHP plus complexes.

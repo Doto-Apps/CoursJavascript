@@ -4,8 +4,6 @@ title: "Introduction au langage PHP et à un environnement de développement"
 type: "TP"
 ---
 
-# Introduction au langage PHP et à un environnement de développement
-
 #### Objectifs du TD
 
 - Comprendre les bases du langage PHP

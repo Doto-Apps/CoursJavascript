@@ -24,7 +24,7 @@ pnpm run dev
 - Add the route in `Sidebar.astro`
 - Add the name of the link in `i18n/fr.ts`
 
-## Pull request
+## Pull requestt
 
 - Develop on your own branch
 - Push it then open a pull request

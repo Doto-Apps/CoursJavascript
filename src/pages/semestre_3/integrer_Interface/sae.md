@@ -1,7 +1,5 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Développemennt du mockup"
+title: "TP : Accompagnement de la SAE"
 type : "tp"
 ---
-
-# TP : Accompagnement de la SAE

@@ -1,9 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Développemennt du mockup"
+title: "🛠️ TP WordPress – Séance 2 : Catalogue de produits"
 ---
-
-# 🛠️ TP WordPress – Séance 2 : Création du catalogue de produits
 
 ## 🎯 Objectifs de la séance
 - Ajouter des produits dans WooCommerce

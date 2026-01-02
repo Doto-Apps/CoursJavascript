@@ -1,9 +1,7 @@
 ---
 layout: "layouts/Layout.astro"
-title: "PHP > Connexion à une base de donnée"
+title: "PHP > Connexion à une base de données MySQL"
 ---
-
-# Connexion à une base de données MySQL
 
 ## Introduction à MySQL et PHP
 
