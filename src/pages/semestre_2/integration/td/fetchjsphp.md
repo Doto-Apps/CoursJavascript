@@ -1,6 +1,6 @@
 ---
 layout: "layouts/Layout.astro"
-title: "JavaScript Fetch avec PHP et base de données"
+title: "JavaScript Fetch avec PHP et base de données SQL"
 type: "TD"
 ---
 
