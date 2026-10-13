@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Media queries : adapter une interface",
+  "uid": "s2-int-04",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/tp/hover",
+  "sourceSession": "S2-INT-04",
+  "targetCourse": "/semestre_2/integration/tp/dropdown",
+  "questions": [
+    {
+      "question": "Quel rôle joue une media query ?",
+      "answers": [
+        "Appliquer des règles si une condition est vraie",
+        "Créer une nouvelle page HTML",
+        "Déplacer les fichiers sur le serveur",
+        "Changer automatiquement les contenus"
+      ],
+      "explanation": "Une media query conditionne l’application des règles CSS.",
+      "sourceSection": "notion-1",
+      "evidence": "Une media query applique des règles lorsque sa condition est satisfaite.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quand min-width: 700px est-elle vraie ?",
+      "answers": [
+        "Uniquement en portrait",
+        "À 700px et au-dessus",
+        "Seulement au-dessus de 700px sans égalité",
+        "Seulement sous 700px"
+      ],
+      "explanation": "La borne de min-width est inclusive.",
+      "sourceSection": "notion-2",
+      "evidence": "min-width: 700px signifie au moins 700 pixels CSS.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quand max-width: 700px est-elle vraie ?",
+      "answers": [
+        "À 700px uniquement",
+        "Seulement si le navigateur est mobile",
+        "À 700px et au-dessous",
+        "Seulement au-dessus de 700px"
+      ],
+      "explanation": "La borne de max-width est également inclusive.",
+      "sourceSection": "notion-3",
+      "evidence": "max-width: 700px signifie au plus 700 pixels CSS.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle largeur les seuils CSS considèrent-ils ?",
+      "answers": [
+        "Le nombre de pixels du fichier image",
+        "La taille en octets de la feuille CSS",
+        "La diagonale commerciale de l’écran",
+        "Les pixels CSS de la fenêtre"
+      ],
+      "explanation": "Les conditions de largeur concernent le viewport exprimé en pixels CSS.",
+      "sourceSection": "notion-4",
+      "evidence": "Les seuils du cours utilisent la largeur en pixels CSS de la fenêtre.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que signifie la base mobile dans cette grille ?",
+      "answers": [
+        "Une disposition étroite de base puis des adaptations",
+        "Un fichier HTML différent par appareil",
+        "Une largeur fixe sur toutes les fenêtres",
+        "La suppression des textes sur téléphone"
+      ],
+      "explanation": "Les règles de base restent valables puis sont complétées aux seuils choisis.",
+      "sourceSection": "notion-5",
+      "evidence": "Le cours définit d'abord la grille pour une petite largeur.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que décrit repeat(2, minmax(0, 1fr)) pour les colonnes ?",
+      "answers": [
+        "Deux copies de chaque carte",
+        "Deux colonnes partageant l’espace et pouvant rétrécir",
+        "Deux lignes obligatoires",
+        "Une largeur fixe de 2px"
+      ],
+      "explanation": "repeat évite la répétition ; minmax avec un minimum nul autorise le rétrécissement.",
+      "sourceSection": "notion-10",
+      "evidence": "repeat(2, minmax(0, 1fr)) définit deux colonnes de fractions égales avec minimum zéro.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle propriété espace les cellules ?",
+      "answers": [
+        "line-height",
+        "font-size",
+        "gap",
+        "padding"
+      ],
+      "explanation": "gap règle l’intervalle entre les pistes.",
+      "sourceSection": "notion-11",
+      "evidence": "gap règle l'espace entre les cellules de grille.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Deux règles actives de même priorité définissent les colonnes : pourquoi leur ordre compte-t-il ?",
+      "answers": [
+        "La première règle gagne toujours",
+        "Le plus grand fichier gagne",
+        "L’ordre des classes HTML décide",
+        "À égalité des priorités, la dernière règle applicable gagne"
+      ],
+      "explanation": "L’ordre intervient une fois les autres critères de cascade à égalité.",
+      "sourceSection": "notion-12",
+      "evidence": "À spécificité et priorité égales, une règle applicable placée après l'autre peut la remplacer.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel élément du head accompagne une page responsive ?",
+      "answers": [
+        "meta name=\"viewport\"",
+        "meta name=\"author\"",
+        "title seul",
+        "link rel=\"icon\""
+      ],
+      "explanation": "Le viewport prépare la largeur de mise en page adaptée à l’appareil.",
+      "sourceSection": "notion-14",
+      "evidence": "La meta viewport permet notamment une largeur adaptée au dispositif sur mobile.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle règle limite la largeur d'une image à son conteneur ?",
+      "answers": [
+        "position: absolute seulement",
+        "max-width: 100%",
+        "min-width: 2000px",
+        "height: 100% seulement"
+      ],
+      "explanation": "L’image ne doit pas imposer une largeur supérieure à son conteneur.",
+      "sourceSection": "notion-16",
+      "evidence": "max-width: 100% empêche une image de dépasser la largeur disponible de son conteneur.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle propriété aide pour une chaîne très longue ?",
+      "answers": [
+        "text-transform: uppercase",
+        "letter-spacing: 5px",
+        "overflow-wrap: anywhere",
+        "white-space: nowrap"
+      ],
+      "explanation": "Les coupures permettent à une longue chaîne de rester dans l’espace disponible.",
+      "sourceSection": "notion-17",
+      "evidence": "overflow-wrap: anywhere permet de couper un contenu textuel long si nécessaire.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment choisir un seuil pertinent ?",
+      "answers": [
+        "Selon la marque de téléphone",
+        "Selon le nom du fichier",
+        "Selon le nombre d’images uniquement",
+        "Selon les difficultés de lisibilité du contenu"
+      ],
+      "explanation": "Un seuil répond à un besoin concret de disposition et de lecture.",
+      "sourceSection": "notion-19",
+      "evidence": "Un breakpoint se choisit d'après les besoins du contenu.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

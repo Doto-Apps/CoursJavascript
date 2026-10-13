@@ -1,42 +1,48 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Advanced Exercises"
+title: "Exemple commenté : une liste asynchrone"
 type: "td"
 ---
 
-# Exercices
+## Une liste asynchrone avec chargement et erreur
 
-## Todo List
+Cette démonstration corrigée utilise une promesse locale pour isoler l’attente et le rendu. Elle ne contacte aucune API et ne conserve rien après rechargement. Le même rendu peut ensuite recevoir les données de [fetch](/semestre_4/js/intermediate/fetch).
 
-Dans cet exercice vous avez besoin d'utiliser le localStorage, et la données du formulaire.
-
-Une tâche se compose d'une date de création, un titre, une description et une date de traitement:
-
-```js
-{
-    dateDeCreation: Date,
-    titre: string,
-    description: string,
-    dateDeTraitement: Date
-}
+```html live title="Chargement simulé d’une liste"
+<button type="button">Charger les projets</button>
+<label><input type="checkbox"> Simuler une panne</label>
+<p role="status"></p>
+<ul></ul>
+<script>
+  const bouton = document.querySelector('button');
+  const statut = document.querySelector('p');
+  const liste = document.querySelector('ul');
+  bouton.addEventListener('click', async () => {
+    const panne = document.querySelector('input').checked;
+    bouton.disabled = true;
+    statut.textContent = 'Chargement…';
+    liste.replaceChildren();
+    try {
+      const projets = await new Promise((resolve, reject) => {
+        setTimeout(() => panne ? reject(new Error('Service indisponible')) : resolve(['Affiche', 'Vidéo']), 500);
+      });
+      for (const titre of projets) {
+        const item = document.createElement('li');
+        item.textContent = titre;
+        liste.append(item);
+      }
+      statut.textContent = `${projets.length} projets`;
+    } catch (error) {
+      statut.textContent = error.message;
+    } finally {
+      bouton.disabled = false;
+    }
+  });
+</script>
 ```
 
-- Créez une page HTML avec 2 champs textes dans un formulaire
-  - Titre
-  - Description
-- Ajoutez un bouton pour soumettre le formulaire et un pour le reinitialiser
-- Lorsque je complète le formulaire et je le soumet, ma liste se met à jour automatiquement avec le nouveau todo.
-- Lorsque j'ajoute un todo mon formulaire se remet à zéro
-- Sur chaque todo afficher ajoutez un bouton permettant de marquer le todo comme fait. Quand je clique dessus la date de traitement du todo est renseignée.
-- Lorsque j’actualise la page ma liste est toujours là (utilisation du localStorage)
+Au clic, « Chargement… » apparaît pendant environ une demi-seconde. La réussite affiche deux éléments et « 2 projets ». Avec la case cochée, le message devient « Service indisponible » et la liste reste vide. Dans les deux cas, le bouton est réactivé. `replaceChildren` retire les résultats précédents afin de ne pas les présenter comme ceux de la nouvelle requête.
 
-## Récupérer des données et les afficher
+## Du prototype à la requête réelle
 
-- Créez une page HTML avec un bouton : "Charger les données"
-- Quand je clique sur le bouton. faire une requête fetch sur cette url avec la méthode `GET` et `Content-Type: application/json` : https://jsonplaceholder.typicode.com/todos/
-- Afficher les données avec tous les champs dans une liste
-- Maintenant je veux que ca soit fait automatiquement dès le chargement de la page.
-- Maintenant je veux avoir une pagination de 10 dans ma liste.
-  - Par défaut je suis sur la page 1, mes données sont toute chargées mais j'affiche uniquement les éléments de 0 à 9 (10 éléments)
-  - Il y a un bouton page suivante qui me permet de voir la prochaine page. Si je suis sur la dernière page le bouton est désactivé
-  - Il y a un bouton page précédente qui me permet de retoruner à la page précedente. Si je suis sur la page 1 le bouton est désactivé
+Le bloc `try` peut appeler une fonction `lireProjets` qui vérifie statut, JSON et forme des données. Le rendu reçoit alors des objets et lit leur propriété `titre`. Cette séparation permet de tester la liste vide, la panne et les titres contenant des caractères HTML sans dépendre d’un service extérieur. Pour persister une sélection, utilisez ensuite un stockage validé ; le rendu seul ne prouve pas une écriture serveur.

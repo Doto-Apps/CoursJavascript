@@ -1,17 +1,24 @@
 ---
+order: 4
 layout: "layouts/Layout.astro"
 title: "Apprendre les flexbox avec des jeux"
 type: "TP"
 ---
 
-Ce TP vous propose deux petits jeux en ligne pour vous entraîner à manipuler **Flexbox** tout en vous amusant.
+## Les axes et les alignements Flexbox
 
-## Flexbox Froggy
+Les jeux de cette page prolongent les [propriétés Flexbox](/semestre_1/integration/csstd#flex). Le parent porte `display: flex` ; ses enfants directs sont distribués selon les axes du conteneur.
 
-Apprenez à manier les flexbox en plaçant des grenouilles sur des nénuphars :  
-[Flexbox Froggy](https://flexboxfroggy.com/#fr)
+| Propriété | Effet à rechercher |
+|---|---|
+| `flex-direction` | Direction de l’axe principal |
+| `justify-content` | Distribution sur l’axe principal |
+| `align-items` | Alignement sur l’axe transversal |
+| `flex-wrap` | Retour sur plusieurs lignes |
+| `gap` | Espacement entre éléments ou lignes |
 
-## Flexbox Defense
+## Flexbox Froggy et Flexbox Defense
 
-Entraînez-vous avec un jeu de *tower defense* basé sur Flexbox :  
-[Flexbox Defense](http://www.flexboxdefense.com/)
+[Flexbox Froggy](https://flexboxfroggy.com/#fr) associe des cibles à des positions d’éléments. [Flexbox Defense](http://www.flexboxdefense.com/) utilise la disposition d’éléments dans un contexte de jeu. Ces ressources sont facultatives et restent externes à la plateforme.
+
+Si une direction passe de `row` à `column`, `justify-content` suit le nouvel axe principal : il ne signifie pas systématiquement « aligner horizontalement ». Une position obtenue dans un niveau devient une connaissance réutilisable quand la propriété et le parent concernés sont identifiés.

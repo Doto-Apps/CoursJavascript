@@ -1,223 +1,218 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Découverte de Three.js pour créer des scènes 3D"
+title: "Intégrer un carrousel avec Swiper"
+type: "TP"
+order: 6
+quizId: "s2-int-05"
+previousSession: "/semestre_2/integration/tp/dropdown"
+nextSession: "/semestre_2/integration/tp/eventJs"
 ---
 
-# Introduction à Three.js 🧱🎮
+<a id="comprendre"></a>
 
-**Three.js** est une bibliothèque JavaScript qui permet de créer des **scènes 3D interactives** dans un navigateur web.  
-C’est une passerelle facile d’accès pour s’amuser avec la **3D en ligne**, sans avoir besoin de logiciels complexes comme Blender ou Unity.
+## HTML, CSS et JavaScript d’un carrousel
 
-Three.js repose sur **WebGL**, une technologie de dessin 3D pour les navigateurs.  
-Mais au lieu d’écrire plein de code complexe en WebGL, on utilise Three.js pour simplifier tout ça ✅
+| Partie | Rôle | Symptôme si elle manque |
+|---|---|---|
+| CSS du plugin. | Disposition et styles nécessaires. | Les diapositives peuvent s’empiler. |
+| JavaScript du plugin. | Création du comportement. | Le constructeur n’est pas disponible. |
+| Structure HTML. | Éléments attendus par le plugin. | Les contrôles ou diapositives ne sont pas trouvés. |
 
----
+Le cours utilise une copie locale de Swiper 11.2.10. Le projet doit utiliser des fichiers de cette même version ou une installation clairement documentée. Changer seulement le JavaScript sans vérifier le CSS et les options peut rendre l’exemple incohérent.
 
-## 1. Pourquoi utiliser Three.js ? 🤔
+## Chargement du DOM et initialisation de Swiper
 
-Quelques exemples d’usages :
-- Créer un jeu ou une animation en 3D 🎮
-- Intégrer un objet interactif dans un site web 🧩
-- Faire un visualiseur de produits ou de données 🧬
-- Apprendre les bases de la modélisation et des scènes 3D 🌍
+Le constructeur reçoit un sélecteur ou un élément ainsi qu’un objet d’options. La structure doit exister lors de cette initialisation. Si une page possède deux carrousels, des sélecteurs trop généraux peuvent relier les boutons du premier au second. Donnez un contexte précis à chaque instance.
 
----
+`slidesPerView` décrit combien de diapositives sont visibles ; l’espace entre elles relève d’une autre option. Les boutons précédent/suivant, les indicateurs et les conditions de largeur ont des rôles distincts. Activez les fonctionnalités nécessaires, puis vérifiez leur effet au lieu d’accumuler toutes les options disponibles.
 
-## 2. Mise en place du projet 🧰
+## Clavier, navigation et mouvement du carrousel
 
-Tu peux commencer un projet avec juste un fichier HTML et un lien vers la bibliothèque :
+Une lecture automatique n’est pas obligatoire. Un carrousel dont le contenu change trop vite peut gêner la lecture ; la version de base utilise des commandes explicites. Les boutons doivent posséder un nom compréhensible et rester atteignables au clavier. Les images ont toujours besoin d’alternatives adaptées.
+
+Testez la première diapositive, la dernière et la largeur étroite. Le contenu doit rester utilisable sans dépendre d’un geste tactile. Une bibliothèque n’exonère pas de vérifier les états et les parcours du composant final.
+
+<a id="apprentissage"></a>
+
+## La configuration du carrousel Swiper
+
+Un plugin apporte une fonctionnalité et une API de configuration. Vous restez responsable des contenus, du clavier et des ressources. Le carrousel utilise ici **Swiper 11.2.10**, fourni localement avec sa licence. La version est fixée pour garder l’exemple reproductible ; les URL CDN d’un autre tutoriel peuvent fournir une API différente.
 
 ```html
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<div class="swiper" aria-label="Sélection de projets">
+  <div class="swiper-wrapper">
+    <article class="swiper-slide">Premier projet</article>
+    <article class="swiper-slide">Deuxième projet</article>
+  </div>
+  <button class="swiper-button-prev" aria-label="Projet précédent"></button>
+  <button class="swiper-button-next" aria-label="Projet suivant"></button>
+  <div class="swiper-pagination"></div>
+</div>
 ```
-
-Pas besoin d’installation complexe ! Tu peux copier/coller le code et l’ouvrir dans un navigateur.
-
----
-
-## 3. Structure d’une scène 3D 🏗️
-
-Trois éléments de base sont nécessaires :
-
-| Élément        | Rôle |
-|----------------|------|
-| `Scene`        | Conteneur général pour les objets 3D |
-| `Camera`       | Point de vue pour observer la scène |
-| `Renderer`     | Moteur de rendu pour afficher la scène dans la page web |
-
----
-
-## 4. Premier exemple : un cube qui tourne 🔁
-
-On va créer une scène complète avec un **cube vert qui tourne**.
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cube 3D avec Three.js</title>
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <style>
-    body { margin: 0; overflow: hidden; }
-    canvas { display: block; }
-  </style>
-</head>
-<body>
-  <script>
-    // 1. Créer la scène
-    const scene = new THREE.Scene();
-
-    // 2. Créer la caméra (angle, ratio, near, far)
-    const camera = new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
-    );
-
-    // 3. Créer le moteur de rendu
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // 4. Créer un cube
-    const geometry = new THREE.BoxGeometry(); // géométrie (forme)
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // matière
-    const cube = new THREE.Mesh(geometry, material); // assemblage
-    scene.add(cube);
-
-    // 5. Placer la caméra
-    camera.position.z = 5;
-
-    // 6. Animation
-    function animate() {
-      requestAnimationFrame(animate); // boucle infinie
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera); // afficher la scène
-    }
-
-    animate(); // démarrer l’animation
-  </script>
-</body>
-</html>
-```
-
----
-
-## 5. Exercice 1 – Changer l’apparence du cube 🎨
-
-👉 Change la couleur du cube avec une autre couleur hexadécimale :
 
 ```js
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // rouge
-```
-
-👉 Essaie aussi d’ajouter un **fil de fer** (wireframe) :
-
-```js
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-```
-
----
-
-## 6. Exercice 2 – Ajouter d’autres formes 🔺⚽
-
-Three.js permet de créer d’autres géométries très facilement.
-
-### Une sphère :
-
-```js
-const geometry = new THREE.SphereGeometry(1, 32, 32);
-const material = new THREE.MeshBasicMaterial({ color: 0x2196f3 });
-const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
-```
-
-### Un cône :
-
-```js
-const cone = new THREE.Mesh(
-  new THREE.ConeGeometry(1, 2, 16),
-  new THREE.MeshBasicMaterial({ color: 0xffa500 })
-);
-scene.add(cone);
-```
-
-Tu peux aussi changer la **position** d’un objet :
-
-```js
-cone.position.set(2, 0, 0); // x, y, z
-```
-
----
-
-## 7. Ajouter de la lumière 💡
-
-Pour rendre les objets plus réalistes, on ajoute de la lumière + un matériau qui la prend en compte :
-
-```js
-// Nouveau matériau
-const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-
-// Lumière directionnelle
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(2, 2, 5);
-scene.add(light);
-```
-
-Et n’oublie pas d’utiliser `MeshStandardMaterial` au lieu de `MeshBasicMaterial`.
-
----
-
-## 8. Exercice 3 – Créer une mini-scène 🌌
-
-Objectif : une scène avec plusieurs formes, à différentes positions, avec au moins **une lumière**.
-
-Exemple de structure :
-
-- 1 cube au centre
-- 1 sphère à gauche
-- 1 cône à droite
-- Une lumière blanche en haut
-
----
-
-## 9. Gérer les fenêtres redimensionnées 🖥️📱
-
-Quand on change la taille de la fenêtre, il faut adapter la caméra et le renderer :
-
-```js
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+const carrousel = new Swiper('.swiper', {
+  slidesPerView: 1,
+  spaceBetween: 16,
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev'
+  },
+  pagination: { el: '.swiper-pagination', clickable: true },
+  keyboard: { enabled: true, onlyInViewport: true },
+  a11y: { enabled: true }
 });
 ```
 
----
+**Lecture :** chargez d’abord CSS et script de la bibliothèque, puis initialisez après le HTML. `slidesPerView` décrit combien de diapositives sont affichées ; `spaceBetween` règle leur espacement. Les sélecteurs de navigation doivent viser les boutons de cet exemple, pas une autre galerie.
 
-## 10. Exercice Final Noté : Crée ta scène 3D personnalisée 💯
+```html live title="Configurer et manipuler un vrai carrousel Swiper"
+<style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: system-ui, sans-serif;
+        color: #18324c;
+        background: #f1f5f9;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        max-width: 100%;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      input,
+      select,
+      textarea {
+        padding: 8px;
+      }
+      :focus-visible {
+        outline: 3px solid #2563eb;
+        outline-offset: 3px;
+      }
+      article,
+      .panel {
+        padding: 16px;
+        background: white;
+        border-radius: 12px;
+        min-width: 0;
+      }
+      .cards {
+        display: grid;
+        gap: 16px;
+      }
+      label {
+        display: block;
+        margin-block: 12px 4px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+      }
+      p,
+      h2,
+      a {
+        overflow-wrap: anywhere;
+      }
+      .note {
+        font-size: 0.9rem;
+      }
 
-### Instructions :
+      .swiper {
+        width: 100%;
+        padding-bottom: 35px;
+      }
+      .swiper-slide {
+        min-height: 130px;
+      }
+      .swiper:not(.swiper-initialized) .swiper-wrapper {
+        display: block;
+      }
+      .swiper:not(.swiper-initialized) .swiper-slide {
+        margin-bottom: 12px;
+      }
+    </style>
+    <link rel="stylesheet" href="/vendor/swiper/swiper-bundle.min.css" />
 
-- Crée une **scène complète**
-- Ajoute **au moins 3 formes différentes**
-- Utilise des **couleurs variées**
-- Intègre **une lumière directionnelle**
-- Anime **au moins un objet** (rotation ou déplacement)
-- Positionne bien ta **caméra** pour voir toute la scène
-- Le code doit être **clair et commenté**
+<h1>Carrousel sans défilement automatique</h1>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <article class="swiper-slide">
+          <h2>Photo</h2>
+          <p>Explorer l’image.</p>
+        </article>
+        <article class="swiper-slide">
+          <h2>Musique</h2>
+          <p>Composer une rencontre.</p>
+        </article>
+        <article class="swiper-slide">
+          <h2>Sport</h2>
+          <p>Préparer un tournoi.</p>
+        </article>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <button class="precedent" aria-label="Diapositive précédente">
+      Précédent
+    </button>
+    <button class="suivant" aria-label="Diapositive suivante">Suivant</button>
+    <p class="note">
+      Bibliothèque Swiper 11.2.10 locale, licence MIT. Sans JS, les trois
+      contenus restent visibles.
+    </p>
+    <script src="/vendor/swiper/swiper-bundle.min.js"></script>
 
----
+    <script>
+      // Wait for the iframe's first layout: its width can be zero during parsing.
+      if (typeof Swiper !== "undefined")
+        requestAnimationFrame(() => {
+          window.carrousel = new Swiper(".swiper", {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            navigation: { nextEl: ".suivant", prevEl: ".precedent" },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            keyboard: { enabled: true, onlyInViewport: true },
+            a11y: {
+              enabled: true,
+              prevSlideMessage: "Diapositive précédente",
+              nextSlideMessage: "Diapositive suivante",
+            },
+          });
+        });
+    </script>
+```
 
-## Bonus : Aller plus loin 🌟
+## Tableau de référence — notions et opérations
 
-Si tu veux explorer encore plus loin :
-- Ajouter un **fond étoilé**
-- Charger des **textures**
-- Importer un modèle 3D `.glb` ou `.obj`
-- Gérer la **souris ou le clavier** pour bouger la caméra (OrbitControls)
-
-Mais ça, c’est pour un prochain cours 😁
-
----
+| Notion | Règle à retenir |
+|---|---|
+| <a id="notion-1"></a>Bibliothèque | Swiper est une bibliothèque de carrousel JavaScript. |
+| <a id="notion-2"></a>Version | Le TP fixe Swiper à la version 11.2.10. |
+| <a id="notion-3"></a>Conteneur | Le conteneur principal porte la classe swiper. |
+| <a id="notion-4"></a>Wrapper | swiper-wrapper contient les diapositives. |
+| <a id="notion-5"></a>Slide | Chaque diapositive porte swiper-slide. |
+| <a id="notion-6"></a>Initialisation | new Swiper initialise le composant sur un sélecteur. |
+| <a id="notion-7"></a>Ordre | Le script de la bibliothèque doit être chargé avant l'initialisation. |
+| <a id="notion-8"></a>Styles | La feuille CSS de Swiper accompagne son script. |
+| <a id="notion-9"></a>Nombre visible | slidesPerView: 1 prévoit une diapositive visible. |
+| <a id="notion-10"></a>Espacement | spaceBetween: 16 règle l'espace de 16 px entre slides. |
+| <a id="notion-11"></a>Bouton suivant | navigation.nextEl pointe vers le contrôle suivant. |
+| <a id="notion-12"></a>Bouton précédent | navigation.prevEl pointe vers le contrôle précédent. |
+| <a id="notion-13"></a>Pagination | pagination.el désigne le conteneur des repères de pagination. |
+| <a id="notion-14"></a>Repères cliquables | pagination.clickable: true permet de choisir une diapositive par son repère. |
+| <a id="notion-15"></a>Clavier | keyboard.enabled: true active le module clavier. |
+| <a id="notion-16"></a>Visibilité | keyboard.onlyInViewport limite le contrôle clavier au carrousel dans la zone visible. |
+| <a id="notion-17"></a>Accessibilité | a11y.enabled active le module d'accessibilité de Swiper. |
+| <a id="notion-18"></a>Sans lecture automatique | Le modèle ne configure pas de défilement automatique. |
+| <a id="notion-19"></a>Dégradation | Sans JavaScript, le contenu reste lisible dans le modèle. |
+| <a id="notion-20"></a>Licence | La version locale de Swiper est conservée avec sa licence MIT. |

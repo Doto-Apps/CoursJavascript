@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Menu déroulant : état et interaction JavaScript",
+  "uid": "s2-int-05",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/tp/dropdown",
+  "sourceSession": "S2-INT-05",
+  "targetCourse": "/semestre_2/integration/tp/pluginJs",
+  "questions": [
+    {
+      "question": "Quel élément commande l'ouverture ?",
+      "answers": [
+        "button",
+        "div sans comportement clavier",
+        "span décoratif",
+        "article"
+      ],
+      "explanation": "Le bouton natif fournit une action accessible au clavier.",
+      "sourceSection": "notion-1",
+      "evidence": "Le contrôle qui ouvre la navigation est un bouton natif.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel attribut décrit l'état ouvert ?",
+      "answers": [
+        "aria-current",
+        "aria-expanded",
+        "aria-label",
+        "aria-hidden"
+      ],
+      "explanation": "L’état développé ou réduit doit correspondre à la visibilité réelle.",
+      "sourceSection": "notion-2",
+      "evidence": "aria-expanded indique si le panneau associé est ouvert.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que contient aria-controls sur le bouton du menu ?",
+      "answers": [
+        "Le texte du bouton",
+        "L’adresse d’une autre page",
+        "L’id du panneau contrôlé",
+        "La classe CSS de tous les liens"
+      ],
+      "explanation": "aria-controls désigne un élément par son identifiant.",
+      "sourceSection": "notion-3",
+      "evidence": "aria-controls contient l'id de l'élément contrôlé.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment comparer correctement la valeur lue de aria-expanded ?",
+      "answers": [
+        "Comparer uniquement au booléen true",
+        "Tester seulement si la chaîne existe",
+        "Comparer au nombre 1",
+        "Comparer à la chaîne true"
+      ],
+      "explanation": "La lecture d’un attribut donne une chaîne ; false comme texte n’est pas un booléen faux.",
+      "sourceSection": "notion-4",
+      "evidence": "getAttribute renvoie ici une chaîne, comparée à 'true'.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel attribut masque la navigation fermée ?",
+      "answers": [
+        "hidden",
+        "disabled",
+        "readonly",
+        "checked"
+      ],
+      "explanation": "hidden masque le panneau dans l’état fermé.",
+      "sourceSection": "notion-5",
+      "evidence": "hidden masque le panneau fermé.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle méthode relie le clic au traitement ?",
+      "answers": [
+        "JSON.stringify",
+        "addEventListener",
+        "querySelector",
+        "classList.remove"
+      ],
+      "explanation": "L’écouteur relie un événement à une fonction de traitement.",
+      "sourceSection": "notion-7",
+      "evidence": "addEventListener associe une fonction à un événement.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle méthode retrouve #ouvrir dans le document ?",
+      "answers": [
+        "replaceChildren",
+        "JSON.parse",
+        "querySelector",
+        "append"
+      ],
+      "explanation": "querySelector retrouve un élément selon un sélecteur CSS.",
+      "sourceSection": "notion-8",
+      "evidence": "querySelector sélectionne le premier élément correspondant au sélecteur.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel état suit un clic lorsque la navigation est déjà ouverte ?",
+      "answers": [
+        "Ouvert sans changement",
+        "Supprimé du DOM",
+        "Déplacé dans une autre page",
+        "Fermé"
+      ],
+      "explanation": "Le bouton inverse l’état ; la visibilité et l’attribut doivent suivre.",
+      "sourceSection": "notion-10",
+      "evidence": "L'ouverture alterne entre deux états.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quels éléments doivent rester cohérents ?",
+      "answers": [
+        "L’état affiché et l’état annoncé",
+        "La couleur et le nom du fichier",
+        "Le nombre de liens et le port",
+        "Le titre de l’onglet et sa largeur"
+      ],
+      "explanation": "Un état annoncé faux rend l’interface trompeuse pour les aides techniques.",
+      "sourceSection": "notion-11",
+      "evidence": "Le masquage et aria-expanded doivent décrire le même état.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle valeur de event.key teste Échap ?",
+      "answers": [
+        "Tab",
+        "Escape",
+        "Escaped",
+        "Enter"
+      ],
+      "explanation": "La valeur standard de la touche Échap est Escape.",
+      "sourceSection": "notion-12",
+      "evidence": "event.key === 'Escape' reconnaît la touche Échap.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Où replacer le focus après Échap ?",
+      "answers": [
+        "Le pied de page",
+        "Un div non focalisable",
+        "Le bouton d’ouverture",
+        "Le premier lien toujours caché"
+      ],
+      "explanation": "Après fermeture, le focus revient au contrôle qui permet de rouvrir.",
+      "sourceSection": "notion-13",
+      "evidence": "Après fermeture par Échap, le focus revient au bouton d'ouverture.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Faut-il ajouter role menu à toute navigation de site ?",
+      "answers": [
+        "Oui, tout nav exige role menu",
+        "Oui, role menu remplace les liens",
+        "Oui, role menu ajoute automatiquement tout le clavier",
+        "Non, conserver une navigation avec éléments natifs"
+      ],
+      "explanation": "Une navigation de site n’est pas automatiquement un menu applicatif ARIA.",
+      "sourceSection": "notion-15",
+      "evidence": "Une navigation de site n'est pas un menu applicatif ARIA.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

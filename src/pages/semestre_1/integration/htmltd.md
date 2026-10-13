@@ -1,234 +1,240 @@
 ---
 layout: "layouts/Layout.astro"
-title: "HTML5"
+title: "Structurer une page HTML sémantique"
 type: "TD"
+order: 2
+quizId: "s1-int-01"
+previousSession: "/semestre_1/integration/web"
+nextSession: "/semestre_1/integration/csstd"
 ---
 
-## Qu'est-ce que HTML5 ?
+<a id="comprendre"></a>
 
-HTML5 est la dernière version du langage HTML (HyperText Markup Language). Il est utilisé pour structurer et présenter le contenu sur le Web. HTML5 introduit de nouvelles balises et fonctionnalités qui facilitent la création de sites Web modernes et interactifs.
+## Balises, attributs et imbrication HTML
 
-## Structure de base d'un document HTML5
+Dans `<a href="projets.html">Nos projets</a>`, `a` est le nom de la balise ; `href` est un attribut ; `projets.html` est sa valeur ; « Nos projets » est le contenu. La balise fermante reprend le nom avec `/`. Écrivez les attributs dans la balise ouvrante et entourez leurs valeurs de guillemets. L’imbrication suit l’ordre inverse des ouvertures : `<p><strong>Attention</strong> au chemin.</p>` est cohérent.
 
-Un document HTML5 typique commence par une déclaration de type de document (`<!DOCTYPE html>`), suivie de la structure de base suivante :
+`img`, `meta`, `input` et `br` sont des éléments vides : ils ne contiennent pas de texte et n’ont pas de balise fermante en HTML. `br` produit un saut de ligne utile dans une adresse, mais ne remplace pas plusieurs paragraphes. Un nouveau sujet appelle un nouveau `p`, pas une succession de `br`.
+
+| Balise et syntaxe | Rôle | Attributs / vigilance |
+|---|---|---|
+| `<h2>Programme</h2>` | Titre d’une section du document. | Son niveau dépend du plan, non de la taille souhaitée. |
+| `<p>Une idée.</p>` | Paragraphe de texte. | Ne contient pas une section entière ni un autre paragraphe. |
+| `<ul><li>Photo</li></ul>` | Liste sans ordre significatif. | Chaque entrée est un `li`. |
+| `<ol><li>Enregistrer</li></ol>` | Suite d’étapes ordonnées. | Changer l’ordre change le sens. |
+| `<strong>Obligatoire</strong>` | Importance particulière. | La graisse visuelle peut être modifiée en CSS. |
+| `<em>Vraiment</em>` | Emphase dans une phrase. | Ce n’est pas un outil de décoration à appliquer partout. |
+| `<a href="projets.html">Voir les projets</a>` | Navigation vers une destination. | Le texte doit annoncer cette destination. |
+| `<img src="photo.jpg" alt="Atelier de sérigraphie">` | Image avec alternative selon son rôle. | `alt=""` pour une image uniquement décorative. |
+| `<button type="button">Ouvrir</button>` | Action dans l’interface. | Ne pas utiliser un lien sans destination pour imiter un bouton. |
+
+```html preview title="Un titre, une idée et une liste" height=210
+<h2>Préparer l’atelier</h2>
+<p>Apportez <strong>un carnet</strong> pour les essais.</p>
+<ol>
+  <li>Choisir une image.</li>
+  <li>Préparer les couleurs.</li>
+</ol>
+```
+
+**Résultat :** un titre introduit le sujet, un paragraphe donne une consigne et deux étapes numérotées expriment un ordre. Le rendu est fixe pour concentrer la lecture sur ces quelques lignes. La démonstration suivante présente un document plus complet.
+
+## Le document HTML et les chemins de fichiers
+
+`head` contient les informations sur le document ; `body` contient le contenu affiché. `title` nomme l’onglet, alors que `h1` est le titre visible dans la page. `lang="fr"` précise la langue ; `charset="utf-8"` permet d’interpréter les caractères selon l’encodage du fichier. Il faut aussi enregistrer réellement le fichier en UTF-8.
+
+Un chemin relatif comme `images/atelier.jpg` part du dossier de la page. `../images/atelier.jpg` remonte d’un dossier. Un lien interne `#programme` désigne l’élément dont l’`id` est `programme`. Un identifiant ne doit désigner qu’un seul élément. Plusieurs éléments peuvent en revanche partager la même `class` pour être stylisés ensemble.
+
+**Erreurs fréquentes :** un `src` qui pointe vers un fichier local hors du projet ; un nom d’image dont la casse diffère ; un lien « ici » incompréhensible hors contexte ; une image informative décrite seulement par « image » ; un titre choisi pour sa taille plutôt que pour sa place dans le plan.
+
+## La sémantique des éléments HTML
+
+HTML décrit ce que représente chaque morceau de contenu. Un titre n’est pas simplement du texte gros : il organise la lecture. Un lien n’est pas simplement du texte bleu : il possède une destination. Vous pouvez changer leur apparence en CSS sans changer leur rôle. Commencez donc par vous demander « qu’est-ce que ce contenu ? », avant « à quoi doit-il ressembler ? ».
+
+| Élément | Rôle | Décision à prendre |
+|---|---|---|
+| `h1`, `h2`, `h3` | Titres de niveaux différents | Quelle place dans le plan ? |
+| `p` | Paragraphe | Où commence une nouvelle idée ? |
+| `nav` | Navigation | Quels liens constituent le parcours principal ? |
+| `main` | Contenu principal | Qu’est-ce qui appartient à cette page ? |
+| `section` | Ensemble thématique | Quel titre nomme ce thème ? |
+| `article` | Unité de contenu autonome | Cette fiche se comprend-elle séparément ? |
+| `a` | Lien vers une ressource | Quelle valeur de `href` ? |
+| `img` | Image | Quelle source et quelle alternative utile ? |
+
+```html live title="Titres, paragraphes, listes et liens"
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Balises et rôles</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 16px;
+        color: #203047;
+        background: #f3f6fa;
+      }
+      section {
+        border: 1px solid #bcc7d6;
+        padding: 16px;
+      }
+      a:focus-visible {
+        outline: 3px solid #2457a7;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav aria-label="Principale">
+        <a href="#programme">Programme</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Le festival du campus</h1>
+      <p>Un paragraphe présente le sujet.</p>
+      <section id="programme">
+        <h2>Le programme</h2>
+        <ul>
+          <li>Découvrir une exposition</li>
+          <li>Rencontrer les artistes</li>
+        </ul>
+        <article>
+          <h3>Atelier photographie</h3>
+          <p>Une fiche autonome décrit un atelier.</p>
+          <a href="#contact">Poser une question sur l’atelier photographie</a>
+        </article>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Zone de contact fictive de cette démonstration.</p>
+      </section>
+    </main>
+  </body>
+</html>
+```
+
+**Lecture accompagnée :** la balise ouvrante porte les attributs ; le texte entre les balises est le contenu. Dans un lien, `href` précise la destination. Dans `section id="programme"`, l’identifiant rend possible le lien `href="#programme"`. Ce nom doit correspondre exactement et rester unique dans le document.
+
+**Erreur à éviter :** choisir `h3` uniquement parce que `h2` paraît trop grand. Le niveau dépend de la hiérarchie ; la taille se règle ensuite en CSS.
+
+<a id="document"></a>
+
+## Doctype, head et body
+
+Un élément HTML associe une balise à un contenu et, éventuellement, des attributs. Un attribut ajoute une information dans la balise ouvrante. Les éléments doivent être correctement imbriqués : le dernier ouvert est le premier fermé. `img` et `meta` sont des éléments vides, sans balise de fermeture.
 
 ```html
 <!doctype html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Titre de la page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les créateurs du campus</title>
   </head>
   <body>
-    <header>
-      <h1>Bienvenue sur mon site</h1>
-    </header>
-    <main>
-      <p>Ceci est un paragraphe de contenu.</p>
-    </main>
-    <footer>
-      <p>Pied de page</p>
-    </footer>
+    <h1>Les créateurs du campus</h1>
+    <p>Découvrez nos projets.</p>
   </body>
 </html>
 ```
 
-### Explications
+Le doctype demande le mode standard du navigateur. `head` contient les métadonnées ; `body` contient le contenu de la page. `title` nomme l'onglet. `charset="utf-8"` indique l'encodage. `lang="fr"` indique la langue, notamment aux technologies d'assistance. La balise viewport prépare un affichage adapté aux appareils mobiles.
 
-- `<!DOCTYPE html>` : Cette ligne indique que le document utilise HTML5.
-- `<html lang="fr">` : La balise `<html>` enveloppe tout le contenu de la page. L'attribut `lang="fr"` indique que la langue de la page est le français.
-- `<head>` : La balise `<head>` contient des informations sur la page, comme son titre et les paramètres de caractère.
-- `<meta charset="UTF-8">` : Cette ligne indique que la page utilise l'encodage de caractères UTF-8.
-- `<meta name="viewport" content="width=device-width, initial-scale=1.0">` : Cette ligne permet de rendre la page réactive, c'est-à-dire qu'elle s'adapte aux différentes tailles d'écran.
-- `<title>Titre de la page</title>` : Cette balise définit le titre de la page, qui apparaît dans l'onglet du navigateur.
-- `<body>` : La balise `<body>` contient tout le contenu visible de la page web.
-- `<header>`, `<main>`, `<footer>` : Ces balises structurent le contenu de la page en en-tête, contenu principal et pied de page respectivement.
-- `<h1>` : Cette balise définit un titre de premier niveau.
-- `<p>` : Cette balise définit un paragraphe.
+<a id="structure"></a>
 
-## Nouvelles balises HTML5
+## Titres, paragraphes et zones du document
 
-### Sectionnement
+| Élément | Rôle dans notre page |
+|---|---|
+| `header` | Introduction du site ou d'une section. |
+| `nav` | Ensemble important de liens de navigation. |
+| `main` | Contenu principal ; un seul contenu principal visible dans notre page. |
+| `section` | Partie thématique, généralement introduite par un titre. |
+| `article` | Contenu autonome, par exemple une fiche de profil. |
+| `footer` | Informations de fin et mentions. |
+| `div` | Regroupement générique sans signification particulière. |
 
-HTML5 introduit de nouvelles balises de sectionnement pour une meilleure organisation du contenu :
+Les titres `h1` à `h6` indiquent une hiérarchie. Utilisez `h1` pour le titre principal de ce document, puis `h2` pour ses sections. La taille visuelle se règle en CSS : choisir `h4` uniquement parce qu'il paraît plus petit dégrade la structure. Une liste non ordonnée utilise `ul` ; une liste ordonnée utilise `ol`. Dans les deux cas, chaque entrée est un `li`.
 
-- `<header>` : Utilisée pour définir l'en-tête d'un document ou d'une section. Exemple :
-
-```html
-<header>
-  <h1>Bienvenue sur mon site</h1>
-</header>
+```html live title="Lire une page sans décoration"
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Une page sémantique</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 16px;
+        color: #203047;
+        background: #f3f6fa;
+      }
+      nav {
+        display: flex;
+        gap: 16px;
+      }
+      article {
+        border: 1px solid #bcc7d6;
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p>Atelier Pixel</p>
+      <nav aria-label="Principale">
+        <a href="#projets">Projets</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Nos créations</h1>
+      <section id="projets">
+        <h2>Projets</h2>
+        <article>
+          <h3>Affiche Pixel</h3>
+          <p>Une exploration typographique.</p>
+          <a href="#contact">Discuter de l’affiche Pixel</a>
+        </article>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Données fictives pour cet atelier.</p>
+      </section>
+    </main>
+    <footer><p>Atelier MMI</p></footer>
+  </body>
+</html>
 ```
 
-- `<nav>` : Utilisée pour définir une section de navigation. Exemple :
+**Essayez :** transformez une fiche autonome en `article`, ajoutez une deuxième fiche et vérifiez que les titres restent cohérents. L'apparence ne change pas nécessairement : la sémantique exprime d'abord le rôle.
+
+<a id="liens-images"></a>
+
+## Liens et images
+
+Un lien `a` utilise `href` pour sa destination. Un lien vers `#equipe` cible l'élément dont l'attribut `id` vaut `equipe`. Un identifiant doit être unique dans le document. Le texte d'un lien doit annoncer sa destination : « Voir les profils » est plus clair que « Cliquez ici ».
 
 ```html
-<nav>
-  <ul>
-    <li><a href="#home">Accueil</a></li>
-    <li><a href="#about">À propos</a></li>
-  </ul>
-</nav>
-```
-
-- `<section>` : Utilisée pour définir une section générale. Exemple :
-
-```html
-<section>
-  <h2>Section 1</h2>
-  <p>Ceci est une section de contenu.</p>
+<nav><a href="#equipe">Voir les profils</a></nav>
+<section id="equipe">
+  <h2>Les profils</h2>
+  <article>
+    <h3>Le projet d'Anna</h3>
+    <img src="images/anna.svg" alt="Anna présente sa maquette de jeu">
+    <p>Une galerie de personnages.</p>
+  </article>
 </section>
 ```
 
-- `<article>` : Utilisée pour définir un contenu indépendant comme un article de blog. Exemple :
+`src` indique le fichier de l'image. `alt` fournit une alternative textuelle utile dans le contexte. Une image purement décorative reçoit `alt=""`. Un lien mène à une destination ; un bouton déclenche une action. `strong` marque une importance particulière et `em` une emphase, indépendamment de leur apparence par défaut. Les caractères réservés peuvent être écrits avec des entités : `&lt;` affiche le signe `<`.
 
-```html
-<article>
-  <h2>Mon premier article</h2>
-  <p>Ceci est le contenu de l'article.</p>
-</article>
-```
+## Pour approfondir
 
-- `<aside>` : Utilisée pour définir du contenu associé, comme une barre latérale. Exemple :
-
-```html
-<aside>
-  <h2>Informations complémentaires</h2>
-  <p>Voici des informations supplémentaires.</p>
-</aside>
-```
-
-- `<footer>` : Utilisée pour définir le pied de page d'un document ou d'une section. Exemple :
-
-```html
-<footer>
-  <p>&copy; 2024 Mon Site Web</p>
-</footer>
-```
-
-### Média
-
-HTML5 facilite l'intégration des médias avec les nouvelles balises suivantes :
-
-- `<audio>` : Utilisée pour intégrer des fichiers audio. Exemple :
-
-```html
-<audio controls>
-  <source src="audio.mp3" type="audio/mp3" />
-  Votre navigateur ne supporte pas la balise audio.
-</audio>
-```
-
-<div style="margin:auto;">
-<audio controls>
-    <source src="audio.mp3" type="audio/mp3">
-    Votre navigateur ne supporte pas la balise audio.
-</audio>
-</div>
-
-- `<video>` : Utilisée pour intégrer des fichiers vidéo. Exemple :
-
-```html
-<video controls>
-  <source src="video.mp4" type="video/mp4" />
-  Votre navigateur ne supporte pas la balise vidéo.
-</video>
-```
-
-<div style="margin:auto;">
-<video controls>
-    <source src="video.mp4" type="video/mp4">
-    Votre navigateur ne supporte pas la balise vidéo.
-</video>
-</div>
-
-- `<canvas>` : Utilisée pour dessiner des graphiques à la volée avec JavaScript. Exemple :
-
-```html
-<canvas
-  id="myCanvas"
-  width="200"
-  height="100"
-  style="border:1px solid #000000;"
-></canvas>
-```
-
-<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
-
-### Formulaires
-
-HTML5 améliore les formulaires avec de nouveaux types de champs et attributs :
-
-- `<input type="email">` : Champ pour les adresses e-mail. Exemple :
-
-```html
-<label for="email">Email :</label>
-<input type="email" id="email" name="email" required />
-```
-
-- `<input type="url">` : Champ pour les URL. Exemple :
-
-```html
-<label for="website">Site Web :</label>
-<input type="url" id="website" name="website" />
-```
-
-- `<input type="date">` : Champ pour les dates. Exemple :
-
-```html
-<label for="birthday">Date de naissance :</label>
-<input type="date" id="birthday" name="birthday" />
-```
-
-- `<input type="range">` : Champ pour les valeurs numériques dans une plage. Exemple :
-
-```html
-<label for="volume">Volume :</label>
-<input type="range" id="volume" name="volume" min="0" max="100" />
-```
-
-- Attributs de validation : `required`, `pattern`, `min`, `max`, etc.
-
-Exemple de formulaire HTML5 complet :
-
-```html
-<form>
-  <label for="email">Email :</label>
-  <input type="email" id="email" name="email" required />
-
-  <label for="website">Site Web :</label>
-  <input type="url" id="website" name="website" />
-
-  <label for="birthday">Date de naissance :</label>
-  <input type="date" id="birthday" name="birthday" />
-
-  <label for="volume">Volume :</label>
-  <input type="range" id="volume" name="volume" min="0" max="100" />
-
-  <button type="submit">Envoyer</button>
-</form>
-```
-
-<form>
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="website">Site Web :</label>
-    <input type="url" id="website" name="website">
-
-    <label for="birthday">Date de naissance :</label>
-    <input type="date" id="birthday" name="birthday">
-
-    <label for="volume">Volume :</label>
-    <input type="range" id="volume" name="volume" min="0" max="100">
-
-    <button type="submit">Envoyer</button>
-
-</form>
-
-## Conclusion
-
-HTML5 offre de nombreuses nouvelles fonctionnalités pour améliorer la structure, l'accessibilité et l'interactivité des sites Web. En utilisant ces nouvelles balises et fonctionnalités, vous pouvez créer des sites Web modernes et réactifs.
-
----
+- [Liste des balises HTML et leur rôle — MDN](https://developer.mozilla.org/fr/docs/Web/HTML/Reference/Elements).
+- [Attributs HTML — MDN](https://developer.mozilla.org/fr/docs/Web/HTML/Reference/Attributes).
+- [Images accessibles — W3C WAI](https://www.w3.org/WAI/tutorials/images/).

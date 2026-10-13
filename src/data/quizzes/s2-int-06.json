@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Intégrer un carrousel avec Swiper",
+  "uid": "s2-int-06",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/tp/pluginJs",
+  "sourceSession": "S2-INT-06",
+  "targetCourse": "/semestre_2/integration/tp/eventJs",
+  "questions": [
+    {
+      "question": "Quel rôle joue Swiper dans ce TP ?",
+      "answers": [
+        "Une bibliothèque de carrousel",
+        "Un compilateur CSS utilitaire",
+        "Un serveur HTTP",
+        "Une base de données"
+      ],
+      "explanation": "Swiper fournit les comportements du carrousel.",
+      "sourceSection": "notion-1",
+      "evidence": "Swiper est une bibliothèque de carrousel JavaScript.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle classe identifie le conteneur principal ?",
+      "answers": [
+        ".swiper-pagination",
+        ".swiper",
+        ".swiper-slide",
+        ".swiper-wrapper"
+      ],
+      "explanation": "Le conteneur principal contient la structure attendue par la bibliothèque.",
+      "sourceSection": "notion-3",
+      "evidence": "Le conteneur principal porte la classe swiper.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle classe porte le parent direct des diapositives ?",
+      "answers": [
+        "swiper-pagination",
+        "swiper-button-next",
+        "swiper-wrapper",
+        "swiper-slide"
+      ],
+      "explanation": "Le wrapper regroupe les diapositives ; une slide est une occurrence.",
+      "sourceSection": "notion-4",
+      "evidence": "swiper-wrapper contient les diapositives.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel appel initialise le carrousel ?",
+      "answers": [
+        "Swiper comme attribut href",
+        "Un import CSS sans initialisation",
+        "Une déclaration de couleur seule",
+        "new Swiper('.swiper', options)"
+      ],
+      "explanation": "Charger la bibliothèque ne suffit pas : il faut l’initialiser sur le conteneur.",
+      "sourceSection": "notion-6",
+      "evidence": "new Swiper initialise le composant sur un sélecteur.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Dans quel ordre exécuter les scripts ?",
+      "answers": [
+        "La bibliothèque avant son initialisation",
+        "L’initialisation avant la bibliothèque",
+        "Les scripts avant tout HTML dans tous les cas",
+        "Le CSS après chaque clic"
+      ],
+      "explanation": "L’initialisation doit disposer de la bibliothèque et du conteneur.",
+      "sourceSection": "notion-7",
+      "evidence": "Le script de la bibliothèque doit être chargé avant l'initialisation.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que faut-il charger en plus du JavaScript ?",
+      "answers": [
+        "Le fichier de configuration PHP",
+        "La feuille CSS de Swiper",
+        "Un fichier SQL",
+        "Une seconde copie de toutes les images"
+      ],
+      "explanation": "La structure visuelle requiert aussi les styles de la bibliothèque.",
+      "sourceSection": "notion-8",
+      "evidence": "La feuille CSS de Swiper accompagne son script.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que règle slidesPerView ?",
+      "answers": [
+        "La vitesse en millisecondes",
+        "Le numéro du dernier clic",
+        "Le nombre de diapositives visibles",
+        "Le nombre total d’images à télécharger"
+      ],
+      "explanation": "slidesPerView règle le nombre visible, pas la taille de la collection.",
+      "sourceSection": "notion-9",
+      "evidence": "slidesPerView: 1 prévoit une diapositive visible.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que règle spaceBetween ?",
+      "answers": [
+        "Le padding de chaque paragraphe",
+        "La vitesse de défilement",
+        "Le nombre de tours de boucle",
+        "L’espace entre les diapositives"
+      ],
+      "explanation": "spaceBetween règle l’intervalle entre les diapositives.",
+      "sourceSection": "notion-10",
+      "evidence": "spaceBetween: 16 règle l'espace de 16 px entre slides.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle option désigne le bouton suivant ?",
+      "answers": [
+        "navigation.nextEl",
+        "navigation.prevEl",
+        "pagination.el",
+        "keyboard.enabled"
+      ],
+      "explanation": "Le sélecteur doit correspondre au contrôle suivant présent dans le document.",
+      "sourceSection": "notion-11",
+      "evidence": "navigation.nextEl pointe vers le contrôle suivant.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle option rend les repères cliquables ?",
+      "answers": [
+        "spaceBetween",
+        "pagination.clickable",
+        "keyboard.enabled",
+        "slidesPerView"
+      ],
+      "explanation": "Les repères doivent être configurés pour accepter les clics.",
+      "sourceSection": "notion-14",
+      "evidence": "pagination.clickable: true permet de choisir une diapositive par son repère.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel rôle joue onlyInViewport ?",
+      "answers": [
+        "Désactiver les images hors écran",
+        "Changer le nombre total de diapositives",
+        "Limiter la commande clavier au carrousel dans la zone visible",
+        "Interdire tous les liens du document"
+      ],
+      "explanation": "Un carrousel hors de la zone visible ne doit pas capter inutilement les touches.",
+      "sourceSection": "notion-16",
+      "evidence": "keyboard.onlyInViewport limite le contrôle clavier au carrousel dans la zone visible.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel choix fait le carrousel du cours pour l'autoplay ?",
+      "answers": [
+        "Défilement automatique imposé",
+        "Défilement même pendant le focus",
+        "Défilement sans bouton d’arrêt",
+        "Pas de défilement automatique"
+      ],
+      "explanation": "Le cours laisse l’utilisateur choisir quand changer de diapositive.",
+      "sourceSection": "notion-18",
+      "evidence": "Le modèle ne configure pas de défilement automatique.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

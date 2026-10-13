@@ -1,0 +1,766 @@
+[
+  {
+    "id": "INT-01",
+    "subject": "Intégration",
+    "order": 1,
+    "durationMinutes": 120,
+    "type": "CM",
+    "planningDate": "11/09/2026",
+    "coursePath": "/semestre_1/integration/web",
+    "title": "Le Web : du navigateur au serveur",
+    "skills": [
+      {
+        "id": "reseau",
+        "label": "Distinguer Internet et le Web"
+      },
+      {
+        "id": "url",
+        "label": "Décomposer une URL"
+      },
+      {
+        "id": "http",
+        "label": "Suivre une requête et sa réponse"
+      },
+      {
+        "id": "langages",
+        "label": "Distinguer structure, présentation et comportement"
+      }
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "INT-02",
+    "subject": "Intégration",
+    "order": 2,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "11/09/2026",
+    "coursePath": "/semestre_1/integration/htmltd",
+    "title": "Structurer une page HTML sémantique",
+    "skills": [
+      {
+        "id": "document",
+        "label": "Construire le document"
+      },
+      {
+        "id": "structure",
+        "label": "Choisir une balise pour son rôle"
+      },
+      {
+        "id": "liens-images",
+        "label": "Relier les contenus et décrire les images"
+      }
+    ],
+    "quizId": "s1-int-01",
+    "previousSession": "INT-01",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-01",
+      "sourceSession": "INT-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-03",
+    "subject": "Intégration",
+    "order": 3,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "25/09/2026",
+    "coursePath": "/semestre_1/integration/csstd",
+    "title": "CSS : sélecteurs, boîtes et Flexbox",
+    "skills": [
+      {
+        "id": "selecteurs",
+        "label": "Lire un sélecteur et ses déclarations"
+      },
+      {
+        "id": "boites",
+        "label": "Calculer une dimension avec le modèle de boîte"
+      },
+      {
+        "id": "display",
+        "label": "Expliquer les modes display utilisés"
+      },
+      {
+        "id": "flex",
+        "label": "Distribuer les enfants selon les axes Flexbox"
+      }
+    ],
+    "quizId": "s1-int-02",
+    "previousSession": "INT-02",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-02",
+      "sourceSession": "INT-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-04",
+    "subject": "Intégration",
+    "order": 4,
+    "durationMinutes": 120,
+    "type": "CM",
+    "planningDate": "05/10/2026",
+    "coursePath": "/semestre_1/integration/html",
+    "title": "Consolider HTML et CSS : lire, tester, corriger",
+    "skills": [
+      {
+        "id": "organisation",
+        "label": "Séparer les fichiers et leurs responsabilités"
+      },
+      {
+        "id": "cascade",
+        "label": "Expliquer pourquoi une règle gagne"
+      },
+      {
+        "id": "diagnostic",
+        "label": "Enquêter avec les outils du navigateur"
+      },
+      {
+        "id": "etats",
+        "label": "Prévoir les états et les médias"
+      }
+    ],
+    "quizId": "s1-int-03",
+    "previousSession": "INT-03",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-03",
+      "sourceSession": "INT-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-05",
+    "subject": "Intégration",
+    "order": 5,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "05/10/2026",
+    "coursePath": "/semestre_1/integration/grid",
+    "title": "Construire une mise en page avec Grid",
+    "skills": [
+      {
+        "id": "grille",
+        "label": "Définir pistes, cellules et lignes de grille"
+      },
+      {
+        "id": "placement",
+        "label": "Créer et partager des colonnes"
+      },
+      {
+        "id": "verification",
+        "label": "Placer un enfant et vérifier son étendue"
+      }
+    ],
+    "quizId": "s1-int-04",
+    "previousSession": "INT-04",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-04",
+      "sourceSession": "INT-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-06",
+    "subject": "Intégration",
+    "order": 6,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "19/10/2026",
+    "coursePath": "/semestre_1/integration/htmltp",
+    "title": "TP : structurer le site Gamer / Creator",
+    "skills": [
+      {
+        "id": "contrat",
+        "label": "Traduire un brief en structure HTML"
+      },
+      {
+        "id": "structure",
+        "label": "Hiérarchiser les zones et les profils"
+      },
+      {
+        "id": "contenus",
+        "label": "Produire des cartes compréhensibles sans CSS"
+      },
+      {
+        "id": "validation",
+        "label": "Vérifier liens, images et droits d’usage"
+      }
+    ],
+    "quizId": "s1-int-05",
+    "previousSession": "INT-05",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-05",
+      "sourceSession": "INT-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-07",
+    "subject": "Intégration",
+    "order": 7,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "02/11/2026",
+    "coursePath": "/semestre_1/integration/csstp",
+    "title": "TP : mettre en forme Gamer / Creator",
+    "skills": [
+      {
+        "id": "base",
+        "label": "Organiser la feuille CSS du site"
+      },
+      {
+        "id": "identite",
+        "label": "Réutiliser une échelle de couleurs et d’espacements"
+      },
+      {
+        "id": "disposition",
+        "label": "Disposer navigation et cartes sans déformer les images"
+      }
+    ],
+    "quizId": "s1-int-06",
+    "previousSession": "INT-06",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-06",
+      "sourceSession": "INT-06",
+      "points": 10
+    }
+  },
+  {
+    "id": "INT-08",
+    "subject": "Intégration",
+    "order": 8,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "09/11/2026",
+    "coursePath": "/semestre_1/integration/tpCreatorGamer",
+    "title": "TP : finaliser une page responsive et accessible",
+    "skills": [
+      {
+        "id": "responsive",
+        "label": "Adapter le site à plusieurs largeurs"
+      },
+      {
+        "id": "interaction",
+        "label": "Maintenir des états de lien et de focus perceptibles"
+      },
+      {
+        "id": "audit",
+        "label": "Décrire un test avec une entrée et un attendu"
+      }
+    ],
+    "quizId": "s1-int-07",
+    "previousSession": "INT-07",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-int-07",
+      "sourceSession": "INT-07",
+      "points": 10
+    }
+  },
+  {
+    "id": "DEV-01",
+    "subject": "Développement web",
+    "order": 1,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "29/09/2026",
+    "coursePath": "/semestre_1/developpement_Web/util_dev_tool",
+    "title": "Outils web et atelier d’IA locale",
+    "skills": [
+      {
+        "id": "editeur",
+        "label": "Utiliser dossier, éditeur et terminal"
+      },
+      {
+        "id": "serveur",
+        "label": "Expliquer localhost et les ports"
+      },
+      {
+        "id": "ia",
+        "label": "Distinguer éditeur, assistant, serveur local et modèle"
+      },
+      {
+        "id": "connexion",
+        "label": "Connecter OpenCode au modèle chargé dans LM Studio"
+      }
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "DEV-02",
+    "subject": "Développement web",
+    "order": 2,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "29/09/2026",
+    "coursePath": "/semestre_1/developpement_Web/PHP_inter",
+    "title": "Algorithmique PHP : données, décisions et traces",
+    "skills": [
+      {
+        "id": "variables",
+        "label": "Affecter une variable et reconnaître son type"
+      },
+      {
+        "id": "operateurs",
+        "label": "Calculer et comparer des valeurs"
+      },
+      {
+        "id": "conditions",
+        "label": "Prévoir la branche d’une condition"
+      },
+      {
+        "id": "tableaux",
+        "label": "Lire un tableau et suivre les données"
+      }
+    ],
+    "quizId": "s1-dev-01",
+    "previousSession": "DEV-01",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-dev-01",
+      "sourceSession": "DEV-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "DEV-03",
+    "subject": "Développement web",
+    "order": 3,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "06/10/2026",
+    "coursePath": "/semestre_1/developpement_Web/PHP_begin",
+    "title": "TP PHP : calculer un tarif et tester les limites",
+    "skills": [
+      {
+        "id": "regles",
+        "label": "Traduire les règles du tarif en conditions"
+      },
+      {
+        "id": "programme",
+        "label": "Structurer un calcul avec des variables explicites"
+      },
+      {
+        "id": "tests",
+        "label": "Tester les bornes et les seuils"
+      },
+      {
+        "id": "trace",
+        "label": "Diagnostiquer une erreur avec un attendu indépendant"
+      }
+    ],
+    "quizId": "s1-dev-02",
+    "previousSession": "DEV-02",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-dev-02",
+      "sourceSession": "DEV-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "DEV-04",
+    "subject": "Développement web",
+    "order": 4,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "10/11/2026",
+    "coursePath": "/semestre_1/developpement_Web/phpVarTab",
+    "title": "TP PHP : parcourir des données et afficher des profils",
+    "skills": [
+      {
+        "id": "collection",
+        "label": "Distinguer collection et enregistrement"
+      },
+      {
+        "id": "boucle",
+        "label": "Parcourir une collection et accumuler un résultat"
+      },
+      {
+        "id": "objet",
+        "label": "Distinguer classe, instance et propriété"
+      },
+      {
+        "id": "affichage",
+        "label": "Produire du HTML en protégeant le texte reçu"
+      }
+    ],
+    "quizId": "s1-dev-03",
+    "previousSession": "DEV-03",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-dev-03",
+      "sourceSession": "DEV-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "DEV-05",
+    "subject": "Développement web",
+    "order": 5,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "17/11/2026",
+    "coursePath": "/semestre_1/developpement_Web/phpForm",
+    "title": "TP PHP : recevoir et valider un message",
+    "skills": [
+      {
+        "id": "formulaire",
+        "label": "Décrire la requête d’un formulaire"
+      },
+      {
+        "id": "reception",
+        "label": "Lire les champs et prévoir les clés absentes"
+      },
+      {
+        "id": "validation",
+        "label": "Valider type, contenu et longueur côté serveur"
+      },
+      {
+        "id": "sortie",
+        "label": "Échapper le texte dans le contexte HTML"
+      }
+    ],
+    "quizId": "s1-dev-04",
+    "previousSession": "DEV-04",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-dev-04",
+      "sourceSession": "DEV-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "DEV-06",
+    "subject": "Développement web",
+    "order": 6,
+    "durationMinutes": 120,
+    "type": "TP",
+    "planningDate": "26/11/2026",
+    "coursePath": "/semestre_1/developpement_Web/phpminichat2",
+    "title": "TP PHP : un mini-chat persistant en session",
+    "skills": [
+      {
+        "id": "session",
+        "label": "Expliquer la durée d’un historique en session"
+      },
+      {
+        "id": "ajout",
+        "label": "N’ajouter que des messages validés"
+      },
+      {
+        "id": "redirection",
+        "label": "Appliquer POST puis redirection puis GET"
+      },
+      {
+        "id": "liste",
+        "label": "Tester l’historique et ses limites"
+      }
+    ],
+    "quizId": "s1-dev-05",
+    "previousSession": "DEV-05",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-dev-05",
+      "sourceSession": "DEV-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-01",
+    "subject": "Produire un site Web",
+    "order": 1,
+    "durationMinutes": 120,
+    "type": "CM",
+    "planningDate": "13/11/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/projet",
+    "title": "Cadrer le projet de site Web",
+    "skills": [
+      {
+        "id": "besoin",
+        "label": "Partir d'une action utile"
+      },
+      {
+        "id": "parcours",
+        "label": "Dessiner l'arborescence et le parcours"
+      },
+      {
+        "id": "perimetre",
+        "label": "Décider ce qui sera réellement livré"
+      },
+      {
+        "id": "criteres",
+        "label": "Définir la réussite avant la remise"
+      }
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "SITE-02",
+    "subject": "Produire un site Web",
+    "order": 2,
+    "durationMinutes": 120,
+    "type": "CM",
+    "planningDate": "13/11/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/figma",
+    "title": "Lire une maquette et préparer l’intégration",
+    "skills": [
+      {
+        "id": "maquette",
+        "label": "Distinguer wireframe, maquette et prototype"
+      },
+      {
+        "id": "inspection",
+        "label": "Relever les relations et valeurs utiles dans Figma"
+      },
+      {
+        "id": "composants",
+        "label": "Reconnaître les composants et valeurs partagées"
+      },
+      {
+        "id": "ressources",
+        "label": "Exporter les médias utiles et clarifier les états manquants"
+      }
+    ],
+    "quizId": "s1-site-01",
+    "previousSession": "SITE-01",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-01",
+      "sourceSession": "SITE-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-03",
+    "subject": "Produire un site Web",
+    "order": 3,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "13/11/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/integration",
+    "title": "Projet : construire la structure sémantique",
+    "skills": [
+      {
+        "id": "document",
+        "label": "Préparer les fichiers et le document"
+      },
+      {
+        "id": "semantique",
+        "label": "Donner du sens aux grandes zones"
+      },
+      {
+        "id": "navigation",
+        "label": "Réaliser le parcours annoncé"
+      },
+      {
+        "id": "controle",
+        "label": "Contrôler sans CSS"
+      }
+    ],
+    "quizId": "s1-site-02",
+    "previousSession": "SITE-02",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-02",
+      "sourceSession": "SITE-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-04",
+    "subject": "Produire un site Web",
+    "order": 4,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "30/11/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/disposition",
+    "title": "Projet : disposer les blocs avec Flexbox et Grid",
+    "skills": [
+      {
+        "id": "conteneur",
+        "label": "Encadrer la largeur du contenu"
+      },
+      {
+        "id": "flex",
+        "label": "Aligner la navigation"
+      },
+      {
+        "id": "grid",
+        "label": "Aligner plusieurs lignes de projets"
+      },
+      {
+        "id": "mesures",
+        "label": "Mesurer et diagnostiquer"
+      }
+    ],
+    "quizId": "s1-site-03",
+    "previousSession": "SITE-03",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-03",
+      "sourceSession": "SITE-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-05",
+    "subject": "Produire un site Web",
+    "order": 5,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "30/11/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/composants",
+    "title": "Projet : créer des composants cohérents",
+    "skills": [
+      {
+        "id": "structure",
+        "label": "Définir la structure et les variantes d’une carte"
+      },
+      {
+        "id": "tokens",
+        "label": "Centraliser les valeurs avec des propriétés personnalisées"
+      },
+      {
+        "id": "images",
+        "label": "Adapter les médias sans les déformer"
+      },
+      {
+        "id": "etats",
+        "label": "Prévoir et tester les états du composant"
+      }
+    ],
+    "quizId": "s1-site-04",
+    "previousSession": "SITE-04",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-04",
+      "sourceSession": "SITE-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-06",
+    "subject": "Produire un site Web",
+    "order": 6,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "14/12/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/responsive",
+    "title": "Projet : adapter le site aux écrans",
+    "skills": [
+      {
+        "id": "viewport",
+        "label": "Commencer par l'espace disponible"
+      },
+      {
+        "id": "queries",
+        "label": "Changer la disposition au bon moment"
+      },
+      {
+        "id": "navigation",
+        "label": "Une navigation simple qui reste accessible"
+      },
+      {
+        "id": "tests",
+        "label": "Tester des dimensions et des cas de contenu"
+      }
+    ],
+    "quizId": "s1-site-05",
+    "previousSession": "SITE-05",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-05",
+      "sourceSession": "SITE-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-07",
+    "subject": "Produire un site Web",
+    "order": 7,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "14/12/2026",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/norme",
+    "title": "Projet : vérifier l’accessibilité et la qualité HTML",
+    "skills": [
+      {
+        "id": "clavier",
+        "label": "Parcourir la page sans souris"
+      },
+      {
+        "id": "textes",
+        "label": "Rendre le sens perceptible"
+      },
+      {
+        "id": "formulaires",
+        "label": "Nommer les contrôles et signaler les erreurs"
+      },
+      {
+        "id": "audit",
+        "label": "Croiser contrôles automatiques et manuels"
+      }
+    ],
+    "quizId": "s1-site-06",
+    "previousSession": "SITE-06",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-06",
+      "sourceSession": "SITE-06",
+      "points": 10
+    }
+  },
+  {
+    "id": "SITE-08",
+    "subject": "Produire un site Web",
+    "order": 8,
+    "durationMinutes": 120,
+    "type": "TD",
+    "planningDate": "04/01/2027",
+    "coursePath": "/semestre_1/produire_Un_Site_Web/finalisation",
+    "title": "Projet : finaliser, remettre et présenter le site",
+    "skills": [
+      {
+        "id": "priorites",
+        "label": "Finir les tâches utiles avant de polir"
+      },
+      {
+        "id": "dossier",
+        "label": "Préparer une remise reproductible"
+      },
+      {
+        "id": "verification",
+        "label": "Contrôler la version qui sera remise"
+      },
+      {
+        "id": "presentation",
+        "label": "Expliquer avec une démonstration"
+      }
+    ],
+    "quizId": "s1-site-07",
+    "previousSession": "SITE-07",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s1-site-07",
+      "sourceSession": "SITE-07",
+      "points": 10
+    }
+  }
+]

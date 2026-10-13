@@ -1,183 +1,196 @@
 ---
-
 layout: "layouts/Layout.astro"
-title: "Outils & Mise en place d’un environnement web local"
-type: "TP"
-----------
-
-#### Objectifs du TD (version débutants)
-
-* Comprendre **serveur web local** (Apache), **localhost**, **IP** et **ports**.
-* Installer **XAMPP** et lancer **Apache**.
-* Créer un **premier site local** étape par étape (dossier → fichier → test).
-* Utiliser **Visual Studio Code** pour éditer vos fichiers.
-* Savoir exécuter **quelques commandes** en terminal (**macOS** & **Windows**).
-* Appliquer des **bonnes pratiques** et savoir **dépanner** les erreurs courantes.
+title: "Outils web et atelier d’IA locale"
+type: "TD"
+order: 1
+nextSession: "/semestre_1/developpement_Web/PHP_inter"
 ---
 
-# 1) Installer les outils
+<a id="comprendre"></a>
 
-## 1.1 Visual Studio Code (éditeur)
+## Éditeur, fichiers et terminal : trois objets distincts
 
-* Téléchargez **VS Code** : [https://code.visualstudio.com/](https://code.visualstudio.com/)
-* Installez‑le, puis lancez‑le.
+L’éditeur modifie des fichiers ; il ne publie pas automatiquement une page. Le navigateur affiche la version enregistrée et reçue du serveur. Le terminal exécute une commande dans un **dossier courant**. Si `php` ou `opencode` n’est pas reconnu, le système ne trouve pas l’exécutable : cela ne signifie pas que votre fichier HTML est incorrect.
 
-## 1.2 XAMPP (serveur web local)
+| Action | Outil | Vérification concrète |
+|---|---|---|
+| Modifier un titre. | VS Code. | Le fichier est enregistré dans le dossier du projet. |
+| Servir un fichier PHP. | Apache/XAMPP ou serveur PHP local. | Une adresse HTTP renvoie le résultat du script. |
+| Inspecter ce résultat. | Navigateur et DevTools. | Le titre change après rechargement. |
+| Proposer une modification. | OpenCode. | Le changement de fichier est lu et testé. |
+| Produire une réponse de modèle. | LM Studio. | Un modèle est chargé et son serveur répond. |
 
-* Téléchargez **XAMPP** (Windows/macOS) : [https://www.apachefriends.org/](https://www.apachefriends.org/)
-* Installez avec les **options par défaut**.
-* Ouvrez le **panneau de contrôle XAMPP**.
+## localhost, ports et adresses locales
 
-**Dossiers par défaut où placer vos sites** :
+`http://127.0.0.1:1234/v1` désigne le serveur de modèle sur votre propre machine. `http://localhost/atelier/index.php` peut désigner Apache. Le **port** distingue les services ; le **chemin** désigne une ressource de ce service. Remplacer 1234 par le port d’Apache ne connecte pas OpenCode à PHP : on change de service.
 
-* **Windows** : `C:\xampp\htdocs`
-* **macOS** : `/Applications/XAMPP/htdocs/`
+Sur Windows, un chemin tel que `C:\xampp\htdocs\atelier` désigne un dossier. Sur macOS, le chemin dépend de l’installation PHP choisie. Dans les deux cas, ouvrez le dossier de travail dans VS Code et vérifiez le service avec son adresse HTTP. Un fichier PHP ouvert directement avec une adresse `file://` n’est pas exécuté par le serveur PHP.
 
----
+## Le modèle local et la vérification du code généré
 
-# 2) Lancer XAMPP et vérifier
+Le modèle est un ensemble de paramètres chargé en mémoire ; LM Studio l’exécute ; OpenCode lui fournit des instructions et peut proposer des actions sur le projet. Télécharger un modèle n’équivaut pas à démarrer un serveur. Le nom configuré dans OpenCode doit correspondre à l’identifiant réellement annoncé par le serveur de LM Studio.
 
-1. Ouvrez le **panneau XAMPP**.
-2. Cliquez **Start** sur **Apache** (vert = démarré).
-3. Ouvrez votre navigateur et allez sur **[http://localhost/](http://localhost/)** : vous devez voir la page d’accueil XAMPP ou la liste des dossiers.
+Une proposition de code peut être syntaxiquement correcte et répondre au mauvais besoin. Demandez une modification limitée — par exemple le titre d’une page —, examinez les lignes modifiées, puis vérifiez le rendu. Si le poste ne permet pas de charger le modèle choisi, travaillez en binôme sur un poste compatible. Ollama est une autre solution de serveur local ; son adresse et sa configuration ne doivent pas être mélangées à celles de LM Studio.
 
-Si tout est OK, vous avez un **serveur web** qui répond **en local**.
+**Erreurs fréquentes :** serveur arrêté, modèle téléchargé mais non chargé, mauvais port, terminal ouvert dans le mauvais dossier, fichier non enregistré, changement validé sans essai dans le navigateur.
 
----
+## Installation de PHP et des outils
 
-# 3) Votre premier site local — pas à pas (A → Z)
+Installez [VS Code](https://code.visualstudio.com/), [XAMPP](https://www.apachefriends.org/fr/index.html) ou un environnement PHP équivalent, [LM Studio](https://lmstudio.ai/) et [OpenCode](https://opencode.ai/docs/). Téléchargez à l'avance un modèle compatible avec votre machine dans LM Studio. Le choix dépend de la mémoire disponible : vérifiez les indications de l'application, sans supposer qu'un modèle imposant fonctionnera sur tous les postes. Un binôme peut travailler sur un seul poste compatible. Aucun compte payant de fournisseur de modèle n'est nécessaire pour cette connexion locale.
 
-## 3.1 Créer le dossier du site
+Sur les postes de la fac, vérifiez les droits d'installation avec l'enseignant. Sur Windows, PHP de XAMPP se trouve habituellement dans `C:\xampp\php\php.exe` ; sur macOS, utilisez le chemin de votre installation. Ne confondez pas le chemin d'un fichier avec une URL.
 
-* **Windows** : dans `C:\xampp\htdocs\`, créez un dossier **sans espace**, par ex. `test`.
-* **macOS** : dans `/Applications/XAMPP/htdocs/`, créez un dossier `test`.
+## Les outils du développement local
 
-## 3.2 Créer la page d’accueil
+L’éditeur modifie les fichiers, le terminal lance des commandes, le serveur PHP exécute PHP et le navigateur affiche la réponse. Ces outils ont des responsabilités différentes : installer une extension dans VS Code ne démarre pas automatiquement un serveur PHP.
 
-1. Ouvrez **VS Code** → **File → Open Folder** → sélectionnez le dossier `test`.
-2. Créez un fichier **`index.php`** avec ce contenu :
+```text
+index.php enregistré
+        ↓ demande HTTP du navigateur
+serveur PHP sur localhost:8000
+        ↓ résultat HTML
+page affichée dans le navigateur
+```
+
+Pour l’IA locale, une autre chaîne intervient : OpenCode envoie une demande au serveur de LM Studio, qui utilise le modèle chargé. Ce serveur n’est pas le serveur PHP. Les ports permettent de joindre ces deux services séparément. `localhost` désigne la machine sur laquelle l’adresse est utilisée ; ce n’est pas une adresse partagée par toute la salle.
+
+## Enregistrement du fichier et actualisation du navigateur
 
 ```php
 <?php
-// Exemple 1 : afficher un message
-echo "<h1>Bonjour, site local ✔</h1>";
-
-// Exemple 2 : date/heure
-$date = date('d/m/Y H:i:s');
-echo "<p>Dernière mise à jour : $date</p>";
-
-// Exemple 3 : petite interaction (GET)
-$nom = $_GET['nom'] ?? 'anonyme';
-echo "<p>Bonjour, $nom ! Ajoutez ?nom=VotrePrenom à l’URL.</p>";
+$atelier = 'Photographie';
+?>
+<h1><?= htmlspecialchars($atelier, ENT_QUOTES, 'UTF-8') ?></h1>
 ```
 
-3. **Enregistrez** le fichier.
+**Sortie attendue, produite par PHP :** un titre « Photographie ». La variable est traitée sur le serveur, puis sa valeur est insérée dans du HTML. L’échappement permet de l’afficher comme texte. Cet exemple s’exécute dans votre environnement PHP, pas dans l’éditeur front-end du cours.
 
-## 3.3 Tester dans le navigateur
+<a id="editeur"></a>
 
-* Lancez **Apache** si ce n’est pas déjà fait.
-* Ouvrez : **[http://localhost/test/](http://localhost/test/)**
-* Vous devez voir votre message et la date. Testez : **[http://localhost/test/?nom=Alice](http://localhost/test/?nom=Alice)**
+## Le dossier de projet et le terminal
 
-> Besoin de vérifier la config PHP ? Ajoutez temporairement `phpinfo();` puis **supprimez‑le** :
->
-> ```php
-> <?php phpinfo();
-> ```
+VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.
 
-## 3.4 Ajouter un deuxième site (facultatif)
+Créez `atelier/index.php` :
 
-* Créez un autre dossier (ex. `mon-portfolio`) dans `htdocs`.
-* Ajoutez un `index.php` (ou `index.html`).
-* Accédez via **[http://localhost/mon-portfolio/](http://localhost/mon-portfolio/)**.
-
----
-
-# 4) Commandes de base en terminal
-
-> **Note** : La commande **`cd`** (changer de dossier) fonctionne **sur macOS et Windows**.
-
-## 4.1 macOS (Terminal)
-
-```bash
-pwd          # dossier courant
-ls           # lister les fichiers
-cd ..        # remonter d’un dossier
-cd test      # entrer dans le dossier 'test'
-mkdir demo   # créer un dossier
-code .       # ouvrir le dossier courant dans VS Code (si 'code' est installé)
+```php
+<?php
+$message = 'Bonjour MMI';
+?>
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><title>Atelier</title>
+<h1><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></h1></html>
 ```
 
-## 4.2 Windows (PowerShell)
+Les extensions de VS Code peuvent aider à formater ou compléter, mais elles ne remplacent pas PHP. Installez uniquement des extensions dont vous comprenez l'utilité. Le formatage change la présentation du code, pas l'objectif du programme.
+
+<a id="serveur"></a>
+
+## Localhost n'est pas « Internet »
+
+Dans le terminal du dossier `atelier`, lancez le serveur de développement :
 
 ```powershell
-cd           # affiche le dossier courant et sert à naviguer
-ls           # alias de Get-ChildItem (liste les fichiers)
-cd ..        # remonter d’un dossier
-cd test      # entrer dans 'test'
-mkdir demo   # créer un dossier
-New-Item index.php   # créer un fichier
-code .      # ouvrir le dossier courant dans VS Code (si 'code' est installé)
+# Windows, si PHP n’est pas dans PATH :
+C:\xampp\php\php.exe -S localhost:8000
 ```
 
-> Astuce noms de fichiers/dossiers : **pas d’espaces**, pas d’accents. Préférez `kebab-case` ou `snake_case`.
-
----
-
-# 5) Utiliser VS Code efficacement
-
-* **Ouvrir un dossier** : *File → Open Folder…* (pointez sur `htdocs/test`).
-* **Créer un fichier** : clic droit dans l’explorateur → *New File* → `index.php`.
-* **Écrire / Enregistrer** : Ctrl/Cmd+S.
-* **Extensions utiles (optionnel)** :
-
-  * *PHP Intelephense* (aide à l’édition)
-  * *PHP Debug* (si vous utilisez Xdebug)
-
-> ⚠️ *Live Server* ne traite pas le **PHP**. Pour tester du PHP, passez **toujours** par **[http://localhost/](http://localhost/)...** (Apache/XAMPP).
-
----
-
-# 6) Bonnes pratiques
-
-* **Arborescence claire** :
-
-```
-htdocs/
-├─ test/
-│  ├─ index.php
-│  ├─ assets/
-│  └─ styles/
+```sh
+# macOS ou Windows avec PHP dans PATH :
+php -S localhost:8000
 ```
 
-* **Sécurité (local vs prod)** : ne laissez pas `phpinfo()` ou des mots de passe en clair.
-* **Sauvegardes** : pensez à copier vos dossiers importants régulièrement.
+Ouvrez `http://localhost:8000`. `localhost` désigne la machine utilisée ; `8000` est le port du serveur PHP. Ouvrir un fichier par `file://` n'exécute pas PHP. Ctrl+C arrête le serveur lancé dans ce terminal. Si le port est occupé, choisissez par exemple 8001 et changez aussi l'URL. Le serveur intégré convient à l'exercice local, pas à une mise en production.
 
----
+Avec Apache de XAMPP, utilisez plutôt son dossier `htdocs` et son URL locale : choisissez un parcours cohérent, sans lancer deux serveurs pour le même exercice.
 
-# 7) Dépannage (FAQ très simple)
+<a id="ia"></a>
 
-* **Page blanche / erreur** :
+## Les quatre rôles de l'environnement IA
 
-  ```php
-  <?php
-  ini_set('display_errors', 1);
-  error_reporting(E_ALL);
-  ```
+```text
+VS Code → les fichiers que vous lisez et modifiez
+OpenCode → assistant qui demande une réponse au modèle
+LM Studio → serveur local qui reçoit cette demande
+Modèle chargé → produit du texte, éventuellement du code
+```
 
-  Rechargez la page et lisez le message d’erreur.
-* **`http://localhost/` ne répond pas** : vérifiez dans XAMPP que **Apache** est en **vert** (démarré).
-* **Conflit de port (80)** : arrêtez l’appli qui l’occupe (ex. Skype/IIS) **ou** changez le port d’Apache (ex. 8080) puis accédez via `http://localhost:8080/`.
-* **Fichier non trouvé** : vérifiez le **nom du dossier** (sans espace) et le **chemin** dans l’URL.
+LM Studio expose une API compatible OpenAI, mais cela ne veut pas dire que le modèle est hébergé par OpenAI. Le serveur LM Studio et le serveur PHP sont deux services distincts. Le modèle local peut se tromper ; une réponse plausible n'est pas un test réussi. N'envoyez pas de secrets dans une consigne et contrôlez les changements avant de les conserver.
 
----
+<a id="connexion"></a>
 
-# 8) Récap express (checklist)
+## Connecter OpenCode à LM Studio
 
-1. Installer **VS Code** & **XAMPP**.
-2. Démarrer **Apache**.
-3. Créer `htdocs/test/` puis `index.php`.
-4. Ouvrir **[http://localhost/test/](http://localhost/test/)** (tester aussi `?nom=VotrePrenom`).
-5. Éditer/enregistrer dans VS Code → recharger la page.
+Chargez le modèle dans LM Studio, puis démarrez son serveur local depuis l'onglet Developer. Vérifiez l'adresse et le port affichés. Pour un serveur sur le port 1234, créez **dans votre dossier d'atelier** un `opencode.json` :
 
-C’est tout ! Vous avez un **environnement web local** fonctionnel et un **premier site** qui répond. 🎉
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": { "baseURL": "http://127.0.0.1:1234/v1" },
+      "models": { "REMPLACER_PAR_ID_MODELE": { "name": "Mon modèle local" } }
+    }
+  }
+}
+```
+
+Remplacez la clé `REMPLACER_PAR_ID_MODELE` par l'identifiant exact du modèle chargé, visible dans LM Studio ou dans la réponse de `http://127.0.0.1:1234/v1/models`. Adaptez le port si nécessaire. Lancez `opencode`, puis `/models` pour sélectionner ce modèle. Si la connexion échoue, vérifiez dans l'ordre : serveur démarré, modèle chargé, URL, identifiant. Un modèle qui ne gère pas les outils demandés peut nécessiter un autre modèle ; ne multipliez pas les installations au hasard.
+
+## Code PHP serveur et réponse HTML
+
+Cette petite page ne nécessite ni PHP ni IA : le navigateur affiche HTML, applique CSS et exécute JavaScript. Changez la couleur puis le message. Dans votre vrai projet, comparez une ouverture de fichier avec une URL servie par XAMPP. Un assistant suggère du code ; il ne remplace pas le serveur.
+
+```html live title="Observer ce que le navigateur exécute"
+<style>
+  body {
+    margin: 16px;
+    font-family: system-ui, sans-serif;
+    color: #18324c;
+  }
+  .cartes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  article,
+  output {
+    display: block;
+    padding: 16px;
+    border: 1px solid #9aaabe;
+  }
+  button,
+  input {
+    font: inherit;
+    padding: 8px;
+  }
+  label {
+    display: block;
+    margin-block: 12px 4px;
+  }
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+  }
+</style>
+
+<h1>Mon premier atelier</h1>
+<p>HTML donne le contenu, CSS sa présentation.</p>
+<button type="button">Tester le comportement</button>
+<p id="message" role="status"></p>
+<style>
+  h1 {
+    color: #2457a7;
+  }
+</style>
+<script>
+  document.querySelector("button").addEventListener("click", () => {
+    document.querySelector("#message").textContent =
+      "Le navigateur exécute ce clic.";
+  });
+</script>
+```
+
+**Résultat à observer :** Le titre est bleu ; le bouton affiche un message. Modifier le texte du message change le comportement sans démarrer un modèle.

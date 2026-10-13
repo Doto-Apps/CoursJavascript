@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Retool : composants, données et premières actions",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "questions": [
+    {
+      "question": "Quel rôle joue un composant Table dans Retool ?",
+      "answers": [
+        "Présenter les lignes reçues",
+        "Conserver automatiquement la base définitive",
+        "Créer le compte Firebase",
+        "Remplacer toutes les requêtes"
+      ],
+      "explanation": "La table est une vue ; les données proviennent d’une requête.",
+      "sourceSection": "roles",
+      "evidence": "Un composant Table n’est pas une base de données : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’act",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Qu’est-ce qu’une ressource Retool ?",
+      "answers": [
+        "Une capture d’écran",
+        "La configuration de connexion à un service",
+        "Une ligne de produit",
+        "Le texte d’un bouton"
+      ],
+      "explanation": "La ressource décrit la connexion ; une requête décrit l’opération.",
+      "sourceSection": "roles",
+      "evidence": "| Ressource | Décrire la connexion à un service. | Firebase connecté au projet de test. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que fait une requête getProduits ?",
+      "answers": [
+        "Créer automatiquement tous les événements",
+        "Installer le modèle local",
+        "Lire les données via la ressource",
+        "Définir la couleur de chaque ligne"
+      ],
+      "explanation": "La requête exécute l’opération de lecture prévue.",
+      "sourceSection": "roles",
+      "evidence": "| Requête | Lire ou modifier des données via la ressource. | `getProduits`, `createProduit`. |",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Qu’est-ce qui déclenche une action de bouton configurée ?",
+      "answers": [
+        "Le nom du bouton seulement",
+        "La présence de la ressource seulement",
+        "Le texte d’une colonne",
+        "Un événement relié à l’opération"
+      ],
+      "explanation": "Le contrôle doit être relié à une action dans son gestionnaire d’événement.",
+      "sourceSection": "roles",
+      "evidence": "| Événement | Déclencher une action à un moment donné. | Soumission du formulaire → lancer la création. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle propriété alimente généralement la Table avec le résultat getProduits ?",
+      "answers": [
+        "getProduits.data",
+        "getProduits.name",
+        "getProduits.color",
+        "getProduits.title"
+      ],
+      "explanation": "La propriété data contient le résultat de la requête.",
+      "sourceSection": "composants",
+      "evidence": "{{ getProduits.data ?? [] }}",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi prévoir le cas sans ligne sélectionnée ?",
+      "answers": [
+        "Transformer toutes les lignes en texte",
+        "Éviter de lire des propriétés d’une sélection absente",
+        "Effacer le catalogue",
+        "Ajouter un produit fictif"
+      ],
+      "explanation": "Le formulaire doit gérer une sélection absente avant toute lecture ou modification.",
+      "sourceSection": "composants",
+      "evidence": "{{ tableProduits.selectedRow?.nom ?? \"Sélectionnez un produit\" }}",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Où conserver les identifiants Firebase de la ressource ?",
+      "answers": [
+        "Dans la capture du rapport",
+        "Dans une expression affichée à l’utilisateur",
+        "Dans la configuration côté Retool",
+        "Dans le texte public d’un bouton"
+      ],
+      "explanation": "Les identifiants de connexion ne doivent pas être exposés dans l’interface.",
+      "sourceSection": "roles",
+      "evidence": "Retool → ressource Firebase → Firestore → résultat → composant**. Les identifiants de ressource sont conservés côté Retool ; ils ne doivent pas être copiés dans une expression d’interface ou une capture du rapport.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel rôle joue l’id d’un document produit ?",
+      "answers": [
+        "Définir sa couleur",
+        "Indiquer sa position après filtrage",
+        "Fixer son prix",
+        "Identifier le produit de façon stable"
+      ],
+      "explanation": "L’identité ne doit pas dépendre de l’ordre affiché.",
+      "sourceSection": "roles",
+      "evidence": "Retool → ressource Firebase → Firestore → résultat → composant**. Les identifiants de ressource sont conservés côté Retool ; ils ne doivent pas être copiés dans une expression d’interface ou une capture du rapport.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel composant convient à une quantité numérique ?",
+      "answers": [
+        "Number Input",
+        "Text de lecture seul",
+        "Une image",
+        "Une Table sans colonne"
+      ],
+      "explanation": "Le composant recueille un nombre ; les règles métier restent à vérifier.",
+      "sourceSection": "composants",
+      "evidence": "| Number Input | `inputPrix`, `inputStock` | Valeur numérique à contrôler. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pour le stock, quelle valeur respecte la règle enseignée ?",
+      "answers": [
+        "Une valeur fractionnaire",
+        "Un entier non négatif",
+        "Un nombre négatif",
+        "Un texte libre"
+      ],
+      "explanation": "Le stock représente une quantité entière qui ne peut pas être négative.",
+      "sourceSection": "donnees",
+      "evidence": "our commencer, la collection `produits` contient nom, marque, prix et stock. Le prix est un nombre ; le stock est un entier positif ou nul ; un titre vide n’est pas un produit exploitable.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quand actualiser le catalogue après création ?",
+      "answers": [
+        "Seulement après une erreur",
+        "À chaque changement de lettre",
+        "Après confirmation de réussite de l’écriture",
+        "Avant d’avoir la réponse"
+      ],
+      "explanation": "L’actualisation doit refléter une opération confirmée.",
+      "sourceSection": "actions",
+      "evidence": "création, puis l’événement de réussite de la création à `getProduits.trigger()`. Le formulaire se réinitialise après confirmation, pas avant. Désactivez la soumission pendant l’exécution et affichez une erreur utile si la requête échoue. É",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel test vérifie une vraie persistance ?",
+      "answers": [
+        "Voir un texte ajouté seulement à la Table",
+        "Changer la couleur du bouton",
+        "Renommer le formulaire",
+        "Relancer la lecture après l’écriture"
+      ],
+      "explanation": "L’affichage local ne suffit pas à prouver une modification enregistrée.",
+      "sourceSection": "roles",
+      "evidence": "nées : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’action attendue.",
+      "correctAnswerIndex": 3
+    }
+  ],
+  "sourceCourse": "/semestre_3/deploiement_Services/retool",
+  "sourceSession": "S3-CONT-01",
+  "targetCourse": "/semestre_3/deploiement_Services/tpteeshirt",
+  "uid": "s3-retool"
+}

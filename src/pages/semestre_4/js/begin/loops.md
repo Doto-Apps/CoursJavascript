@@ -4,93 +4,43 @@ title: "Loops"
 type: "tp"
 ---
 
-# Les boucles
+## Parcourir les valeurs avec for…of
 
-## Boucle for
+Une boucle répète un bloc. Pour parcourir les valeurs d’un tableau, `for…of` évite de gérer un indice manuellement.
 
-La boucle for en JavaScript s'utilise de la manière suivante :
-
-```js
-for (initialisation; condition; étape) {
-  // code à exécuter
+```js live title="Parcourir trois prix"
+const prix = [12, 8, 15];
+let total = 0;
+for (const montant of prix) {
+  total += montant;
+  console.log(total);
 }
 ```
 
-La boucle for commence par l'initialisation de la boucle, qui est
-généralement utilisée pour déclarer et initialiser une variable de
-boucle. Ensuite, la condition est vérifiée. Si la condition est vraie,
-le code à l'intérieur de la boucle est exécuté. Enfin, l'étape est
-exécutée, généralement utilisée pour mettre à jour la variable de
-boucle. Ensuite, la condition est à nouveau vérifiée, et ainsi de suite
-jusqu'à ce que la condition soit fausse, ce qui fait sortir de la
-boucle.
+La console affiche `12`, `20`, puis `35`. À chaque tour, `montant` reçoit la valeur suivante et le total accumulé est mis à jour. Avec un tableau vide, le corps ne s’exécute pas et `total` reste 0.
 
-Voici un exemple de boucle for qui affiche les nombres de 1 à 10 :
+## for : initialisation, condition, progression
 
 ```js
-for (let i = 1; i <= 10; i++) {
-  console.log(i);
+for (let indice = 0; indice < 3; indice++) {
+  console.log(indice);
 }
 ```
 
-## Boucle while
+Sortie : `0`, `1`, `2`. L’initialisation s’exécute une fois, la condition avant chaque tour et l’incrémentation après chaque tour. Pour un tableau, le dernier indice est `length - 1` : utilisez `< tableau.length`, pas `<=`.
 
-La boucle while en JavaScript s'utilise de la manière suivante :
+## while et do…while
 
 ```js
-while (condition) {
-  // code à exécuter
+let restant = 3;
+while (restant > 0) {
+  console.log(restant);
+  restant--;
 }
 ```
 
-La boucle while vérifie d'abord la condition. Si la condition est vraie,
-le code à l'intérieur de la boucle est exécuté, puis la condition est à
-nouveau vérifiée. Cela se poursuit jusqu'à ce que la condition soit
-fausse, ce qui fait sortir de la boucle.
+Résultat : `3`, `2`, `1`. `while` teste avant d’entrer. `do { ... } while (condition);` teste après le corps, qui s’exécute donc au moins une fois. Chaque boucle doit atteindre une condition d’arrêt ; oublier `restant--` bloque l’exécution dans cet exemple.
 
-Voici un exemple de boucle while qui affiche les nombres de 1 à 10 :
+## break, continue et for…in
 
-```js
-let i = 1;
-while (i <= 10) {
-  console.log(i);
-  i++;
-}
-```
-
-## Boucle do-while
-
-La boucle do-while en JavaScript s'utilise de la manière suivante :
-
-```js
-do {
-  // code à exécuter
-} while (condition);`;
-```
-
-La boucle do-while fonctionne de manière similaire à la boucle while,
-mais la condition est vérifiée à la fin de chaque itération de la boucle
-au lieu de au début. Cela signifie que le code à l'intérieur de la
-boucle sera toujours exécuté au moins une fois, même si la condition est
-fausse.
-
-Voici un exemple de boucle do-while qui affiche les nombres de 1 à 10 :
-
-```js
-let i = 1;
-do {
-  console.log(i);
-  i++;
-} while (i <= 10);
-```
-
-## Instructions de contrôle de flux
-
-Il existe également des instructions de contrôle de flux comme{" "}
-<code>break</code> et <code>continue</code>, qui permettent de sortir de
-la boucle ou de passer à l'itération suivante de la boucle :
-
-- <code>break</code> permet de sortir complètement de la boucle.
-
-- <code>continue</code> permet de passer à l'itération suivante de la
-  boucle sans exécuter le reste du code de l'itération en cours.
+`break` quitte la boucle ; `continue` saute le reste du tour courant. Dans une recherche, `break` permet de s’arrêter au premier résultat. `for…in` parcourt des noms de propriétés, pas directement les valeurs d’un tableau ; pour les tableaux, préférez `for…of`, `map` ou `filter` selon le résultat recherché. Une opération asynchrone dans une boucle demande aussi de décider si les appels doivent être séquentiels ou parallèles, ce qui sera traité avec les promesses.

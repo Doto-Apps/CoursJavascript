@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#dbeafe"/>
+  <circle cx="760" cy="120" r="180" fill="#bfdbfe"/>
+  <rect x="80" y="80" width="540" height="380" rx="32" fill="#1e3a8a"/>
+  <text x="120" y="200" fill="white" font-family="system-ui,sans-serif" font-size="50">Festival étudiant</text>
+  <text x="120" y="280" fill="#bfdbfe" font-family="system-ui,sans-serif" font-size="30">Musique · photo · créations</text>
+  <path d="M700 310h120v120H700z" fill="#2563eb"/>
+  <circle cx="690" cy="330" r="48" fill="#fbbf24"/>
+</svg>

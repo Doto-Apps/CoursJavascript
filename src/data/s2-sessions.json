@@ -1,0 +1,473 @@
+[
+  {
+    "id": "S2-INT-01",
+    "subject": "Intégration",
+    "type": "TD",
+    "planningDate": "10/03/2027",
+    "coursePath": "/semestre_2/integration/td/bootstrap",
+    "title": "Tailwind : comprendre les classes utilitaires",
+    "durationMinutes": 120,
+    "order": 1,
+    "skills": [
+      "Expliquer les utilitaires Tailwind",
+      "Construire une carte sémantique",
+      "Compiler les classes de son projet"
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "S2-INT-02",
+    "subject": "Intégration",
+    "type": "TD",
+    "planningDate": "10/03/2027",
+    "coursePath": "/semestre_2/integration/td/tailwind-composants",
+    "title": "Tailwind : composants, états et responsive",
+    "durationMinutes": 120,
+    "order": 2,
+    "previousSession": "S2-INT-01",
+    "quizId": "s2-int-01",
+    "skills": [
+      "Créer un composant réutilisable",
+      "Adapter la grille à trois largeurs",
+      "Rendre survol et focus perceptibles"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-01",
+      "sourceSession": "S2-INT-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-INT-03",
+    "subject": "Intégration",
+    "type": "TP",
+    "planningDate": "12/03/2027",
+    "coursePath": "/semestre_2/integration/tp/transition",
+    "title": "Transitions, transformations et apparition au défilement",
+    "durationMinutes": 120,
+    "order": 3,
+    "previousSession": "S2-INT-02",
+    "quizId": "s2-int-02",
+    "skills": [
+      "Distinguer transition et animation",
+      "Déclencher une apparition par visibilité",
+      "Prévoir le mouvement réduit et le repli sans script"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-02",
+      "sourceSession": "S2-INT-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-INT-04",
+    "subject": "Intégration",
+    "type": "TP",
+    "planningDate": "12/03/2027",
+    "coursePath": "/semestre_2/integration/tp/hover",
+    "title": "Media queries : adapter une interface",
+    "durationMinutes": 120,
+    "order": 4,
+    "previousSession": "S2-INT-03",
+    "quizId": "s2-int-03",
+    "skills": [
+      "Écrire des media queries justifiées",
+      "Construire une grille fluide",
+      "Vérifier contenus longs et zoom"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-03",
+      "sourceSession": "S2-INT-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-INT-05",
+    "subject": "Intégration",
+    "type": "TP",
+    "planningDate": "26/03/2027",
+    "coursePath": "/semestre_2/integration/tp/dropdown",
+    "title": "Menu déroulant : état et interaction JavaScript",
+    "durationMinutes": 120,
+    "order": 5,
+    "previousSession": "S2-INT-04",
+    "quizId": "s2-int-04",
+    "skills": [
+      "Synchroniser visibilité et état ARIA",
+      "Écouter clic et Échap",
+      "Conserver une navigation accessible au clavier"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-04",
+      "sourceSession": "S2-INT-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-INT-06",
+    "subject": "Intégration",
+    "type": "TP",
+    "planningDate": "26/03/2027",
+    "coursePath": "/semestre_2/integration/tp/pluginJs",
+    "title": "Intégrer un carrousel avec Swiper",
+    "durationMinutes": 120,
+    "order": 6,
+    "previousSession": "S2-INT-05",
+    "quizId": "s2-int-05",
+    "skills": [
+      "Intégrer une bibliothèque versionnée",
+      "Configurer slides et contrôles",
+      "Tester clavier et dégradation sans script"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-05",
+      "sourceSession": "S2-INT-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-INT-07",
+    "subject": "Intégration",
+    "type": "TP",
+    "planningDate": "20/05/2027",
+    "coursePath": "/semestre_2/integration/tp/eventJs",
+    "title": "Événements JavaScript : construire une interaction",
+    "durationMinutes": 120,
+    "order": 7,
+    "previousSession": "S2-INT-06",
+    "quizId": "s2-int-06",
+    "skills": [
+      "Traiter submit et les interactions",
+      "Construire le DOM avec du texte",
+      "Maintenir compteur et état cohérent"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-int-06",
+      "sourceSession": "S2-INT-06",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-01",
+    "subject": "Développement web",
+    "type": "TD",
+    "planningDate": "30/03/2027",
+    "coursePath": "/semestre_2/developpement_Web/td/http-json",
+    "title": "HTTP et JSON : comprendre le contrat d’une API",
+    "durationMinutes": 120,
+    "order": 1,
+    "skills": [
+      "Distinguer client, serveur et stockage",
+      "Définir un contrat HTTP/JSON",
+      "Lire un échange dans Réseau"
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "S2-DEV-02",
+    "subject": "Développement web",
+    "type": "TD",
+    "planningDate": "30/03/2027",
+    "coursePath": "/semestre_2/developpement_Web/td/fetch-php",
+    "title": "Fetch et PHP : parcourir la chaîne complète",
+    "durationMinutes": 120,
+    "order": 2,
+    "previousSession": "S2-DEV-01",
+    "quizId": "s2-dev-01",
+    "skills": [
+      "Attendre et vérifier une réponse Fetch",
+      "Produire du JSON en PHP",
+      "Présenter chargement, vide et erreur"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-01",
+      "sourceSession": "S2-DEV-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-03",
+    "subject": "Développement web",
+    "type": "TP",
+    "planningDate": "09/04/2027",
+    "coursePath": "/semestre_2/developpement_Web/tp/lecture",
+    "title": "Lire des tâches depuis MySQL avec PDO",
+    "durationMinutes": 120,
+    "order": 3,
+    "previousSession": "S2-DEV-02",
+    "quizId": "s2-dev-02",
+    "skills": [
+      "Créer un schéma de tâches",
+      "Lire MySQL avec PDO",
+      "Conserver des types et un tri explicites"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-02",
+      "sourceSession": "S2-DEV-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-04",
+    "subject": "Développement web",
+    "type": "TP",
+    "planningDate": "09/04/2027",
+    "coursePath": "/semestre_2/developpement_Web/tp/ajout",
+    "title": "Ajouter une tâche avec un formulaire et une API",
+    "durationMinutes": 120,
+    "order": 4,
+    "previousSession": "S2-DEV-03",
+    "quizId": "s2-dev-03",
+    "skills": [
+      "Envoyer un POST JSON",
+      "Valider et insérer par paramètres",
+      "Confirmer la création sans perdre la saisie"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-03",
+      "sourceSession": "S2-DEV-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-05",
+    "subject": "Développement web",
+    "type": "TP",
+    "planningDate": "27/04/2027",
+    "coursePath": "/semestre_2/developpement_Web/tp/modification",
+    "title": "Modifier et supprimer une tâche sans perdre le contexte",
+    "durationMinutes": 120,
+    "order": 5,
+    "previousSession": "S2-DEV-04",
+    "quizId": "s2-dev-04",
+    "skills": [
+      "Modifier et supprimer par id",
+      "Cibler UPDATE et DELETE",
+      "Vérifier état confirmé et persistance"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-04",
+      "sourceSession": "S2-DEV-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-06",
+    "subject": "Développement web",
+    "type": "TP",
+    "planningDate": "27/04/2027",
+    "coursePath": "/semestre_2/developpement_Web/tp/erreurs",
+    "title": "Erreurs et validations : garder une interface fiable",
+    "durationMinutes": 120,
+    "order": 6,
+    "previousSession": "S2-DEV-05",
+    "quizId": "s2-dev-05",
+    "skills": [
+      "Diagnostiquer chaque frontière",
+      "Traiter refus et pannes",
+      "Construire une matrice de tests reproductibles"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-05",
+      "sourceSession": "S2-DEV-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-DEV-07",
+    "subject": "Développement web",
+    "type": "TP",
+    "planningDate": "20/05/2027",
+    "coursePath": "/semestre_2/developpement_Web/tp/integration",
+    "title": "Finaliser et tester la Todo List complète",
+    "durationMinutes": 120,
+    "order": 7,
+    "previousSession": "S2-DEV-06",
+    "quizId": "s2-dev-06",
+    "skills": [
+      "Assembler le CRUD persistant",
+      "Séparer transport, rendu et interactions",
+      "Livrer et démontrer un projet testable"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-dev-06",
+      "sourceSession": "S2-DEV-06",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-01",
+    "subject": "Site Web avec données",
+    "type": "TP",
+    "planningDate": "14/05/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/portfolio",
+    "title": "Portfolio dynamique : cadrer les données et les parcours",
+    "durationMinutes": 120,
+    "order": 1,
+    "skills": [
+      "Décrire les parcours visiteur et gestion",
+      "Établir le dictionnaire des projets",
+      "Définir le minimum livrable et ses maquettes"
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "S2-SITE-02",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "14/05/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/base",
+    "title": "Portfolio : créer la base et une API de lecture",
+    "durationMinutes": 120,
+    "order": 2,
+    "previousSession": "S2-SITE-01",
+    "quizId": "s2-site-01",
+    "skills": [
+      "Créer le schéma du portfolio",
+      "Lire les projets avec PDO",
+      "Distinguer dates, NULL, tri et erreurs"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-01",
+      "sourceSession": "S2-SITE-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-03",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "21/05/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/affichage",
+    "title": "Portfolio : afficher les projets comme des composants",
+    "durationMinutes": 120,
+    "order": 3,
+    "previousSession": "S2-SITE-02",
+    "quizId": "s2-site-02",
+    "skills": [
+      "Transformer JSON en cartes accessibles",
+      "Traiter images et liens absents",
+      "Vérifier rendu responsive et états de liste"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-02",
+      "sourceSession": "S2-SITE-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-04",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "21/05/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/filtres",
+    "title": "Portfolio : recherche, filtres et états de résultat",
+    "durationMinutes": 120,
+    "order": 4,
+    "previousSession": "S2-SITE-03",
+    "quizId": "s2-site-03",
+    "skills": [
+      "Combiner recherche et technologie",
+      "Préserver le tableau source",
+      "Annoncer résultats et réinitialisation"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-03",
+      "sourceSession": "S2-SITE-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-05",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "02/06/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/gestion",
+    "title": "Portfolio : formulaire d’ajout et d’édition",
+    "durationMinutes": 120,
+    "order": 5,
+    "previousSession": "S2-SITE-04",
+    "quizId": "s2-site-04",
+    "skills": [
+      "Préremplir et valider le formulaire",
+      "Ajouter et éditer un projet en base",
+      "Contrôler dates et URLs côté serveur"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-04",
+      "sourceSession": "S2-SITE-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-06",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "02/06/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/qualite",
+    "title": "Portfolio : sécurité, accessibilité et tests croisés",
+    "durationMinutes": 120,
+    "order": 6,
+    "previousSession": "S2-SITE-05",
+    "quizId": "s2-site-05",
+    "skills": [
+      "Auditer clavier et petit écran",
+      "Tester entrées hostiles et erreurs",
+      "Documenter puis rejouer les corrections"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-05",
+      "sourceSession": "S2-SITE-05",
+      "points": 10
+    }
+  },
+  {
+    "id": "S2-SITE-07",
+    "subject": "Site Web avec données",
+    "type": "TD",
+    "planningDate": "09/06/2027",
+    "coursePath": "/semestre_2/Site_Web_Avec_Donnees/td/livraison",
+    "title": "Portfolio : finaliser, livrer et présenter",
+    "durationMinutes": 240,
+    "order": 7,
+    "previousSession": "S2-SITE-06",
+    "quizId": "s2-site-06",
+    "skills": [
+      "Installer le projet sur un autre poste",
+      "Finaliser les parcours persistants",
+      "Livrer et expliquer ses décisions techniques"
+    ],
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s2-site-06",
+      "sourceSession": "S2-SITE-06",
+      "points": 10
+    }
+  }
+]

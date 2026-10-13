@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio PHP/MySQL</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Projets du portfolio</h1>
+    <label for="recherche">Rechercher dans les titres</label>
+    <input id="recherche" type="search">
+    <label for="technologie">Technologie</label>
+    <select id="technologie"><option value="">Toutes</option></select>
+    <button id="reset" type="button">Réinitialiser les filtres</button>
+    <button id="relire" type="button">Relire les données</button>
+    <p id="etat" role="status"></p>
+    <section id="projets" aria-label="Liste des projets"></section>
+    <h2>Gestion locale</h2>
+    <p>Cette interface pédagogique locale n'est pas une gestion authentifiée pour Internet.</p>
+    <form id="gestion">
+      <input name="id" type="hidden">
+      <label for="title">Titre</label><input id="title" name="title" required maxlength="120">
+      <label for="description">Description</label><textarea id="description" name="description" required maxlength="5000"></textarea>
+      <label for="image_url">Image (chemin /images/ connu ou URL HTTP(S))</label><input id="image_url" name="image_url" maxlength="500">
+      <label for="start_date">Début</label><input id="start_date" name="start_date" type="date" required>
+      <label for="end_date">Fin (facultative)</label><input id="end_date" name="end_date" type="date">
+      <label for="technologies">Technologies séparées par des virgules</label><input id="technologies" name="technologies" maxlength="200">
+      <label for="project_url">Lien du projet (HTTP(S), facultatif)</label><input id="project_url" name="project_url" type="url" maxlength="500">
+      <label for="code_url">Lien du code (HTTP(S), facultatif)</label><input id="code_url" name="code_url" type="url" maxlength="500">
+      <button id="enregistrer">Enregistrer</button>
+      <button id="annuler" type="button">Annuler l'édition</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,9 +1,8 @@
 ---
 import Layout from "layouts/Layout.astro";
 import type { Answers, APIResponse } from "types";
-import { Code } from "astro:components";
 import { AnswerForm } from "components/AnswerForm.tsx";
-import { getQuiz } from "utils/getQuiz";
+import { getQuiz, getLocalQuiz } from "utils/getQuiz";
 import { getCookieName } from "utils/getCookieName";
 import { getRandomQuestion } from "utils/getRandomQuestion";
 import { isNullOrUndefined } from "utils/isNullOrUndefined";
@@ -42,22 +41,25 @@ if (await Astro.session?.has(cookieKey)) {
   answers = answersCookie ? (JSON.parse(answersCookie) as Answers) : {};
 }
 
-const [_, nextQuestionIndex] = getRandomQuestion(
-  quizData.questions,
-  Object.keys(answers).map(Number),
-);
+// A local bank contains 40 questions, but an attempt stops after 10.
+if (
+  getLocalQuiz(quizId) &&
+  Object.keys(answers).length >= totalQuestions &&
+  !Object.prototype.hasOwnProperty.call(answers, questionIndex)
+) {
+  return Astro.redirect(`/quiz/${quizId}/results`);
+}
 
 const meta = {
   title: `MMI Quiz - ${quizData.name}`,
   description: `Testez vos compétences avec ce questionnaire`,
 };
 
-const totalAnswers = Object.keys(answers).length;
-
 // ---------- Gestion du temps par question (SERVER-SIDE) ----------
 
 const timeByQuestionInSeconds =
-  quizData.mode === "exam" ? quizData.timeByQuestionInSeconds : 0;
+  quizData.timeByQuestionInSeconds;
+const answerGraceMs = 1000;
 
 // Clé unique pour le deadline de CETTE question
 const deadlineKey = `${quizData.uid ?? ""}:deadline:${questionIndex}`;
@@ -79,11 +81,11 @@ if (timeByQuestionInSeconds > 0) {
   }
 
   // Temps restant en secondes, jamais négatif
-  remainingSeconds = Math.max(0, Math.floor((deadline - now) / 1000));
+  remainingSeconds = Math.max(0, (deadline - now) / 1000);
 
   // Si on arrive sur la page alors que le temps est déjà écoulé
   // et que l'étudiant n'a jamais répondu, on marque directement la question comme ratée
-  if (remainingSeconds <= 0 && isNullOrUndefined(answers[questionIndex])) {
+  if (remainingSeconds <= 0 && (!isPost || now > deadline + answerGraceMs) && isNullOrUndefined(answers[questionIndex])) {
     answers[questionIndex] = -1;
     Astro.session?.set(cookieKey, JSON.stringify(answers));
   }
@@ -95,10 +97,17 @@ if (isPost) {
   try {
     const data = await Astro.request.formData();
     const answerIndex = data.get("answerIndex");
-    if (typeof answerIndex !== "string") throw new Error("No answer provided");
+    if (typeof answerIndex !== "string") {
+      if (timeByQuestionInSeconds > 0 && Date.now() >= deadline) {
+        answers[questionIndex] = -1;
+        Astro.session?.set(cookieKey, JSON.stringify(answers));
+      } else {
+        throw new Error("No answer provided");
+      }
+    }
 
     // On ne modifie la réponse que si la question n'a jamais été "fixée"
-    if (isNullOrUndefined(answers[questionIndex])) {
+    if (typeof answerIndex === "string" && isNullOrUndefined(answers[questionIndex])) {
       let stillInTime = true;
 
       if (timeByQuestionInSeconds > 0) {
@@ -110,8 +119,8 @@ if (isPost) {
           stillInTime = false;
         } else {
           const deadlineFromSession = Number(savedDeadline);
-          // Petite marge de 3 secondes comme tu le faisais
-          stillInTime = now <= deadlineFromSession + 3000;
+          // Allow one second for transport without extending the displayed timer.
+          stillInTime = now <= deadlineFromSession + answerGraceMs;
         }
       }
 
@@ -140,37 +149,36 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
   Astro.session?.set(cookieKey, JSON.stringify(answers));
 }
 
+const answeredIndexes = Object.keys(answers).map(Number);
+const totalAnswers = answeredIndexes.length;
+const nextQuestionIndex =
+  totalAnswers < totalQuestions
+    ? getRandomQuestion(quizData.questions, answeredIndexes)?.[1] ?? questionIndex
+    : questionIndex;
+
 ---
 
-<Layout title={""}>
+<Layout title={meta.title}>
   {isNullOrUndefined(answers[questionIndex]) &&
   timeByQuestionInSeconds > 0 &&
   remainingSeconds > 0 && (
-
-      <div
-        id="quiz-timer"
-        class="absolute top-0 left-0 right-0 h-2 bg-primary w-screen z-[1000] quiz-timer-bar"
-        data-duration={remainingSeconds}
-      ></div>
-
-      <script is:inline>
-        (() => {
-          const bar = document.getElementById("quiz-timer");
-          if (!bar) return;
-          const duration = Number(bar.dataset.duration || "0");
-          if (!duration || duration <= 0) return;
-
-          // On applique l’animation avec la bonne durée
-          bar.style.animation = `quiz-timer ${duration}s linear forwards`;
-
-          bar.addEventListener("animationend", () => {
-            const form = document.getElementById("answerForm");
-            if (form && typeof form.submit === "function") {
-              form.submit();
-            }
-          });
-        })();
-      </script>
+    <div
+      id="quiz-timer"
+      class="fixed inset-x-0 top-0 z-[1000]"
+      data-duration={remainingSeconds}
+      role="timer"
+      aria-label="Temps restant pour cette question"
+    >
+      <div class="h-1.5 bg-base-300/80">
+        <div data-timer-fill class="quiz-timer-fill h-full w-full bg-primary"></div>
+      </div>
+      <div class="quiz-timer-badge pointer-events-none absolute right-4 top-3 flex items-baseline gap-2 rounded-full border border-base-300 bg-base-100/95 px-3 py-1.5 text-base-content shadow-lg backdrop-blur-sm">
+        <span class="text-xs font-medium">Temps restant</span>
+        <strong class="quiz-timer-count font-mono text-base font-bold tabular-nums">
+          <span data-timer-count>{Math.ceil(remainingSeconds)}</span> s
+        </strong>
+      </div>
+    </div>
   )}
   <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-4">
@@ -187,7 +195,7 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
       ></progress>
     </div>
 
-    <Code code={currentQuestion.question} lang="markdown" />
+    <p class="text-lg font-semibold break-words">{currentQuestion.question}</p>
 
     <AnswerForm
       hasMoreQuestions={totalAnswers < totalQuestions}
@@ -198,9 +206,61 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
       correctAnswerIndex={currentQuestion.correctAnswerIndex}
       nextQuestionIndex={nextQuestionIndex}
       currentLocale={Astro.currentLocale}
+      explanation={!isNullOrUndefined(answers[questionIndex]) ? currentQuestion.explanation : undefined}
+      sourceLink={quizData.sourceCourse && currentQuestion.sourceSection ? `${quizData.sourceCourse}#${currentQuestion.sourceSection}` : undefined}
     />
   </div>
 </Layout>
+
+<script>
+  let stopTimer: (() => void) | undefined;
+
+  function startTimer() {
+    stopTimer?.();
+
+    const timer = document.querySelector<HTMLElement>("#quiz-timer");
+    const fill = timer?.querySelector<HTMLElement>("[data-timer-fill]");
+    const count = timer?.querySelector<HTMLElement>("[data-timer-count]");
+    const form = document.querySelector<HTMLFormElement>("#answerForm");
+    const duration = Number(timer?.dataset.duration ?? 0);
+    if (!timer || !fill || !count || !form || duration <= 0) return;
+
+    // The persistent sidebar sits above <main>; place the timer beside it.
+    document.body.appendChild(timer);
+
+    const expiresAt = performance.now() + duration * 1000;
+    const updateCount = () => {
+      const seconds = Math.max(0, Math.ceil((expiresAt - performance.now()) / 1000));
+      count.textContent = String(seconds);
+      timer.dataset.urgent = String(seconds <= 5);
+    };
+
+    fill.style.animation = "none";
+    void fill.offsetWidth;
+    fill.style.animation = `quiz-timer ${duration}s linear forwards`;
+    updateCount();
+    const interval = window.setInterval(updateCount, 100);
+    const timeout = window.setTimeout(() => {
+      updateCount();
+      stopTimer?.();
+      form.submit();
+    }, duration * 1000);
+
+    stopTimer = () => {
+      window.clearInterval(interval);
+      window.clearTimeout(timeout);
+      fill.style.animationPlayState = "paused";
+      form.removeEventListener("submit", onSubmit);
+      stopTimer = undefined;
+    };
+    const onSubmit = () => stopTimer?.();
+    form.addEventListener("submit", onSubmit);
+  }
+
+  document.addEventListener("astro:before-swap", () => stopTimer?.());
+  document.addEventListener("astro:page-load", startTimer);
+  startTimer();
+</script>
 
 <style is:global>
   @keyframes quiz-timer {
@@ -212,7 +272,15 @@ if (answers[questionIndex] === null || answers[questionIndex] === undefined) {
     }
   }
 
-  .quiz-timer-bar {
+  .quiz-timer-fill {
     transform-origin: left;
+  }
+
+  #quiz-timer[data-urgent="true"] .quiz-timer-fill {
+    background-color: #ef4444;
+  }
+
+  #quiz-timer[data-urgent="true"] .quiz-timer-count {
+    color: #ef4444;
   }
 </style>

@@ -1,34 +1,35 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Introduction"
+title: "JavaScript : données, DOM et asynchronisme"
 type: "tp"
 ---
 
-# Introduction
+## JavaScript : données, DOM et opérations asynchrones
 
-JavaScript est un langage de programmation de script principalement
-utilisé dans les pages Web interactives pour rendre les pages plus
-dynamiques et réactives. JavaScript est exécuté côté client
-(c'est-à-dire dans le navigateur Web de l'utilisateur) et permet de
-manipuler l'interface utilisateur, de réaliser des appels HTTP
-asynchrones, de créer des animations, etc.
+Au S2, JavaScript servait à écouter des événements et à afficher les données d’une API. Au S3, le même langage s’exécutait aussi dans Node. Ce parcours consolide les valeurs et les fonctions avant d’aborder les collections, le DOM, les promesses et la persistance dans le navigateur.
 
-JavaScript est un langage de programmation orienté objet, ce qui
-signifie qu'il permet de créer des objets qui possèdent des propriétés
-(des valeurs associées à des noms) et des méthodes (des fonctions
-associées à l'objet). JavaScript supporte également les fonctions
-anonymes, les closures, le polymorphisme, l'héritage, etc.
+| Étape | Supports | Application |
+|---|---|---|
+| Valeurs et décisions | [Variables](/semestre_4/js/begin/variables), [types](/semestre_4/js/begin/types), [conditions](/semestre_4/js/begin/conditions) | Calculer et vérifier une saisie |
+| Traitements réutilisables | [Fonctions](/semestre_4/js/begin/functions), [boucles](/semestre_4/js/begin/loops) | Transformer plusieurs valeurs |
+| Collections | [Tableaux](/semestre_4/js/begin/arrays), [méthodes](/semestre_4/js/begin/array-functions), [objets](/semestre_4/js/begin/objects), [Object](/semestre_4/js/begin/object-functions) | Représenter des fiches |
+| Interface | [Événements](/semestre_4/js/begin/events), [FormData](/semestre_4/js/begin/form) | Relier saisie et état |
+| Asynchronisme | [Promesses](/semestre_4/js/intermediate/promises), [async/await](/semestre_4/js/intermediate/async-await), [fetch](/semestre_4/js/intermediate/fetch) | Charger une API et traiter ses erreurs |
+| Persistance | [Stockage](/semestre_4/js/intermediate/storages) | Retrouver une sélection |
 
-JavaScript est un langage de programmation interprété, ce qui signifie
-qu'il n'est pas nécessaire de le compiler avant de l'exécuter. Le code
-JavaScript est généralement intégré directement dans les pages HTML sous
-forme de balises &lt;script&gt;. Le code JavaScript peut également être
-stocké dans des fichiers externes et inclus dans les pages HTML à l'aide
-de l'attribut src de la balise &lt;script&gt;.
+Dans le navigateur, `document` donne accès au DOM. Dans Node, cette variable n’existe pas par défaut. Les exemples `html live` de ce parcours utilisent le navigateur ; les sorties de console sont indiquées après les extraits JavaScript.
 
-Voici un exemple de code JavaScript qui affiche un message dans une
-boîte de dialogue lorsque vous cliquez sur un bouton :
-
-```html
-<button onclick="alert('Hello World!')">Cliquez ici</button>
+```html live title="Un événement modifie le DOM"
+<button type="button">Afficher le message</button>
+<p role="status"></p>
+<script>
+  const bouton = document.querySelector('button');
+  bouton.addEventListener('click', () => {
+    document.querySelector('p').textContent = 'Bonjour MMI !';
+  });
+</script>
 ```
+
+Le bouton existe avant l’exécution du script. `querySelector` récupère l’élément ; `addEventListener` enregistre une fonction qui sera appelée au clic. `textContent` écrit du texte dans le paragraphe. Après un clic, « Bonjour MMI ! » apparaît sans rechargement.
+
+Dans un projet, placez le JavaScript dans `app.js`, chargé par `<script type="module" src="app.js"></script>`. Un script de module attend l’analyse du document et possède sa propre portée.

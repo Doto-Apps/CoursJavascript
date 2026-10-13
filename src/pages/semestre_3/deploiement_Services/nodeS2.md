@@ -1,300 +1,110 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Node.js et API RESTful - Session 2"
-type : "tp"
+title: "Configurer les services et connecter un modèle local"
+type: "TD"
+order: 2
+quizId: "s3-node-chatbot"
+previousSession: "/semestre_3/deploiement_Services/nodeS1"
+nextSession: "/semestre_3/deploiement_Services/tpRPG"
 ---
 
-# Introduction à Node.js et API RESTful - Session 2
+<a id="adresses"></a>
 
-## Sécurité et Authentification
+## 127.0.0.1, adresse réseau et 0.0.0.0
 
-### Introduction à la sécurité des API
+| Valeur | Usage | Erreur à éviter |
+|---|---|---|
+| 127.0.0.1 ou localhost | Joindre sa propre machine. | Donner localhost à un camarade : il joindrait son propre PC. |
+| 0.0.0.0 dans HOST | Écouter sur les interfaces réseau du serveur. | L’utiliser comme adresse à distribuer aux clients. |
+| Adresse IP du poste dans la salle | Joindre le poste depuis une autre machine autorisée. | Confondre cette IP avec celle d’un autre réseau. |
+| Port 3000 | API du personnage. | Appeler le port du modèle à la place. |
+| Port 1234 | Serveur LM Studio par défaut. | Penser qu’installer LM Studio suffit à lancer ce serveur. |
 
-La sécurité des API est cruciale pour protéger les données et les utilisateurs. Quelques aspects clés incluent la gestion des CORS, l'utilisation de JSON Web Tokens (JWT) pour sécuriser les routes, et le hachage des mots de passe pour l'authentification.
+Deux services sur la même machine ont besoin de ports distincts. Sur deux machines, le même numéro peut être utilisé. Le pare-feu et le réseau de la salle doivent autoriser les échanges : vérifiez avec l’enseignant, sans désactiver globalement le pare-feu.
 
-#### Gestion des CORS
+<a id="configuration"></a>
 
-CORS (Cross-Origin Resource Sharing) permet aux serveurs de contrôler l'accès aux ressources en fonction de l'origine de la demande. Pour gérer les CORS dans Express.js, vous pouvez utiliser le middleware `cors`.
+## process.env et le fichier .env
 
-Installation du middleware CORS :
-```sh
-npm install cors
+Créez `.env` à côté de personnage.mjs. Les valeurs ci-dessous sont des exemples à adapter : LM_MODEL est l’identifiant du modèle réellement chargé, pas une famille approximative.
+
+```ini
+PORT=3000
+HOST=127.0.0.1
+PERSONNAGE=A Fata
+MODE=simulation
+LM_BASE_URL=http://127.0.0.1:1234/v1
+LM_MODEL=identifiant-du-modele-charge
 ```
 
-Utilisation dans votre application Express.js :
+Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.
+
+N’ajoutez pas un véritable secret au dépôt ou au rapport. Une configuration ne remplace pas un contrôle d’accès ; cette API pédagogique vise le réseau de la salle, pas une exposition publique.
+
+<a id="modele"></a>
+
+## L’appel HTTP au modèle local
+
+Dans LM Studio, chargez le modèle, ouvrez l’espace Developer et démarrez le serveur. Vérifiez l’adresse et la liste des modèles. Remplacez **uniquement repondre** du squelette par cette fonction :
+
 ```js
-const cors = require('cors');
-const express = require('express');
-const app = express();
-
-app.use(cors());
-
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello, API!' });
-});
-
-app.listen(3000, () => {
-  console.log("Serveur en cours d'exécution sur http://localhost:3000/");
-});
-```
-
-### Sécurisation des routes avec JWT (JSON Web Tokens)
-
-JWT est une méthode sécurisée pour transmettre des informations entre le client et le serveur. Chaque token est signé, garantissant son intégrité.
-
-Installation de `jsonwebtoken` :
-```sh
-npm install jsonwebtoken
-```
-
-Génération d'un token JWT :
-```js
-const jwt = require('jsonwebtoken');
-
-const token = jwt.sign({ userId: 123 }, 'secretKey', { expiresIn: '1h' });
-console.log(token);
-```
-
-Vérification d'un token JWT :
-```js
-app.use((req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
-  jwt.verify(token, 'secretKey', (err, decoded) => {
-    if (err) {
-      return res.status(401).send('Accès refusé');
-    }
-    req.user = decoded;
-    next();
-  });
-});
-```
-
-### Authentification
-
-Pour implémenter un système d'authentification, vous devez créer des routes pour l'inscription et la connexion des utilisateurs. Utilisez `bcrypt` pour le hachage des mots de passe.
-
-Installation de `bcrypt` :
-```sh
-npm install bcrypt
-```
-
-Création des routes de login et registration :
-```js
-const bcrypt = require('bcrypt');
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const app = express();
-app.use(express.json());
-
-const users = []; // Utiliser une base de données réelle en production
-
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  users.push({ username, password: hashedPassword });
-  res.status(201).send('Utilisateur créé');
-});
-
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-  if (user && await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign({ username }, 'secretKey', { expiresIn: '1h' });
-    res.json({ token });
-  } else {
-    res.status(401).send('Identifiants invalides');
+async function repondre(message) {
+  if (process.env.MODE !== "modele") {
+    return `Je suis ${personnage}. J’ai reçu : ${message}`;
   }
-});
-
-app.listen(3000, () => {
-  console.log("Serveur en cours d'exécution sur http://localhost:3000/");
-});
-```
-
-### Exercice
-
-1. Implémentez un système d'authentification simple avec JWT pour l'API créée précédemment.
-2. Créez des routes de login et registration comme montré ci-dessus.
-3. Utilisez Postman pour tester les routes `POST /register` et `POST /login`.
-
-## Interaction avec une Base de Données MySQL
-
-### Introduction à MySQL
-
-MySQL est un système de gestion de bases de données relationnelles très populaire. Vous allez apprendre à intégrer MySQL avec votre application Node.js en utilisant le module `mysql`.
-
-#### Installation de MySQL
-
-Installez MySQL sur votre machine (voir la documentation officielle pour les instructions spécifiques à votre système d'exploitation).
-
-#### Installation du module `mysql`
-
-Installez le module `mysql` via npm :
-```sh
-npm install mysql
-```
-
-#### Connexion à MySQL
-
-Voici comment établir une connexion à une base de données MySQL :
-```js
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'test'
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connecté à la base de données MySQL');
-});
-```
-
-### Intégration avec l'API
-
-Modifiez les routes de votre API pour utiliser MySQL pour les opérations CRUD.
-
-Exemple pour la route `GET /users` :
-```js
-const express = require('express');
-const mysql = require('mysql');
-const app = express();
-app.use(express.json());
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'test'
-});
-
-connection.connect(err => {
-  if (err) throw err;
-  console.log('Connecté à la base de données MySQL');
-});
-
-app.get('/users', (req, res) => {
-  connection.query('SELECT * FROM users', (err, results) => {
-    if (err) throw err;
-    res.json(results);
+  const base = (process.env.LM_BASE_URL || "http://127.0.0.1:1234/v1").replace(/\/$/, "");
+  const response = await fetch(`${base}/chat/completions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    signal: AbortSignal.timeout(30000),
+    body: JSON.stringify({
+      model: process.env.LM_MODEL,
+      messages: [
+        {
+          role: "system",
+          content: `Tu incarnes ${personnage}, dans un conte corse. Réponds en français en deux phrases.`,
+        },
+        { role: "user", content: message },
+      ],
+      temperature: 0.7,
+      max_tokens: 120,
+    }),
   });
-});
-
-app.post('/users', (req, res) => {
-  const user = req.body;
-  connection.query('INSERT INTO users SET ?', user, (err, results) => {
-    if (err) throw err;
-    res.status(201).json({ id: results.insertId, ...user });
-  });
-});
-
-app.listen(3000, () => {
-  console.log("Serveur en cours d'exécution sur http://localhost:3000/");
-});
-```
-
-### Exemple de JSON à envoyer pour ajouter un utilisateur
-
-Pour ajouter un utilisateur, vous pouvez envoyer un JSON via un outil comme Postman :
-
-Exemple de JSON :
-```json
-{
-  "nom": "John Doe",
-  "email": "john.doe@example.com",
-  "age": 30,
-  "actif": true
+  if (!response.ok) throw new Error(`Modèle : HTTP ${response.status}`);
+  const data = await response.json();
+  const texte = data.choices?.[0]?.message?.content;
+  if (typeof texte !== "string" || !texte.trim()) {
+    throw new Error("Réponse du modèle sans texte");
+  }
+  return texte.trim();
 }
 ```
 
-Postman est un outil permettant de tester et de manipuler des API. Vous pouvez le télécharger et l'utiliser pour envoyer des requêtes à votre serveur. [Téléchargez Postman](https://www.postman.com/downloads/)
+**Résultat attendu :** POST /message conserve personnage et reply. Seule la fabrication de reply change. Le serveur personnage transforme les erreurs du modèle en réponse 502 ; le client n’a pas à connaître choices. La limite d’attente de 30 secondes évite une requête suspendue sans fin ; elle ne garantit pas une génération aussi rapide.
 
-### Exercice
+| Message envoyé au modèle | Rôle |
+|---|---|
+| system | Contexte et consignes de personnage. |
+| user | Réplique reçue dans cet échange. |
+| assistant | Réponse du modèle ; utile dans un historique si on l’ajoute. |
 
-1. Configurez une base de données MySQL et créez la table `users` avec les champs spécifiés dans la session 1.
-2. Établissez une connexion à la base de données MySQL depuis votre application Node.js.
-3. Modifiez les routes de votre API pour utiliser MySQL pour les opérations CRUD sur la table `users`.
-4. Utilisez Postman pour tester les routes `GET /users` et `POST /users`.
+Ce code n’enregistre pas d’historique entre les requêtes. Fournir un contexte n’entraîne pas le modèle et ne modifie pas ses poids. Les réponses peuvent varier : un test vérifie la structure et les limites, pas une phrase exacte.
 
-## Déploiement et Conclusion
+<a id="diagnostic"></a>
 
-### Préparation pour la production
+## Les erreurs entre client, API et modèle
 
-Avant de déployer une application Node.js en production, assurez-vous de bien gérer les variables d'environnement et d'optimiser les performances.
+| Test | Conclusion si réussite | Prochain contrôle si échec |
+|---|---|---|
+| health sur son poste | L’API écoute localement. | Processus, port, erreur terminal. |
+| health depuis le binôme | Le trajet réseau vers l’API fonctionne. | IP, HOST, réseau, pare-feu autorisé. |
+| message en simulation | Lecture, validation et contrat fonctionnent. | Corps JSON et route. |
+| message en mode modèle | L’API atteint le modèle et lit son texte. | Serveur LM, adresse, modèle chargé, statut et délai. |
 
-#### Variables d'environnement
+health ne contacte pas le modèle : une API saine peut avoir une dépendance en panne. Un échange Node → Node n’est pas soumis au CORS du navigateur. Si on ajoute une interface Web d’origine différente, il faut traiter cette frontière séparément.
 
-Utilisez le module `dotenv` pour gérer les variables d'environnement :
-```sh
-npm install dotenv
-```
+## Pour approfondir
 
-Créez un fichier `.env` :
-```
-SECRET_KEY=yourSecretKey
-PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=password
-DB_NAME=test
-```
-
-Utilisation dans votre application :
-```js
-require('dotenv').config();
-
-const express = require('express');
-const mysql = require('mysql');
-const app = express();
-const port = process.env.PORT || 3000;
-
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-});
-
-connection.connect(err => {
-  if (err) throw err;
-  console.log('Connecté à la base de données MySQL');
-});
-
-app.listen(port, () => {
-  console.log(`Serveur en cours d'exécution sur http://localhost:${port}/`);
-});
-```
-
-### Optimisation des performances
-
-Quelques pratiques pour optimiser les performances de votre application Node.js :
-- Utilisez des outils de surveillance et de profilage.
-- Mettez en cache les réponses fréquentes.
-- Optimisez les requêtes à la base de données.
-
-### Exercice
-
-1. Déployez l'API sur Heroku et connectez une base de données MySQL hébergée (ex : ClearDB pour Heroku).
-2. Assurez-vous que votre application utilise les variables d'environnement pour les clés secrètes et les connexions à la base de données.
-3. Utilisez Postman pour tester votre API déployée sur Heroku.
-
-### Conclusion
-
-**Résumé des concepts clés :**
-- Sécurité et authentification avec JWT.
-- Interaction avec une base de données MySQL.
-- Déploiement d'une application Node.js sur Heroku.
-
-**Questions & Réponses :**
-
-Posez toutes vos questions sur les concepts vus pendant les deux sessions.
-
-**Suggestions de ressources supplémentaires :**
-- [Documentation officielle de Node.js](https://nodejs.org/en/docs/)
-- [Documentation officielle d'Express.js](https://expressjs.com/)
-- [Guide sur les meilleures pratiques de sécurité des API RESTful](https://www.owasp.org/index.php/REST_Security_Cheat_Sheet)
-
----
+- [Variables d’environnement de Node](https://nodejs.org/docs/latest-v22.x/api/cli.html#--env-filefile).
+- [API Chat Completions de LM Studio](https://lmstudio.ai/docs/developer/openai-compat/chat-completions).
+- [AbortSignal et limite d’attente](https://nodejs.org/docs/latest-v22.x/api/globals.html#static-method-abortsignaltimeoutdelay).

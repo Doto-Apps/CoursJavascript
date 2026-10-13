@@ -3,8 +3,6 @@ import Link from "components/Link.tsx";
 import MenuIcon from "components/MenuIcon.astro";
 import { getCollection } from "astro:content";
 import RecursiveTree from "./RecursiveTree.tsx";
-import { bigint } from "astro:schema";
-import { LucideSearch } from "lucide-react";
 
 export const prefetch = false
 
@@ -39,6 +37,7 @@ function createSidebar(sub: typeof allBlogPosts, subDir: string | null) {
       title: tr?.data.title ?? id,
       path: customsuffixe,
       type: tr?.data.type ?? undefined,
+      order: tr?.data.order,
       items: createSidebar(childrens, customsuffixe),
     });
   });
@@ -46,7 +45,8 @@ function createSidebar(sub: typeof allBlogPosts, subDir: string | null) {
   return final;
 }
 
-const sidebarData = createSidebar(allBlogPosts, null);
+// Filter before building branches so archived-only folders do not leave empty links.
+const sidebarData = createSidebar(allBlogPosts.filter(post => !post.data.hidden), null);
 
 ---
 <script is:inline>
@@ -96,8 +96,7 @@ const sidebarData = createSidebar(allBlogPosts, null);
 </script>
 
 <div
-  style="background: linear-gradient( to bottom,var(--fallback-b1, oklch(var(--b1) / 1)) 0%,var(--fallback-b1, oklch(var(--b1) / 1)) 60%,transparent 100%);"
-  class="fixed top-0 left-0 z-[60] w-full border-solid pb-10"
+  class="sidebar-toggle fixed top-0 left-0 z-[60] w-full border-solid pb-10"
 >
   <button
     onclick="handleClick()"
@@ -112,7 +111,7 @@ const sidebarData = createSidebar(allBlogPosts, null);
 
 <aside
   id="sidebar"
-  class="fixed top-0 left-0 z-[100] w-96 h-screen transition-transform -translate-x-full"
+  class="fixed top-0 left-0 z-[100] w-96 max-w-full h-screen transition-transform -translate-x-full"
   aria-label="Sidebar"
 >
   <div class="h-full px-3 py-4  overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -144,3 +143,9 @@ const sidebarData = createSidebar(allBlogPosts, null);
     </ul>
   </div>
 </aside>
+
+<style>
+  .sidebar-toggle {
+    background: linear-gradient(to bottom, var(--fallback-b1, oklch(var(--b1) / 1)) 0%, var(--fallback-b1, oklch(var(--b1) / 1)) 60%, transparent 100%);
+  }
+</style>

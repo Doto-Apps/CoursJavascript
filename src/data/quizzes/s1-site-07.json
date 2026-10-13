@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Projet : vérifier l’accessibilité et la qualité HTML",
+  "uid": "s1-site-07",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/produire_Un_Site_Web/norme",
+  "sourceSession": "SITE-07",
+  "targetCourse": "/semestre_1/produire_Un_Site_Web/finalisation",
+  "questions": [
+    {
+      "question": "Quelle touche avance entre les contrôles natifs ?",
+      "answers": [
+        "Tab",
+        "Entrée",
+        "Espace",
+        "Échap"
+      ],
+      "explanation": "Tab fait avancer le focus entre les contrôles navigables.",
+      "sourceSection": "comprendre",
+      "evidence": "Tab avance entre les contrôles natifs",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Comment revenir au contrôle précédent ?",
+      "answers": [
+        "Ctrl+S",
+        "Maj+Tab",
+        "Tab seul",
+        "Entrée"
+      ],
+      "explanation": "La combinaison Maj et Tab revient au contrôle précédent.",
+      "sourceSection": "comprendre",
+      "evidence": "Maj+Tab revient au précédent.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment activer un lien focalisé ?",
+      "answers": [
+        "Échap",
+        "Maj+Tab",
+        "Entrée",
+        "Tab"
+      ],
+      "explanation": "Entrée active le lien focalisé ; Tab ne fait que déplacer le focus.",
+      "sourceSection": "comprendre",
+      "evidence": "Entrée active un lien focalisé.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Un div avec onclick devient-il automatiquement un bouton accessible ?",
+      "answers": [
+        "Oui, la couleur suffit",
+        "Oui, une classe button suffit",
+        "Oui, un onclick fournit toujours tous les comportements",
+        "Non, il faut les comportements d’un vrai bouton"
+      ],
+      "explanation": "Un élément natif apporte des comportements clavier que le simple clic ne fournit pas.",
+      "sourceSection": "comprendre",
+      "evidence": "Un `div` avec `onclick` ne devient pas automatiquement un bouton accessible.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel risque crée outline: none sans style de focus de remplacement ?",
+      "answers": [
+        "Le focus peut devenir invisible",
+        "Le formulaire devient GET",
+        "Le navigateur arrête JavaScript",
+        "Le lien perd son href"
+      ],
+      "explanation": "Supprimer le contour exige un autre indicateur de focus perceptible.",
+      "sourceSection": "comprendre",
+      "evidence": "`outline: none` sans remplacement peut rendre le focus invisible",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "À quoi sert un lien d'évitement ?",
+      "answers": [
+        "Passer au lien précédent",
+        "Rejoindre directement le contenu principal",
+        "Recharger toutes les images",
+        "Ouvrir les favoris"
+      ],
+      "explanation": "Un lien d’évitement permet de sauter les blocs répétés de navigation.",
+      "sourceSection": "comprendre",
+      "evidence": "Le lien d’évitement rejoint directement le contenu principal",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel intitulé de lien est le plus utile hors contexte ?",
+      "answers": [
+        "Utiliser une seule lettre",
+        "Retirer le texte du lien",
+        "Nommer le projet visé",
+        "Écrire Cliquez ici partout"
+      ],
+      "explanation": "Un intitulé explicite aide à comprendre la destination hors de son contexte immédiat.",
+      "sourceSection": "comprendre",
+      "evidence": "« Voir le projet Photo » reste compréhensible hors contexte",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel réflexe avant d'ajouter ARIA ?",
+      "answers": [
+        "Ajouter des rôles au hasard",
+        "Remplacer les boutons par des div",
+        "Supprimer les labels",
+        "Choisir d’abord l’élément HTML natif adapté"
+      ],
+      "explanation": "Les éléments natifs évitent de réimplémenter inutilement leurs comportements.",
+      "sourceSection": "comprendre",
+      "evidence": "Avant d’ajouter ARIA, choisissez d’abord l’élément HTML natif adapté.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Comment associer un label à son champ ?",
+      "answers": [
+        "Le for du label correspond à l’id du champ",
+        "Le for correspond à la classe CSS",
+        "Le label contient le nom du fichier",
+        "Le label doit être remplacé par le placeholder"
+      ],
+      "explanation": "L’association explicite utilise le même identifiant dans for et id.",
+      "sourceSection": "comprendre",
+      "evidence": "Le `for` du label correspond à l’`id` du champ.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi un placeholder ne remplace-t-il pas un label ?",
+      "answers": [
+        "Le placeholder fournit tous les messages d’erreur",
+        "Le placeholder disparaît et n’est pas une étiquette persistante",
+        "Le placeholder bloque toujours l’envoi",
+        "Le placeholder devient une destination de lien"
+      ],
+      "explanation": "Le label reste une indication associée au champ pendant la saisie.",
+      "sourceSection": "comprendre",
+      "evidence": "Le placeholder disparaît pendant la saisie et ne remplace pas une étiquette persistante.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que doit exprimer un message d'erreur ?",
+      "answers": [
+        "Un symbole sans texte",
+        "Le nom du navigateur",
+        "Le problème et une indication pour le corriger",
+        "Une couleur rouge seule"
+      ],
+      "explanation": "L’erreur doit être compréhensible sans dépendre seulement de sa couleur.",
+      "sourceSection": "comprendre",
+      "evidence": "une erreur indique le problème et comment le corriger.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Un score automatique garantit-il toute l’accessibilité du site ?",
+      "answers": [
+        "Oui, tout score élevé est une certification",
+        "Oui, dès que HTML compile",
+        "Oui, sur un seul écran",
+        "Non, des vérifications manuelles restent nécessaires"
+      ],
+      "explanation": "Un outil automatique ne vérifie pas tous les usages ni tous les contenus.",
+      "sourceSection": "comprendre",
+      "evidence": "un score élevé ne garantit pas toute l’accessibilité",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

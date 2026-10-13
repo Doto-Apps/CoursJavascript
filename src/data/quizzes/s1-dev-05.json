@@ -1,0 +1,168 @@
+{
+  "name": "Révision — TP PHP : recevoir et valider un message",
+  "uid": "s1-dev-05",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/developpement_Web/phpForm",
+  "sourceSession": "DEV-05",
+  "targetCourse": "/semestre_1/developpement_Web/phpminichat2",
+  "questions": [
+    {
+      "question": "Quel attribut indique la destination du formulaire ?",
+      "answers": [
+        "action",
+        "method",
+        "name",
+        "id"
+      ],
+      "explanation": "action indique l’adresse qui reçoit le formulaire.",
+      "sourceSection": "comprendre",
+      "evidence": "action",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel attribut définit le mode d'envoi du formulaire ?",
+      "answers": [
+        "type",
+        "method",
+        "action",
+        "name"
+      ],
+      "explanation": "method indique notamment GET ou POST.",
+      "sourceSection": "comprendre",
+      "evidence": "method",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel attribut définit la clé transmise ?",
+      "answers": [
+        "class",
+        "placeholder",
+        "name",
+        "id"
+      ],
+      "explanation": "La clé transmise vient de name ; id permet notamment d’associer un label.",
+      "sourceSection": "comprendre",
+      "evidence": "name",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Où les paramètres GET sont-ils transmis ?",
+      "answers": [
+        "Uniquement dans le corps de la requête",
+        "Dans le fragment après le dièse",
+        "Dans le nom d’hôte",
+        "Dans la partie paramètres de l’URL"
+      ],
+      "explanation": "Les champs GET sont encodés dans la partie de requête de l’URL.",
+      "sourceSection": "comprendre",
+      "evidence": "URL",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Où les données POST sont-elles transmises ?",
+      "answers": [
+        "Dans le corps de la requête",
+        "Dans le fragment de l’URL",
+        "Dans le nom d’hôte",
+        "Dans le port du serveur"
+      ],
+      "explanation": "POST transmet ici les données dans le corps ; cela ne les chiffre pas.",
+      "sourceSection": "comprendre",
+      "evidence": "corps",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "POST chiffre-t-il les données à lui seul ?",
+      "answers": [
+        "Oui, si le formulaire utilise required",
+        "Non, le chiffrement relève de HTTPS",
+        "Oui, POST chiffre toujours le corps",
+        "Oui, si le champ est de type password"
+      ],
+      "explanation": "La méthode d’envoi et la protection du transport sont deux choix différents.",
+      "sourceSection": "comprendre",
+      "evidence": "chiffrement",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle variable reçoit les données POST ?",
+      "answers": [
+        "$_SESSION",
+        "$_COOKIE",
+        "$_POST",
+        "$_GET"
+      ],
+      "explanation": "Les données du formulaire POST sont disponibles dans le tableau prévu pour cette méthode.",
+      "sourceSection": "comprendre",
+      "evidence": "$_POST",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "La clé message est absente de $_POST. Que vaut $_POST[\"message\"] ?? \"\" ?",
+      "answers": [
+        "Le mot message",
+        "Le tableau POST complet",
+        "Le nombre zéro",
+        "La chaîne vide"
+      ],
+      "explanation": "L’opérateur de repli fournit la valeur indiquée lorsque la clé manque ou vaut null.",
+      "sourceSection": "reception",
+      "evidence": "repli",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que retire trim ?",
+      "answers": [
+        "Les espaces aux extrémités",
+        "Tous les espaces entre les mots",
+        "Toutes les balises HTML",
+        "Tous les caractères accentués"
+      ],
+      "explanation": "trim prépare le texte sans supprimer les espaces internes ni filtrer le HTML.",
+      "sourceSection": "comprendre",
+      "evidence": "extrémités",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi vérifier is_string avant trim ?",
+      "answers": [
+        "Transformer toute entrée en entier",
+        "Contrôler que la valeur reçue est un texte",
+        "Contrôler seulement sa couleur",
+        "Accepter automatiquement les tableaux"
+      ],
+      "explanation": "Une requête peut fournir un autre type que celui prévu ; il faut le vérifier avant le traitement.",
+      "sourceSection": "reception",
+      "evidence": "type",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pourquoi la validation serveur reste-t-elle nécessaire ?",
+      "answers": [
+        "POST garantit les valeurs valides",
+        "Une page avec CSS ne reçoit pas de données invalides",
+        "Les contraintes du navigateur peuvent être contournées",
+        "required remplace toujours le contrôle serveur"
+      ],
+      "explanation": "Le serveur doit appliquer les règles même si le navigateur les vérifie déjà.",
+      "sourceSection": "validation",
+      "evidence": "contournés",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Dans quel contexte l'échappement montré protège-t-il le texte ?",
+      "answers": [
+        "Toute requête SQL",
+        "Tout code JavaScript intégré",
+        "Le transport HTTP lui-même",
+        "La sortie dans le contexte texte HTML"
+      ],
+      "explanation": "La protection doit correspondre au contexte ; l’échappement HTML ne protège pas une requête SQL.",
+      "sourceSection": "sortie",
+      "evidence": "contexte HTML",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

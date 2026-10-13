@@ -1,0 +1,168 @@
+{
+  "uid": "s3-retool-catalogue",
+  "name": "Révision — TP Retool : catalogue persistant et statistiques",
+  "sourceCourse": "/semestre_3/deploiement_Services/tpteeshirt",
+  "sourceSession": "S3-CONT-02",
+  "targetCourse": "/semestre_3/integrer_Interface/retool",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "questions": [
+    {
+      "question": "Quel identifiant envoyer pour modifier le produit sélectionné ?",
+      "answers": [
+        "L’id stable du document",
+        "Le numéro de ligne affichée",
+        "Le prix du produit",
+        "La position après filtrage"
+      ],
+      "explanation": "La cible doit rester la même après un tri ou un filtre.",
+      "sourceSection": "identite",
+      "evidence": "t l’ordre de la Table. Une action Éditer ou Supprimer conserve donc l’id du document sélectionné. Si la troisième ligne correspond à `p08`, l’opération vise `p08`, pas « le document numéro 3 ».",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Un filtre local retire un produit de la vue. Que devient la base ?",
+      "answers": [
+        "Le prix est recalculé",
+        "Elle reste inchangée",
+        "Le document est supprimé",
+        "Le stock passe à zéro"
+      ],
+      "explanation": "Filtrer la vue ne modifie pas les données persistantes.",
+      "sourceSection": "identite",
+      "evidence": "Le tri et les filtres changent l’ordre de la Table. Une action Éditer ou Supprimer conserve donc l’id du document sélectionné. Si la troisième ligne correspond à `p08`, l’opération vise `p08`, pas « le document numéro 3 ».",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pourquoi normaliser la casse dans une recherche ?",
+      "answers": [
+        "Changer les ids",
+        "Mettre à jour le stock",
+        "Comparer sans dépendre des majuscules",
+        "Supprimer tous les accents automatiquement"
+      ],
+      "explanation": "La normalisation facilite la comparaison du texte sans changer les documents.",
+      "sourceSection": "filtre",
+      "evidence": "atisfont les conditions ; il ne supprime aucun document. `&&` combine recherche et marque. Effacer le champ et choisir Toutes doit restaurer la collection complète.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Le catalogue contient deux produits avec stocks 5 et 0. Nombre de références ?",
+      "answers": [
+        "5",
+        "0",
+        "7",
+        "2"
+      ],
+      "explanation": "Une référence correspond à un produit, pas à une unité en stock.",
+      "sourceSection": "statistiques",
+      "evidence": "| Nombre de références | Nombre de documents. | Références, pas articles physiques. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Avec les mêmes stocks 5 et 0, combien d’unités sont disponibles ?",
+      "answers": [
+        "5",
+        "2",
+        "0",
+        "10"
+      ],
+      "explanation": "Le total des unités additionne les stocks des références.",
+      "sourceSection": "statistiques",
+      "evidence": "| Stock total | Somme des stocks. | Unités disponibles. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Un produit vaut 12 euros et son stock est 5. Sa valeur de stock ?",
+      "answers": [
+        "5 euros",
+        "60 euros",
+        "17 euros",
+        "12 euros"
+      ],
+      "explanation": "La valeur de stock multiplie le prix par la quantité disponible.",
+      "sourceSection": "identite",
+      "evidence": "Id existant et champs validés. | Garder le même id et actualiser les valeurs. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pourquoi la valeur du stock n’est-elle pas un chiffre d’affaires ?",
+      "answers": [
+        "Le chiffre d’affaires est toujours égal au nombre de références",
+        "Le prix unitaire suffit à prouver une vente",
+        "Le stock disponible ne représente pas des ventes réalisées",
+        "Toute unité disponible est déjà vendue"
+      ],
+      "explanation": "Le chiffre d’affaires suppose des ventes ; le stock représente des unités encore disponibles.",
+      "sourceSection": "statistiques",
+      "evidence": "| Valeur du stock | Somme de prix × stock. | Euros théoriques, pas chiffre d’affaires réalisé. |",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que doit préciser un indicateur calculé après filtrage ?",
+      "answers": [
+        "Seulement la couleur du titre",
+        "Le nom du navigateur",
+        "Le nombre de comptes Retool",
+        "La population concernée : catalogue ou résultats filtrés"
+      ],
+      "explanation": "Sans population explicite, deux valeurs peuvent sembler se contredire.",
+      "sourceSection": "statistiques",
+      "evidence": "peuvent sembler contradictoires alors qu’ils ne mesurent pas la même population.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel rôle joue reduce avec une valeur initiale zéro ?",
+      "answers": [
+        "Accumuler un total, y compris sur une liste vide",
+        "Créer toujours un produit",
+        "Modifier automatiquement la base",
+        "Classer les produits par id"
+      ],
+      "explanation": "L’accumulation part d’une valeur définie et traite chaque élément.",
+      "sourceSection": "statistiques",
+      "evidence": "stockTotal: produits.reduce((somme, p) => somme + p.stock, 0),",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi confirmer une suppression ?",
+      "answers": [
+        "Recréer le produit supprimé",
+        "Limiter une action destructrice accidentelle",
+        "Garantir le transport chiffré",
+        "Changer l’id du document"
+      ],
+      "explanation": "La confirmation protège le parcours ; les permissions serveur restent nécessaires.",
+      "sourceSection": "identite",
+      "evidence": "le ne doit pas produire une adresse contenant undefined. Confirmez la suppression avec le nom du produit pour rendre la cible claire.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel état prévoir quand la recherche ne trouve rien ?",
+      "answers": [
+        "Un message de panne systématique",
+        "Un chargement sans fin",
+        "Un message de résultat vide",
+        "Un faux produit obligatoire"
+      ],
+      "explanation": "Une recherche sans résultat n’est pas forcément une panne.",
+      "sourceSection": "filtre",
+      "evidence": "Un résultat filtré vide n’est pas un catalogue vide. Affichez « Aucun produit pour ces critères » et proposez une réinitialisation. Pour le petit jeu de test, le filtre local est suffisant ; un catalogue très grand nécessiterait un autre ch",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Sans vente, que faire avant de calculer le panier moyen ?",
+      "answers": [
+        "Diviser automatiquement par zéro",
+        "Inventer une vente",
+        "Remplacer le nombre de ventes par le prix",
+        "Éviter une division par zéro et afficher l’état prévu"
+      ],
+      "explanation": "Une moyenne exige un nombre de valeurs non nul ou un cas vide explicitement géré.",
+      "sourceSection": "ventes",
+      "evidence": "Une moyenne demande un dénominateur : panier moyen = total des ventes / nombre de ventes. Sans vente, affichez un résultat prévu par le contrat plutôt que de diviser par zéro. Les promotions, dates et canaux sont des extensions ; elles ne r",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

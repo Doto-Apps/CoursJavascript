@@ -1,4 +1,5 @@
 node_modules
+.pnpm-store
 .git
 .gitignore
 Dockerfile
@@ -6,3 +7,10 @@ docker-compose.yml
 README.md
 *.log
 dist
+.astro
+.env
+.env.*
+docs
+.github
+.vscode
+opencode.json

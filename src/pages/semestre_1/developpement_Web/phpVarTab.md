@@ -1,783 +1,193 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP Multiple"
+title: "TP PHP : parcourir des données et afficher des profils"
 type: "TP"
+order: 4
+quizId: "s1-dev-03"
+previousSession: "/semestre_1/developpement_Web/PHP_begin"
+nextSession: "/semestre_1/developpement_Web/phpForm"
 ---
 
-# TP 1 : Morpion
+<a id="comprendre"></a>
 
-## Objectif
-Créer un jeu de morpion interactif avec PHP. Vous apprendrez à :
-1. Manipuler des formulaires HTML pour interagir avec un serveur PHP.
-2. Modifier le CSS pour améliorer l'apparence du morpion.
-3. Ajouter une fonctionnalité pour détecter le vainqueur du jeu.
+## Valeur, enregistrement et collection PHP
 
----
-
-## Partie 1 : Préparation du plateau et amélioration du CSS
-
-### Étape 1 : Le code PHP et HTML
-Voici le code de base du jeu de morpion en PHP. Vous devrez utiliser ce code pour démarrer le TP :
+La collection regroupe plusieurs profils ; chaque profil est un enregistrement ; chaque enregistrement possède des champs comme un nom et un âge. Cette organisation est distincte du HTML utilisé pour la présenter. On peut changer le rendu sans réécrire les données.
 
 ```php
 <?php
-// Initialisation du plateau (3x3) si non défini
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-if (!isset($_SESSION['plateau'])) {
-    $_SESSION['plateau'] = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-    ];
-    $_SESSION['joueur'] = 'X'; // X commence
-}
-
-// Gestion du clic sur une case
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ligne']) && isset($_POST['colonne'])) {
-    $ligne = (int)$_POST['ligne'];
-    $colonne = (int)$_POST['colonne'];
-
-    // Vérifie si la case est vide
-    if ($_SESSION['plateau'][$ligne][$colonne] === '') {
-        $_SESSION['plateau'][$ligne][$colonne] = $_SESSION['joueur'];
-        // Change de joueur
-        $_SESSION['joueur'] = $_SESSION['joueur'] === 'X' ? 'O' : 'X';
-    }
-}
-
-// Réinitialiser le plateau
-if (isset($_POST['reset'])) {
-    session_destroy();
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Morpion</title>
-</head>
-<body>
-    <header>
-        <div class="logo">Logo</div>
-        <nav>
-            <ul>
-                <li>Echecs</li>
-                <li>Mahjong</li>
-                <li>Force 4</li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="morpion">
-            <?php foreach ($_SESSION['plateau'] as $ligneIndex => $ligne) : ?>
-                <div class="morpionligne">
-                    <?php foreach ($ligne as $colonneIndex => $case) : ?>
-                        <form method="POST" >
-                            <input type="hidden" name="ligne" value="<?php echo $ligneIndex; ?>">
-                            <input type="hidden" name="colonne" value="<?php echo $colonneIndex; ?>">
-                            <button type="submit" >
-                                <?php echo htmlspecialchars($case); ?>
-                            </button>
-                        </form>
-                    <?php endforeach; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <form method="POST">
-            <button type="submit" name="reset">Réinitialiser</button>
-        </form>
-    </main>
-
-    <footer>
-        <div>Google Maps</div>
-        <div>Réseaux Sociaux</div>
-        <div>Contact+Infos</div>
-    </footer>
-</body>
-</html>
-
-?>
-```
-
-### Étape 2 : Amélioration du CSS
-Vous devez modifier le fichier `styles.css` pour rendre le plateau plus esthétique. Voici quelques idées :
-- Centrez le plateau au milieu de l'écran.
-- Ajoutez une bordure et une couleur de fond aux cases.
-- Mettez en surbrillance la case survolée.
-- Changez le style du bouton pour qu'il s'intègre au thème général.
-
-Le code css de base : 
-
-```css
-body {
-    margin: 0;
-}
-
-header {
-    display:flex;
-    justify-content: space-between;
-    height: 5vh;
-    background-color: darkslateblue;
-    color: beige;
-    align-items: center;
-    padding: 10px;
-}
-
-nav ul {
-display: flex;
-list-style-type: none;
-justify-content: space-between;
-gap: 10px;
-}
-
-footer{
-    height: 5vh;
-    background-color: chartreuse;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    
-}
-
-main
-{
-    width: 100%;
-    height: 90vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.PUB {
-    background-color: hotpink;
-    height: 90vh;
-    width:20vw ;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding-left: 10px;
-    padding-right: 10px;
-    
-}
-
-.PUB div{
-    background-color: khaki;
-    height: 20vh;
-    width: 100%;
-    
-}
-
-.morpion{
-    width: 70vw;
-    height: 70vw;
-    display: flex;
-    flex-direction:column;
-    justify-content: space-between;
-    margin-left: 30px;
-}
-
-.morpionligne{
-    width: 100% ;
-    height: 30%;
-    background-color: mintcream;
-    display:flex;
-    justify-content: space-between;
-}
-
-.morpionligne form { 
-    height: 100%;
-    width: 30%;
-    background-color: orange;
-}
-
-.morpionligne form button { 
-    height: 100%;
-    width: 100%;
-    font-size: xx-large;
-}
-
-.morpionligne div:hover { 
-
-    background-color: blue;
-    transform: rotate(180deg);
+$profils = [
+    ['nom' => 'Léa', 'age' => 18],
+    ['nom' => 'Sam', 'age' => 19],
+];
+foreach ($profils as $profil) {
+    echo $profil['nom'] . ' : ' . $profil['age'] . "
+";
 }
 ```
 
----
+**Sortie attendue :** `Léa : 18`, puis `Sam : 19`. À chaque tour, `$profil` représente un enregistrement. Ce nom ne désigne pas la collection entière. Ajouter un troisième profil provoque un troisième tour, sans ajouter une instruction d’affichage.
 
-## Partie 2 : Détection du vainqueur
+| Syntaxe | Ce qu’elle lit | Confusion à éviter |
+|---|---|---|
+| `$profils[0]` | Le premier enregistrement. | Ce n’est pas directement le nom du profil. |
+| `$profils[0]['nom']` | Son champ `nom`. | Les deux accès concernent deux niveaux. |
+| `count($profils)` | Le nombre d’enregistrements. | Ce n’est pas le dernier indice. |
+| `foreach ($profils as $profil)` | Chaque enregistrement successif. | Le corps s’exécute une fois par élément. |
 
-Dans cette partie, vous devez implémenter un système pour détecter si un joueur a gagné. Voici les étapes et indices pour vous guider :
+## Tableaux associatifs et objets PHP
 
-1. **Analyser le plateau après chaque tour**  
-   Pensez à examiner les lignes, colonnes et diagonales pour voir si elles contiennent trois symboles identiques (X ou O). Vous pouvez utiliser des boucles pour parcourir les différentes combinaisons possibles.
+Un tableau associatif se lit avec des crochets et une clé. Un objet simple possède des propriétés, lues avec `->`. Une classe décrit une structure et des comportements ; un objet est une instance de cette classe. Dans cette séance, un petit objet sert uniquement à reconnaître cette autre notation : il n’est pas nécessaire de construire une architecture orientée objet complète.
 
-2. **Créer une logique de vérification**  
-   - Pour vérifier une ligne : assurez-vous que toutes les cases de cette ligne contiennent le même symbole.
-   - Pour les colonnes : appliquez une méthode similaire, mais en parcourant les cases verticalement.
-   - Pour les diagonales : identifiez les deux diagonales et vérifiez si elles contiennent trois symboles identiques.
+## L’échappement HTML à la sortie
 
-3. **Gérer le résultat**  
-   Si un joueur gagne :
-   - Affichez un message pour indiquer le gagnant.
-   - Bloquez les cases restantes pour empêcher tout autre clic.
+Une chaîne peut contenir `<` ou `&`. Dans une page HTML, ces signes peuvent être interprétés comme du balisage. `htmlspecialchars($texte, ENT_QUOTES, 'UTF-8')` transforme les caractères spéciaux pour afficher du texte dans un contexte HTML. Cela ne valide pas une URL, ne protège pas une requête SQL et ne remplace pas la validation des données.
 
-   Si aucune combinaison gagnante n'est trouvée et que toutes les cases sont remplies :
-   - Déclarez un match nul.
+Conservez les données brutes dans la collection ; échappez-les lors de la sortie dans le HTML. Une liste vide reste un cas normal : la boucle ne produit aucun profil et l’interface peut afficher un message explicite.
 
-4. **Afficher un message clair**  
-   Intégrez un affichage dynamique pour informer les joueurs du résultat (par exemple, avec un message au-dessus ou en dessous du plateau).
+## Générer des cartes avec foreach
 
-5. **Réinitialisation**  
-   Assurez-vous que le bouton de réinitialisation fonctionne toujours correctement pour redémarrer une nouvelle partie.
-
----
-
-# TP 2 : Puissance 4
-
-## Objectif
-Ce TP est divisé en deux parties :
-1. **Amélioration du design CSS** : Vous devrez intégrer et utiliser le fichier CSS fourni pour améliorer l'apparence du jeu.
-2. **Ajout de la vérification de victoire** : Vous implémenterez une logique pour vérifier si un utilisateur a gagné.
-
----
-
-## Étape 1 : Préparer votre environnement
-
-### Fichiers fournis :
-1. `index.php` : Contient le code PHP du jeu.
-2. `styles.css` : Contient le style CSS que vous devrez intégrer.
----
-
-### Le CSS
-```css
-body{
-    margin: 0;
-    padding: 0;
-}
-
-header{
-    background-color: orange;
-    height: 5vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-}
-
-nav ul{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    list-style-type: none;
-    gap: 20px;
-}
-
-main{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: powderblue;
-    height: calc(90vh - 40px);
-    width: 100%;
-}
-
-.pub{
-    width: 15vh;
-    background-color: purple;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.pub div{
-  background-color: red;
-  height: 15vh;
-  width: 80%;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    background-color: orchid;
-    display: flex;
-    height: 5vh;
-    width: 100%;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.ligne{
-    display: flex;
-    gap: 4px;
-    padding: 10px;
-    width: min-content;
-}
-
-.bleu{
-    background-color: blue;
-}
-
-
-.puissance-quatre{
-    display: flex;
-    
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-
-}
-.ligne div{
-    height: 8vw;
-    width: 8vw;
-    border-radius: 50%;
-    transition: all 1s;
-    border: solid;
-}
-
-.ligne form{
-    height: 8vw;
-    width: 8vw;
-    border-radius: 50%;
-    transition: all 1s;
-}
-
-.ligne form button{
-    height: 8vw;
-    width: 8vw;
-    border-radius: 50%;
-    transition: all 1s;
-}
-
-.socle{
-    width: calc(8vw * 8);
-    background-color: #0000ff;
-    height: 8vw;
-}
-
-.rouge { background-color: red; }
-.jaune { background-color: yellow; }
-```
-
----
-
-### Le PHP
+Un tableau représente une collection ; chaque entrée peut être un tableau associatif décrivant un profil. Les index identifient la position dans la collection, les clés identifient les champs dans le profil. Dans `$profils[1]['nom']`, on choisit d’abord le deuxième profil, puis son champ `nom`.
 
 ```php
 <?php
-session_start();
-
-// Initialisation du tableau de jeu
-if (!isset($_SESSION['board'])) {
-    $_SESSION['board'] = array_fill(0, 6, array_fill(0, 7, null));
+$profils = [
+    ['nom' => 'Léa', 'points' => 12],
+    ['nom' => 'Sam', 'points' => 8],
+    ['nom' => 'Noa', 'points' => 15],
+];
+$total = 0;
+foreach ($profils as $profil) {
+    $total += $profil['points'];
 }
-
-// Gestion des clics
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['col'])) {
-    $col = intval($_POST['col']);
-
-    // Trouver la première ligne disponible dans la colonne
-    for ($row = 5; $row >= 0; $row--) {
-        if ($_SESSION['board'][$row][$col] === null) {
-            // Définir la couleur actuelle (alternance entre "rouge" et "jaune")
-            if (!isset($_SESSION['current_color']) || $_SESSION['current_color'] === 'jaune') {
-                $_SESSION['next_color'] = 'jaune';
-                $_SESSION['current_color'] = 'rouge';
-
-            } else {
-                $_SESSION['next_color'] = 'rouge';
-                $_SESSION['current_color'] = 'jaune';
-            }
-
-            // Mettre à jour le tableau avec la couleur actuelle
-            $_SESSION['board'][$row][$col] = $_SESSION['current_color'];
-            break;
-        }
-    }
-}
-else
-{
-    $_SESSION['next_color'] = 'rouge';
-}
-
-// Réinitialiser le plateau
-if (isset($_POST['reset'])) {
-    session_destroy();
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-
-?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Puissance Quatre</title>
-</head>
-<body>
-<header>
-            <div id="logo-head">logo</div>
-            <nav>
-                <ul>
-                    <li>morpion</li>
-                    <li>test de personnalité</li>
-                    <li>calculatrice</li>
-                </ul>
-            </nav>
-        </header>
-    <main>
-        <div class="puissance-quatre">
-            <div class="ligne">
-                <?php for ($j = 0; $j < 7; $j++): ?>
-                    <form method="post" action="index.php" style="display: inline;">
-                        <input type="hidden" name="col" value="<?php echo $j; ?>">
-                        <button type="submit" class="<?php echo $_SESSION['next_color'];?>">&#x25BC;</button>
-                    </form>
-                <?php endfor; ?>
-            </div>
-
-            <div>
-                <?php for ($i = 0; $i < 6; $i++): ?>
-                    <div class="ligne bleu">
-                        <?php for ($j = 0; $j < 7; $j++): ?>
-                            <div class="cell <?php echo $_SESSION['board'][$i][$j] ?? ''; ?>"></div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endfor; ?>
-            </div>
-
-            <div class="socle">
-                <form method="POST">
-                    <button type="submit" name="reset">Réinitialiser</button>
-                </form>
-            </div>
-        </div>
-        <div class="pub">
-        <div>pub1</div>
-        <div>pub2</div>
-        <div>pub3</div>
-    </div>
-</main>
-<footer>
-    <div>Contact</div>
-    <div>Nos reseaux</div>
-    <div>Mention légale</div>
-</footer>
-
-</body>
-</html>
+echo $total;
 ```
-## Partie 1 : Amélioration de l'interface visuelle
 
-### Objectif
-Ameliorer l'interface visuelle en retravaillant les coouleur, espacement,etc.
+**Trace avec 12, 8 et 15 points :** le total passe de 0 à 12, puis à 20, puis à 35. L’initialisation se place avant la boucle : la déplacer dans la boucle effacerait les additions précédentes. Pour une collection vide, aucun tour ne se produit et le total reste 0.
 
-## Partie 2 : Ajout de la vérification de victoire
+**Lecture accompagnée :** `$profils` reste la collection ; `$profil` désigne l’entrée courante. Le HTML d’une carte sera écrit une fois dans le parcours, mais produit plusieurs fois dans la réponse. Ce HTML doit afficher les valeurs comme texte échappé.
 
-### Objectif
-Implémentez une fonction qui vérifie si un joueur a aligné 4 pions (horizontalement, verticalement ou en diagonale).
+**Thèmes possibles :** joueurs et points, musiciens et morceaux, photographes et séries. Les champs et les calculs doivent garder un sens dans le thème choisi ; ne changez pas seulement les couleurs.
 
-### Où mettre le code ?
-1. Dans le fichier `index.php`, ajoutez une fonction PHP qui vérifie la victoire.
-2. Appelez cette fonction après chaque action de l'utilisateur.
-3. Affichez un message (par exemple, une alerte) si un joueur a gagné.
+<a id="collection"></a>
+
+## Les tableaux imbriqués de profils
 
 ```php
-// Ajoutez votre fonction ici
-function checkWinner($board) {
-    // Votre code pour vérifier la victoire
-}
+$profils = [
+    ['nom' => 'Léa', 'points' => 12],
+    ['nom' => 'Sam', 'points' => 8],
+    ['nom' => 'Noa', 'points' => 15],
+];
 ```
----
 
-# TP 3 : Test de Personnalité
+Le tableau extérieur contient trois profils. Chaque profil est un tableau associatif. `$profils[1]['nom']` donne `Sam` ; `count($profils)` donne 3. Ajouter un profil doit produire un affichage supplémentaire sans recopier un bloc HTML entier.
 
-Dans ce TP vous allez devoir appliquer le Style que nous avions definis dans la dernière séance au code PHP que je vous donne. 
+<a id="boucle"></a>
 
-## Le code PHP
-
-Le code est composé de deux pages, une page permettant la saisie des questions et une page permettant l'affichage des résultats. 
-
-### Le Questionnaire (index.php)
+## La boucle foreach
 
 ```php
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Personnalité</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Test de Personnalité</h1>
-        <form action="resultat.php" method="POST">
-            <div class="question">
-                <p>1. Vous aimez aider les autres.</p>
-                <input type="hidden" name="criteria[q1]" value="gentillesse">
-                <div class="options">
-                    <label><input type="radio" name="q1" value="1" required> Pas du tout d'accord</label>
-                    <label><input type="radio" name="q1" value="2"> Pas d'accord</label>
-                    <label><input type="radio" name="q1" value="3"> Neutre</label>
-                    <label><input type="radio" name="q1" value="4"> D'accord</label>
-                    <label><input type="radio" name="q1" value="5"> Très d'accord</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>2. Vous préférez économiser que dépenser.</p>
-                <input type="hidden" name="criteria[q2]" value="radin">
-                <div class="options">
-                    <label><input type="radio" name="q2" value="1" required> Pas du tout d'accord</label>
-                    <label><input type="radio" name="q2" value="2"> Pas d'accord</label>
-                    <label><input type="radio" name="q2" value="3"> Neutre</label>
-                    <label><input type="radio" name="q2" value="4"> D'accord</label>
-                    <label><input type="radio" name="q2" value="5"> Très d'accord</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>3. Vous aimez être le centre de l'attention.</p>
-                <input type="hidden" name="criteria[q3]" value="egocentrique">
-                <div class="options">
-                    <label><input type="radio" name="q3" value="1" required> Pas du tout d'accord</label>
-                    <label><input type="radio" name="q3" value="2"> Pas d'accord</label>
-                    <label><input type="radio" name="q3" value="3"> Neutre</label>
-                    <label><input type="radio" name="q3" value="4"> D'accord</label>
-                    <label><input type="radio" name="q3" value="5"> Très d'accord</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>4. Vous vous sentez satisfait après avoir aidé quelqu'un.</p>
-                <input type="hidden" name="criteria[q4]" value="gentillesse">
-                <div class="options">
-                    <label><input type="radio" name="q4" value="1" required> Pas du tout d'accord</label>
-                    <label><input type="radio" name="q4" value="2"> Pas d'accord</label>
-                    <label><input type="radio" name="q4" value="3"> Neutre</label>
-                    <label><input type="radio" name="q4" value="4"> D'accord</label>
-                    <label><input type="radio" name="q4" value="5"> Très d'accord</label>
-                </div>
-            </div>
-
-            <button type="submit">Voir les résultats</button>
-        </form>
-    </div>
-</body>
-</html>
+$total = 0;
+foreach ($profils as $profil) {
+    $total += $profil['points'];
+}
+echo $total; // 35
 ```
 
-### La page des résultats (resultat.php)
+`foreach` exécute son bloc pour chaque élément ; `$profil` reçoit l'élément courant. `$total += valeur` ajoute cette valeur au total. Initialisez le total avant la boucle : le remettre à zéro à chaque tour détruit l'accumulation. Une collection vide n'effectue aucun tour.
+
+Pour une moyenne, divisez par `count($profils)` seulement si le nombre est supérieur à zéro. Une division par zéro n'est pas une moyenne de zéro. Une boucle `for` possède généralement une initialisation, une condition et une mise à jour ; avec des indices, le dernier indice est ici 2, pas 3.
+
+<a id="objet"></a>
+
+## Les propriétés d’un objet PHP
 
 ```php
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $criteria = $_POST['criteria'];
-    $results = [];
-
-    foreach ($criteria as $question => $criterion) {
-        if (!isset($results[$criterion])) {
-            $results[$criterion] = 0;
-        }
-        $results[$criterion] += (int) $_POST[$question];
+class Profil {
+    public string $nom;
+    public int $points;
+    public function __construct(string $nom, int $points) {
+        $this->nom = $nom;
+        $this->points = $points;
     }
-
-    echo "<div style='text-align:center; padding: 20px;'>";
-    echo "<h1>Résultats du Test de Personnalité</h1>";
-    foreach ($results as $criterion => $score) {
-        echo "<p><strong>$criterion:</strong> $score points</p>";
-    }
-    echo "</div>";
-} else {
-    header('Location: index.php');
-    exit;
 }
-?>
+$lea = new Profil('Léa', 12);
+echo $lea->nom; // Léa
 ```
 
-## Partie 1 : Styliser le formulaire
+Une classe décrit un type d'objet ; `new` crée une instance. `->` accède à une propriété d'objet ; `['nom']` accède à une entrée de tableau associatif. `$this` désigne l'instance courante dans ses méthodes. L'objectif est de reconnaître ces deux représentations, pas de réécrire tout l'exercice en architecture complexe.
 
-Vous devez styliser le formulaire comme nous l'avons vue dans le cours.
+<a id="affichage"></a>
 
-## Partie 2 : Styliser la page des résultats
-
-Vous allez devoir modifier la page resultat.php afin que la page présente le résusltat du questionnaire de manière jolie. Vous pouvez par exemple transformer le nombre de points obtenu dans certain critère par une progress bar.
-
-## Bonus : Faire un graphique
-
-Vous devrez faire un graphique permettant de visualiser les différents critères.
-
----
-
-# TP 4 : Calculatrice en HTML/CSS/PHP
-
-Dans ce TP, vous allez travailler sur une calculatrice simple développée en PHP. Vous allez personnaliser son design et ajouter une fonctionnalité supplémentaire.
-
-Pour vous aider, vous vous baserez sur le code php suivant : 
+## echo et htmlspecialchars
 
 ```php
-    <?php
-// Initialisation des variables
-$result = "";
-$display = "";
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $input = $_POST['input'] ?? "";
-
-    // Évaluer l'expression si "=" est pressé
-    if (isset($_POST['equals'])) {
-        try {
-            $display = eval("return $input;");
-        } catch (Throwable $e) {
-            $display = "Erreur";
-        }
-    } elseif (isset($_POST['clear'])) {
-        $display = "";
-        $input = "";
-    } else {
-        $display = $input;
-    }
-}
-?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculatrice</title>
-    <link rel="stylesheet" href="styl.css">
-</head>
-<body>
-    <div class="calculator">
-        <form method="POST">
-            <input type="text" class="screen" name="input" value="<?= htmlspecialchars($display) ?>" readonly>
-            <div class="buttons">
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '7') ?>">7</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '8') ?>">8</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '9') ?>">9</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '/') ?>">/</button>
-
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '4') ?>">4</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '5') ?>">5</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '6') ?>">6</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '*') ?>">x</button>
-
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '1') ?>">1</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '2') ?>">2</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '3') ?>">3</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '-') ?>">-</button>
-
-                <button type="submit" name="clear">C</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '0') ?>">0</button>
-                <button type="submit" name="equals">=</button>
-                <button type="submit" name="input" value="<?= htmlspecialchars($display . '+') ?>">+</button>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
-
+<ul>
+<?php foreach ($profils as $profil): ?>
+  <li><?= htmlspecialchars($profil['nom'], ENT_QUOTES, 'UTF-8') ?> :
+      <?= $profil['points'] ?> points</li>
+<?php endforeach; ?>
+</ul>
 ```
 
-## Objectifs du TP
+`<?= ... ?>` affiche une expression. `htmlspecialchars` transforme les caractères sensibles en entités HTML lors de l'affichage : un nom contenant `<b>` doit apparaître comme texte, pas créer du balisage. PHP génère le HTML côté serveur ; le navigateur ne parcourt pas votre tableau PHP lui-même.
 
-1. **Partie 1 : Appliquer le design CSS**  
-   Vous allez appliquer un style en CSS pour que la calculatrice corresponde au design vu lors de la séance précédente.
+## Le HTML produit par la boucle
 
-2. **Partie 2 : Ajouter une fonctionnalité "historique des calculs"**  
-   Vous ajouterez un tableau affichant les derniers calculs effectués sous la calculatrice.
+En PHP, foreach parcourt la collection avant l’envoi de la réponse HTML. Ici, un tableau JavaScript illustre la même transformation dans le navigateur. Les syntaxes sont différentes : observez le principe « une entrée → une carte », puis exécutez votre version PHP.
 
----
-Ajouter une fonctionnalité "historique des calculs"
+```html live title="D’une collection à plusieurs cartes"
+<style>
+  body {
+    margin: 16px;
+    font-family: system-ui, sans-serif;
+    color: #18324c;
+  }
+  .cartes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  article,
+  output {
+    display: block;
+    padding: 16px;
+    border: 1px solid #9aaabe;
+  }
+  button,
+  input {
+    font: inherit;
+    padding: 8px;
+  }
+  label {
+    display: block;
+    margin-block: 12px 4px;
+  }
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+  }
+</style>
 
-Dans cette partie, vous allez ajouter une section sous la calculatrice pour afficher les derniers calculs effectués.
+<h1>Profils de l’atelier</h1>
+<section class="cartes" id="profils"></section>
+<script>
+  const profils = [
+    { nom: "Léa", passion: "Photographie" },
+    { nom: "Sam", passion: "Jeux coopératifs" },
+    { nom: "Noa", passion: "Illustration" },
+  ];
+  for (const profil of profils) {
+    const article = document.createElement("article");
+    const titre = document.createElement("h2");
+    titre.textContent = profil.nom;
+    const texte = document.createElement("p");
+    texte.textContent = profil.passion;
+    article.append(titre, texte);
+    document.querySelector("#profils").append(article);
+  }
+</script>
+```
 
-1. Modifiez votre fichier PHP pour inclure un tableau des historiques. Voici un exemple de modification dans votre fichier :
-
-   ```php
-   <?php
-   // Initialisation des variables
-   $result = "";
-   $display = "";
-   $history = [];
-
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $input = $_POST['input'] ?? "";
-
-       // Évaluer l'expression si "=" est pressé
-       if (isset($_POST['equals'])) {
-           try {
-               $result = eval("return $input;");
-               $history[] = $input . " = " . $result;
-               $display = $result;
-           } catch (Throwable $e) {
-               $display = "Erreur";
-           }
-       } elseif (isset($_POST['clear'])) {
-           $display = "";
-           $input = "";
-       } else {
-           $display = $input;
-       }
-   }
-   ?>
-
-   <div class="history">
-       <h2>Historique des calculs</h2>
-       <ul>
-           <?php foreach ($history as $entry): ?>
-               <li><?= htmlspecialchars($entry) ?></li>
-           <?php endforeach; ?>
-       </ul>
-   </div>
-   ```
-
-2. Ajoutez le style suivant à votre fichier `style.css` pour styliser l'historique :
-
-   ```css
-   .history {
-       margin-top: 20px;
-       font-size: 0.9em;
-       color: #333;
-   }
-   .history ul {
-       list-style: none;
-       padding: 0;
-   }
-   .history li {
-       background: #f9f9f9;
-       padding: 5px 10px;
-       margin-bottom: 5px;
-       border-radius: 3px;
-   }
-   ```
-
-3. Testez à nouveau votre calculatrice et assurez-vous que les calculs effectués s'affichent dans l'historique.
-
----
-
-## Bonus
-
-- Ajoutez un bouton pour effacer l'historique.
-- Personnalisez les couleurs des boutons et du fond pour mieux correspondre au style de votre choix.
-
-
----
+**Résultat à observer :** Trois objets produisent trois cartes. Ajoutez un quatrième objet sans copier le HTML d’une carte. Les valeurs affichées sont du texte, même si elles contiennent des chevrons.

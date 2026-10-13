@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Cadrer le projet de site Web",
+  "uid": "s1-site-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/produire_Un_Site_Web/projet",
+  "sourceSession": "SITE-01",
+  "targetCourse": "/semestre_1/produire_Un_Site_Web/figma",
+  "questions": [
+    {
+      "question": "Quel élément doit accompagner un objectif de site ?",
+      "answers": [
+        "Le public utilisateur",
+        "La couleur de fond seulement",
+        "Le modèle d’ordinateur",
+        "Le nom du fichier CSS"
+      ],
+      "explanation": "L’objectif doit répondre à un besoin d’un public identifié.",
+      "sourceSection": "comprendre",
+      "evidence": "Un objectif associe un public à une action",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Comment formuler un objectif vérifiable ?",
+      "answers": [
+        "Le nom d’une technologie seulement",
+        "Une action et un résultat observables",
+        "Une préférence comme faire un joli site",
+        "Une liste de couleurs sans usage"
+      ],
+      "explanation": "Un objectif vérifiable décrit ce que la personne pourra accomplir.",
+      "sourceSection": "comprendre",
+      "evidence": "une action et à un résultat observables",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle différence entre commanditaire et utilisateur ?",
+      "answers": [
+        "L’utilisateur choisit toujours le budget",
+        "Ces deux rôles sont forcément identiques",
+        "Le commanditaire demande ; l’utilisateur utilise",
+        "Le commanditaire utilise toujours seul"
+      ],
+      "explanation": "Les attentes du commanditaire et les besoins des utilisateurs doivent être distingués.",
+      "sourceSection": "comprendre",
+      "evidence": "Le commanditaire demande le site ; l’utilisateur le consulte",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que décrit une arborescence ?",
+      "answers": [
+        "La position de chaque pixel",
+        "Le détail de toutes les couleurs",
+        "La liste des logiciels installés",
+        "L’organisation des pages ou rubriques"
+      ],
+      "explanation": "L’arborescence montre les contenus et leurs liens, pas leur disposition graphique.",
+      "sourceSection": "comprendre",
+      "evidence": "L’arborescence décrit l’organisation des pages ou rubriques.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que décrit un parcours utilisateur ?",
+      "answers": [
+        "Les étapes permettant de réaliser une tâche",
+        "L’ordre alphabétique des fichiers",
+        "Une palette de couleurs",
+        "La liste de tous les navigateurs"
+      ],
+      "explanation": "Un parcours suit une personne de son point d’entrée à son résultat.",
+      "sourceSection": "comprendre",
+      "evidence": "Un parcours décrit les étapes d’une tâche.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que faut-il clarifier pour chaque lien ou bouton ?",
+      "answers": [
+        "Uniquement le nom de sa classe CSS",
+        "La destination ou l’action attendue",
+        "Seulement la couleur du contrôle",
+        "Seulement sa taille"
+      ],
+      "explanation": "Chaque contrôle doit avoir un usage défini et testable.",
+      "sourceSection": "comprendre",
+      "evidence": "Pour chaque lien, indiquez une destination ; pour chaque bouton, indiquez une action.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel périmètre technique est obligatoire dans le projet de site vitrine du S1 ?",
+      "answers": [
+        "Administration avec base obligatoire",
+        "Connexion utilisateur obligatoire",
+        "HTML/CSS, navigation et vérifications",
+        "Paiement réel obligatoire"
+      ],
+      "explanation": "Le périmètre du S1 privilégie un site vitrine fonctionnel et vérifié.",
+      "sourceSection": "comprendre",
+      "evidence": "Le périmètre technique du site vitrine S1 comprend HTML/CSS, navigation et vérifications.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Un formulaire est uniquement une maquette, sans traitement. Que faut-il indiquer à l’utilisateur ?",
+      "answers": [
+        "Afficher un faux succès d’envoi",
+        "Prétendre qu’un courriel est parti",
+        "Cacher le bouton seulement dans le CSS",
+        "Indiquer qu’il s’agit d’une démonstration sans envoi"
+      ],
+      "explanation": "L’interface doit annoncer honnêtement les limites de son fonctionnement.",
+      "sourceSection": "comprendre",
+      "evidence": "Un formulaire sans traitement doit annoncer « Démonstration sans envoi »",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "À quoi sert la liste indispensable / utile / optionnel ?",
+      "answers": [
+        "Classer les priorités",
+        "Classer les noms de fichiers",
+        "Trier les couleurs",
+        "Choisir la largeur de chaque écran"
+      ],
+      "explanation": "Le socle indispensable est construit avant les améliorations optionnelles.",
+      "sourceSection": "comprendre",
+      "evidence": "La liste indispensable / utile / optionnel classe les priorités.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle formulation est un critère concret ?",
+      "answers": [
+        "Le code est impressionnant",
+        "Les trois projets sont accessibles depuis l’accueil",
+        "Le site est très moderne",
+        "La page est jolie"
+      ],
+      "explanation": "Un critère décrit un résultat que l’on peut constater dans un scénario.",
+      "sourceSection": "comprendre",
+      "evidence": "« Les trois projets sont accessibles depuis l’accueil » est un critère concret.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Qu'appelle-t-on un livrable ?",
+      "answers": [
+        "Une idée non réalisée",
+        "Le nom d’une séance",
+        "Un élément remis et vérifiable",
+        "Une préférence de couleur"
+      ],
+      "explanation": "Le livrable matérialise le travail attendu.",
+      "sourceSection": "comprendre",
+      "evidence": "Un livrable est un élément remis et vérifiable",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Qu'appelle-t-on un jalon ?",
+      "answers": [
+        "La version finale uniquement",
+        "Un fichier de police",
+        "Une action sans résultat attendu",
+        "Un point de contrôle intermédiaire"
+      ],
+      "explanation": "Le jalon permet de constater les progrès et de corriger tôt.",
+      "sourceSection": "comprendre",
+      "evidence": "Un jalon est un point de contrôle intermédiaire",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

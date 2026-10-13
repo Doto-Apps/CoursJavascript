@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Portfolio : formulaire d’ajout et d’édition",
+  "uid": "s2-site-05",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/Site_Web_Avec_Donnees/td/gestion",
+  "sourceSession": "S2-SITE-05",
+  "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/qualite",
+  "questions": [
+    {
+      "question": "Sur quoi baser les contrôles de gestion ?",
+      "answers": [
+        "Le dictionnaire de données et le contrat",
+        "Uniquement les couleurs de la maquette",
+        "Les noms de fichiers CSS",
+        "Le nombre de cartes affichées"
+      ],
+      "explanation": "Les champs de gestion représentent les données et leurs règles.",
+      "sourceSection": "notion-1",
+      "evidence": "Le formulaire reprend les champs du dictionnaire de données.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Qu'est-ce qui donne un nom compréhensible au champ ?",
+      "answers": [
+        "Un id sans texte",
+        "Un label associé",
+        "Un placeholder seul",
+        "Une couleur différente"
+      ],
+      "explanation": "Le label nomme le champ pendant la saisie.",
+      "sourceSection": "notion-2",
+      "evidence": "Chaque contrôle possède un label.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Un id caché est-il fiable sans validation serveur ?",
+      "answers": [
+        "Oui, si le formulaire a une bordure",
+        "Oui, si JavaScript le remplit",
+        "Non, l’id doit être validé côté serveur",
+        "Oui, hidden rend l’id impossible à changer"
+      ],
+      "explanation": "Un champ caché reste une donnée envoyée par le client et modifiable.",
+      "sourceSection": "notion-4",
+      "evidence": "Un champ caché peut porter l'id mais ne constitue pas une protection.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle valeur envoyer pour end_date non renseignée ?",
+      "answers": [
+        "Une chaîne contenant null",
+        "La date d’aujourd’hui systématiquement",
+        "Le nombre zéro",
+        "null"
+      ],
+      "explanation": "Une absence prévue doit être transmise dans le type défini par le contrat.",
+      "sourceSection": "notion-6",
+      "evidence": "Une fin absente est envoyée comme null dans le contrat.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle méthode modifie un projet existant ?",
+      "answers": [
+        "PATCH",
+        "GET",
+        "HEAD",
+        "POST de lecture"
+      ],
+      "explanation": "La modification cible un projet existant plutôt que d’en créer un second.",
+      "sourceSection": "notion-8",
+      "evidence": "PATCH édite un projet identifié.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel identifiant permet de cibler l'édition ?",
+      "answers": [
+        "Le numéro de clic",
+        "L’id stable du projet",
+        "La position dans les résultats",
+        "Le titre uniquement"
+      ],
+      "explanation": "L’identité doit survivre aux tris et aux filtres.",
+      "sourceSection": "notion-9",
+      "evidence": "L'édition transmet l'id du projet existant.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel SQL correspond à une édition ciblée ?",
+      "answers": [
+        "INSERT d’une copie à chaque édition",
+        "SELECT seulement",
+        "UPDATE avec WHERE id = :id",
+        "UPDATE sans condition"
+      ],
+      "explanation": "La clause de ciblage évite de modifier tous les projets.",
+      "sourceSection": "notion-11",
+      "evidence": "UPDATE avec WHERE id cible un projet.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment insérer description dans SQL ?",
+      "answers": [
+        "Concaténer directement la description dans SQL",
+        "Utiliser textContent pour protéger SQL",
+        "Remplacer les apostrophes par une couleur",
+        "prepare puis execute avec des paramètres"
+      ],
+      "explanation": "Les paramètres protègent la construction SQL ; le rendu HTML a d’autres règles.",
+      "sourceSection": "notion-12",
+      "evidence": "Les valeurs du formulaire sont passées comme paramètres.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quand vider le formulaire après une création ?",
+      "answers": [
+        "Après confirmation de réussite",
+        "Avant de recevoir la réponse",
+        "Dès la saisie du dernier champ",
+        "Après chaque échec"
+      ],
+      "explanation": "En cas d’échec, conserver la saisie permet la correction.",
+      "sourceSection": "notion-14",
+      "evidence": "La réinitialisation suit la réponse réussie.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "2027-02-30 est-il une date valide ?",
+      "answers": [
+        "Oui, si POST est utilisé",
+        "Non, février n’a pas trente jours",
+        "Oui, toute chaîne année-mois-jour est valide",
+        "Oui, si le titre est présent"
+      ],
+      "explanation": "Le format ne suffit pas ; la date doit réellement exister.",
+      "sourceSection": "notion-17",
+      "evidence": "Une date doit être réelle et pas seulement avoir le bon format.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel protocole doit être refusé pour project_url ?",
+      "answers": [
+        "http:",
+        "Un lien HTTPS valide",
+        "javascript:",
+        "https:"
+      ],
+      "explanation": "Les protocoles autorisés sont vérifiés séparément du texte affiché.",
+      "sourceSection": "notion-19",
+      "evidence": "Les liens externes du contrat n'acceptent que HTTP(S).",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Le formulaire local suffit-il pour publier une gestion sécurisée ?",
+      "answers": [
+        "Oui, un bouton caché protège toutes les écritures",
+        "Oui, required protège la base",
+        "Oui, une requête préparée identifie l’utilisateur",
+        "Non, il faut aussi authentification et autorisations serveur"
+      ],
+      "explanation": "La validation et la protection SQL ne remplacent pas les droits d’accès.",
+      "sourceSection": "notion-20",
+      "evidence": "Le projet de gestion livré est local ; une publication demande une authentification serveur.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

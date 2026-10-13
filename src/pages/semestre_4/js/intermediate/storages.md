@@ -4,164 +4,46 @@ title: "Storage"
 type: "tp"
 ---
 
-# Stockage
+## localStorage et sessionStorage
 
-Il existe plusieurs méthodes de stockage de données en JavaScript, qui
-permettent de conserver des informations côté client et de les
-réutiliser ultérieurement. Les méthodes de stockage incluent :
-
-- Le <strong>stockage local</strong>, qui permet de stocker des données
-  de manière permanente dans le navigateur de l'utilisateur
-- Le <strong>sessionStorage</strong>, qui permet de stocker des données
-  de manière temporaire pour une session donnée (c'est-à-dire, jusqu'à
-  ce que le navigateur soit fermé)
-- Le <strong>cookies</strong>, qui permet de stocker des données de
-  manière temporaire ou permanente sur l'ordinateur de l'utilisateur
-
-## Stockage local
-
-Le stockage local vous permet de stocker des données de manière
-permanente dans le navigateur de l'utilisateur. Les données stockées
-dans le stockage local sont accessibles depuis n'importe quelle page du
-site, même si le navigateur est fermé et rouvert.
-
-Voici comment utiliser le stockage local :
+Ces espaces conservent des couples clé/valeur textuels dans le navigateur et sont isolés par origine. `localStorage` persiste généralement après fermeture ; `sessionStorage` est lié à la session d’un onglet et survit à son rechargement. Ils ne constituent ni une base de données serveur ni une synchronisation entre appareils. L’utilisateur ou les réglages de confidentialité peuvent supprimer ou interdire les données.
 
 ```js
-// enregistrer une valeur dans le stockage local
-localStorage.setItem("cle", "valeur");
-
-// récupérer une valeur du stockage local
-let valeur = localStorage.getItem("cle");
-
-// supprimer une valeur du stockage local
-localStorage.removeItem("cle");
-
-// vider toutes les valeurs du stockage local
-localStorage.clear();
+const favoris = [4, 9];
+localStorage.setItem('mmi-favoris', JSON.stringify(favoris));
+const sauvegarde = localStorage.getItem('mmi-favoris');
+console.log(JSON.parse(sauvegarde)); // [4, 9]
+localStorage.removeItem('mmi-favoris');
+console.log(localStorage.getItem('mmi-favoris')); // null
 ```
 
-Le stockage local accepte uniquement des chaînes de caractères comme
-valeurs. Si vous voulez stocker un objet ou un tableau, vous devez
-d'abord le convertir en chaîne de caractères en utilisant{" "}
-<code>JSON.stringify()</code>, et le convertir en objet ou en tableau en
-utilisant <code>JSON.parse()</code> :
+Ces instructions s’exécutent dans la console d’un site servi par HTTP. L’aperçu de la plateforme possède une origine opaque et ne permet pas de prouver le fonctionnement de Web Storage. `setItem` remplace la valeur de la clé ; `removeItem` retire seulement cette clé. Évitez `clear()`, qui retire aussi les autres données de l’application.
+
+## Lire une sauvegarde et vérifier sa forme
 
 ```js
-// enregistrer un objet dans le stockage local
-let monObjet = { nom: "John", âge: 30 };
-localStorage.setItem("monObjet", JSON.stringify(monObjet));
-
-// récupérer un objet du stockage local
-let monObjet = JSON.parse(localStorage.getItem("monObjet"));
-
-// enregistrer un tableau dans le stockage local
-let monTableau = ["un", "deux", "trois"];
-localStorage.setItem("monTableau", JSON.stringify(monTableau));
-
-// récupérer un tableau du stockage local
-let monTableau = JSON.parse(localStorage.getItem("monTableau"));
-```
-
-## SessionStorage
-
-Le sessionStorage est similaire au stockage local, mais les données sont
-stockées de manière temporaire pour une session donnée (c'est-à-dire,
-jusqu'à ce que le navigateur soit fermé).
-
-Voici comment utiliser le sessionStorage :
-
-```js
-// enregistrer une valeur dans le sessionStorage
-sessionStorage.setItem("cle", "valeur");
-
-// récupérer une valeur du sessionStorage
-let valeur = sessionStorage.getItem("cle");
-
-// supprimer une valeur du sessionStorage
-sessionStorage.removeItem("cle");
-
-// vider toutes les valeurs du sessionStorage
-sessionStorage.clear();
-```
-
-Le sessionStorage accepte uniquement des chaînes de caractères comme
-valeurs. Si vous voulez stocker un objet ou un tableau, vous devez
-d'abord le convertir en chaîne de caractères en utilisant{" "}
-<code>JSON.stringify()</code>, et le convertir en objet ou en tableau en
-utilisant <code>JSON.parse()</code> :
-
-```js
-// enregistrer un objet dans le sessionStorage
-let monObjet = { nom: "John", âge: 30 };
-sessionStorage.setItem("monObjet", JSON.stringify(monObjet));
-
-// récupérer un objet du sessionStorage
-let monObjet = JSON.parse(sessionStorage.getItem("monObjet"));
-
-// enregistrer un tableau dans le sessionStorage
-let monTableau = ["un", "deux", "trois"];
-sessionStorage.setItem("monTableau", JSON.stringify(monTableau));
-
-// récupérer un tableau du sessionStorage
-let monTableau = JSON.parse(sessionStorage.getItem("monTableau"));
-```
-
-## Cookies
-
-Les cookies sont de petits fichiers stockés sur l'ordinateur de
-l'utilisateur qui permettent de conserver des informations sur la
-navigation de l'utilisateur sur un site web. Les cookies sont souvent
-utilisés pour stocker les préférences de l'utilisateur, pour suivre le
-comportement de l'utilisateur sur un site web, ou pour stocker des
-informations de connexion pour que l'utilisateur n'ait pas à saisir son
-nom d'utilisateur et son mot de passe à chaque visite. Les cookies
-peuvent être stockés de manière temporaire ou permanente sur
-l'ordinateur de l'utilisateur.
-
-Voici comment enregistrer un cookie :
-
-```js
-function setCookie(nom, valeur, jours) {
-  let date = new Date();
-  date.setTime(date.getTime() + jours * 24 * 60 * 60 * 1000);
-  let expires = "expires=" + date.toUTCString();
-  document.cookie = nom + "=" + valeur + ";" + expires + ";path=/";
-}
-```
-
-Voici comment utiliser la fonction <code>setCookie()</code> :
-
-```js
-setCookie("nom", "valeur", 7); // enregistre un cookie qui expirera dans 7 jours
-```
-
-Voici comment récupérer un cookie :
-
-```js
-// récupérer un cookie
-function getCookie(nom) {
-  let nomEgal = nom + "=";
-  let decalage = 0;
-  let tabCookies = document.cookie.split(";");
-  for (let i = 0; i < tabCookies.length; i++) {
-    let c = tabCookies[i];
-    while (c.charAt(0) === " ") {
-      c = c.substring(1);
-    }
-    if (c.indexOf(nomEgal) === 0) {
-      return c.substring(nomEgal.length, c.length);
-    }
+function lireFavoris() {
+  try {
+    const texte = localStorage.getItem('mmi-favoris');
+    if (texte === null) return [];
+    const valeurs = JSON.parse(texte);
+    return Array.isArray(valeurs) && valeurs.every(Number.isInteger) ? valeurs : [];
+  } catch {
+    return [];
   }
-  return "";
-}
-
-// supprimer un cookie
-function deleteCookie(nom) {
-  setCookie(nom, "", -1);
 }
 ```
 
-Note : les cookies sont souvent utilisés pour suivre les utilisateurs
-sur plusieurs sites. Assurez-vous d'informer les utilisateurs et de
-respecter leur vie privée lorsque vous utilisez des cookies.
+Une clé absente donne une liste vide. Une ancienne sauvegarde mal formée ou un stockage refusé donne aussi une liste vide ici. L’écriture doit également gérer un échec, par exemple un quota dépassé ; l’interface peut continuer en mémoire en annonçant que la sélection ne sera pas conservée.
+
+## Cookies et requêtes HTTP
+
+Les cookies sont transmis automatiquement avec les requêtes auxquelles ils correspondent, selon leurs attributs et la politique du navigateur. Web Storage n’est pas transmis automatiquement. Un serveur PHP utilise souvent un cookie d’identifiant pour retrouver une session : les données de la session restent alors côté serveur.
+
+| Mécanisme | Transmission | Usage |
+|---|---|---|
+| localStorage | Explicite seulement | Préférences et favoris |
+| sessionStorage | Explicite seulement | État de l’onglet |
+| Cookie de session | Automatique selon ses règles | Session serveur |
+
+`HttpOnly` interdit la lecture du cookie par JavaScript ; `Secure` restreint son transport à HTTPS ; `SameSite` limite certains envois entre sites. Ces attributs se configurent côté serveur pour un cookie d’authentification. Une valeur locale reste modifiable par l’utilisateur et lisible par les scripts autorisés de l’origine : elle ne prouve aucun droit d’accès.

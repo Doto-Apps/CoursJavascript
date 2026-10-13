@@ -1,61 +1,89 @@
-# MMI2 Course
+# Cours BUT MMI
 
-This repo is for students in MMI2, he is including :
+Plateforme de cours pour les semestres 1 à 4 du BUT MMI, construite avec Astro, React et Tailwind CSS. Les supports sont rédigés en Markdown, avec des exemples interactifs et des QCM.
 
-- Javascript
+## Démarrer
 
-## Start this project
+Node.js 22 et pnpm 9.10.0 sont nécessaires.
 
-- Install `pnpm`, `node`
-- Clone this project
-- Run the following commands :
-
-```bash
-pnpm install
-pnpm run dev
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-- Go to `http://localhost:4321/fr`
+Ouvrir [localhost:4321](http://localhost:4321).
 
-## Develop
+La configuration facultative des services externes est décrite dans `.env.dist`. Copier ce fichier en `.env` pour utiliser ces services. Les cours et les QCM locaux fonctionnent sans eux. Le fichier `.env` reste hors du dépôt.
 
-- The routing is automatic and managed by Astro
-- Create a file inside fr folder to make it exist in the routing
-- Add the route in `Sidebar.astro`
-- Add the name of the link in `i18n/fr.ts`
+## Commandes
 
-## Pull requestt
+| Commande | Utilisation |
+|---|---|
+| `pnpm dev` | Développement local |
+| `pnpm build` | Compilation du site |
+| `pnpm preview` | Aperçu après compilation |
+| `pnpm start` | Serveur de production après compilation |
+| `pnpm format` | Formatage du projet |
 
-- Develop on your own branch
-- Push it then open a pull request
+## Organisation
 
-## Deploy
+```text
+src/
+  pages/          Cours Markdown et routes du site
+  data/           Registres des semestres et banques de QCM
+  components/     Composants de navigation et de quiz
+  layouts/        Mise en page commune
+  markdown/       Traitement des blocs de démonstration
+  scripts/        Éditeur interactif chargé dans le navigateur
+  styles/         Styles de l’accueil et des démonstrations
+  utils/          Fonctions utilisées par le site
+public/
+  exemples/       Projets de départ et téléchargements étudiants
+  images/         Illustrations des cours
+  vendor/         Bibliothèques locales et leurs licences
+docs/
+  exemples-interactifs.md
+  corrections-s1/
+  corrections-s2/
+```
 
-- Need to push on main and it will deploy it on a server
-- Deployment is based on a docker image that we build through `Github CI` and push it to the registry, then the CI will trigger the docker image update on the server
-- Find the CI configuration in `.github/workflows/`
+Les corrections sont des ressources enseignant ; elles ne sont pas publiées comme pages du site. Les applications PHP/MySQL se lancent séparément d’Astro, selon leur notice.
 
-## How quiz works
+## Modifier les cours
 
-- There are a google drive folder where we put all tests
-- You need to create one from the `template.json`, change `template` by the name of the quiz that will be used in the url.
-- If you named it `example.json` you can access it through `/fr/quiz/example/`
-- Questions are choosen randomly by selecting one not answered by the student
-- **TO PROVENT CHEATING**: When the land on a new question it cant change the question number in the url, it will count as  false answer
+Ajouter ou modifier un fichier `.md` dans `src/pages`. Son chemin définit son URL. L’en-tête conserve les informations du cours :
 
+```yaml
+---
+layout: "layouts/Layout.astro"
+title: "Les sélecteurs CSS"
+type: "TD"
+order: 3
+quizId: "s1-int-02"
+previousSession: "/semestre_1/integration/htmltd"
+nextSession: "/semestre_1/integration/html"
+---
+```
 
-## Configure the quiz
+`quizId`, `previousSession` et `nextSession` sont facultatifs. `hidden: true` masque une ressource de la barre latérale tout en conservant son URL. Les registres `src/data/s1-sessions.json`, `s2-sessions.json` et `s3-sessions.json` fournissent les informations de séance affichées par le site.
 
-- **name** : The name of the quiz
-- **mode**:
-  - **train**: No timer on each questions
-  - **exam**: Timer will be applied on each questions
-  - **close**: Students can't access the quiz
-- **questionsPerTest**: Choose a number of questions to ask for a test
-- **timeByQuestionInSeconds**:
-  - **x <= 0**: Unlimited time
-  - **x > 0**: Set a timer of x seconds for each questions when in `exam` mode
-- **questions**: An array of questions containing question string, answers strings and the correctAnswerIndex
-  - **question**: The question to ask
-  - **answers**: Array of string of possible answers
-  - **correctAnswerIndex**: The correct answer index (starting at 0)
+Les notions techniques structurent le support. Chaque exemple est accompagné de son résultat. Les blocs `html preview` affichent un rendu fixe ; les blocs `html live` permettent de modifier et d’exécuter du HTML/CSS/JavaScript. PHP et SQL demandent leur propre environnement.
+
+Voir le [guide des démonstrations](docs/exemples-interactifs.md).
+
+## QCM
+
+Les banques locales sont dans `src/data/quizzes/`. Un cours les référence avec `quizId` ; elles sont accessibles à `/quiz/IDENTIFIANT`. Chaque banque définit son mode, le nombre de questions par tentative, le temps par question et les réponses correctes. Les explications et les références au cours sont conservées dans le même JSON.
+
+Les identifiants absents des banques locales utilisent le service Google Apps Script configuré dans `src/utils/getQuiz.ts` avec `API_KEY`. La page `/oral` utilise les variables `LLM_*` pour son service de génération.
+
+## Déploiement
+
+Le site utilise un serveur Node, notamment pour les sessions des QCM ; ce n’est pas un export statique GitHub Pages.
+
+```sh
+pnpm build
+pnpm start
+```
+
+`HOST` et `PORT` règlent l’adresse d’écoute du serveur. Le `Dockerfile` et `docker-compose.yml` permettent également le lancement en conteneur. Le workflow `.github/workflows/deploy.yml` construit l’image et déploie sur le serveur configuré lors d’un push sur `main` ; ses secrets doivent être renseignés dans GitHub.

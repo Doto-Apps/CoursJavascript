@@ -1,473 +1,210 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Introduction au CSS"
-type: "td"
+title: "CSS : sélecteurs, boîtes et Flexbox"
+type: "TD"
+order: 3
+quizId: "s1-int-02"
+previousSession: "/semestre_1/integration/htmltd"
+nextSession: "/semestre_1/integration/html"
 ---
 
-## Qu'est-ce que le CSS ?
+<a id="comprendre"></a>
 
-CSS (Cascading Style Sheets) est un langage utilisé pour décrire la présentation d'un document HTML. Tandis que HTML s'occupe de la structure du contenu, CSS gère l'apparence visuelle. Le CSS permet de contrôler la mise en page, les couleurs, les polices, et bien plus encore, afin de rendre les pages web attrayantes et faciles à utiliser.
+## Les règles et les sélecteurs CSS
 
-## Structure de base d'un fichier CSS
+Une règle CSS associe un sélecteur à des déclarations. Dans `.carte { padding: 16px; color: #203047; }`, `.carte` choisit les éléments ayant la classe `carte`. Les accolades contiennent des couples `propriété: valeur`, séparés par des points-virgules. Une règle valide sans élément correspondant ne produit aucun changement visible.
 
-Un fichier CSS est constitué de règles. Chaque règle se compose d'un sélecteur et d'un bloc de déclaration :
+<a id="selecteurs"></a>
 
-```css
-sélecteur {
-  propriété: valeur;
-}
+### Sélectionner les éléments par balise
+
+Le nom de balise sélectionne tous les éléments de ce type. Ici, les deux paragraphes deviennent bleus, mais le titre garde sa couleur normale.
+
+`color` règle la couleur du texte ; `background-color` règle celle du fond. Ces deux propriétés ne ciblent donc pas la même partie de l’élément.
+
+```html preview title="Sélecteur de balise" height=160
+<h2>Atelier</h2>
+<p>Premier paragraphe</p>
+<p>Second paragraphe</p>
+<style>p { color: #1d4ed8; }</style>
 ```
 
-Exemple :
+### Sélectionner des éléments avec une classe
 
-```css
-body {
-  background-color: lightblue;
-}
+Le point précède le nom de classe dans le CSS, jamais dans l’attribut HTML. Plusieurs éléments peuvent partager cette classe ; un élément peut posséder plusieurs classes séparées par des espaces.
+
+```html preview title="Seule la classe selection est ciblée" height=140
+<p class="selection">Projet sélectionné</p>
+<p>Autre projet</p>
+<style>.selection { background: #fef08a; }</style>
 ```
 
-Cette règle CSS définit la couleur de fond du corps de la page en bleu clair.
+### Sélectionner un élément avec son identifiant
 
-## Ajouter du CSS à un document HTML
+`#programme` cible l’élément ayant `id="programme"`. Un identifiant est unique dans le document ; pour un style réutilisé, choisissez une classe.
 
-Il existe plusieurs façons d'ajouter du CSS à un document HTML :
-
-1. **CSS en ligne** : Utilisation de l'attribut `style` directement dans les balises HTML.
-2. **CSS interne** : Utilisation de la balise `<style>` dans la section `<head>` du document HTML.
-3. **CSS externe** : Lien vers un fichier CSS externe à l'aide de la balise `<link>`.
-
-### Exemple de CSS en ligne
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple CSS en ligne</title>
-</head>
-<body>
-  <h1 style="color:blue;">Titre bleu</h1>
-  <p style="font-size:20px;">Paragraphe avec une taille de police de 20px.</p>
-</body>
-</html>
+```html preview title="Sélecteur d’identifiant" height=140
+<p id="programme">Programme de la journée</p>
+<p>Informations pratiques</p>
+<style>#programme { border-left: 5px solid #1d4ed8; }</style>
 ```
-<div style="margin:auto;">
-<h1 style="color:blue;">Titre bleu</h1>
-<p style="font-size:20px;">Paragraphe avec une taille de police de 20px.</p>
+
+### Sélectionner les descendants et les enfants directs
+
+L’espace dans `.carte p` sélectionne tous les paragraphes à l’intérieur d’une carte, même profondément imbriqués. Le signe `>` dans `.carte > p` sélectionne seulement les enfants directs.
+
+```html live title="Descendants et enfants directs"
+<div class="carte">
+  <p>Enfant direct : fond jaune et texte bleu</p>
+  <div><p>Descendant imbriqué : texte bleu seulement</p></div>
 </div>
-
-### Exemple de CSS interne
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple CSS interne</title>
-  <style>
-    h1 {
-      color: blue;
-    }
-    p {
-      font-size: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Titre bleu</h1>
-  <p>Paragraphe avec une taille de police de 20px.</p>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<h1 style="color:blue;">Titre bleu</h1>
-<p style="font-size:20px;">Paragraphe avec une taille de police de 20px.</p>
-</div>
-
-### Exemple de CSS externe
-
-Créez un fichier `styles.css` :
-
-```css
-h1 {
-  color: blue;
-}
-p {
-  font-size: 20px;
-}
+<p>Extérieur : aucune des deux règles</p>
+<style>
+  .carte p { color: #1d4ed8; }
+  .carte > p { background: #fef08a; }
+</style>
 ```
 
-Puis, liez ce fichier dans votre document HTML :
+Les deux paragraphes intérieurs sont bleus ; seul le premier a un fond jaune. Retirer `>` ferait aussi apparaître le fond sur le paragraphe imbriqué.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple CSS externe</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Titre bleu</h1>
-  <p>Paragraphe avec une taille de police de 20px.</p>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<h1 style="color:blue;">Titre bleu</h1>
-<p style="font-size:20px;">Paragraphe avec une taille de police de 20px.</p>
-</div>
+### Combiner et regrouper les sélecteurs
 
-## Propriétés CSS essentielles
+`.carte.active` sélectionne un élément portant les deux classes. `.carte .active` sélectionne un descendant portant `active` : l’espace change le sens. `h1, h2` applique les mêmes déclarations aux deux types de titres. Une pseudo-classe comme `a:hover` limite la règle à un état ; `a:focus-visible` permet de signaler le focus clavier.
 
-### Couleur et Arrière-plan
+Dans une feuille `style.css`, n’écrivez pas de balises `<style>`. Le document charge ce fichier dans son `head` avec `<link rel="stylesheet" href="style.css">`. Les démonstrations regroupent HTML et CSS uniquement pour rendre chaque exemple autonome.
 
-```css
-/* Couleur du texte */
-p {
-  color: red;
-}
+La couleur du texte est souvent héritée par les enfants ; marge, bordure et padding ne sont pas hérités de cette façon. Quand plusieurs règles ciblent un élément, la cascade détermine la déclaration appliquée ; la [séance suivante](/semestre_1/integration/html) détaille la spécificité.
 
-/* Couleur de fond */
-body {
-  background-color: yellow;
-}
+<a id="boites"></a>
+
+## Le modèle de boîte et les espacements CSS
+
+Le contenu est entouré successivement par le padding, la bordure et la marge extérieure. Le fond de l’élément couvre son contenu et son padding ; sa marge reste extérieure à ce fond.
+
+### padding : l’espace intérieur
+
+`padding` éloigne le contenu de sa bordure. Augmenter le padding ne sépare pas directement deux bordures voisines : cela agrandit l’espace à l’intérieur de chacune.
+
+```html preview title="Même texte, deux paddings" height=180
+<div class="carte">Padding de 4 px</div>
+<div class="carte large">Padding de 24 px</div>
+<style>
+  .carte { padding: 4px; border: 2px solid #1d4ed8; background: #dbeafe; }
+  .large { padding: 24px; }
+</style>
 ```
 
-Exemple HTML :
+### margin : les marges extérieures
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Couleur et Arrière-plan</title>
-  <style>
-    p {
-      color: red;
-    }
-    body {
-      background-color: yellow;
-    }
-  </style>
-</head>
-<body>
-  <p>Paragraphe en rouge sur fond jaune.</p>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<p style="color:red;">Paragraphe en rouge sur fond jaune.</p>
-</div>
+`margin` éloigne la boîte de son environnement. Une marge ne reçoit pas la couleur du fond de l’élément. Les quatre côtés peuvent être réglés séparément ou avec un raccourci.
 
-### Bordures
+| Syntaxe | Répartition |
+|---|---|
+| `margin: 12px` | Quatre côtés |
+| `margin: 12px 24px` | Haut/bas : 12 ; gauche/droite : 24 |
+| `margin: 12px 24px 8px` | Haut : 12 ; gauche/droite : 24 ; bas : 8 |
+| `margin: 12px 24px 8px 4px` | Haut, droite, bas, gauche |
 
-```css
-div {
-  border: 2px solid black;
-}
+Ces raccourcis valent aussi pour le padding. En flux normal, certaines marges verticales de blocs fusionnent : deux marges positives de 20 et 30 px peuvent produire 30 px, pas 50. Ce phénomène ne concerne pas les marges entre éléments flex ou grid. `margin-inline: auto` peut centrer un bloc dont la largeur est inférieure à celle de son conteneur.
+
+```html preview title="La marge se trouve hors du fond bleu" height=180
+<div class="zone"><div class="boite">Contenu</div></div>
+<style>
+  .zone { display: flow-root; background: #fef08a; }
+  .boite { margin: 24px; padding: 12px; border: 3px solid #1e3a8a; background: #dbeafe; }
+</style>
 ```
 
-Exemple HTML :
+Le bleu clair montre contenu et padding, le trait bleu foncé la bordure, le jaune la zone extérieure rendue visible par la marge. Le parent utilise `flow-root` pour éviter ici la fusion de marges avec son enfant.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Bordures</title>
-  <style>
-    div {
-      border: 2px solid black;
-    }
-  </style>
-</head>
-<body>
-  <div>Contenu avec une bordure noire.</div>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<div style="border: 2px solid black;">Contenu avec une bordure noire.</div>
-</div>
+### border et box-sizing : le calcul des dimensions
 
-### Marges et Padding
+`border: 2px solid #1d4ed8` combine épaisseur, style et couleur. `border-radius` arrondit les coins sans définir une nouvelle marge. Avec `content-box`, la largeur déclarée concerne le contenu : une largeur de 240 px, un padding de 16 px de chaque côté et une bordure de 2 px donnent **276 px hors marge** (`240 + 2 × 16 + 2 × 2`). Avec `border-box`, les 240 px incluent padding et bordures : le contenu dispose de 204 px.
 
-```css
-div {
-  margin: 20px; /* Espace à l'extérieur de l'élément */
-  padding: 20px; /* Espace à l'intérieur de l'élément */
-  background-color: lightgrey;
-}
+```html live title="Comparer content-box et border-box"
+<div class="boite">content-box : 276 px hors marge</div>
+<div class="boite incluse">border-box : 240 px hors marge</div>
+<style>
+  .boite { width: 240px; padding: 16px; border: 2px solid #1d4ed8; margin: 8px; background: #dbeafe; }
+  .incluse { box-sizing: border-box; }
+</style>
 ```
 
-Exemple HTML :
+Une unité `px` est un pixel CSS ; `rem` dépend de la taille de police de la racine. Avec `border-box`, augmenter le padding réduit la largeur disponible pour le contenu tant que la largeur totale peut respecter les contraintes.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Marges et Padding</title>
-  <style>
-    div {
-      margin: 20px;
-      padding: 20px;
-      background-color: lightgrey;
-    }
-  </style>
-</head>
-<body>
-  <div>Contenu avec marges et padding.</div>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<div style="margin: 20px; padding: 20px; background-color: lightgrey;">Contenu avec marges et padding.</div>
-</div>
+<a id="display"></a>
 
-## Display: Bloc, Inline, et Inline-block
+## Les modes d’affichage avec display
 
-### Display Bloc
+| Valeur | Comportement courant |
+|---|---|
+| `block` | Nouvelle ligne et largeur disponible en flux normal |
+| `inline` | Contenu dans la ligne ; width et height ne règlent pas sa boîte comme un bloc |
+| `inline-block` | Dans la ligne, avec largeur et hauteur réglables |
+| `none` | Élément retiré de la mise en page et de l’arbre d’accessibilité |
+| `flex`, `grid` | Organisation des enfants directs |
 
-Les éléments de type bloc prennent toute la largeur disponible et commencent toujours sur une nouvelle ligne.
+Changer `display` ne change pas le rôle sémantique d’une balise. Un lien reste un lien même présenté comme un bloc. `visibility: hidden` conserve l’espace, contrairement à `display: none`.
 
-```css
-div {
-  display: block;
-  background-color: red;
-  width: 100px;
-  height: 100px;
-}
+<a id="flex"></a>
+
+## Organiser les éléments avec Flexbox
+
+### display: flex et flex-direction
+
+`display: flex` s’applique au parent ; ses enfants directs deviennent les éléments flex. `flex-direction: row` organise selon la direction de la ligne, `column` selon celle de la colonne. L’axe transversal est perpendiculaire à l’axe principal.
+
+```html live title="Les axes d’un conteneur Flexbox"
+<div class="ligne"><span>A</span><span class="grand">B</span><span>C</span></div>
+<style>
+  .ligne { display: flex; flex-direction: row; min-height: 140px; border: 2px dashed #1d4ed8; }
+  span { padding: 12px; background: #dbeafe; }
+  .grand { font-size: 2rem; }
+</style>
 ```
 
-Exemple HTML :
+Les trois enfants sont placés en ligne. Passer à `column` les empile et change les axes. Les valeurs `row-reverse` et `column-reverse` changent l’affichage sans réordonner le DOM : évitez une contradiction entre lecture visuelle et navigation clavier.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Display Bloc</title>
-  <style>
-    div {
-      display: block;
-      background-color: red;
-      width: 100px;
-      height: 100px;
-    }
-  </style>
-</head>
-<body>
-  <div></div>
-  <div></div>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<div style="display: block; background-color: red; width: 100px; height: 100px;"></div>
-<div style="display: block; background-color: red; width: 100px; height: 100px;"></div>
-</div>
+### justify-content et align-items
 
-### Display Inline
+`justify-content` distribue l’espace libre sur l’axe principal : `flex-start`, `center`, `flex-end`, `space-between`, `space-around` et `space-evenly` offrent des répartitions différentes. `align-items` agit sur l’axe transversal : `stretch`, `center`, `flex-start`, `flex-end`, `baseline`. `stretch` étire les éléments dont la taille transversale est automatique.
 
-Les éléments en ligne ne prennent que la largeur nécessaire et ne commencent pas sur une nouvelle ligne.
-
-```css
-span {
-  display: inline;
-  background-color: blue;
-  padding: 10px;
-}
+```html live title="Alignement et espace disponible"
+<div class="ligne"><span>A</span><span class="grand">B</span><span>C</span></div>
+<style>
+  .ligne { display: flex; justify-content: space-between; align-items: center; min-height: 160px; border: 2px dashed #1d4ed8; }
+  span { padding: 12px; background: #dbeafe; }
+  .grand { font-size: 2rem; }
+</style>
 ```
 
-Exemple HTML :
+A et C se rapprochent des extrémités, et les centres des trois boîtes s’alignent transversalement. `justify-content` a peu d’effet s’il ne reste aucun espace à distribuer. L’appliquer aux enfants ne les répartit pas dans leur parent.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Display Inline</title>
-  <style>
-    span {
-      display: inline;
-      background-color: blue;
-      padding: 10px;
-    }
-  </style>
-</head>
-<body>
-  <span>Élément en ligne</span>
-  <span>Élément en ligne</span>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<span style="display: inline; background-color: blue; padding: 10px;">Élément en ligne</span>
-<span style="display: inline; background-color: blue; padding: 10px;">Élément en ligne</span>
-</div>
+### flex-wrap et gap
 
-### Display Inline-Block
+`flex-wrap: wrap` autorise plusieurs lignes quand la place manque. `gap` réserve des gouttières entre les éléments ou les lignes d’un conteneur flex ou grid. Il ne crée pas d’espace au bord extérieur et n’est donc pas interchangeable avec `margin` ou le padding du parent.
 
-Les éléments en ligne-bloc sont similaires aux éléments en ligne, mais vous pouvez leur appliquer des dimensions.
-
-```css
-span {
-  display: inline-block;
-  background-color: green;
-  width: 100px;
-  height: 100px;
-  margin: 5px;
-}
+```html live title="Retour à la ligne et gouttières"
+<div class="liste"><span>A</span><span>B</span><span>C</span></div>
+<style>
+  .liste { display: flex; flex-wrap: wrap; gap: 16px; max-width: 300px; border: 2px dashed #1d4ed8; }
+  span { flex: 0 0 120px; padding-block: 12px; background: #dbeafe; }
+</style>
 ```
 
-Exemple HTML :
+Deux éléments de 120 px et leur gouttière tiennent dans 300 px ; le troisième passe à la ligne. La gouttière mesure 16 px ; aucun padding n’a été ajouté au conteneur.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Display Inline-Block</title>
-  <style>
-    span {
-      display: inline-block;
-      background-color: green;
-      width: 100px;
-      height: 100px;
-      margin: 5px;
-    }
-  </style>
-</head>
-<body>
-  <span></span>
-  <span></span>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<span style="display: inline-block; background-color: green; width: 100px; height: 100px; margin: 5px;"></span>
-<span style="display: inline-block; background-color: green; width: 100px; height: 100px; margin: 5px;"></span>
-</div>
+### flex-grow, flex-shrink et flex-basis
 
-## Flexbox
+Ces propriétés appartiennent aux enfants. `flex-basis` définit la taille de base sur l’axe principal ; `flex-grow` partage l’espace positif selon des proportions ; `flex-shrink` répartit la réduction en tenant compte des tailles de base. Le raccourci `flex: 1 1 160px` signifie grandir, rétrécir et partir de 160 px.
 
-Flexbox est un modèle de mise en page qui permet de créer des mises en page complexes et flexibles.
-
-### Conteneur Flex
-
-```css
-.container {
-  display: flex;
-  flex-direction: row; /* row, row-reverse, column, column-reverse */
-  justify-content: center; /* flex-start, flex-end, center, space-between, space-around */
-  align-items: center; /* flex-start, flex-end, center, stretch */
-  height: 100vh;
-}
-.item {
-  background-color: lightcoral;
-  padding: 20px;
-  margin: 10px;
-  color: white;
-}
+```html live title="Partager l’espace disponible"
+<div class="liste"><span>A : grow 1</span><span class="double">B : grow 2</span></div>
+<style>
+  .liste { display: flex; gap: 12px; }
+  span { flex: 1 1 100px; min-width: 0; padding-block: 12px; background: #dbeafe; }
+  .double { flex-grow: 2; }
+</style>
 ```
 
-Exemple HTML :
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Flexbox</title>
-  <style>
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      border: 2px solid black;
-    }
-    .item {
-      background-color: lightcoral;
-      padding: 20px;
-      margin: 10px;
-      color: white;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="item">Item 1</div>
-    <div class="item">Item 2</div>
-    <div class="item">Item 3</div>
-  </div>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; border: 2px solid black;">
-  <div style="background-color: lightcoral; padding: 20px; margin: 10px; color: white;">Item 1</div>
-  <div style="background-color: lightcoral; padding: 20px; margin: 10px; color: white;">Item 2</div>
-  <div style="background-color: lightcoral; padding: 20px; margin: 10px; color: white;">Item 3</div>
-</div>
-</div>
-
-## Grid Layout
-
-Grid Layout est un système de mise en page basé sur une grille à deux dimensions.
-
-### Conteneur Grid
-
-```css
-.container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colonnes de taille égale */
-  grid-gap: 10px; /* espace entre les éléments */
-}
-.item {
-  background-color: lightblue;
-  padding: 20px;
-  text-align: center;
-}
-```
-
-Exemple HTML :
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <title>Exemple Grid Layout</title>
-  <style>
-    .container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
-    }
-    .item {
-      background-color: lightblue;
-      padding: 20px;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="item">Item 1</div>
-    <div class="item">Item 2</div>
-    <div class="item">Item 3</div>
-    <div class="item">Item 4</div>
-    <div class="item">Item 5</div>
-    <div class="item">Item 6</div>
-  </div>
-</body>
-</html>
-```
-<div style="margin:auto;">
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px;">
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 1</div>
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 2</div>
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 3</div>
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 4</div>
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 5</div>
-  <div style="background-color: lightblue; padding: 20px; text-align: center;">Item 6</div>
-</div>
-</div>
-
-## Conclusion
-
-Dans ce cours, nous avons couvert les bases du CSS, y compris la structure des fichiers CSS, comment intégrer CSS dans un document HTML, et certaines des propriétés CSS les plus courantes. Nous avons également exploré les concepts avancés de mise en page avec Flexbox et Grid Layout. En pratiquant ces concepts, vous serez capable de créer des mises en page web élégantes et efficaces.
-
----
+Au-delà des bases et de la gouttière, B reçoit deux parts de l’espace libre et A une part. B ne mesure pas nécessairement deux fois A : chacun possède déjà sa base de 100 px. La grille à pistes communes sera étudiée dans [CSS Grid](/semestre_1/integration/grid).

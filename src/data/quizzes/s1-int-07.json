@@ -1,0 +1,168 @@
+{
+  "name": "Révision — TP : mettre en forme Gamer / Creator",
+  "uid": "s1-int-07",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/integration/csstp",
+  "sourceSession": "INT-07",
+  "targetCourse": "/semestre_1/integration/tpCreatorGamer",
+  "questions": [
+    {
+      "question": "Comment relier css/styles.css au document HTML ?",
+      "answers": [
+        "Avec link rel=\"stylesheet\" dans head",
+        "Avec un lien a uniquement",
+        "Avec script src vers ce fichier CSS",
+        "Avec une image src vers ce fichier"
+      ],
+      "explanation": "Une feuille CSS externe est chargée avec un élément link de type stylesheet.",
+      "sourceSection": "base",
+      "evidence": "Créez `css/styles.css` et liez-le dans `head` avec `href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la m",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Où diagnostiquer une feuille CSS renvoyant 404 ?",
+      "answers": [
+        "Dans le panneau des favoris",
+        "Dans l’onglet Réseau",
+        "Dans le sélecteur de couleurs",
+        "Dans les options de police"
+      ],
+      "explanation": "Le statut de chargement permet de vérifier le chemin avant les règles CSS.",
+      "sourceSection": "base",
+      "evidence": "href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigate",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que comprend width avec box-sizing: border-box, hors marge ?",
+      "answers": [
+        "Le contenu et la marge",
+        "Les bordures et les marges seulement",
+        "Contenu, padding et bordures",
+        "Le contenu seulement"
+      ],
+      "explanation": "La largeur déclarée inclut le padding et les bordures.",
+      "sourceSection": "comprendre",
+      "evidence": "box-sizing: border-box;",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle différence existe entre width fixe et max-width ?",
+      "answers": [
+        "Les deux imposent toujours une largeur fixe",
+        "width fixe réduit toujours la largeur sur mobile",
+        "max-width règle uniquement la hauteur",
+        "max-width pose une limite sans imposer cette largeur"
+      ],
+      "explanation": "Une largeur maximale permet au conteneur de rester plus étroit si l’espace manque.",
+      "sourceSection": "comprendre",
+      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle règle centre un bloc normal moins large que son conteneur ?",
+      "answers": [
+        "margin-inline: auto",
+        "text-align: center seulement",
+        "padding: auto",
+        "width: auto seulement"
+      ],
+      "explanation": "Les marges horizontales automatiques partagent l’espace restant.",
+      "sourceSection": "comprendre",
+      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle propriété améliore l’espacement vertical entre les lignes de texte ?",
+      "answers": [
+        "border-width",
+        "line-height",
+        "letter-spacing",
+        "gap"
+      ],
+      "explanation": "La hauteur de ligne règle l’espace de lecture à l’intérieur d’un texte.",
+      "sourceSection": "comprendre",
+      "evidence": "| Base | `body { line-height: 1.5; }` | Une lecture régulière sur toute la page. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment adapter une image à son conteneur sans la déformer ?",
+      "answers": [
+        "Une largeur fixe de 2000px",
+        "Une hauteur fixe sans contrôler la largeur",
+        "max-width: 100% et height: auto",
+        "width: 100% et height: 100px pour toute image"
+      ],
+      "explanation": "La largeur est limitée et la hauteur conserve le rapport de l’image.",
+      "sourceSection": "base",
+      "evidence": "img { max-width: 100%; height: auto; }",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle référence utilise une valeur en rem ?",
+      "answers": [
+        "La largeur du conteneur",
+        "La taille du texte voisin",
+        "La hauteur de l’image",
+        "La taille de police racine"
+      ],
+      "explanation": "Une échelle en rem dépend de la taille de police de la racine.",
+      "sourceSection": "comprendre",
+      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Comment lire une propriété personnalisée --accent ?",
+      "answers": [
+        "var(--accent)",
+        "--accent()",
+        "accent: var",
+        "$accent"
+      ],
+      "explanation": "var récupère la valeur de la propriété personnalisée.",
+      "sourceSection": "comprendre",
+      "evidence": "**Lecture accompagnée :** `--accent` stocke une valeur commune ; `var(--accent)` la lit. `line-height` laisse respirer les lignes ; `border-radius` change la forme des coins. Aucune de ces règles ne crée les colonnes de la liste : cette res",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Où placer display: grid pour organiser les profils ?",
+      "answers": [
+        "Sur la feuille CSS elle-même",
+        "Sur le parent commun des profils",
+        "Sur chaque titre uniquement",
+        "Sur chaque image seulement"
+      ],
+      "explanation": "La grille organise les enfants directs du conteneur.",
+      "sourceSection": "comprendre",
+      "evidence": "ne crée les colonnes de la liste : cette responsabilité appartient au parent.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que peut faire object-fit: cover dans un cadre d’image ?",
+      "answers": [
+        "Changer le fichier source",
+        "Retirer systématiquement l’image",
+        "Recadrer en conservant les proportions",
+        "Déformer l’image pour remplir le cadre"
+      ],
+      "explanation": "Le recadrage peut couper des bords ; il faut vérifier que le sujet reste visible.",
+      "sourceSection": "comprendre",
+      "evidence": "es, `aspect-ratio` réserve un rapport largeur/hauteur et `object-fit: cover` remplit un cadre en recadrant. Vérifiez que le recadrage ne supprime pas l’information utile.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "À quoi sert aspect-ratio ?",
+      "answers": [
+        "Définir le nombre de cartes",
+        "Fixer toujours la hauteur à 1px",
+        "Changer les proportions du fichier source",
+        "Définir le rapport largeur/hauteur du cadre"
+      ],
+      "explanation": "Le cadre garde une relation entre ses dimensions ; l’image conserve son propre contenu.",
+      "sourceSection": "comprendre",
+      "evidence": "ez un espacement interne commun pour la régularité. Pour les images, `aspect-ratio` réserve un rapport largeur/hauteur et `object-fit: cover` remplit un cadre en recadrant. Vérifiez que le recadrage ne supprime pas l’information utile.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

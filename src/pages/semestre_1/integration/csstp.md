@@ -1,135 +1,174 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Travaux pratiques CSS"
+title: "TP : mettre en forme Gamer / Creator"
 type: "TP"
+order: 7
+quizId: "s1-int-06"
+previousSession: "/semestre_1/integration/htmltp"
+nextSession: "/semestre_1/integration/tpCreatorGamer"
 ---
 
-## Objectifs
+<a id="comprendre"></a>
 
-1. Pratiquer l'application des concepts de base du CSS.
-2. Créer une page web dynamique et attrayante en utilisant des sélecteurs, des propriétés et des valeurs CSS.
-3. Développer une page structurée avec des images, du texte, et des sections distinctes.
-4. Mettre en œuvre des effets visuels, des transitions et une mise en page fluide.
+## L’organisation de la feuille CSS
 
----
+Une base concerne toute la page : `box-sizing`, police, couleur et rythme des lignes. Les règles de disposition concernent ensuite les conteneurs, puis les règles de composants concernent les cartes ou la navigation. Cette organisation permet de retrouver l’origine d’un style sans parcourir des dizaines de corrections dispersées.
 
-### Étape 1 : Structurer la page HTML
+| Niveau | Exemple | Raison |
+|---|---|---|
+| Base | `body { line-height: 1.5; }` | Une lecture régulière sur toute la page. |
+| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |
+| Disposition | `.profils { display: grid; gap: 16px; }` | Une organisation commune aux fiches. |
+| Composant | `.profil { padding: 16px; }` | Un espacement intérieur identique. |
 
-1. **Créez un fichier `index.html`** avec la structure suivante :
-   - Un en-tête (`header`) avec un titre principal (`h1`) et une navigation (`nav`).
-   - Une section principale (`main`) pour le contenu de la page.
-   - Un pied de page (`footer`) avec des informations de contact ou des liens sociaux.
+`width: 100%` demande toute la largeur disponible ; `max-width` fixe une limite supérieure. Les deux se complètent. Une largeur fixe de 1100 px ne devient pas automatiquement adaptée à un écran plus petit. `margin-inline: auto` distribue l’espace extérieur libre sur les deux côtés de l’axe en ligne.
 
-2. **Dans l'en-tête**, créez une navigation horizontale (sans formulaire) avec quelques liens fictifs (par exemple, "Accueil", "À propos", "Projets", "Contact").
-   - **Rappel** : Organisez la navigation avec une liste non ordonnée (`ul`) et des éléments de liste (`li`).
+## Largeurs fluides et hauteur automatique
 
----
+Le texte occupe une hauteur variable. Une carte à hauteur fixe peut couper un titre long ou une description traduite. Préférez une hauteur naturelle ; employez un espacement interne commun pour la régularité. Pour les images, `aspect-ratio` réserve un rapport largeur/hauteur et `object-fit: cover` remplit un cadre en recadrant. Vérifiez que le recadrage ne supprime pas l’information utile.
 
-### Étape 2 : Appliquer des styles de base à la page
+Les valeurs en `rem` dépendent de la taille de police racine ; elles sont utiles pour construire une échelle cohérente. Ne mélangez pas vingt tailles différentes sans besoin. Une même classe sur six profils permet de modifier leur style en une seule règle : corriger chaque fiche avec un style inline ferait perdre cette cohérence.
 
-1. **Sélecteur `body`** :
-   - Appliquez une couleur de fond agréable à la page et choisissez une police lisible.
-   - **Rappel** : Utilisez `background-color`, `font-family`, et `color`.
+**Méthode :** choisir une police, deux ou trois tailles de texte et une courte échelle d’espacements ; appliquer ces choix ; tester une carte avec un titre long ; corriger les dimensions avant d’ajouter des ombres et des détails décoratifs.
 
-2. **En-tête et navigation** :
-   - Ajoutez une couleur de fond sombre à l'en-tête avec un texte clair. Centre le texte et ajoute une marge pour espacer les éléments.
-   - **Rappel** : Utilisez `background-color`, `color`, `text-align`, et `padding` pour centrer et espacer les éléments.
+## Typographie, couleurs et espacements
 
----
-
-### Étape 3 : Ajouter des images et des vidéos
-
-1. **Sélecteur `img`** :
-   - Ajoutez une image dans votre `main` (par exemple, une photo de vous-même ou de votre projet) et assurez-vous qu'elle s'ajuste bien à la taille de son conteneur.
-   - **Rappel** : Utilisez `max-width: 100%` pour rendre l'image responsive.
-
-2. **Sélecteur `video`** :
-   - Ajoutez une vidéo dans la section `main`. La vidéo peut être une démonstration ou une vidéo d'introduction.
-   - **Rappel** : Utilisez `max-width: 100%` et `height: auto` pour que la vidéo soit flexible.
-
----
-
-### Étape 4 : Organiser le contenu avec Flexbox
-
-Utilisez **Flexbox** pour disposer vos sections de manière flexible. Voici un exemple simple pour aligner les éléments horizontalement avec des espaces égaux entre eux.
+Une page cohérente utilise des choix répétés : une famille typographique, une échelle d’espacements, des couleurs de texte et de fond compatibles. Créer une règle commune est plus fiable que régler chaque carte séparément. Le CSS doit supporter un nom court comme un nom long sans demander une nouvelle exception.
 
 ```css
-.container {
-    display: flex;
-    flex-direction: row; /* Aligne les éléments horizontalement */
-    justify-content: space-between; /* Espace les éléments de manière égale */
-    align-items: center; /* Centre verticalement les éléments */
+:root {
+  --accent: #2457a7;
+}
+
+.profil {
+  padding: 1rem;
+  border: 1px solid #bcc7d6;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.profil a {
+  color: var(--accent);
 }
 ```
 
-**Explication des propriétés :**
-- `display: flex` active Flexbox sur l’élément.
-- `flex-direction: row` aligne les éléments en ligne.
-- `justify-content: space-between` distribue l’espace entre les éléments.
-- `align-items: center` centre verticalement les éléments.
+**Lecture accompagnée :** `--accent` stocke une valeur commune ; `var(--accent)` la lit. `line-height` laisse respirer les lignes ; `border-radius` change la forme des coins. Aucune de ces règles ne crée les colonnes de la liste : cette responsabilité appartient au parent.
 
----
+```html live title="Un style commun pour des contenus différents"
+<style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 16px;
+        color: #203047;
+        background: #f3f6fa;
+      }
+      :root {
+        --accent: #2457a7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      h1 {
+        color: var(--accent);
+      }
+      .profils {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .carte {
+        padding: 16px;
+        border: 1px solid #bcc7d6;
+        border-radius: 12px;
+        background: white;
+      }
+    </style>
 
-### Étape 5 : Ajouter des effets avec les pseudo-classes
-
-Les **pseudo-classes** permettent de changer les styles lorsqu’un utilisateur interagit avec un élément (exemple : `:hover` pour le survol, `:focus` pour le focus, etc.).
-
-1. **Effet de survol sur les liens** :
-   - Utilisez la pseudo-classe `:hover` pour ajouter un effet de transition. Cela adoucit le changement de style au survol. Exemple :
-
-   ```css
-   nav a {
-       color: #ffffff;
-       text-decoration: none;
-       transition: color 0.3s ease; /* Transition douce pour le changement de couleur */
-   }
-
-   nav a:hover {
-       color: #ffa500; /* Changement de couleur au survol */
-   }
-   ```
-
-   - **Explication** : Le `:hover` est déclenché lorsque l’utilisateur passe la souris sur un élément. Ici, `transition` adoucit le passage de la couleur initiale à celle au survol.
-
-2. **Effet de survol sur les images** :
-   - Utilisez `:hover` pour agrandir légèrement les images au survol :
-
-   ```css
-   img {
-       transition: transform 0.3s ease;
-   }
-
-   img:hover {
-       transform: scale(1.05); /* Agrandissement au survol */
-   }
-   ```
-
----
-
-### Étape 6 (Bonus) : Media Queries pour la Responsivité
-
-Les **Media Queries** permettent d’adapter le style en fonction de la taille de l’écran, rendant votre page responsive. Exemple pour ajuster le layout sur mobile :
-
-```css
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Empile les éléments en colonne sur les petits écrans */
-    }
-
-    nav ul {
-        flex-direction: column; /* Modifie la navigation en liste verticale sur mobile */
-    }
-}
+<h1>La communauté Pixel</h1>
+    <section class="profils" aria-label="Profils">
+      <article class="carte">
+        <h2>Léa</h2>
+        <p>Création graphique et jeux coopératifs.</p>
+      </article>
+      <article class="carte">
+        <h2>Sam et ses projets</h2>
+        <p>
+          Photographie, montage et un texte un peu plus long pour tester la
+          carte.
+        </p>
+      </article>
+      <article class="carte">
+        <h2>Noa</h2>
+        <p>Illustration.</p>
+      </article>
+    </section>
 ```
 
-**Explication** :
-- La media query `@media (max-width: 768px)` applique les styles uniquement si la largeur de l’écran est de 768px ou moins.
-- Le `flex-direction: column` passe les éléments d’une disposition en ligne à une disposition en colonne pour faciliter la lecture sur des petits écrans.
+**Erreur à éviter :** fixer une hauteur arbitraire pour cacher un débordement. Demandez d’abord si le contenu peut naturellement occuper davantage de place. Une capture avec trois textes identiques ne prouve pas que la disposition fonctionne avec de vrais contenus.
 
----
+<a id="base"></a>
 
-### Conclusion
+## Les styles de base du document
 
-Félicitations ! Vous avez appris à structurer une page web avec CSS en utilisant des techniques comme **Flexbox** pour la mise en page, des **pseudo-classes** pour ajouter des effets interactifs, et des **media queries** pour rendre votre page responsive.
+Créez `css/styles.css` et liez-le dans `head` avec `href="css/styles.css"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigateur.
 
-Une fois votre page terminée, n'oubliez pas de tester sur différents appareils et tailles d'écran pour vous assurer qu'elle s'affiche correctement partout. Soumettez votre travail en suivant les instructions fournies par votre enseignant.
+```css
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; line-height: 1.5; }
+img { max-width: 100%; height: auto; }
+.conteneur { max-width: 1100px; margin-inline: auto; padding: 24px; }
+```
+
+`max-width` fixe une limite supérieure, contrairement à une largeur fixe qui peut déborder. `margin-inline: auto` répartit l'espace disponible de chaque côté. `line-height` règle la hauteur des lignes, pas la taille des lettres.
+
+<a id="identite"></a>
+
+## La cohérence des styles de composants
+
+Choisissez une couleur de fond, une couleur de texte et une couleur d'accent. Réutilisez une petite échelle d'espacements, par exemple 8, 16, 24 et 32 px. Les unités `rem` se réfèrent à la taille de police racine. Les variables CSS déclarées avec `--` et lues avec `var()` permettent de modifier une couleur partagée à un seul endroit.
+
+```css
+:root { --accent: #2457a7; --espace: 1rem; }
+h1, h2 { color: var(--accent); }
+.carte { padding: var(--espace); border: 1px solid #bcc7d6; border-radius: 12px; }
+```
+
+Une bordure aide à délimiter une carte ; une ombre ne doit pas rendre le texte flou. Gardez un contraste lisible. Ne donnez pas une taille différente à chaque titre au hasard : définissez une hiérarchie réutilisable.
+
+<a id="disposition"></a>
+
+## Le conteneur Flexbox des cartes
+
+La navigation peut être un conteneur Flexbox avec `gap`. Les profils peuvent former une grille à trois colonnes. Les propriétés de disposition s'appliquent au parent ; les règles de présentation des cartes s'appliquent à leurs classes. Le même `.carte` doit fonctionner dans les deux catégories.
+
+```css
+nav { display: flex; flex-wrap: wrap; gap: 16px; }
+.profils { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.carte img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+```
+
+`object-fit: cover` recadre une image pour remplir son cadre en conservant ses proportions. Vérifiez que ce recadrage ne coupe pas une information essentielle. `aspect-ratio` définit le rapport largeur/hauteur du cadre. La version mobile sera approfondie à la séance suivante.
+
+
+À essayer : changez l'accent puis le gap. Constatez quels éléments héritent du changement et lesquels utilisent une règle spécifique.
+
+## Exemple court — une image limitée par son conteneur
+
+La carte garde une largeur maximale ; l’image ne dépasse pas cette carte. Sa hauteur automatique préserve ses proportions. Une largeur maximale ne signifie pas que le bloc atteint toujours cette largeur.
+
+```html preview title="Carte et image adaptables" height=220
+<article class="carte">
+  <h2>Un paysage</h2>
+  <img src="/images/learning/landscape.svg" alt="Paysage illustré de montagnes">
+</article>
+<style>
+  .carte {
+    max-width: 18rem;
+    margin-inline: auto;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+```

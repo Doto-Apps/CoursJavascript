@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Portfolio : créer la base et une API de lecture",
+  "uid": "s2-site-02",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/Site_Web_Avec_Donnees/td/base",
+  "sourceSession": "S2-SITE-02",
+  "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/affichage",
+  "questions": [
+    {
+      "question": "En passant de Todo List à portfolio, qu’est-ce qui change principalement ?",
+      "answers": [
+        "Les champs et les règles, pas les rôles client/serveur/base",
+        "Le navigateur devient la base",
+        "PHP devient la feuille CSS",
+        "MySQL devient le navigateur"
+      ],
+      "explanation": "Le portfolio réutilise l’architecture de la Todo List avec un autre modèle de données.",
+      "sourceSection": "notion-1",
+      "evidence": "Le portfolio reprend les rôles navigateur, PHP et MySQL du TP de développement.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel champ identifie une ligne de projects ?",
+      "answers": [
+        "La position dans le filtre",
+        "id",
+        "title",
+        "start_date"
+      ],
+      "explanation": "L’id garde l’identité de la ligne malgré le tri.",
+      "sourceSection": "notion-2",
+      "evidence": "id est la clé primaire du projet.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel type stocke la description ?",
+      "answers": [
+        "INT",
+        "BOOLEAN",
+        "TEXT",
+        "DATE"
+      ],
+      "explanation": "Une description textuelle longue utilise un type adapté au texte.",
+      "sourceSection": "notion-4",
+      "evidence": "description utilise TEXT dans ce schéma.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel type stocke la date de début ?",
+      "answers": [
+        "TEXT pour une date sans contrôle",
+        "BOOLEAN",
+        "Une image",
+        "DATE"
+      ],
+      "explanation": "Le type DATE représente une date, sans heure.",
+      "sourceSection": "notion-5",
+      "evidence": "start_date utilise le type DATE.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que signifie NULL ici ?",
+      "answers": [
+        "Aucune date de fin renseignée",
+        "Une date égale à zéro",
+        "La date d’aujourd’hui",
+        "Une erreur serveur obligatoire"
+      ],
+      "explanation": "NULL représente ici une absence prévue par le schéma.",
+      "sourceSection": "notion-7",
+      "evidence": "NULL signifie une valeur absente.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "start_date et created_at désignent-ils le même événement ?",
+      "answers": [
+        "Non, created_at est le titre",
+        "Non, l’un est le début du projet et l’autre son enregistrement",
+        "Oui, ils sont toujours identiques",
+        "Oui, les deux sont des identifiants"
+      ],
+      "explanation": "La date métier et la date d’enregistrement décrivent des événements différents.",
+      "sourceSection": "notion-9",
+      "evidence": "start_date et created_at décrivent deux événements différents.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle instruction construit la liste depuis MySQL ?",
+      "answers": [
+        "UPDATE",
+        "DELETE",
+        "SELECT",
+        "INSERT"
+      ],
+      "explanation": "La lecture construit le résultat sans modifier les projets.",
+      "sourceSection": "notion-11",
+      "evidence": "SELECT lit les projets pour l'API.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pourquoi énumérer les colonnes du SELECT ?",
+      "answers": [
+        "Pour changer leur couleur",
+        "Pour effacer les colonnes inutiles",
+        "Pour trier automatiquement par titre",
+        "Pour sélectionner les champs du contrat"
+      ],
+      "explanation": "Le résultat envoyé doit correspondre aux propriétés attendues par le client.",
+      "sourceSection": "notion-12",
+      "evidence": "Sélectionner les colonnes explicitement stabilise le contrat transmis.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Pourquoi ajouter un second critère id au tri par date ?",
+      "answers": [
+        "Départager les projets ayant la même date",
+        "Remplacer tous les ids",
+        "Créer un projet supplémentaire",
+        "Filtrer toutes les dates absentes"
+      ],
+      "explanation": "Un second critère rend le tri déterministe lorsque les premières valeurs sont égales.",
+      "sourceSection": "notion-14",
+      "evidence": "id DESC départage les dates de début identiques.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel corps renvoyer après une lecture réussie sans projet ?",
+      "answers": [
+        "Un projet fictif automatique",
+        "Un tableau JSON vide",
+        "Une erreur HTTP systématique",
+        "Une page HTML vide"
+      ],
+      "explanation": "Une lecture réussie sans projet reste une liste valide.",
+      "sourceSection": "notion-15",
+      "evidence": "Une table vide produit un tableau JSON vide pour GET réussi.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment distinguer une panne SQL d’une liste de projets vide ?",
+      "answers": [
+        "Un projet inventé",
+        "Un faux succès de création",
+        "Un statut d’erreur et un message",
+        "Un tableau vide en 200 pour masquer la panne"
+      ],
+      "explanation": "Une panne ne doit pas être présentée comme une absence normale de projets.",
+      "sourceSection": "notion-16",
+      "evidence": "Une erreur de connexion ne doit pas être assimilée à une liste vide normale.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Où conserver les paramètres MySQL ?",
+      "answers": [
+        "Dans le JavaScript public",
+        "Dans le texte du titre",
+        "Dans l’URL publique du projet",
+        "Côté PHP, sans les exposer au navigateur"
+      ],
+      "explanation": "La configuration de base appartient au serveur.",
+      "sourceSection": "notion-20",
+      "evidence": "Les identifiants de base restent côté serveur.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

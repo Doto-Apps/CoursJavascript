@@ -4,93 +4,40 @@ title: "Events"
 type: "tp"
 ---
 
-# Les évènements (event)
+## Le DOM et querySelector
 
-Les évènements en JavaScript sont des actions qui sont déclenchées par
-l'utilisateur (comme un clic sur un bouton) ou par le navigateur (comme
-le chargement d'une page). JavaScript vous permet de définir des
-fonctions de gestionnaire d'évènements qui seront exécutées lorsque
-l'évènement se produit.
+Le DOM est la représentation du document que JavaScript peut consulter et modifier. `document.querySelector('.carte')` renvoie le premier élément correspondant au sélecteur CSS, ou `null`. Le script doit s’exécuter après la création de cet élément : placez-le après le HTML ou chargez un fichier de module.
 
-Voici comment définir un gestionnaire d'évènements pour l'évènement <code>click</code> d'un bouton :
+## addEventListener et la fonction de rappel
 
-```html
-<button onclick="maFonction()">Cliquez ici</button>
-
+```html live title="Un compteur de clics"
+<button type="button">Ajouter un clic</button>
+<p role="status">0 clic</p>
 <script>
-  function maFonction() {
-    alert("Vous avez cliqué sur le bouton!");
-  }
+  const bouton = document.querySelector('button');
+  const sortie = document.querySelector('p');
+  let nombre = 0;
+  bouton.addEventListener('click', () => {
+    nombre += 1;
+    sortie.textContent = `${nombre} clic(s)`;
+  });
 </script>
 ```
 
-Voici comment définir un gestionnaire d'évènements en utilisant l'API
-des évènements :
+L’inscription de l’écouteur ne modifie pas le compteur. Après deux clics, le paragraphe affiche `2 clic(s)`. La variable conserve l’état et le paragraphe en présente la valeur. `textContent` insère du texte, sans interpréter des balises fournies par une saisie.
 
-```html
-<button id="monBouton">Cliquez ici</button>
+## target, currentTarget et propagation
 
-<script>
-  let monBouton = document.getElementById("monBouton");
-  monBouton.addEventListener("click", maFonction);
+Un clic sur un élément enfant remonte généralement à ses parents. `event.target` désigne l’élément à l’origine de l’événement ; `event.currentTarget`, celui dont l’écouteur s’exécute. Un clic sur une icône dans un bouton peut donc donner deux éléments différents. Pour déléguer des clics sur une liste, utilisez `event.target.closest('button[data-id]')` puis vérifiez qu’un bouton a été trouvé.
 
-  function maFonction() {
-    alert("Vous avez cliqué sur le bouton!");
-  }
-</script>
-```
+## input, change et submit
 
-Voici comment désactiver le comportement par défaut d'un évènement :
+| Événement | Usage |
+|---|---|
+| `click` | Activation d’un bouton, y compris au clavier avec l’élément natif |
+| `input` | Mise à jour pendant la saisie |
+| `change` | Choix validé ou valeur confirmée selon le contrôle |
+| `submit` | Soumission d’un formulaire, même par Entrée |
+| `keydown` | Touche précise, par exemple Échap pour fermer un menu |
 
-```js
-monBouton.addEventListener("click", function (e) {
-  e.preventDefault(); // empêche le comportement par défaut de l'évènement (par exemple, le rechargement de la page lors de la soumission d'un formulaire)
-});
-```
-
-Voici comment accéder aux détails de l'évènement dans le gestionnaire
-d'évènements :
-
-```js
-monBouton.addEventListener("click", function (e) {
-  console.log(e.target); // affiche l'élément qui a déclenché l'évènement
-  console.log(e.type); // affiche le type de l'évènement (par exemple, "click")
-  console.log(e.clientX); // affiche la position X de la souris par rapport à la fenêtre du navigateur
-  console.log(e.clientY); // affiche la position Y de la souris par rapport à la fenêtre du navigateur
-});
-```
-
-Voici comment définir un gestionnaire d'évènements sur tous les éléments
-d'un même type (par exemple, tous les boutons) :
-
-```js
-document.addEventListener("click", function (e) {
-  if (e.target.tagName === "BUTTON") {
-    // vérifie si l'élément qui a déclenché l'évènement est un bouton
-    console.log("Vous avez cliqué sur un bouton!");
-  }
-});
-```
-
-Voici une liste de quelques évènements courants en JavaScript :
-
-- <code>click</code> : déclenché lorsque l'utilisateur clique sur un
-  élément
-- <code>submit</code> : déclenché lorsque l'utilisateur soumet un
-  formulaire
-- <code>focus</code> : déclenché lorsque l'utilisateur place le curseur
-  dans un élément
-- <code>blur</code> : déclenché lorsque l'utilisateur retire le curseur
-  d'un élément
-- <code>change</code> : déclenché lorsque l'utilisateur modifie la
-  valeur d'un élément
-- <code>mouseover</code> : déclenché lorsque l'utilisateur place le
-  curseur sur un élément
-- <code>mouseout</code> : déclenché lorsque l'utilisateur retire le
-  curseur d'un élément
-- <code>keydown</code> : déclenché lorsque l'utilisateur appuie sur une
-  touche du clavier
-- <code>keyup</code> : déclenché lorsque l'utilisateur relâche une
-  touche du clavier
-- <code>load</code> : déclenché lorsque la page est chargée
-- <code>unload</code> : déclenché lorsque l'utilisateur quitte la page
+`preventDefault()` annule une action par défaut, par exemple la navigation d’un formulaire soumis. Il n’arrête pas la propagation. `stopPropagation()` agit sur la propagation et ne remplace pas l’annulation de la soumission. N’ajoutez ces appels que lorsque le comportement l’exige. `removeEventListener` nécessite la même fonction de rappel que celle enregistrée : conservez son nom si vous devez retirer l’écouteur.

@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Algorithmique PHP : données, décisions et traces",
+  "uid": "s1-dev-02",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/developpement_Web/PHP_inter",
+  "sourceSession": "DEV-02",
+  "targetCourse": "/semestre_1/developpement_Web/PHP_begin",
+  "questions": [
+    {
+      "question": "Comment reconnaître une variable PHP ?",
+      "answers": [
+        "$quantite",
+        "quantite",
+        "@quantite",
+        "quantite$"
+      ],
+      "explanation": "En PHP, un nom de variable commence par le signe dollar.",
+      "sourceSection": "comprendre",
+      "evidence": "commence",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel effet produit l’affectation PHP $quantite = 3 ?",
+      "answers": [
+        "Afficher automatiquement 3",
+        "Stocker 3 dans la variable",
+        "Comparer la variable à 3",
+        "Ajouter 3 à sa valeur actuelle"
+      ],
+      "explanation": "L’affectation enregistre une valeur ; elle n’est pas une comparaison.",
+      "sourceSection": "comprendre",
+      "evidence": "affectation",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "En PHP, $prix et $Prix désignent-ils la même variable ?",
+      "answers": [
+        "Oui, mais seulement pour les nombres",
+        "Oui, après affichage par echo",
+        "Non, les deux noms sont distincts",
+        "Oui, la casse est toujours ignorée"
+      ],
+      "explanation": "Les noms de variables PHP sont sensibles à la casse.",
+      "sourceSection": "variables",
+      "evidence": "casse",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel type représente un texte comme 'Léa' ?",
+      "answers": [
+        "Un entier",
+        "Un booléen",
+        "Un tableau",
+        "Une chaîne de caractères"
+      ],
+      "explanation": "Un texte entre guillemets est une chaîne, même s’il contient des chiffres.",
+      "sourceSection": "comprendre",
+      "evidence": "chaîne",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel opérateur concatène des chaînes PHP ?",
+      "answers": [
+        "Le point .",
+        "Le signe +",
+        "Le signe *",
+        "Le signe ==="
+      ],
+      "explanation": "En PHP, le point concatène les chaînes.",
+      "sourceSection": "variables",
+      "evidence": "concatène",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "À quoi sert echo ?",
+      "answers": [
+        "Déclarer une classe",
+        "Produire une sortie",
+        "Affecter une variable sans afficher",
+        "Comparer deux types"
+      ],
+      "explanation": "echo envoie une valeur dans la sortie du programme.",
+      "sourceSection": "comprendre",
+      "evidence": "echo",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel total donne 3 multiplié par 12.5 ?",
+      "answers": [
+        "15.5",
+        "12.5",
+        "37.5",
+        "36"
+      ],
+      "explanation": "Trois fois 12,5 vaut 37,5 ; la quantité multiplie le prix unitaire.",
+      "sourceSection": "comprendre",
+      "evidence": "37.5",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "À quoi sert l'opérateur % ?",
+      "answers": [
+        "Une réduction automatique en pourcentage",
+        "Le quotient de toute division",
+        "Une concaténation de nombres",
+        "Le reste d’une division entière"
+      ],
+      "explanation": "L’opérateur modulo donne le reste de la division entière.",
+      "sourceSection": "operateurs",
+      "evidence": "reste",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que vaut l’expression PHP 5 === \"5\" ?",
+      "answers": [
+        "false, car les types sont différents",
+        "true, car les valeurs ressemblent au même nombre",
+        "true, car le texte est converti avant toute comparaison stricte",
+        "Une erreur de syntaxe"
+      ],
+      "explanation": "Une comparaison stricte exige des valeurs et des types identiques.",
+      "sourceSection": "comprendre",
+      "evidence": "valeur et le type",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel opérateur exprime un ET logique ?",
+      "answers": [
+        "Le signe ! seul",
+        "&&",
+        "Deux signes & utilisés séparément",
+        "Deux signes ="
+      ],
+      "explanation": "Le ET logique est vrai lorsque ses deux conditions sont vraies.",
+      "sourceSection": "comprendre",
+      "evidence": "&&",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Avec $age = 18, if ($age >= 18) affiche « Accès adulte », sinon « Accès junior ». Quel résultat ?",
+      "answers": [
+        "Les deux textes",
+        "Aucun texte",
+        "Accès adulte",
+        "Accès junior"
+      ],
+      "explanation": "Le seuil est inclus : 18 satisfait la condition supérieure ou égale à 18.",
+      "sourceSection": "comprendre",
+      "evidence": "18",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment une chaîne if/elseif choisit-elle sa branche ?",
+      "answers": [
+        "La dernière condition vraie",
+        "Toutes les conditions vraies",
+        "La branche contenant le plus de code",
+        "La première condition vraie"
+      ],
+      "explanation": "Une chaîne if/elseif s’arrête à sa première branche vraie.",
+      "sourceSection": "conditions",
+      "evidence": "première branche",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

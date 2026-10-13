@@ -1,0 +1,138 @@
+[
+  {
+    "id": "S3-CONT-01",
+    "coursePath": "/semestre_3/deploiement_Services/retool",
+    "title": "Retool : composants, données et premières actions",
+    "subject": "Gestion de contenu avancée",
+    "order": 1,
+    "type": "TD",
+    "durationMinutes": 240,
+    "planningDate": "09/08/2026 — date à confirmer",
+    "skills": [
+      "Distinguer composant, ressource, requête et événement",
+      "Afficher une collection de produits et lire une sélection",
+      "Relier un formulaire à une opération validée",
+      "Configurer Firebase côté Retool et vérifier une lecture"
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "S3-CONT-02",
+    "coursePath": "/semestre_3/deploiement_Services/tpteeshirt",
+    "title": "TP Retool : catalogue persistant et statistiques",
+    "subject": "Gestion de contenu avancée",
+    "order": 2,
+    "type": "TP",
+    "durationMinutes": 240,
+    "planningDate": "23/09/2026 — 8 h",
+    "skills": [
+      "Compléter les opérations sur un catalogue identifié",
+      "Filtrer une vue sans modifier la source",
+      "Calculer et expliquer des indicateurs simples",
+      "Tester valeurs limites, état vide et échec de requête"
+    ],
+    "previousSession": "S3-CONT-01",
+    "quizId": "s3-retool",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-retool",
+      "sourceSession": "S3-CONT-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-CONT-03",
+    "coursePath": "/semestre_3/integrer_Interface/retool",
+    "title": "Retool : consolider une interface d’administration",
+    "subject": "Gestion de contenu avancée",
+    "order": 3,
+    "type": "TD",
+    "durationMinutes": 240,
+    "planningDate": "23/09/2026 — 14 h",
+    "skills": [
+      "Organiser les usages de lecture, gestion et analyse",
+      "Conserver des formulaires et filtres cohérents",
+      "Présenter chargement, vide, erreur et réussite",
+      "Vérifier les parcours et les limites de l’administration"
+    ],
+    "previousSession": "S3-CONT-02",
+    "quizId": "s3-retool-catalogue",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-retool-catalogue",
+      "sourceSession": "S3-CONT-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-DEP-01",
+    "coursePath": "/semestre_3/deploiement_Services/nodeS1",
+    "title": "Node.js : créer une API de personnage",
+    "subject": "Déploiement de services",
+    "order": 1,
+    "type": "TD",
+    "durationMinutes": 240,
+    "planningDate": "22/10/2026 14 h",
+    "skills": [
+      "Exécuter JavaScript avec Node et expliquer le rôle du serveur",
+      "Lire une requête HTTP et produire une réponse JSON",
+      "Valider un message et distinguer réussite et erreur",
+      "Tester une API de personnage sans dépendre d’un modèle"
+    ],
+    "entryActivity": {
+      "type": "diagnostic",
+      "points": null
+    }
+  },
+  {
+    "id": "S3-DEP-02",
+    "coursePath": "/semestre_3/deploiement_Services/nodeS2",
+    "title": "Configurer les services et connecter un modèle local",
+    "subject": "Déploiement de services",
+    "order": 2,
+    "type": "TD",
+    "durationMinutes": 120,
+    "planningDate": "18/11/2026 14 h",
+    "skills": [
+      "Distinguer adresse locale, adresse réseau et adresse d’écoute",
+      "Configurer un service avec des variables d’environnement",
+      "Appeler un modèle local en conservant le contrat de l’API",
+      "Diagnostiquer une panne entre deux services"
+    ],
+    "previousSession": "S3-DEP-01",
+    "quizId": "s3-node-chatbot",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-node-chatbot",
+      "sourceSession": "S3-DEP-01",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-DEP-03",
+    "coursePath": "/semestre_3/deploiement_Services/tpRPG",
+    "title": "TP : un conte corse raconté par nos services",
+    "subject": "Déploiement de services",
+    "order": 3,
+    "type": "TP",
+    "durationMinutes": 120,
+    "planningDate": "18/11/2026 16 h",
+    "skills": [
+      "Personnaliser un personnage en conservant une API commune",
+      "Faire circuler un contexte entre des services du réseau",
+      "Limiter les tours et gérer l’arrêt sur erreur",
+      "Présenter un récit et attribuer son contexte source"
+    ],
+    "previousSession": "S3-DEP-02",
+    "quizId": "s3-node-services",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-node-services",
+      "sourceSession": "S3-DEP-02",
+      "points": 10
+    }
+  }
+]

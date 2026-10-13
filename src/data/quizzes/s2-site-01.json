@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Portfolio dynamique : cadrer les données et les parcours",
+  "uid": "s2-site-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/Site_Web_Avec_Donnees/td/portfolio",
+  "sourceSession": "S2-SITE-01",
+  "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/base",
+  "questions": [
+    {
+      "question": "Quelle fonction appartient au parcours visiteur ?",
+      "answers": [
+        "Filtrer les projets",
+        "Modifier les données enregistrées",
+        "Supprimer un projet",
+        "Configurer la connexion SQL"
+      ],
+      "explanation": "Le parcours visiteur consulte et sélectionne l’affichage, sans administrer les données.",
+      "sourceSection": "notion-2",
+      "evidence": "Le visiteur consulte et filtre les projets.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle action relève de la gestion ?",
+      "answers": [
+        "Ouvrir un lien de projet",
+        "Ajouter un projet par formulaire",
+        "Lire une carte",
+        "Filtrer les cartes visibles"
+      ],
+      "explanation": "La gestion modifie les données ; l’affichage public les consulte.",
+      "sourceSection": "notion-3",
+      "evidence": "La gestion ajoute et modifie les données du catalogue.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel document clarifie les champs avant SQL ?",
+      "answers": [
+        "Une liste de polices",
+        "Le nom des navigateurs",
+        "Le dictionnaire de données",
+        "Une capture de couleurs"
+      ],
+      "explanation": "Le dictionnaire précise les noms, types et règles avant la table SQL.",
+      "sourceSection": "notion-4",
+      "evidence": "Le dictionnaire de données décrit type, exemple et règles de chaque champ.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel champ garde une identité stable ?",
+      "answers": [
+        "title",
+        "description",
+        "La position de la carte",
+        "id"
+      ],
+      "explanation": "Une identité stable permet de retrouver le projet après filtrage ou édition.",
+      "sourceSection": "notion-5",
+      "evidence": "L'id identifie le projet indépendamment du titre.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle règle s'applique à title ?",
+      "answers": [
+        "Un texte obligatoire non vide",
+        "Un nombre entier",
+        "Une date de fin",
+        "Une URL uniquement"
+      ],
+      "explanation": "Le titre identifie le projet pour le lecteur et doit respecter la règle de saisie.",
+      "sourceSection": "notion-6",
+      "evidence": "Le titre est une chaîne obligatoire.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel rôle joue image_url ?",
+      "answers": [
+        "Le lien du dépôt",
+        "L’emplacement de l’image",
+        "Le texte alternatif",
+        "La date de début"
+      ],
+      "explanation": "L’URL de l’image et sa description ont des rôles différents.",
+      "sourceSection": "notion-8",
+      "evidence": "image_url désigne une image, pas sa description textuelle.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel format utilise start_date dans le contrat ?",
+      "answers": [
+        "Un numéro de jour seul",
+        "La date d’enregistrement obligatoire",
+        "Une date au format année-mois-jour",
+        "Un nom de mois seul"
+      ],
+      "explanation": "Le contrat utilise un format de date stable entre interface et serveur.",
+      "sourceSection": "notion-9",
+      "evidence": "Les dates du contrat suivent année-mois-jour.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle règle relie début et fin ?",
+      "answers": [
+        "La fin doit toujours être égale au début",
+        "Les deux dates doivent être aujourd’hui",
+        "La fin dépend uniquement de l’id",
+        "La fin ne peut pas précéder le début"
+      ],
+      "explanation": "L’ordre chronologique est une règle du projet, distincte de la syntaxe des dates.",
+      "sourceSection": "notion-10",
+      "evidence": "La date de fin ne doit pas précéder celle de début.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel champ contient le lien du projet ?",
+      "answers": [
+        "project_url",
+        "image_url",
+        "code_url",
+        "title"
+      ],
+      "explanation": "Le lien du projet ne doit pas être confondu avec celui de l’image ou du code.",
+      "sourceSection": "notion-12",
+      "evidence": "project_url désigne la destination du projet.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quels protocoles sont retenus pour les liens externes ?",
+      "answers": [
+        "File seulement",
+        "HTTP et HTTPS",
+        "Tous les protocoles",
+        "JavaScript seulement"
+      ],
+      "explanation": "Un lien externe reçu doit respecter les protocoles autorisés par le contrat.",
+      "sourceSection": "notion-15",
+      "evidence": "Les liens externes acceptés sont HTTP ou HTTPS.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Une maquette est-elle directement une table SQL ?",
+      "answers": [
+        "Oui, chaque pixel devient une ligne",
+        "Oui, une capture remplace le schéma",
+        "Non, interface et stockage décrivent des aspects différents",
+        "Oui, chaque couleur devient une colonne"
+      ],
+      "explanation": "Le modèle de données découle du contenu à conserver, pas des positions de la maquette.",
+      "sourceSection": "notion-19",
+      "evidence": "Une maquette décrit l'interface ; le dictionnaire prépare les données.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que prioriser au cadrage ?",
+      "answers": [
+        "Toutes les extensions avant l’affichage",
+        "Une animation obligatoire par carte",
+        "Un compte utilisateur avant tout socle",
+        "Un parcours minimal fonctionnel"
+      ],
+      "explanation": "Le socle permet de valider le trajet complet avant les options.",
+      "sourceSection": "notion-20",
+      "evidence": "Le minimum livrable est défini avant les détails décoratifs.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "name": "Révision — TP PHP : calculer un tarif et tester les limites",
+  "uid": "s1-dev-03",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/developpement_Web/PHP_begin",
+  "sourceSession": "DEV-03",
+  "targetCourse": "/semestre_1/developpement_Web/phpVarTab",
+  "questions": [
+    {
+      "question": "Le TP autorise de 1 à 6 billets inclus. Comment classer une commande de 7 billets ?",
+      "answers": [
+        "Invalide : elle dépasse le maximum 6",
+        "Valide car toute quantité positive convient",
+        "Valide avec la remise seulement",
+        "Valide après remplacement automatique par 6"
+      ],
+      "explanation": "Les bornes doivent être vérifiées avant le calcul du tarif.",
+      "sourceSection": "regles",
+      "evidence": "1 à 6",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle réduction faut-il appliquer ?",
+      "answers": [
+        "Une remise égale au prix d’un billet",
+        "Une remise globale de 6 euros",
+        "Une remise de 6 euros par billet",
+        "Une remise de 6 pour cent"
+      ],
+      "explanation": "La règle du TP distingue une réduction fixe globale d’un pourcentage.",
+      "sourceSection": "regles",
+      "evidence": "fixe",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel comportement pour une quantité hors limites ?",
+      "answers": [
+        "Ramener silencieusement la quantité au maximum",
+        "Appliquer la remise malgré l’entrée invalide",
+        "Signaler une quantité invalide sans calculer le tarif",
+        "Facturer un total nul comme une réussite"
+      ],
+      "explanation": "Une entrée hors des bornes ne doit pas devenir une commande acceptée.",
+      "sourceSection": "comprendre",
+      "evidence": "Quantité invalide",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que faire avant l'implémentation des règles ?",
+      "answers": [
+        "Commencer par les couleurs de l’interface",
+        "Copier un résultat sans décrire la règle",
+        "Écrire les tests après toute livraison uniquement",
+        "Écrire les étapes en pseudo-code"
+      ],
+      "explanation": "Décrire entrées, conditions et sorties clarifie le traitement avant la syntaxe PHP.",
+      "sourceSection": "regles",
+      "evidence": "pseudo-code",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Pourquoi initialiser la réduction à zéro ?",
+      "answers": [
+        "Initialiser la réduction à zéro avant les branches",
+        "Ne la définir que dans la branche avec remise",
+        "L’initialiser systématiquement à 6",
+        "Réinitialiser le total à chaque affichage"
+      ],
+      "explanation": "Une valeur initiale couvre aussi le cas sans remise et évite une variable non définie.",
+      "sourceSection": "programme",
+      "evidence": "à 0",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle condition inclut le seuil de quatre billets ?",
+      "answers": [
+        "Quantité égale à zéro",
+        "Quantité supérieure ou égale à 4",
+        "Quantité strictement supérieure à 4",
+        "Quantité strictement inférieure à 4"
+      ],
+      "explanation": "Une borne inclusive utilise une comparaison qui accepte l’égalité.",
+      "sourceSection": "comprendre",
+      "evidence": ">= 4",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pour refuser toute quantité hors de 1 à 6 inclus, quelle condition convient ?",
+      "answers": [
+        "Quantité supérieure à 1 OU inférieure à 6",
+        "Quantité égale à 1 OU égale à 6",
+        "Quantité inférieure à 1 OU supérieure à 6",
+        "Quantité inférieure à 1 ET supérieure à 6"
+      ],
+      "explanation": "Un seul dépassement suffit pour être hors de l’intervalle.",
+      "sourceSection": "comprendre",
+      "evidence": "OU",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle condition accepte exactement les quantités de 1 à 6 inclus ?",
+      "answers": [
+        "Quantité au moins 1 OU au plus 6",
+        "Quantité strictement entre 1 et 6",
+        "Quantité égale seulement à 1 ou 6",
+        "Quantité au moins 1 ET au plus 6"
+      ],
+      "explanation": "Une valeur valide doit satisfaire simultanément les deux bornes.",
+      "sourceSection": "comprendre",
+      "evidence": "ET",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Un billet coûte 12 euros et la remise globale est de 6 euros dès 4 billets. Quel total pour 4 billets ?",
+      "answers": [
+        "42 euros",
+        "48 euros",
+        "24 euros",
+        "36 euros"
+      ],
+      "explanation": "Quatre billets coûtent 48 euros avant la remise globale de 6 euros.",
+      "sourceSection": "comprendre",
+      "evidence": "42",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Un billet coûte 12 €. Pour 3 billets, aucune remise. Quel total ?",
+      "answers": [
+        "12 euros",
+        "36 euros",
+        "30 euros",
+        "42 euros"
+      ],
+      "explanation": "Trois billets coûtent 36 euros ; le seuil de remise n’est pas atteint.",
+      "sourceSection": "comprendre",
+      "evidence": "36",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment établir le résultat attendu d’un test de calcul ?",
+      "answers": [
+        "Vérifier uniquement que le fichier s’ouvre",
+        "Changer la règle pour accepter chaque résultat",
+        "Calculer l’attendu indépendamment du programme",
+        "Copier la valeur observée comme attendu"
+      ],
+      "explanation": "Un attendu indépendant permet de détecter un calcul erroné.",
+      "sourceSection": "tests",
+      "evidence": "indépendamment",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que vérifie php -l ?",
+      "answers": [
+        "Tous les tarifs et tous les seuils",
+        "La qualité du CSS",
+        "L’affichage identique dans chaque navigateur",
+        "La syntaxe PHP, pas les règles métier"
+      ],
+      "explanation": "Le contrôle de syntaxe ne remplace pas les tests de comportement.",
+      "sourceSection": "tests",
+      "evidence": "syntaxe",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

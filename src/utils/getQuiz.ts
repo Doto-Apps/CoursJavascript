@@ -1,5 +1,6 @@
 import type { APIResponse } from "types";
 import type { APIContext } from "astro";
+import { z } from "zod";
 
 // Yolo cache but it works
 let cachedData: { [x: string]: { res: APIResponse; lastFetch: number } } = {};
@@ -7,6 +8,45 @@ const CACHE_DURATION = import.meta.env.DEV ? 60 * 60 * 8 * 1000 : 10 * 60 * 1000
 const SCRIPT_URL =
 	"https://script.google.com/macros/s/AKfycbxsUnyUPjQhv1mjnRLPcIN8Z5W3vjzG1AWvVhcQOEmENHUkkB2mb77oL31pXSW8Q-6J/exec";
 const API_KEY = import.meta.env.API_KEY;
+
+const localQuizModules = import.meta.glob("../data/quizzes/*.json", {
+	eager: true,
+	import: "default",
+}) as Record<string, unknown>;
+
+const localQuizSchema = z.object({
+	name: z.string().min(1),
+	mode: z.enum(["exam", "train", "close"]),
+	questionsPerTest: z.number().int().positive(),
+	timeByQuestionInSeconds: z.number().int().nonnegative(),
+	questions: z.array(z.object({
+		question: z.string().min(1),
+		answers: z.array(z.string().min(1)).length(4),
+		correctAnswerIndex: z.number().int().min(0).max(3),
+		explanation: z.string().optional(),
+		sourceSection: z.string().optional(),
+		evidence: z.string().optional(),
+	})).min(1),
+	uid: z.string().optional(),
+	sourceCourse: z.string().optional(),
+	sourceSession: z.string().optional(),
+	targetCourse: z.string().optional(),
+}).refine(quiz => quiz.questionsPerTest <= quiz.questions.length, {
+	message: "Le tirage dépasse le nombre de questions disponibles",
+	path: ["questionsPerTest"],
+});
+
+export function getLocalQuiz(quizId: string): APIResponse | undefined {
+	const source = localQuizModules[`../data/quizzes/${quizId}.json`];
+	if (!source) return undefined;
+
+	const parsed = localQuizSchema.safeParse(source);
+	if (!parsed.success) {
+		console.error(`Quiz local invalide (${quizId})`, parsed.error.flatten());
+		return undefined;
+	}
+	return { ...parsed.data, uid: parsed.data.uid ?? quizId };
+}
 
 export async function getQuiz(
 	quizId: string, sessions? : APIContext["session"]
@@ -18,6 +58,9 @@ export async function getQuiz(
 		const value = await sessions?.get("generatedQuiz")
 		return value;
 	}
+
+	const localQuiz = getLocalQuiz(quizId);
+	if (localQuiz) return localQuiz;
 
 	if (
 		cachedData &&

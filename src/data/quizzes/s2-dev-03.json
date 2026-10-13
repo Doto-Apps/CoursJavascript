@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Lire des tâches depuis MySQL avec PDO",
+  "uid": "s2-dev-03",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/tp/lecture",
+  "sourceSession": "S2-DEV-03",
+  "targetCourse": "/semestre_2/developpement_Web/tp/ajout",
+  "questions": [
+    {
+      "question": "Pourquoi conserver les tâches dans MySQL plutôt que dans une variable PHP locale ?",
+      "answers": [
+        "La base persiste entre les requêtes",
+        "La variable PHP locale conserve tout après la réponse",
+        "La table est uniquement une liste du DOM",
+        "La base n’a pas de types"
+      ],
+      "explanation": "Le stockage durable et les variables d’un traitement ont des durées différentes.",
+      "sourceSection": "notion-1",
+      "evidence": "MySQL conserve les lignes entre les requêtes.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Comment décrire une table SQL ?",
+      "answers": [
+        "Une fonction exécutée par le navigateur",
+        "Des colonnes typées et des lignes d’enregistrements",
+        "Une feuille CSS",
+        "Un seul texte sans champs"
+      ],
+      "explanation": "Le schéma fixe les champs et les types des enregistrements.",
+      "sourceSection": "notion-2",
+      "evidence": "Une table définit des colonnes et contient des lignes.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel champ représente l'identité stable de la tâche ?",
+      "answers": [
+        "done",
+        "La position d’affichage",
+        "id",
+        "title"
+      ],
+      "explanation": "L’identité stable reste utilisable après un tri ou un filtrage.",
+      "sourceSection": "notion-4",
+      "evidence": "La clé primaire identifie une tâche indépendamment de sa position affichée.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel réglage produit l'id automatiquement ?",
+      "answers": [
+        "NOT NULL seulement",
+        "ORDER BY",
+        "VARCHAR",
+        "AUTO_INCREMENT"
+      ],
+      "explanation": "L’incrément automatique produit une identité numérique pour les nouvelles lignes.",
+      "sourceSection": "notion-5",
+      "evidence": "AUTO_INCREMENT fournit un identifiant numérique généré.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "NOT NULL suffit-il à interdire un titre vide ?",
+      "answers": [
+        "Non, il faut aussi refuser la chaîne vide dans l’application",
+        "Oui, NOT NULL interdit tout texte vide",
+        "Oui, si le type est VARCHAR",
+        "Oui, si l’id est positif"
+      ],
+      "explanation": "Une absence SQL et une chaîne vide sont des valeurs différentes.",
+      "sourceSection": "notion-8",
+      "evidence": "NOT NULL interdit NULL mais pas une chaîne vide.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle instruction ajoute une tâche ?",
+      "answers": [
+        "DELETE",
+        "INSERT",
+        "SELECT",
+        "UPDATE"
+      ],
+      "explanation": "INSERT ajoute un enregistrement.",
+      "sourceSection": "notion-9",
+      "evidence": "INSERT ajoute une ligne.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle instruction lit la table ?",
+      "answers": [
+        "ALTER",
+        "DELETE",
+        "SELECT",
+        "INSERT"
+      ],
+      "explanation": "SELECT lit les données sans les modifier.",
+      "sourceSection": "notion-10",
+      "evidence": "SELECT lit les données.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle clause fixe l'ordre ?",
+      "answers": [
+        "WHERE seulement",
+        "LIMIT seulement",
+        "NOT NULL",
+        "ORDER BY"
+      ],
+      "explanation": "L’ordre voulu doit être explicitement décrit.",
+      "sourceSection": "notion-11",
+      "evidence": "ORDER BY définit l'ordre du résultat.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel rôle joue PDO dans ce projet ?",
+      "answers": [
+        "Relier PHP à la base et exécuter des requêtes",
+        "Rendre les cartes dans le DOM",
+        "Compiler les styles CSS",
+        "Remplacer les statuts HTTP"
+      ],
+      "explanation": "PDO fournit l’accès aux données depuis PHP.",
+      "sourceSection": "notion-14",
+      "evidence": "PDO permet au PHP de communiquer avec la base.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel mode fournit des clés comme title ?",
+      "answers": [
+        "Le texte du titre uniquement",
+        "PDO::FETCH_ASSOC",
+        "Un index de carte CSS",
+        "Une chaîne JSON automatique"
+      ],
+      "explanation": "Le mode associatif permet de lire les valeurs par nom de colonne.",
+      "sourceSection": "notion-17",
+      "evidence": "PDO::FETCH_ASSOC fournit les valeurs indexées par noms de colonnes.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pourquoi convertir certains types après la lecture SQL ?",
+      "answers": [
+        "Supprimer tous les nombres",
+        "Transformer chaque valeur en HTML",
+        "Respecter les types prévus par le contrat JSON",
+        "Modifier arbitrairement les noms de colonnes"
+      ],
+      "explanation": "Les valeurs lues en base doivent être adaptées aux types attendus par le client.",
+      "sourceSection": "notion-19",
+      "evidence": "Le TP convertit id en entier et done en booléen pour le contrat JSON.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Où conserver la configuration de base ?",
+      "answers": [
+        "Dans une variable publique JavaScript",
+        "Dans le titre de l’onglet",
+        "Dans le texte de chaque carte",
+        "Côté PHP, sans l’envoyer au navigateur"
+      ],
+      "explanation": "Le navigateur parle à l’API ; il ne doit pas recevoir les identifiants de la base.",
+      "sourceSection": "notion-20",
+      "evidence": "Les paramètres de connexion restent côté serveur.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

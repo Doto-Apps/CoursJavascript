@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Portfolio : afficher les projets comme des composants",
+  "uid": "s2-site-03",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/Site_Web_Avec_Donnees/td/affichage",
+  "sourceSession": "S2-SITE-03",
+  "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/filtres",
+  "questions": [
+    {
+      "question": "Quel rôle joue creerCarte ?",
+      "answers": [
+        "Construire une carte à partir d’un projet",
+        "Relire automatiquement MySQL",
+        "Modifier la configuration PHP",
+        "Trier toujours les projets"
+      ],
+      "explanation": "La fonction de rendu sépare la présentation de l’obtention des données.",
+      "sourceSection": "notion-1",
+      "evidence": "Une fonction commune transforme un objet projet en carte.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle méthode crée article ?",
+      "answers": [
+        "JSON.stringify",
+        "document.createElement",
+        "JSON.parse",
+        "fetch"
+      ],
+      "explanation": "createElement crée un élément DOM qui peut ensuite être rempli et inséré.",
+      "sourceSection": "notion-2",
+      "evidence": "createElement construit un élément DOM.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle propriété utilise le titre de carte ?",
+      "answers": [
+        "outerHTML",
+        "insertAdjacentHTML",
+        "textContent",
+        "innerHTML"
+      ],
+      "explanation": "Un titre reçu doit être affiché comme texte, sans être interprété comme une balise.",
+      "sourceSection": "notion-3",
+      "evidence": "textContent traite le titre comme du texte.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle méthode assemble titre et description ?",
+      "answers": [
+        "JSON.stringify",
+        "response.json",
+        "Array.isArray",
+        "article.append"
+      ],
+      "explanation": "append ajoute les éléments construits au parent.",
+      "sourceSection": "notion-4",
+      "evidence": "append ajoute les éléments enfants à la carte.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle méthode transforme chaque projet du tableau en carte ?",
+      "answers": [
+        "map",
+        "filter",
+        "find",
+        "includes"
+      ],
+      "explanation": "map transforme chaque projet en une carte sans sélectionner une sous-liste.",
+      "sourceSection": "notion-5",
+      "evidence": "map produit une carte pour chaque projet.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi utiliser replaceChildren pour un rendu complet ?",
+      "answers": [
+        "Modifier l’id de chaque projet",
+        "Éviter d’empiler les anciennes cartes à chaque rendu",
+        "Effacer les données dans MySQL",
+        "Créer une nouvelle requête HTTP"
+      ],
+      "explanation": "Remplacer les enfants reconstruit la liste au lieu de dupliquer l’ancien rendu.",
+      "sourceSection": "notion-6",
+      "evidence": "replaceChildren remplace les enfants existants du conteneur.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel principe guide les titres ?",
+      "answers": [
+        "Le nombre d’images",
+        "L’ordre alphabétique des ids",
+        "Une hiérarchie cohérente avec la page",
+        "La taille graphique uniquement"
+      ],
+      "explanation": "Les titres structurent le contenu ; CSS choisit la taille.",
+      "sourceSection": "notion-8",
+      "evidence": "Les titres de cartes gardent une hiérarchie cohérente avec le h1.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que fait object-fit: cover sur une image dans un cadre ?",
+      "answers": [
+        "Étendre indépendamment chaque dimension",
+        "Changer l’URL de l’image",
+        "Supprimer le texte alternatif",
+        "Remplir le cadre en recadrant sans déformer"
+      ],
+      "explanation": "cover peut couper des bords ; il faut garder l’information importante visible.",
+      "sourceSection": "notion-11",
+      "evidence": "object-fit: cover remplit la boîte en conservant les proportions, avec recadrage possible.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que faire si project_url est vide ?",
+      "answers": [
+        "Ne pas créer de faux lien cliquable",
+        "Créer href vide et annoncer une destination",
+        "Inventer une URL",
+        "Supprimer toute la carte"
+      ],
+      "explanation": "L’absence d’un lien optionnel ne doit pas produire une navigation trompeuse.",
+      "sourceSection": "notion-12",
+      "evidence": "Un lien vide n'est pas remplacé par un faux lien vers #.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quand afficher Chargement ?",
+      "answers": [
+        "Seulement avant d’ouvrir la page",
+        "Pendant l’attente de la réponse",
+        "Après une liste vide confirmée",
+        "Après toute réussite"
+      ],
+      "explanation": "L’état de chargement doit disparaître après réception ou échec.",
+      "sourceSection": "notion-14",
+      "evidence": "Le chargement est un état provisoire en attendant les données.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel message correspond à une liste vide normale ?",
+      "answers": [
+        "Chargement sans fin",
+        "Création réussie",
+        "Aucun projet enregistré",
+        "Erreur SQL dans tous les cas"
+      ],
+      "explanation": "Une liste vide normale se distingue d’une panne.",
+      "sourceSection": "notion-15",
+      "evidence": "Aucun projet enregistré décrit une liste reçue vide.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel contenu de test révèle un manque de robustesse ?",
+      "answers": [
+        "Uniquement un titre d’une lettre",
+        "Toujours le même texte court",
+        "Aucune description à chaque test",
+        "Un titre très long"
+      ],
+      "explanation": "Un contenu représentatif révèle les débordements et les contraintes de la carte.",
+      "sourceSection": "notion-18",
+      "evidence": "Une carte doit rester lisible avec un titre long.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

@@ -1,86 +1,65 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP : Transformation de la Maquette Figma en Site Statique"
-type: "TP"
+title: "Projet : construire la structure sémantique"
+type: "TD"
+order: 3
+quizId: "s1-site-02"
+previousSession: "/semestre_1/produire_Un_Site_Web/figma"
+nextSession: "/semestre_1/produire_Un_Site_Web/disposition"
 ---
 
-## Objectif
+<a id="comprendre"></a>
+## Le document HTML et les fichiers du projet
 
-L'objectif de ce TP est de transformer la maquette Figma que vous avez réalisée pour le site **Birbone** en un site statique. Ce TP est conçu pour durer 4 heures, au terme desquelles je passerai dans la salle pour évaluer votre travail. Vous devez avoir mis en place le squelette de votre site avec un placement des éléments en Flexbox.
+La maquette fournit des relations de contenu et de disposition ; le HTML exprime d’abord les rôles et la hiérarchie. Une page doit rester lisible avant sa décoration. Le support [HTML du S1](/semestre_1/integration/htmltd) détaille la syntaxe des éléments.
 
-## Étapes du TP
+```text
+site/
+  index.html
+  css/styles.css
+  images/affiche.jpg
+  credits.md
+```
 
-### 1. Préparation de l'Environnement
+Un chemin relatif est résolu depuis le document qui le référence. `images/affiche.jpg` part ici du dossier d’`index.html`. Vérifiez la casse exacte du chemin et du fichier : elle peut devenir significative sur l’hébergement. Dans une feuille CSS, `url(...)` part du fichier CSS.
 
-Assurez-vous d'avoir un environnement de développement prêt pour coder en HTML et CSS. Vous pouvez utiliser un éditeur de texte comme Visual Studio Code, Sublime Text ou Brackets.
+## Métadonnées et grandes zones sémantiques
 
-### 2. Structure du Squelette HTML
+`title` nomme l’onglet ; `h1` est le titre principal visible. `head` contient les métadonnées ; `body` contient la page. L’encodage UTF-8 du fichier et la déclaration `charset` doivent correspondre.
 
-- **Création du Fichier HTML** : Créez un fichier `index.html` à la racine de votre projet.
-- **Squelette HTML5** : Mettez en place la structure de base du document HTML5.
-  
-  Exemple de squelette de base :
-  ```html
-  <!DOCTYPE html>
-  <html lang="fr">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Birbone</title>
-      <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-      <!-- Ajoutez vos sections ici -->
-  </body>
-  </html>
-  ```
+```html preview title="Une page avec ses zones sémantiques" height=380
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio de Léa</title>
+</head>
+<body>
+  <header><h1>Portfolio de Léa</h1></header>
+  <nav aria-label="Navigation"><a href="#projets">Projets</a> <a href="#contact">Contact</a></nav>
+  <main>
+    <section id="projets">
+      <h2>Projets</h2>
+      <article class="carte"><h3>Affiche du festival</h3><p>Création de l’identité visuelle.</p></article>
+    </section>
+    <section id="contact"><h2>Contact</h2><p>Coordonnées du créateur.</p></section>
+  </main>
+  <footer><p>Crédits des médias disponibles dans le projet.</p></footer>
+</body>
+</html>
+```
 
-### 3. Placement des Éléments avec Flexbox
+Le résultat présente un titre, une navigation, une fiche et un contact sans nécessiter de CSS. `header` est l’en-tête, `nav` la navigation principale et `main` le contenu principal. `section` regroupe un thème titré ; `article` convient à un projet autonome ; `footer` termine le document. `div` reste un conteneur générique sans sens supplémentaire lorsque les autres éléments ne correspondent pas au rôle recherché.
 
-- **Création du Fichier CSS** : Créez un fichier `styles.css` dans lequel vous allez écrire vos règles CSS.
-- **Organisation du Squelette** : Utilisez des balises sémantiques HTML5 comme `<header>`, `<nav>`, `<section>`, `<footer>` pour structurer les différentes parties de votre site.
-- **Mise en Place du Flexbox** : Utilisez Flexbox pour organiser les éléments à l'intérieur de chaque section.
+## Titres, classes et identifiants
 
-  Exemple de CSS pour organiser une section en Flexbox :
-  ```css
-  body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
+Le niveau de titre suit la hiérarchie, pas la taille souhaitée. Ne changez pas un `h2` en `h6` pour le rendre petit : CSS règle la taille. Plusieurs cartes partagent la classe `carte`, mais un id reste unique dans le document.
 
-  header, nav, section, footer {
-      width: 100%;
-      max-width: 1200px;
-      margin: 20px 0;
-  }
+`href="#contact"` doit correspondre à l’élément dont l’id vaut `contact`. Une destination inexistante casse le parcours même si le lien est correctement stylisé. Un bouton exécute une action ; un lien navigue vers une ressource.
 
-  section {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-  }
-  ```
+## Validation et lecture sans CSS
 
-### 4. Intégration des Éléments de la Maquette
+Retirer temporairement la feuille de style permet d’observer l’ordre réel, les titres et le sens des contrôles. Un validateur HTML complète cette lecture, puis des tests manuels vérifient les liens, les alternatives d’images et la navigation clavier. Ces contrôles répondent à des questions différentes : un HTML valide ne prouve pas à lui seul un parcours utile.
 
-- **Placement des Sections** : Placez les éléments principaux de votre maquette (en-tête, menu, sections de contenu) dans les différentes sections de votre HTML.
-- **Utilisation du Flexbox** : Ajustez les propriétés Flexbox pour obtenir un alignement et une disposition conformes à votre maquette Figma.
-
-## Barème d'Évaluation
-
-L'évaluation sera réalisée à la fin du TP. Voici les critères qui seront utilisés pour noter votre travail :
-
-- **Structure du Squelette HTML (2 points)** : Le squelette HTML est en place et utilise des balises sémantiques appropriées.
-- **Mise en Place du Flexbox (3 points)** : Les éléments sont correctement placés en utilisant Flexbox pour aligner et distribuer les sections.
-- **Conformité à la Maquette (3 points)** : Le site reflète fidèlement la maquette réalisée sur Figma, en respectant la structure et l'organisation des éléments.
-- **Présentation du Code (2 points)** : Le code est bien structuré, clair, et prêt à être validé selon les normes W3C lors de la prochaine étape.
-
-## Conclusion
-
-À la fin de ce TP, vous devriez avoir un squelette de site fonctionnel qui respecte la structure et l'organisation définies dans votre maquette Figma. Ce travail est une étape intermédiaire avant de finaliser le développement complet de votre site **Birbone**.
-
-Bonne chance dans votre développement, et n'oubliez pas que je passerai dans la salle pour évaluer votre travail à la fin des 4 heures.
+La [disposition CSS](disposition) ajoute ensuite largeur, alignements et gouttières sans modifier les rôles HTML.

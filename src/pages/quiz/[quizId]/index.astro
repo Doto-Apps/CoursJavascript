@@ -2,11 +2,24 @@
 
 export const prerender = false;
 
+import { getLocalQuiz } from "utils/getQuiz";
+import { getRandomQuestion } from "utils/getRandomQuestion";
+import { clearLocalQuizAttempt } from "utils/clearLocalQuizAttempt";
+
 const { quizId } = Astro.params;
 
 if (!quizId) {
   return Astro.redirect("/404");
 }
 
-return Astro.redirect(`${quizId}/1`,);
+const quiz = getLocalQuiz(quizId);
+if (!quiz) return Astro.redirect(`${quizId}/1`);
+
+// Every visit to the start link creates a fresh practice attempt.
+await clearLocalQuizAttempt(quizId, quiz, Astro.session);
+
+const firstQuestion = getRandomQuestion(quiz.questions, []);
+if (!firstQuestion) return Astro.redirect("/404");
+
+return Astro.redirect(`${quizId}/${firstQuestion[1]}`);
 ---

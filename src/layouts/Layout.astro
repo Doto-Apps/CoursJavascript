@@ -1,18 +1,47 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import { getEntry } from "astro:content";
 import Sidebar from "components/Sidebar/Sidebar.astro";
+import CourseNavigation from "components/CourseNavigation.astro";
+import { getLocalQuiz } from "utils/getQuiz";
+import "../styles/home.css";
+import s1Sessions from "../data/s1-sessions.json";
+import s2Sessions from "../data/s2-sessions.json";
+import s3Sessions from "../data/s3-sessions.json";
 
 interface Props {
   title: string;
-  frontmatter?: { title?: string };
+  quizId?: string;
+  previousSession?: string;
+  nextSession?: string;
+  frontmatter?: { title?: string; quizId?: string; previousSession?: string; nextSession?: string };
 }
 
-const { title, frontmatter } = Astro.props;
+const { title, quizId, previousSession, nextSession, frontmatter } = Astro.props;
 const finalTitle = title ?? frontmatter?.title ?? "MMI - Site";
+const currentQuizId = quizId ?? frontmatter?.quizId;
+const localQuiz = currentQuizId ? getLocalQuiz(currentQuizId) : undefined;
+const isHome = Astro.url.pathname === "/";
+const session = [...s1Sessions, ...s2Sessions, ...s3Sessions].find(
+  entry => entry.coursePath === Astro.url.pathname.replace(/\/$/, ""),
+);
+const sessionHours = session ? Math.floor(session.durationMinutes / 60) : 0;
+const sessionMinutes = session ? session.durationMinutes % 60 : 0;
+const sessionDuration = [sessionHours ? sessionHours + " h" : "", sessionMinutes ? sessionMinutes + " min" : ""].filter(Boolean).join(" ");
+const quizSource = localQuiz?.sourceCourse
+  ? await getEntry("pages", localQuiz.sourceCourse.replace(/^\//, ""))
+  : undefined;
+const navigation = {
+  title: finalTitle,
+  metadata: session ? `${session.id} · ${session.type} · ${sessionDuration}` : undefined,
+  previousSession: previousSession ?? frontmatter?.previousSession,
+  nextSession: nextSession ?? frontmatter?.nextSession,
+};
+const hasCourseNavigation = Boolean(navigation.previousSession || navigation.nextSession);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="MMI2 Dev website" />
@@ -22,16 +51,115 @@ const finalTitle = title ?? frontmatter?.title ?? "MMI - Site";
     <title>{finalTitle}</title>
     <ClientRouter />
   </head>
-  <body class="relative">
+  <body class:list={["relative", hasCourseNavigation && "has-course-navigation"]}>
     <header transition:persist>
       <Sidebar />
     </header>
     <main
       transition:animate="fade"
-      class="p-10 px-18 mt-20 prose prose-slante lg:prose-lg max-w-full"
+      class:list={[
+        isHome ? "home-main" : "prose prose-slante lg:prose-lg max-w-full",
+        !isHome && (hasCourseNavigation
+          ? "course-main course-content px-5 pb-5 sm:px-10 sm:pb-10"
+          : `mt-20 ${/^\/semestre_[123](?:\/|$)/.test(Astro.url.pathname) ? "course-content p-5 sm:p-10" : "p-10 px-18"}`),
+      ]}
     >
-      <h1>{finalTitle}</h1>
+      {!isHome && !hasCourseNavigation && <h1>{finalTitle}</h1>}
+      <CourseNavigation {...navigation} position="top" />
+      {currentQuizId && (
+        <aside class="course-quiz not-prose" aria-labelledby="course-quiz-heading">
+          <div class="course-quiz-details">
+            <p class="course-quiz-title" id="course-quiz-heading">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="4" rx="1" /><path d="M8 5H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 13l2 2 4-4" /></svg>
+              QCM de début de séance
+            </p>
+            <div class="course-quiz-description">
+              {localQuiz && <span><strong>{localQuiz.questionsPerTest}</strong> questions</span>}
+              {localQuiz && <span>Banque de <strong>{localQuiz.questions.length}</strong></span>}
+              <span>{localQuiz ? (localQuiz.mode === "train" ? "Entraînement à volonté" : localQuiz.mode === "exam" ? "Examen" : "Fermé") : "Quiz de révision"}</span>
+              {localQuiz && <span><strong>{localQuiz.timeByQuestionInSeconds ? `${localQuiz.timeByQuestionInSeconds} s` : "Sans chronomètre"}</strong>{localQuiz.timeByQuestionInSeconds ? " par question" : ""}</span>}
+            </div>
+            {localQuiz?.sourceCourse && <p class="course-quiz-source">À réviser : <a href={localQuiz.sourceCourse}>{localQuiz.sourceSession} · {quizSource?.data.title ?? "la séance précédente"}</a></p>}
+          </div>
+          <a data-astro-prefetch="false" class="course-quiz-start" href={`/quiz/${currentQuizId}`}>
+            Commencer le QCM
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 7 7-7 7M5 12h14" /></svg>
+          </a>
+        </aside>
+      )}
       <slot />
+      <CourseNavigation {...navigation} position="bottom" />
     </main>
   </body>
 </html>
+
+<style is:global>
+  .course-main, .course-quiz {
+    --course-paper: var(--fallback-b1, oklch(var(--b1) / 1));
+    --course-ink: var(--fallback-bc, oklch(var(--bc) / 1));
+    --course-muted: color-mix(in srgb, var(--course-ink) 86%, var(--course-paper));
+    --course-line: color-mix(in srgb, var(--course-paper), var(--course-ink) 16%);
+    --course-surface: color-mix(in srgb, var(--course-paper), var(--course-ink) 6%);
+  }
+  .course-main { --course-gutter: 1.25rem; }
+  body.has-course-navigation .sidebar-toggle {
+    width: auto;
+    padding-bottom: 0;
+    background: none;
+  }
+  @media (min-width: 640px) {
+    .course-main { --course-gutter: 2.5rem; }
+  }
+</style>
+
+<style>
+  .course-quiz {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px 20px;
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    border: 1px solid var(--course-line);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--course-paper), var(--course-ink) 4%);
+    color: var(--course-ink);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+  .course-quiz-details { min-width: 0; }
+  .course-quiz p { margin: 0; }
+  .course-quiz-title { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 650; }
+  .course-quiz-title svg, .course-quiz-start svg { flex: 0 0 auto; }
+  .course-quiz .course-quiz-description { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 4px; color: var(--course-muted); font-size: 0.75rem; }
+  .course-quiz-description strong { color: var(--course-ink); font-weight: 600; }
+  .course-quiz .course-quiz-source { margin-top: 5px; font-size: 0.75rem; color: var(--course-muted); }
+  .course-quiz-source a { color: var(--course-ink); text-decoration: underline; text-decoration-color: var(--course-line); text-underline-offset: 3px; }
+  .course-quiz-source a:hover { text-decoration-color: currentColor; }
+  .course-quiz-start {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--course-ink);
+    color: var(--course-paper);
+    font-size: 0.8rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+  .course-quiz-start:hover { background: color-mix(in srgb, var(--course-ink) 88%, var(--course-paper)); }
+  .course-quiz a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .course-quiz-start:focus-visible { outline-color: var(--course-ink); }
+  @media (max-width: 640px) {
+    .course-quiz { grid-template-columns: minmax(0, 1fr); padding: 12px 14px; }
+    .course-quiz-start { justify-self: stretch; min-height: 44px; }
+  }
+</style>
+
+<script>
+  import "../scripts/liveCode";
+</script>

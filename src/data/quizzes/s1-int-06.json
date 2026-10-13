@@ -1,0 +1,168 @@
+{
+  "name": "Révision — TP : structurer le site Gamer / Creator",
+  "uid": "s1-int-06",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/integration/htmltp",
+  "sourceSession": "INT-06",
+  "targetCourse": "/semestre_1/integration/csstp",
+  "questions": [
+    {
+      "question": "Quel objectif est prioritaire dans le TP de structure HTML Gamer/Creator ?",
+      "answers": [
+        "Une page compréhensible sans CSS",
+        "Une animation sur chaque profil",
+        "Une disposition au pixel près avant la structure",
+        "Un formulaire dynamique avant les titres"
+      ],
+      "explanation": "La structure et le sens sont vérifiés avant la mise en forme du même site.",
+      "sourceSection": "contrat",
+      "evidence": "sans CSS",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que faut-il contrôler pour une image récupérée ?",
+      "answers": [
+        "Seulement la couleur dominante",
+        "La licence et les droits de réutilisation",
+        "Seulement la résolution",
+        "Seulement le nom de fichier"
+      ],
+      "explanation": "Une image accessible en ligne n’est pas automatiquement librement réutilisable.",
+      "sourceSection": "contrat",
+      "evidence": "licence",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment présenter des informations de contact inventées ?",
+      "answers": [
+        "Les omettre seulement dans le CSS",
+        "Les annoncer comme coordonnées officielles",
+        "Les signaler comme données fictives",
+        "Les présenter comme vérifiées"
+      ],
+      "explanation": "Un contenu de démonstration ne doit pas tromper sur la réalité des contacts.",
+      "sourceSection": "comprendre",
+      "evidence": "fictives",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle zone contient le contenu principal ?",
+      "answers": [
+        "header",
+        "footer",
+        "nav",
+        "main"
+      ],
+      "explanation": "Le contenu principal appartient à main.",
+      "sourceSection": "comprendre",
+      "evidence": "main",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel élément convient à une fiche de profil autonome ?",
+      "answers": [
+        "article",
+        "nav",
+        "meta",
+        "link"
+      ],
+      "explanation": "Une fiche autonome peut être regroupée dans un article.",
+      "sourceSection": "comprendre",
+      "evidence": "article",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel niveau pour un nom de profil dans une catégorie h2 ?",
+      "answers": [
+        "h6",
+        "h3",
+        "h1",
+        "h2"
+      ],
+      "explanation": "Dans cette structure, le nom du profil se situe sous le titre de catégorie h2.",
+      "sourceSection": "comprendre",
+      "evidence": "h3",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment fonctionne la navigation vers les catégories ?",
+      "answers": [
+        "Un name gamers sur le fichier CSS",
+        "Une classe gamers sans id cible",
+        "Un id gamers unique sur la section visée",
+        "Un id gamers sur chaque profil"
+      ],
+      "explanation": "Un lien de fragment rejoint l’identifiant correspondant dans le document.",
+      "sourceSection": "structure",
+      "evidence": "identifiants uniques",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Vous avez uniquement les éléments nav et main d’une page. Que manque-t-il pour en faire un document HTML complet ?",
+      "answers": [
+        "Uniquement une feuille CSS",
+        "Un formulaire dans tous les cas",
+        "Une seconde navigation obligatoire",
+        "Doctype, head, métadonnées et body"
+      ],
+      "explanation": "Des fragments de contenu ne constituent pas à eux seuls le document complet demandé.",
+      "sourceSection": "structure",
+      "evidence": "document complet",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel rôle les classes auront-elles dans la suite du TP ?",
+      "answers": [
+        "Cibler des éléments en CSS sans changer leur sens",
+        "Remplacer les niveaux de titres",
+        "Définir la destination des liens",
+        "Modifier la langue du document"
+      ],
+      "explanation": "Les classes facilitent la mise en forme ; la sémantique vient des éléments HTML.",
+      "sourceSection": "structure",
+      "evidence": "classes",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel alt utiliser pour une image sans information utile ?",
+      "answers": [
+        "L’absence systématique de l’attribut",
+        "alt=\"\"",
+        "Un nom de fichier imposé",
+        "Le même texte que le lien voisin dans tous les cas"
+      ],
+      "explanation": "Une décoration sans information utile ne nécessite pas une description lue.",
+      "sourceSection": "contenus",
+      "evidence": "décorative",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel intitulé de lien est le plus explicite ?",
+      "answers": [
+        "En savoir plus sans contexte",
+        "Un lien sans texte",
+        "Voir le portfolio de Léa",
+        "Cliquez ici"
+      ],
+      "explanation": "Le libellé doit rendre la destination compréhensible.",
+      "sourceSection": "contenus",
+      "evidence": "portfolio",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel contrôle convient pour rejoindre le portfolio d’une personne ?",
+      "answers": [
+        "Un bouton sans action",
+        "Un div seulement coloré",
+        "Une image sans alternative",
+        "Un lien vers la ressource"
+      ],
+      "explanation": "Le portfolio est une destination ; la navigation utilise un lien.",
+      "sourceSection": "contenus",
+      "evidence": "bouton",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

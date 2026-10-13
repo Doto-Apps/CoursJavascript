@@ -1,157 +1,78 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Développemennt du mockup"
-type : "tp"
+title: "Complément : interface de conversation et états"
+hidden: true
 ---
 
-# TP : Créer un chatbot avec Tailwind CSS, Flowbite et Ollama
+Cette ressource prolonge le [service de personnage](/semestre_3/deploiement_Services/nodeS1). Le rendu conserve le même contrat de message et de réponse.
 
-## Partie 1 : Configuration de l’environnement
+| Élément | Fonction | Précaution |
+|---|---|---|
+| form et événement submit | Envoyer aussi avec le clavier. | Annuler la navigation native dans la version JavaScript. |
+| label lié au champ | Nommer le message. | Un placeholder seul ne suffit pas. |
+| button de soumission | Déclencher une demande. | Désactivé seulement pendant l’attente. |
+| Zone role status | Annoncer attente ou erreur. | Message compréhensible, sans secret. |
+| Liste de répliques | Conserver la conversation visible. | Afficher les contenus avec textContent. |
 
-1. **Installer Tailwind CSS**
-   - Tailwind CSS est un framework CSS qui facilite le développement rapide d’interfaces élégantes et responsives.
-   - **Lien** : [Documentation officielle de Tailwind CSS](https://tailwindcss.com/docs/installation)
-   - Ajoutez Tailwind à votre projet en incluant son CDN directement dans votre fichier HTML :
-     ```html
-     <script src="https://cdn.tailwindcss.com"></script>
-     ```
+Cette démonstration simule la réponse localement pour observer les états sans serveur. Elle ne contacte ni Ollama ni LM Studio.
 
-2. **Ajouter Flowbite**
-   - Flowbite fournit des composants interactifs (boutons, modales, etc.) compatibles avec Tailwind CSS.
-   - **Lien** : [Documentation officielle de Flowbite](https://flowbite.com/docs/getting-started/introduction/)
-   - Intégrez Flowbite en ajoutant ce CDN dans votre fichier HTML :
-     ```html
-     <script src="https://cdn.jsdelivr.net/npm/flowbite/dist/flowbite.min.js"></script>
-     ```
-
-3. **Structure de base du projet**
-   - Créez un fichier `index.html` contenant l'interface utilisateur et liez-y votre fichier CSS/JavaScript.
-
----
-
-## Partie 2 : Interface utilisateur avec Tailwind CSS
-
-- Créez une interface simple avec :
-  - Une zone d'affichage des messages du chatbot.
-  - Un champ de saisie (input) pour poser des questions.
-  - Un bouton pour envoyer la question.
-
-Voici une structure de base pour l'interface :
-
-```html
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white rounded-lg shadow-lg">
-        <div id="chatBox" class="p-4 h-64 overflow-y-auto">
-            <!-- Messages ajoutés ici -->
-        </div>
-        <div class="p-4 flex">
-            <input id="userInput" type="text" placeholder="Posez votre question..."
-                class="flex-1 border rounded-lg p-2 mr-2" />
-            <button id="sendButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Envoyer</button>
-        </div>
-    </div>
-</div>
-```
-
----
-
-## Partie 3 : Intégration d’Ollama
-
-1. **Installation d’Ollama**
-   - Téléchargez Ollama sur votre ordinateur depuis le site officiel.
-   - **Lien** : [Documentation officielle d’Ollama](https://ollama.com/)
-   - Suivez les instructions pour installer et exécuter le serveur local d’Ollama.
-   - Assurez-vous que le modèle LLaMA 3.2 (3B) est disponible et chargé :
-     ```bash
-     ollama pull llama-3.2-3b
-     ollama serve
-     ```
-   - Le serveur d’Ollama est accessible par défaut sur `http://localhost:11434/api/ask`.
-
-2. **Tester la connexion**
-   - Ouvrez un terminal et envoyez une requête POST à Ollama pour vérifier qu’il répond correctement :
-     ```bash
-     curl -X POST http://localhost:11434/api/ask 
-     -H "Content-Type: application/json" 
-     -d '{"prompt": "Hello, how are you?"}'
-     ```
-
----
-
-## Partie 4 : Interaction avec Ollama via JavaScript
-
-Voici un script JavaScript pour envoyer la question posée dans le champ input et afficher la réponse dans la zone de chat :
-
-```javascript
+```html live title="Conversation simulée : attente et reprise"
+<form id="formulaire">
+  <label for="message">Votre message</label>
+  <input id="message" name="message" required maxlength="1000">
+  <button>Envoyer</button>
+</form>
+<label><input id="panne" type="checkbox"> Simuler une panne</label>
+<p id="etat" role="status"></p>
+<ol id="conversation"></ol>
+<style>
+  body { font: 16px system-ui; padding: 20px; }
+  form { display: grid; gap: 10px; max-width: 32rem; }
+  input, button { font: inherit; padding: 8px; }
+  li { margin-block: 12px; overflow-wrap: anywhere; }
+  :focus-visible { outline: 3px solid #2457a7; outline-offset: 3px; }
+</style>
 <script>
-   document.getElementById("sendButton").addEventListener("click", async() => {
-       // Récupérer la saisie utilisateur depuis l'input
-       const userInput = document.getElementById("userInput").value.trim();
-       if (!userInput) {
-           alert("Veuillez entrer une question !");
-           return;
-       }
-
-       // Ajouter la question de l'utilisateur dans la zone de chat
-       addMessage("You", userInput);
-
-       try {
-           // Envoyer la requête à Ollama
-           const response = await fetch("http://127.0.0.1:11434/api/generate", {
-               method: "POST",
-               headers: {
-                   "Content-Type": "application/json"
-               },
-               body: JSON.stringify({
-                   model: "llama3.2",
-                   prompt: `Imagine que tu es cet étudiant. Réponds comme si la question te concernait : ${userInput}`,
-                   stream: false
-               })
-           });
-
-
-           // Lire la réponse
-           if (!response.ok) throw new Error("Erreur de l'API");
-
-           const data = await response.json();
-
-           // Afficher la réponse du chatbot
-           addMessage("Chatbot", data.response || "Pas de réponse reçue.");
-       } catch (error) {
-           console.error(error);
-           addMessage("Chatbot", "Erreur lors de la connexion à Ollama.");
-       }
-
-       // Vider le champ input
-       document.getElementById("userInput").value = "";
-   });
-
-   // Fonction pour ajouter un message dans la zone de chat
-   function addMessage(sender, message) {
-       const chatBox = document.getElementById("chatBox");
-       const messageElement = document.createElement("div");
-       messageElement.className = sender === "You" ? "text-right text-blue-600" : "text-left text-gray-800";
-       messageElement.textContent = `${sender}: ${message}`;
-       chatBox.appendChild(messageElement);
-
-       // Scroller automatiquement vers le bas
-       chatBox.scrollTop = chatBox.scrollHeight;
-   }
+  const form = document.querySelector('#formulaire');
+  const champ = document.querySelector('#message');
+  const bouton = form.querySelector('button');
+  const etat = document.querySelector('#etat');
+  const liste = document.querySelector('#conversation');
+  async function demander(message) {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    if (document.querySelector('#panne').checked) throw new Error('Réponse indisponible. Réessayez.');
+    return { personnage: 'A Fata', reply: `J’ai reçu : ${message}` };
+  }
+  function ajouter(texte) {
+    const ligne = document.createElement('li');
+    ligne.textContent = texte;
+    liste.append(ligne);
+  }
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const message = champ.value.trim();
+    if (!message || bouton.disabled) return;
+    bouton.disabled = true;
+    etat.textContent = 'En attente de réponse…';
+    try {
+      const data = await demander(message);
+      ajouter(`Vous : ${message}`);
+      ajouter(`${data.personnage} : ${data.reply}`);
+      form.reset();
+      etat.textContent = 'Réponse reçue.';
+    } catch (error) {
+      etat.textContent = error.message;
+    } finally {
+      bouton.disabled = false;
+    }
+  });
 </script>
 ```
 
----
+**Lecture :** le formulaire est vidé seulement après réussite. Enfin, finally réactive le bouton dans les deux cas. La simulation retarde volontairement sa réponse de 400ms pour rendre l’état d’attente observable ; ce délai n’est pas à ajouter à votre API réelle.
 
-## Partie 5 : Finalisation
+## La requête HTTP vers le service
 
-1. **Personnalisation**
-   - Les étudiants peuvent personnaliser le style de leur chatbot avec Tailwind (couleurs, animations, etc.).
-   - Ils doivent modifier le prompt pour refléter leur propre personnalité.
+Dans votre projet, remplacez demander par un fetch POST qui sérialise message, contrôle response.ok, analyse le JSON et vérifie les deux champs. Le navigateur doit joindre un serveur accessible ; localhost désigne son propre poste. Si la page et l’API ont des origines différentes, leur communication doit être autorisée explicitement ou passer par le serveur de la même origine. no-cors ne rend pas le JSON lisible.
 
-2. **Validation**
-   - Testez le chatbot en posant des questions variées.
-   - Vérifiez que la mise en page est responsive (testez sur mobile et desktop).
-
----
-
-Ce TP guidera les étudiants à travers la création d’un projet fonctionnel et stylé qu’ils pourront intégrer dans leur portfolio.
+L’aperçu du site est sandboxé : la connexion aux services de la salle doit être essayée dans votre vrai projet, pas supposée fonctionnelle depuis cette simulation. L’ancienne adresse Ollama /api/ask n’est pas une route de notre API ; le parcours principal connecte LM Studio **côté Node**, sans dépendre d’une API de modèle directement dans le navigateur.

@@ -4,124 +4,54 @@ title: "Async/Await"
 type: "tp"
 ---
 
-# Async/Await
+## async : une fonction qui renvoie une promesse
 
-L'Async/Await est une syntaxe introduite dans ECMAScript 2017 pour simplifier la gestion des opérations asynchrones en utilisant des promesses. Cette approche rend le code asynchrone plus lisible et plus proche de la syntaxe synchrone.
+`async` autorise `await` dans une fonction et garantit que celle-ci renvoie une promesse. Une valeur renvoyée avec `return` devient sa valeur de réussite ; une exception devient un rejet.
 
-## 1. Fonctionnement de base
-
-Pour utiliser `async` et `await`, une fonction doit être déclarée comme `async`. Cela permet à la fonction de retourner une promesse. L'instruction `await` est utilisée à l'intérieur de cette fonction pour attendre qu'une promesse soit résolue avant de continuer l'exécution.
-
-```js
-async function exempleAsync() {
-  // Opération asynchrone
-  let resultat = await fonctionAsynchrone();
-
-  // Suite du code après la résolution de la promesse
-  console.log(resultat);
+```js live title="Attendre une valeur"
+async function calculerTotal() {
+  return 36;
 }
-
-// Appel de la fonction asynchrone
-exempleAsync();
+async function afficher() {
+  const total = await calculerTotal();
+  console.log(total);
+}
+afficher();
+console.log('Appel lancé');
 ```
 
-## 2. Utilisation d'Async/Await avec les Promesses
+Sortie : `Appel lancé`, puis `36`. `await` suspend la suite de la fonction `afficher`, pas tout le programme. Sans `await`, `calculerTotal()` fournit un objet Promise, pas directement le nombre 36. Au niveau supérieur d’un fichier, `await` exige un module ; dans un script classique, placez-le dans une fonction `async`.
 
-L'Async/Await est souvent utilisé avec des fonctions qui retournent des promesses. Cela rend le code plus lisible en évitant une cascade de `.then()`.
+## try, catch et finally
 
 ```js
-function fonctionAsynchrone() {
-  return new Promise((resolve, reject) => {
-    // Opération asynchrone
-    if (/* opération réussie */) {
-      resolve('Réussite !');
-    } else {
-      reject('Échec !');
-    }
-  });
-}
-
-async function exempleAsync() {
+async function charger() {
   try {
-    // Utilisation d'await avec une promesse
-    let resultat = await fonctionAsynchrone();
-    console.log(resultat);
-  } catch (erreur) {
-    console.error(erreur);
+    const valeur = await Promise.reject(new Error('Service indisponible'));
+    console.log(valeur);
+  } catch (error) {
+    console.log(error.message);
+  } finally {
+    console.log('Fin du chargement');
   }
 }
+charger();
 ```
 
-## 3. Gestion des Erreurs
+Sorties : `Service indisponible`, puis `Fin du chargement`. La ligne qui utilise `valeur` n’est pas atteinte. Pour intercepter le rejet d’un appel dans ce bloc, il faut l’attendre ou renvoyer sa promesse à une chaîne qui gère l’erreur.
 
-La gestion des erreurs avec Async/Await est simplifiée à l'aide du bloc `try/catch`. Les erreurs rejetées par les promesses peuvent être capturées dans le bloc `catch`.
+## Appels successifs et appels indépendants
 
 ```js
-async function exempleAsync() {
-  try {
-    let resultat = await fonctionAsynchrone();
-    console.log(resultat);
-  } catch (erreur) {
-    console.error('Une erreur s'est produite :', erreur);
-  }
-}
+// Les deux fonctions sont définies par le projet et renvoient des promesses.
+const [projets, categories] = await Promise.all([
+  lireProjets(),
+  lireCategories()
+]);
 ```
 
-## 4. Utilisation d'Async/Await dans les Fonctions de Haut Niveau
+Les deux appels démarrent sans attendre le résultat de l’autre. Ils peuvent être groupés si leurs données sont indépendantes. Pour lire les détails d’un identifiant reçu d’un premier appel, il faut au contraire attendre cet identifiant. `for…of` avec `await` traite une collection en série ; `Promise.all(tableau.map(fonctionAsync))` lance les traitements ensemble, ce qui demande de limiter le nombre d’appels pour une grande collection.
 
-Les fonctions de plus haut niveau, comme les fonctions d'événement ou les fonctions de rappel, peuvent également bénéficier d'Async/Await. Cependant, assurez-vous que la fonction de plus haut niveau est également déclarée comme `async`.
+## Attendre une réponse HTTP
 
-```js
-async function fonctionDeHautNiveau() {
-  try {
-    let resultat = await fonctionAsynchrone();
-    console.log(resultat);
-  } catch (erreur) {
-    console.error('Une erreur s'est produite :', erreur);
-  }
-}
-
-// Appel de la fonction de plus haut niveau
-fonctionDeHautNiveau();
-```
-
-## 5. Async/Await avec Promise.all
-
-Lorsque vous travaillez avec plusieurs promesses, vous pouvez utiliser `Promise.all` avec Async/Await pour attendre la résolution de toutes les promesses.
-
-```js
-async function exempleAvecPromiseAll() {
-  const promesse1 = fonctionAsynchrone1();
-  const promesse2 = fonctionAsynchrone2();
-
-  // Attendre la résolution de toutes les promesses
-  const [resultat1, resultat2] = await Promise.all([promesse1, promesse2]);
-
-  console.log(resultat1, resultat2);
-}
-```
-
-## 6. Utilisation d'Async/Await avec Fetch API
-
-L'Async/Await peut également être utilisé de manière efficace avec la Fetch API pour effectuer des requêtes HTTP de manière asynchrone.
-
-```js
-async function fetchData() {
-  try {
-    const response = await fetch("https://api.exemple.com/donnees");
-    const data = await response.json();
-    console.log(data);
-  } catch (erreur) {
-    console.error("Erreur lors de la récupération des données :", erreur);
-  }
-}
-
-// Appel de la fonction pour récupérer les données
-fetchData();
-```
-
-## 7. Conclusion
-
-L'utilisation d'Async/Await en JavaScript simplifie considérablement la gestion des opérations asynchrones, en rendant le code plus lisible et en facilitant la gestion des erreurs. Cette syntaxe est devenue une norme dans le développement moderne en JavaScript, remplaçant souvent l'utilisation des callbacks et des chaînes de promesses.
-
-N'oubliez pas de déclarer la fonction contenant `await` comme `async` et de traiter les erreurs avec le bloc `try/catch` pour assurer une gestion appropriée des erreurs asynchrones. Cela permet d'écrire du code plus propre et plus robuste, améliorant ainsi la qualité du développement JavaScript.
+`await fetch(url)` attend les en-têtes et fournit une `Response`. `await response.json()` attend la lecture et l’analyse du corps. Le statut et la forme des données restent à vérifier : une écriture linéaire ne supprime aucune de ces responsabilités. Le support [fetch](/semestre_4/js/intermediate/fetch) montre la chaîne complète.

@@ -4,99 +4,39 @@ title: "Promise"
 type: "tp"
 ---
 
-# Les Promesses (Promise)
+## Une promesse représente un résultat futur
 
-Les promesses (ou Promise en anglais) sont un mécanisme essentiel dans JavaScript pour gérer les opérations asynchrones de manière plus lisible et efficace. Elles permettent de simplifier le code et d'éviter les "callback hell" en organisant les opérations asynchrones de manière plus linéaire. Une promesse représente la réussite ou l'échec éventuel d'une opération asynchrone.
+Une `Promise` est d’abord en attente (*pending*), puis réussie (*fulfilled*) avec une valeur ou rejetée (*rejected*) avec une raison. Une fois réglée, elle ne change plus d’état. Elle permet d’enchaîner un traitement après une opération, sans bloquer l’interface pendant l’attente. Elle n’exécute pas automatiquement les calculs lourds dans un autre thread.
 
-## Introduction
-
-Les promesses sont des objets qui représentent la terminaison ou l'échec éventuel d'une opération asynchrone. Elles ont trois états possibles :
-
-- Pendante (pending) : L'opération n'est ni terminée ni rejetée.
-- Résolue (fulfilled) : L'opération est réussie, et la promesse renvoie une valeur.
-- Rejetée (rejected) : L'opération a échoué, et la promesse renvoie une raison d'échec.
-
-## Création d'une Promesse
-
-Pour créer une promesse, utilisez le constructeur Promise. Il prend une fonction en argument avec deux paramètres : `resolve` et `reject`. Vous appelez `resolve` lorsque l'opération réussit et `reject` lorsque l'opération échoue.
-
-```js
-const maPromesse = new Promise((resolve, reject) => {
-  // Code asynchrone ici
-
-  if (/* opération réussie */) {
-    resolve('Réussite !');
-  } else {
-    reject('Échec !');
-  }
+```js live title="L’ordre d’exécution"
+console.log('Début');
+const resultat = new Promise(resolve => {
+  setTimeout(() => resolve('Données disponibles'), 200);
 });
+resultat.then(message => console.log(message));
+console.log('Suite du programme');
 ```
 
-## Utilisation des Promesses
+Ordre attendu : `Début`, `Suite du programme`, puis `Données disponibles` après le délai. La fonction passée au constructeur est exécutée immédiatement ; c’est ici le minuteur qui diffère la résolution. Le délai n’est pas une garantie d’exécution à la milliseconde exacte.
 
-Les promesses sont utilisées pour gérer des opérations asynchrones, comme les requêtes HTTP, les lectures de fichiers, etc. Les méthodes principales des promesses sont `then`, `catch`, et `finally`.
-
-### `then`
-
-La méthode `then` est utilisée pour traiter le résultat d'une promesse résolue.
+## then, catch et finally
 
 ```js
-maPromesse.then((valeur) => {
-  console.log(`Réussite : ${valeur}`);
-});
+Promise.resolve(12)
+  .then(prix => prix * 2)
+  .then(total => console.log(total))
+  .catch(error => console.error(error.message))
+  .finally(() => console.log('Terminé'));
 ```
 
-### `catch`
+Sorties : `24`, puis `Terminé`. Chaque `then` renvoie une nouvelle promesse : la valeur renvoyée par sa fonction devient la valeur de l’étape suivante. Un `throw` rejette cette nouvelle promesse et conduit au prochain `catch`. Oublier `return` dans une fonction avec accolades transmettrait `undefined` à la suite.
 
-La méthode `catch` est utilisée pour traiter le rejet d'une promesse.
+`catch` peut récupérer un échec en renvoyant une valeur ; la chaîne redevient alors réussie. `finally` sert au nettoyage, par exemple réactiver un bouton, que l’opération réussisse ou échoue. Il ne reçoit pas la valeur du résultat.
 
-```js
-maPromesse.catch((raison) => {
-  console.error(`Échec : ${raison}`);
-});
-```
+## Promise.all et Promise.allSettled
 
-### `finally`
+`Promise.all([appelA(), appelB()])` attend toutes les réussites et renvoie les valeurs dans l’ordre du tableau, même si B termine avant A. Il rejette dès qu’un des appels rejette, sans annuler les autres opérations. `Promise.allSettled` attend tous les états et permet de présenter des réussites partielles.
 
-La méthode finally est utilisée pour exécuter du code, que la promesse soit résolue ou rejetée.
+## Promise.race et annulation
 
-```js
-maPromesse.finally(() => {
-  console.log("Opération terminée, que ce soit un succès ou un échec.");
-});
-```
-
-## Chaînage de Promesses
-
-Il est possible de chaîner plusieurs promesses pour exécuter des opérations séquentielles.
-
-```js
-premierePromesse()
-  .then((resultat) => deuxiemePromesse(resultat))
-  .then((nouveauResultat) => {
-    console.log(`Résultat final : ${nouveauResultat}`);
-  })
-  .catch((erreur) => {
-    console.error(`Une erreur s'est produite : ${erreur}`);
-  });
-```
-
-## `Promise.all` et `Promise.race`
-
-- `Promise.all` est utilisé pour traiter un tableau de promesses et renvoie une nouvelle promesse résolue avec un tableau de résultats une fois que toutes les promesses sont résolues.
-- `Promise.race` renvoie la première promesse résolue ou rejetée parmi un tableau de promesses.
-
-```js
-const promesse1 = fetch("https://api.exemple.com/donnees1");
-const promesse2 = fetch("https://api.exemple.com/donnees2");
-
-Promise.all([promesse1, promesse2])
-  .then((resultats) => {
-    console.log("Toutes les promesses sont résolues :", resultats);
-  })
-  .catch((erreur) => {
-    console.error("Au moins une promesse a été rejetée :", erreur);
-  });
-```
-
-Les promesses en JavaScript sont un concept puissant pour gérer l'asynchronisme de manière plus claire et structurée. Elles sont largement utilisées dans le développement moderne pour améliorer la lisibilité et la gestion des opérations asynchrones.
+`Promise.race` adopte le premier résultat réglé, réussite ou échec. Il n’annule pas les opérations perdantes. Pour annuler une requête `fetch`, il faut un `AbortController` ou un signal de délai ; faire seulement la course avec un minuteur laisse la requête continuer. [async/await](/semestre_4/js/intermediate/async-await) propose une écriture plus linéaire de ces mêmes promesses.

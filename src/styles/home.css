@@ -1,0 +1,245 @@
+.home-main {
+  padding: 104px 24px 32px;
+}
+.home {
+  --home-border: var(--fallback-b3, oklch(var(--b3) / 1));
+  --home-ink: var(--fallback-bc, oklch(var(--bc) / 1));
+  --home-paper: var(--fallback-b1, oklch(var(--b1) / 1));
+  max-width: 1040px;
+  margin-inline: auto;
+  color: var(--home-ink);
+  line-height: 1.6;
+}
+.home h1,
+.home h2,
+.home h3,
+.home p,
+.home ol,
+.home ul {
+  margin: 0;
+}
+.home a {
+  text-decoration: none;
+}
+.home a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+.home-intro {
+  padding-block: 20px 28px;
+}
+.home-creators {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  padding-block: 4px 16px;
+  border-bottom: 1px solid var(--home-border);
+}
+.home-creators ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  padding: 0;
+  list-style: none;
+}
+.home-creators li {
+  display: grid;
+  gap: 2px;
+}
+.home-creators strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.home-creators span {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+.home-eyebrow,
+.home-year {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.home h1 {
+  margin-top: 10px;
+  max-width: 800px;
+  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  font-weight: 650;
+  text-wrap: balance;
+}
+.home-description {
+  margin-top: 12px !important;
+  max-width: 560px;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+.home-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 16px;
+  padding: 8px 14px;
+  border: 1px solid var(--home-ink);
+  border-radius: 6px;
+  color: var(--home-paper);
+  background: var(--home-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.home-start:hover {
+  opacity: 0.85;
+}
+.home-section {
+  padding-block: 20px 24px;
+  border-top: 1px solid var(--home-border);
+  scroll-margin-top: 100px;
+}
+.home-section-heading {
+  margin-bottom: 16px;
+}
+.home h2 {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.home-section-heading p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+.home-semesters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.home-semester {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 18px;
+  border: 1px solid var(--home-border);
+  border-radius: 8px;
+}
+.home-semester h3 {
+  margin-top: 6px;
+  font-size: 1.2rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+.home-semester-description {
+  margin-top: 8px !important;
+  margin-bottom: 12px !important;
+  max-width: 390px;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+.home-course-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  min-height: 40px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.home-course-link:hover,
+.home-supports a:hover,
+.home-resources a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.home-supports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-top: auto !important;
+  padding: 0;
+  list-style: none;
+}
+.home-supports a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.home-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+.home-steps li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.home-step-number {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.home-steps h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.home-steps p {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+.home-quiz-note {
+  margin-top: 16px !important;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.home-resources {
+  padding-block: 18px;
+  border-block: 1px solid var(--home-border);
+}
+.home-resources h2 {
+  font-size: 0.95rem;
+}
+.home-resources > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 30px;
+  margin-top: 10px;
+}
+.home-resources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: 0.9rem;
+}
+@media (max-width: 640px) {
+  .home-main {
+    padding-inline: 20px;
+  }
+  .home-intro {
+    padding-block: 16px 24px;
+  }
+  .home-semesters,
+  .home-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .home-semester {
+    padding: 16px;
+  }
+  .home-steps {
+    gap: 14px;
+  }
+  .home-section {
+    padding-block: 20px;
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "name": "Révision — Le Web : du navigateur au serveur",
+  "uid": "s1-int-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/integration/web",
+  "sourceSession": "INT-01",
+  "targetCourse": "/semestre_1/integration/htmltd",
+  "questions": [
+    {
+      "question": "Quel lien existe entre Internet et le Web ?",
+      "answers": [
+        "Le Web utilise le réseau Internet",
+        "Internet est un navigateur Web",
+        "Le Web remplace le réseau Internet",
+        "Internet est seulement un ensemble de pages"
+      ],
+      "explanation": "Internet transporte plusieurs services, dont le Web et le courrier électronique.",
+      "sourceSection": "comprendre",
+      "evidence": "eux machines : votre ordinateur peut exécuter les deux pendant un TP. Internet est le réseau qui transporte les échanges ; le Web est un service utilisant notamment HTTP sur ce réseau.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Lors d’une consultation de page, quel logiciel est le client ?",
+      "answers": [
+        "Le moteur PHP du serveur",
+        "Le navigateur",
+        "Le serveur Web",
+        "Le résolveur DNS"
+      ],
+      "explanation": "Le navigateur envoie les demandes et présente les ressources reçues.",
+      "sourceSection": "comprendre",
+      "evidence": "Un **navigateur** est un logiciel client : il demande des ressources et les présente. Un **serveur** est un programme qui attend des demandes et produit des réponses. Ces rôles ne désignent pas nécessairement deux machines : votre ordinateu",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que désigne localhost depuis votre ordinateur ?",
+      "answers": [
+        "La machine du voisin",
+        "La passerelle du réseau",
+        "Votre propre machine",
+        "Le serveur de la faculté"
+      ],
+      "explanation": "Chaque ordinateur possède son propre localhost.",
+      "sourceSection": "reseau",
+      "evidence": "même ordinateur peut jouer les deux rôles pendant le développement. `localhost` désigne votre propre machine : votre voisin possède son propre `localhost`.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que protège HTTPS pendant un échange ?",
+      "answers": [
+        "La véracité de chaque texte publié",
+        "L’absence de bugs dans la page",
+        "La disponibilité permanente du serveur",
+        "La confidentialité des données en transit"
+      ],
+      "explanation": "HTTPS chiffre le transport ; il ne certifie pas la vérité du contenu.",
+      "sourceSection": "comprendre",
+      "evidence": "| Protocole | `https` | Les règles de l’échange, avec chiffrement du transport. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "À quoi sert DNS pour joindre un site nommé ?",
+      "answers": [
+        "Trouver une adresse IP correspondant au nom",
+        "Construire le contenu HTML",
+        "Choisir les couleurs du site",
+        "Exécuter les scripts de la page"
+      ],
+      "explanation": "Le nom doit être résolu en adresse avant de joindre le service.",
+      "sourceSection": "comprendre",
+      "evidence": "`doto.ovh` | Le nom du serveur demandé, traduit en adresse IP par le DNS. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Dans https://exemple.fr/cours/html, que désigne /cours/html ?",
+      "answers": [
+        "Le fragment",
+        "Le chemin de la ressource",
+        "Le nom de l’hôte",
+        "Le protocole"
+      ],
+      "explanation": "Le chemin identifie une ressource sur l’hôte indiqué.",
+      "sourceSection": "comprendre",
+      "evidence": "| Chemin | `/semestre_1/integration/web` | La ressource demandée à ce serveur. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Dans localhost:8000, que désigne 8000 ?",
+      "answers": [
+        "L’identifiant de la machine",
+        "Le statut HTTP attendu",
+        "Le port du service",
+        "Le numéro de page"
+      ],
+      "explanation": "Le port permet de joindre le service qui écoute sur ce numéro.",
+      "sourceSection": "comprendre",
+      "evidence": "peut exécuter les deux pendant un TP. Internet est le réseau qui transporte les échanges ; le Web est un service utilisant notamment HTTP sur ce réseau.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel rôle joue #contact à la fin d’un lien ?",
+      "answers": [
+        "Définir un autre nom d’hôte",
+        "Fixer le port HTTP",
+        "Envoyer un champ de formulaire POST",
+        "Cibler un repère dans le document côté navigateur"
+      ],
+      "explanation": "Le fragment est interprété par le navigateur ; il n’est pas envoyé au serveur dans la requête.",
+      "sourceSection": "comprendre",
+      "evidence": "| Fragment | `#programme` | Un repère traité par le navigateur, non envoyé dans la requête HTTP. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Un serveur répond 404 à une image. Que vérifier d’abord ?",
+      "answers": [
+        "L’existence du fichier et son chemin",
+        "La couleur du titre",
+        "La taille de police",
+        "Le texte alternatif de l’image"
+      ],
+      "explanation": "404 signifie que la ressource demandée n’a pas été trouvée.",
+      "sourceSection": "comprendre",
+      "evidence": "Le **statut HTTP** décrit le résultat d’une requête. Un `404` pour `style.css` ne signifie pas que le document HTML est absent : celui-ci peut rester visible sans sa mise en forme. Un `500` indique une erreur du serveur ; ce n’est pas une e",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Une page charge une feuille CSS et une image externes. Que peut-on observer ?",
+      "answers": [
+        "Une image affichée sans avoir été reçue",
+        "Plusieurs requêtes pour ses ressources",
+        "Une unique requête dans tous les cas",
+        "Le CSS intégré obligatoirement au HTML"
+      ],
+      "explanation": "Un document peut déclencher des demandes supplémentaires pour ses ressources.",
+      "sourceSection": "comprendre",
+      "evidence": "Un **navigateur** est un logiciel client : il demande des ressources et les présente. Un **serveur** est un programme qui attend des demandes et produit des réponses. Ces rôles ne désignent pas nécessairement deux machines : votre ordinateu",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle couche modifier pour changer la couleur d’un titre ?",
+      "answers": [
+        "DNS",
+        "HTTP",
+        "CSS",
+        "HTML"
+      ],
+      "explanation": "CSS règle la présentation, tandis que HTML décrit la structure.",
+      "sourceSection": "comprendre",
+      "evidence": "ande le document. Il lit ensuite le HTML. Une référence à une feuille CSS ou à une image peut provoquer une autre requête : un document HTML et ses ressources ne sont pas un fichier unique. Le cache peut éviter certains téléchargements ; l’",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quand PHP produit une page sur le serveur, que reçoit le navigateur ?",
+      "answers": [
+        "Le code PHP à exécuter lui-même",
+        "La configuration du serveur PHP",
+        "Le contenu de la mémoire du serveur",
+        "Le résultat produit, par exemple du HTML"
+      ],
+      "explanation": "PHP s’exécute sur le serveur et envoie son résultat au client.",
+      "sourceSection": "comprendre",
+      "evidence": "serveur ; ce n’est pas une erreur de couleur ou de police. Un script PHP est exécuté côté serveur : le navigateur reçoit son résultat, pas son code source PHP.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Dans /recherche?q=photo, où commencent les paramètres de requête ?",
+      "answers": [
+        "Après le point d’interrogation",
+        "Après le dernier slash",
+        "Après le dièse",
+        "Après le point du domaine"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Le point d’interrogation introduit la partie de requête ; le dièse introduit un fragment.",
+      "sourceSection": "url",
+      "evidence": "│       │             │              └ paramètres de requête"
+    },
+    {
+      "question": "Que signifie une réponse HTTP 200 ?",
+      "answers": [
+        "Une redirection est obligatoire",
+        "La requête a réussi",
+        "La ressource est absente",
+        "La réponse est forcément une image"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Un statut de réussite décrit l’échange, pas la vérité du contenu.",
+      "sourceSection": "comprendre",
+      "evidence": "Navigateur  ← HTML + statut 200 ← serveur"
+    },
+    {
+      "question": "De quoi dépend la résolution de images/photo.jpg dans un document ?",
+      "answers": [
+        "De la couleur du lien",
+        "Du nom de l’utilisateur",
+        "De l’adresse de base du document",
+        "De la taille de l’image"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Une référence relative est résolue à partir d’une adresse de base.",
+      "sourceSection": "url",
+      "evidence": "Les paramètres après `?` transmettent des valeurs dans l'URL. Une URL relative comme `images/avatar.svg` est résolue par rapport à l'adresse de la page courante. Une URL absolue fournit notamment le protocole et le nom d'hôte."
+    },
+    {
+      "question": "Quel langage ajoute les interactions côté navigateur ?",
+      "answers": [
+        "CSS uniquement",
+        "DNS",
+        "PHP exécuté directement dans le navigateur",
+        "JavaScript"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "JavaScript peut réagir aux actions et modifier le document côté client.",
+      "sourceSection": "comprendre",
+      "evidence": "| JavaScript | Les réactions programmées | Le bouton fait apparaître un message. |"
+    }
+  ]
+}

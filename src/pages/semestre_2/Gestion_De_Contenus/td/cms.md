@@ -1,103 +1,37 @@
 ---
+hidden: true
+order: 2
 layout: "layouts/Layout.astro"
-title: "TD : Créer un Site de Restaurant avec WordPress et Elementor"
+title: "WordPress : composition et navigation"
 ---
 
-## Objectif : Installer un thème, personnaliser avec Elementor, enrichir avec des plugins
+## Composer une page de restaurant dans WordPress
 
----
+Une page de restaurant doit rendre accessibles une offre, une localisation et un moyen de contact. Le [CMS](/semestre_2/Gestion_De_Contenus/cm/cms) stocke les contenus ; le thème définit le cadre et l’éditeur compose la page. Construire une page n’ajoute pas automatiquement une réservation fonctionnelle.
 
-## 🧱 1. Préparer votre site
+## Éditeur de blocs et constructeur de pages
 
-### Étapes :
+L’éditeur natif assemble des blocs de titres, paragraphes, images et groupes. Elementor est une extension de composition : ses widgets et ses réglages appartiennent à cette extension. Choisissez une méthode par page pour éviter de chercher une mise en page dans le mauvais éditeur. Les options disponibles dépendent de la version et de l’offre installées.
 
-1. Lancez votre site WordPress local (`http://localhost/nom-du-site`).
-2. Connectez-vous à l'administration (`/wp-admin`).
-3. Supprimez les contenus inutiles par défaut (article, page exemple).
-4. Dans **Réglages > Permaliens**, choisissez **Nom de l’article**.
+| Zone | Contenu | Contrôle concret |
+|---|---|---|
+| Présentation | Nom, type de cuisine et phrase descriptive | Le visiteur identifie le restaurant |
+| Carte | Plats, descriptions et prix textuels | Lecture possible sans image |
+| Horaires | Jours et heures | Information disponible sans interaction cachée |
+| Contact | Adresse et lien de contact réel | Destination du lien vérifiée |
 
----
+## Page d’accueil et navigation
 
-## 🎨 2. Choisir et installer un thème
+Créez une page « Accueil » et publiez-la. Dans les réglages de lecture, affectez-la à l’accueil statique. Ajoutez des titres hiérarchisés : le niveau du titre dépend du plan, pas de sa taille visuelle. Pour la navigation, utilisez le bloc Navigation d’un thème à blocs ou le menu prévu par un thème classique.
 
-### Recommandation : thème **léger et compatible Elementor**  
-Exemples :
-- **Hello Elementor** (officiel, minimal)
-- **Astra**
-- **OceanWP**
+**Résultat attendu :** l’URL racine affiche l’accueil choisi et le lien « Carte » ouvre la bonne page. La simple publication d’une page ne garantit pas son ajout à la navigation.
 
-### Installation :
+## Images et extensions
 
-1. Allez dans **Apparence > Thèmes > Ajouter**.
-2. Recherchez un thème compatible.
-3. Cliquez sur **Installer**, puis **Activer**.
+Une photographie informative possède un texte alternatif adapté. Le texte de la carte doit rester éditable ; une photographie du menu seule est difficile à lire, rechercher et adapter. Réglez l’image à une taille cohérente et vérifiez le recadrage sur écran étroit.
 
----
+Une extension de formulaire possède sa configuration propre : champs, validation, destinataire et transport du courriel. Un message de confirmation à l’écran ne prouve pas la réception d’un courriel. Vérifiez le parcours complet sur un environnement de test et expliquez ce qui est effectivement opérationnel. Installer un nombre imposé d’extensions n’améliore pas la page : retenez seulement celles qui répondent au besoin.
 
-## 🔌 3. Installer et activer Elementor
+## Vérifier la page publiée
 
-1. Allez dans **Extensions > Ajouter**.
-2. Cherchez **Elementor Website Builder**.
-3. Cliquez sur **Installer**, puis **Activer**.
-4. Un nouveau bouton "Modifier avec Elementor" apparaîtra dans vos pages.
-
----
-
-## 🏗️ 4. Créer la page d’accueil
-
-1. Allez dans **Pages > Ajouter**.
-2. Nommez-la **Accueil**.
-3. Cliquez sur **Publier**, puis **Modifier avec Elementor**.
-4. Dans l’éditeur Elementor :
-   - Ajoutez une **bannière** avec le nom du restaurant.
-   - Créez une section **“À propos”** avec texte + image.
-   - Intégrez une **galerie** (via widget image ou plugin).
-   - Ajoutez une **section contact** ou un **bouton Réserver**.
-5. Enregistrez votre travail (bouton **Mettre à jour**).
-
-### Définir cette page comme page d’accueil :
-
-- Allez dans **Réglages > Lecture**.
-- Sélectionnez **"Une page statique"** > Choisissez "Accueil".
-
----
-
-## ➕ 5. Ajouter 2 plugins utiles au choix
-
-### Voici quelques idées :
-
-| Besoin | Plugin |
-|--------|--------|
-| Formulaire de contact | **WPForms** ou **Contact Form 7** |
-| Horaires d’ouverture | **Opening Hours** |
-| Carte de localisation | **WP Google Maps** |
-| Menu du restaurant | **Restaurant Menu by MotoPress** |
-| Galerie améliorée | **Envira Gallery** |
-| SEO de base | **Yoast SEO** |
-| Cookies RGPD | **Complianz** |
-
-### Installation :
-
-1. Allez dans **Extensions > Ajouter**.
-2. Recherchez un plugin par son nom.
-3. Cliquez sur **Installer**, puis **Activer**.
-4. Intégrez-le dans une page via un shortcode ou widget Elementor.
-
----
-
-## ✅ Objectif à atteindre en fin de TD
-
-- Un site fonctionnel avec une **page d’accueil moderne faite avec Elementor**.
-- Un **thème installé et activé**.
-- **Deux plugins utiles ajoutés et visibles** sur le site.
-- Structure claire et responsive (ajustable sur mobile/tablette).
-
----
-
-## 🧘‍♂️ Bonus pour les rapides
-
-- Testez d’autres widgets Elementor.
-- Ajoutez une page "Contact" ou "Galerie".
-- Essayez Elementor avec un **template préconstruit**.
-
-**Quand vous avez fini, vous pouvez chiller ou expérimenter davantage ✨**
+Ouvrez l’accueil sans connexion, réduisez la fenêtre, parcourez les liens au clavier et cliquez la destination de contact. Le résultat doit conserver les informations essentielles, un ordre logique et des liens fonctionnels. Un aperçu de l’éditeur peut différer de la page publique à cause du cache, du thème ou d’une mise à jour non publiée.

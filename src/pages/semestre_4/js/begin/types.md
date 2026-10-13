@@ -4,56 +4,44 @@ title: "Types"
 type: "tp"
 ---
 
-# Les types de variables
+## Les valeurs primitives
 
-## Type de valeur primitif
+JavaScript attribue un type aux valeurs. Une même variable déclarée avec `let` peut recevoir des valeurs de types différents, mais cette souplesse ne dispense pas de vérifier ce qu’une fonction attend.
 
-En JavaScript, il existe sept types de valeurs primitives :
+| Type | Exemple | Utilisation |
+|---|---|---|
+| string | `'MMI'` | Texte |
+| number | `12.5` | Calcul ; entiers et décimaux usuels |
+| boolean | `true` ou `false` | Condition |
+| undefined | `undefined` | Valeur non fournie |
+| null | `null` | Absence choisie explicitement |
+| bigint | `12n` | Entiers de grande taille ; pas de mélange direct avec number |
+| symbol | `Symbol('id')` | Identifiant unique, surtout dans les API avancées |
 
-- <code>number</code> pour les nombres (entiers ou flottants)
-- <code>string</code> pour les chaînes de caractères
-- <code>boolean</code> pour les booléens (`true` ou `false`)
-- <code>null</code> pour une valeur null
-- <code>undefined</code> pour une valeur non définie
-- <code>symbol</code> (introduit dans ECMAScript 2015) pour des valeurs
-  symboliques uniques
-- <code>bigint</code> (introduit dans ECMAScript 2020) pour des nombres
-  entiers de grande précision
+## typeof et conversion des saisies
 
-Voici quelques exemples de valeurs de chaque type de valeur primitif :
-
-```js
-let nombre = 10; // number
-let chaine = "Bonjour"; // string
-let boolean = true; // boolean
-let vide = null; // null
-let indefini; // undefined
-let symbole = Symbol("symbole"); // symbol
-let bigint = 123456789012345678901234567890n; // bigint
+```js live title="Une saisie est souvent du texte"
+const saisie = '12';
+console.log(typeof saisie);
+console.log(saisie + 3);
+console.log(Number(saisie) + 3);
+console.log(Number.isNaN(Number('douze')));
 ```
 
-## Type de valeur objet
+Sorties : `string`, `123`, `15`, `true`. Avec une chaîne, `+` peut concaténer. `Number` convertit ; une conversion impossible produit `NaN`. `Number('')` produit `0` : pour un champ obligatoire, vérifier le vide avant la conversion. `typeof null` donne historiquement `object` ; utilisez `valeur === null` pour tester cette absence.
 
-En JavaScript, toutes les valeurs qui ne sont pas des valeurs primitives
-sont des objets. Les objets sont des valeurs qui ont des propriétés (qui
-peuvent être des valeurs primitives ou des objets) et des méthodes (des
-fonctions associées à l'objet).
-
-Voici comment créer un objet en JavaScript :
+## Objets, tableaux et références
 
 ```js
-let monObjet = {
-  propriete1: valeur1,
-  propriete2: valeur2,
-  methode1: function () {
-    // code de la méthode
-  },
-};
+const original = { titre: 'Affiche' };
+const copieDuNom = original;
+copieDuNom.titre = 'Vidéo';
+console.log(original.titre); // Vidéo
+console.log(Array.isArray([1, 2])); // true
 ```
 
-Voici comment accéder aux propriétés et aux méthodes d'un objet :
+Les deux variables désignent le même objet. Une affectation ne crée pas une copie indépendante. Un tableau est un objet spécialisé : `typeof []` renvoie `object`, d’où le test `Array.isArray`. Les copies avec `{ ...original }` ou `[...tableau]` sont superficielles : les objets imbriqués restent partagés.
 
-```js
-console.log(monObjet.propriete1); // affiche la valeur de la propriété1
-monObjet.methode1(); // exécute la méthode1
-```
+## Comparaison stricte
+
+`12 === '12'` vaut `false` : le type et la valeur diffèrent. `==` effectue des conversions implicites ; utilisez `===` et convertissez la saisie explicitement. Les valeurs `false`, `0`, `''`, `null`, `undefined` et `NaN` sont fausses dans une condition. Un tableau vide et l’objet `{}` sont vrais : tester un tableau vide demande `tableau.length === 0`.

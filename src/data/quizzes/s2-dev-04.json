@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Ajouter une tâche avec un formulaire et une API",
+  "uid": "s2-dev-04",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/tp/ajout",
+  "sourceSession": "S2-DEV-04",
+  "targetCourse": "/semestre_2/developpement_Web/tp/modification",
+  "questions": [
+    {
+      "question": "Quel événement traite l'envoi du formulaire ?",
+      "answers": [
+        "submit",
+        "input",
+        "change",
+        "mouseover"
+      ],
+      "explanation": "submit couvre l’envoi par bouton et par clavier.",
+      "sourceSection": "notion-1",
+      "evidence": "L'événement submit du formulaire déclenche le traitement.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi utiliser preventDefault sur submit ?",
+      "answers": [
+        "Garantir les données valides",
+        "Empêcher la navigation native pour gérer l’envoi en JavaScript",
+        "Annuler tous les clics futurs",
+        "Supprimer le formulaire"
+      ],
+      "explanation": "preventDefault annule le comportement par défaut, pas les règles de validation serveur.",
+      "sourceSection": "notion-2",
+      "evidence": "preventDefault évite la navigation de soumission native dans ce traitement.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel attribut donne la clé title à FormData ?",
+      "answers": [
+        "class",
+        "placeholder",
+        "name",
+        "id seulement"
+      ],
+      "explanation": "FormData utilise les noms des champs pour leurs clés.",
+      "sourceSection": "notion-4",
+      "evidence": "name est la clé utilisée par FormData.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que donne trim sur un titre composé seulement d’espaces ?",
+      "answers": [
+        "Un espace conservé",
+        "Une valeur true",
+        "Une valeur null",
+        "Une chaîne vide"
+      ],
+      "explanation": "trim retire les espaces aux extrémités ; un texte composé uniquement d’espaces devient vide.",
+      "sourceSection": "notion-5",
+      "evidence": "trim retire les espaces aux extrémités.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle fonction prépare le corps JSON côté navigateur ?",
+      "answers": [
+        "JSON.stringify",
+        "JSON.parse",
+        "response.json",
+        "textContent"
+      ],
+      "explanation": "Le corps à envoyer doit être sérialisé en texte JSON.",
+      "sourceSection": "notion-7",
+      "evidence": "JSON.stringify transforme un objet JavaScript en texte JSON.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Où lire le corps JSON dans le script ?",
+      "answers": [
+        "La session précédente",
+        "php://input",
+        "Le tableau GET seulement",
+        "Le fichier CSS"
+      ],
+      "explanation": "Le corps JSON est lu puis analysé ; ce n’est pas un formulaire encodé classique.",
+      "sourceSection": "notion-8",
+      "evidence": "php://input donne accès au corps brut envoyé à PHP.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel statut indique un corps JSON cassé ?",
+      "answers": [
+        "404",
+        "422",
+        "400",
+        "201"
+      ],
+      "explanation": "400 signale ici un corps JSON impossible à analyser.",
+      "sourceSection": "notion-10",
+      "evidence": "Un JSON mal formé reçoit 400 dans notre contrat.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "required suffit-il à garantir les données côté serveur ?",
+      "answers": [
+        "Oui, required suffit toujours",
+        "Oui, POST rend tout champ valide",
+        "Oui, si le bouton est désactivé",
+        "Non, les règles doivent aussi être vérifiées en PHP"
+      ],
+      "explanation": "La requête peut contourner les contraintes du navigateur.",
+      "sourceSection": "notion-11",
+      "evidence": "Le serveur vérifie le titre même si HTML possède required.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel mécanisme protège la construction SQL de l'INSERT du cours ?",
+      "answers": [
+        "Une requête préparée avec paramètres",
+        "La concaténation directe du titre",
+        "L’échappement HTML seul",
+        "Le choix du type text pour le champ"
+      ],
+      "explanation": "Les paramètres séparent les données de la structure SQL.",
+      "sourceSection": "notion-14",
+      "evidence": "prepare sépare la structure SQL des valeurs.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que représente :title dans l'INSERT ?",
+      "answers": [
+        "Une requête HTTP",
+        "Une place réservée pour la valeur title",
+        "Un nom de table",
+        "Une classe HTML"
+      ],
+      "explanation": "Le paramètre reçoit une valeur lors de l’exécution, sans devenir du code SQL.",
+      "sourceSection": "notion-15",
+      "evidence": ":title est un emplacement de paramètre SQL.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quand réinitialiser le formulaire d’ajout ?",
+      "answers": [
+        "Après chaque échec",
+        "Dès que le clic arrive",
+        "Après succès confirmé seulement",
+        "Avant toute réponse"
+      ],
+      "explanation": "La saisie doit rester disponible si l’utilisateur doit corriger ou réessayer.",
+      "sourceSection": "notion-18",
+      "evidence": "Le formulaire est réinitialisé seulement après succès confirmé.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel test prouve la persistance de l'ajout ?",
+      "answers": [
+        "Voir la carte ajoutée seulement en mémoire",
+        "Changer sa couleur",
+        "Ouvrir le fichier HTML sans serveur",
+        "Recharger puis relire les données"
+      ],
+      "explanation": "Une relecture vérifie que l’ajout est réellement enregistré.",
+      "sourceSection": "notion-20",
+      "evidence": "Un ajout réussi reste présent après rechargement depuis MySQL.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

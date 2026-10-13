@@ -7,7 +7,11 @@ const pages = defineCollection({
     title: z.string(),
     layout: z.string(),
     type: z.string().optional(),
+    order: z.number().int().positive().optional(),
     hidden: z.boolean().optional(),
+    quizId: z.string().optional(),
+    previousSession: z.string().regex(/^\/(?!\/)[^?#\s]*$/, "Utiliser un chemin interne sans paramètres").optional(),
+    nextSession: z.string().regex(/^\/(?!\/)[^?#\s]*$/, "Utiliser un chemin interne sans paramètres").optional(),
   }),
 });
 

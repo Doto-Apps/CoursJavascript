@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Erreurs et validations : garder une interface fiable",
+  "uid": "s2-dev-06",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/tp/erreurs",
+  "sourceSession": "S2-DEV-06",
+  "targetCourse": "/semestre_2/developpement_Web/tp/integration",
+  "questions": [
+    {
+      "question": "Quelle approche localise une erreur ?",
+      "answers": [
+        "Vérifier les frontières de l’échange une à une",
+        "Modifier tous les fichiers simultanément",
+        "Cacher tous les messages",
+        "Recharger sans observer de données"
+      ],
+      "explanation": "Séparer envoi, statut, corps et stockage aide à trouver la cause.",
+      "sourceSection": "notion-1",
+      "evidence": "Le diagnostic suit formulaire, requête, statut, corps et DOM.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Où vérifier l'envoi effectif ?",
+      "answers": [
+        "Dans les favoris",
+        "Dans l’onglet Réseau",
+        "Dans la palette de couleurs",
+        "Dans le nom du fichier"
+      ],
+      "explanation": "Réseau montre si la requête est réellement partie et quelle réponse revient.",
+      "sourceSection": "notion-2",
+      "evidence": "L'onglet Réseau montre si la requête est partie.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que vérifier si json échoue ?",
+      "answers": [
+        "La taille du titre",
+        "Le nom du thème CSS",
+        "Le corps réellement reçu",
+        "La couleur du bouton"
+      ],
+      "explanation": "Une erreur d’analyse peut venir d’un corps HTML ou d’un JSON mal formé.",
+      "sourceSection": "notion-4",
+      "evidence": "Le corps reçu doit être inspecté lors d'une erreur de conversion JSON.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel statut pour un corps JSON syntaxiquement invalide ?",
+      "answers": [
+        "200",
+        "201",
+        "422",
+        "400"
+      ],
+      "explanation": "Un JSON cassé échoue à l’analyse avant les règles métier.",
+      "sourceSection": "notion-5",
+      "evidence": "Notre API répond 400 à un JSON mal formé.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel statut pour un titre trop long dans un JSON valide ?",
+      "answers": [
+        "422",
+        "200",
+        "201",
+        "404"
+      ],
+      "explanation": "Un JSON valide peut contenir une valeur refusée par les règles du contrat.",
+      "sourceSection": "notion-6",
+      "evidence": "Notre API répond 422 à une valeur refusée.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel statut pour une méthode non prise en charge ?",
+      "answers": [
+        "422",
+        "405",
+        "201",
+        "404 dans tous les cas"
+      ],
+      "explanation": "Le contrat distingue une méthode non prise en charge d’une valeur invalide.",
+      "sourceSection": "notion-8",
+      "evidence": "Notre API répond 405 à une méthode non prévue.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que montrer au client pour une erreur de base ?",
+      "answers": [
+        "La chaîne complète de connexion",
+        "Tout le fichier de configuration",
+        "Un message général sans secret",
+        "Le mot de passe de la base"
+      ],
+      "explanation": "Le détail technique reste côté serveur ; l’utilisateur reçoit un message exploitable.",
+      "sourceSection": "notion-10",
+      "evidence": "Le client reçoit un message général sans secrets de connexion.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Où réactiver le bouton dans ce schéma ?",
+      "answers": [
+        "Seulement avant fetch",
+        "Seulement dans la branche succès",
+        "Seulement après une nouvelle saisie",
+        "finally"
+      ],
+      "explanation": "finally s’exécute après réussite ou échec ; il convient au rétablissement du contrôle.",
+      "sourceSection": "notion-12",
+      "evidence": "finally s'exécute pour rétablir les contrôles après succès ou erreur.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel bloc gère l'erreur attendue dans l'interface ?",
+      "answers": [
+        "catch",
+        "La déclaration de la variable",
+        "Un sélecteur CSS",
+        "La balise title"
+      ],
+      "explanation": "catch prend en charge les erreurs de l’opération surveillée.",
+      "sourceSection": "notion-13",
+      "evidence": "catch présente l'échec à l'utilisateur.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que faire du formulaire après échec ?",
+      "answers": [
+        "Fermer définitivement le formulaire",
+        "Conserver le texte saisi",
+        "Tout effacer immédiatement",
+        "Annoncer un succès malgré l’échec"
+      ],
+      "explanation": "Conserver la saisie permet une correction ou une nouvelle tentative.",
+      "sourceSection": "notion-15",
+      "evidence": "La saisie reste disponible si l'envoi est refusé.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que documente la matrice du TP ?",
+      "answers": [
+        "Le nombre d’onglets",
+        "Une capture sans étapes",
+        "Les cas, attendus et résultats observés",
+        "La palette préférée"
+      ],
+      "explanation": "Une matrice rend les vérifications reproductibles.",
+      "sourceSection": "notion-19",
+      "evidence": "Une matrice associe entrée, statut, message et effet en base.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle propriété d'interface vérifier après échec ?",
+      "answers": [
+        "La disparition de tous les boutons",
+        "L’effacement obligatoire des données",
+        "La suppression de l’erreur sans correction",
+        "La possibilité de réessayer"
+      ],
+      "explanation": "L’interface doit redevenir utilisable après une panne.",
+      "sourceSection": "notion-20",
+      "evidence": "Après une erreur, les contrôles doivent permettre de réessayer.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

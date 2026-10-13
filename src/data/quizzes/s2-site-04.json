@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Portfolio : recherche, filtres et états de résultat",
+  "uid": "s2-site-04",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/Site_Web_Avec_Donnees/td/filtres",
+  "sourceSession": "S2-SITE-04",
+  "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/gestion",
+  "questions": [
+    {
+      "question": "Que fait la recherche locale du portfolio ?",
+      "answers": [
+        "Sélectionner les projets affichés sans modifier la base",
+        "Supprimer les projets non trouvés",
+        "Modifier tous les titres",
+        "Créer une table à chaque saisie"
+      ],
+      "explanation": "Le filtre local change une vue des données, pas leur stockage.",
+      "sourceSection": "notion-1",
+      "evidence": "Le filtre local sélectionne des données déjà reçues.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi garder projects complet ?",
+      "answers": [
+        "Pour changer les ids à chaque recherche",
+        "Pour pouvoir recalculer les résultats et réinitialiser",
+        "Pour supprimer définitivement les projets masqués",
+        "Pour éviter tout traitement du filtre"
+      ],
+      "explanation": "La source intacte permet de revenir à tous les projets.",
+      "sourceSection": "notion-2",
+      "evidence": "Le tableau complet est conservé pour réinitialiser le filtre.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle méthode sélectionne les projets visibles ?",
+      "answers": [
+        "find",
+        "join",
+        "filter",
+        "map"
+      ],
+      "explanation": "filter produit la sous-liste qui satisfait la condition.",
+      "sourceSection": "notion-3",
+      "evidence": "Array.filter produit le sous-ensemble des éléments qui satisfont une condition.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pourquoi appliquer trim à la recherche ?",
+      "answers": [
+        "Supprimer tous les accents",
+        "Modifier les données en base",
+        "Mettre tous les textes en majuscules",
+        "Retirer les espaces aux extrémités de la saisie"
+      ],
+      "explanation": "La recherche ne doit pas changer de sens à cause d’espaces de bord.",
+      "sourceSection": "notion-4",
+      "evidence": "trim enlève les espaces de bord de la recherche.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle normalisation traite la casse ?",
+      "answers": [
+        "toLocaleLowerCase('fr')",
+        "trim seulement",
+        "split(',') seulement",
+        "JSON.stringify"
+      ],
+      "explanation": "Normaliser la casse permet de comparer indépendamment des majuscules.",
+      "sourceSection": "notion-5",
+      "evidence": "toLocaleLowerCase('fr') sert à comparer les titres sans tenir compte de la casse.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "La normalisation du cours retire-t-elle les accents ?",
+      "answers": [
+        "Oui, includes retire les accents",
+        "Non, les accents restent significatifs",
+        "Oui, toutes les variantes accentuées deviennent identiques",
+        "Oui, trim retire les accents"
+      ],
+      "explanation": "Mettre en minuscules n’est pas supprimer les accents.",
+      "sourceSection": "notion-6",
+      "evidence": "Dans cet exemple, les accents restent significatifs.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle méthode teste la présence du texte ?",
+      "answers": [
+        "createElement",
+        "JSON.parse",
+        "includes",
+        "append"
+      ],
+      "explanation": "includes teste la présence d’une sous-chaîne.",
+      "sourceSection": "notion-7",
+      "evidence": "includes vérifie si le titre contient le texte recherché.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que donne la recherche textuelle vide ?",
+      "answers": [
+        "Aucun projet n’est autorisé",
+        "Le premier projet seulement",
+        "Une erreur HTTP obligatoire",
+        "Tous les titres satisfont le critère textuel"
+      ],
+      "explanation": "Une recherche vide n’ajoute pas de restriction textuelle.",
+      "sourceSection": "notion-8",
+      "evidence": "Une chaîne vide n'exclut aucun titre avec includes.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle méthode réalise le découpage ?",
+      "answers": [
+        "split(',')",
+        "trim seulement",
+        "join(',')",
+        "JSON.parse"
+      ],
+      "explanation": "split sépare la chaîne selon le délimiteur prévu.",
+      "sourceSection": "notion-10",
+      "evidence": "split(',') découpe la chaîne des technologies.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pour combiner recherche ET technologie, quel opérateur logique convient ?",
+      "answers": [
+        "Une inversion de tous les ids",
+        "ET, les deux conditions sont nécessaires",
+        "OU, une seule condition suffit",
+        "Une affectation du tableau"
+      ],
+      "explanation": "La recherche et la technologie restreignent ensemble la sélection.",
+      "sourceSection": "notion-12",
+      "evidence": "&& exige que texte et technologie correspondent tous les deux.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel événement écoute la recherche ?",
+      "answers": [
+        "mouseover",
+        "load",
+        "input",
+        "submit seulement"
+      ],
+      "explanation": "input permet de recalculer pendant la saisie.",
+      "sourceSection": "notion-14",
+      "evidence": "input suit les modifications du champ de recherche.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment comprendre zéro résultat après filtrage ?",
+      "answers": [
+        "Une panne de base garantie",
+        "Aucun projet enregistré forcément",
+        "Une suppression réussie",
+        "Aucun résultat pour ces filtres"
+      ],
+      "explanation": "Zéro résultat filtré ne signifie pas que la collection source est vide.",
+      "sourceSection": "notion-19",
+      "evidence": "Aucun résultat de filtre ne signifie pas nécessairement une base vide.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

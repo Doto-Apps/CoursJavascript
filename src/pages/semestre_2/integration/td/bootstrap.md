@@ -1,235 +1,169 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Introduction à Tailwind CSS"
+title: "Tailwind : comprendre les classes utilitaires"
+type: "TD"
+order: 1
+nextSession: "/semestre_2/integration/td/tailwind-composants"
 ---
 
-## 1. Présentation de Tailwind CSS
+<a id="comprendre"></a>
 
-Tailwind CSS est un framework CSS **utilitaire** qui permet de styliser des éléments directement dans le HTML sans écrire de CSS personnalisé. Voici la documentation officiel : [Cliquez ici](https://tailwindcss.com/docs/installation/using-vite)
+## Classes utilitaires, composants et balises
 
-### Exemple minimaliste
+Un utilitaire réalise une tâche de style ciblée. Un composant combine une structure HTML et plusieurs règles. Ajouter `font-bold` à un paragraphe ne le transforme pas en titre : le rôle reste déterminé par sa balise.
 
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Tailwind</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-4">
-    <h1 class="text-3xl font-bold text-center text-blue-500">Bienvenue sur Tailwind CSS</h1>
-</body>
-</html>
-```
+| Classe | Déclaration ou effet | À reconnaître |
+|---|---|---|
+| `flex` | `display: flex` | La disposition du parent. |
+| `grid` | `display: grid` | Des pistes communes. |
+| `p-4` | Padding de l’échelle d’espacement. | L’espace intérieur, pas la marge. |
+| `gap-4` | Espacement entre enfants flex/grid. | Le parent doit utiliser la bonne disposition. |
+| `text-center` | Texte aligné au centre. | Ne centre pas la boîte dans son parent. |
+| `font-bold` | Graisse du texte. | Ne change pas le niveau du titre. |
 
-## 2. Mise en page avec Tailwind
+## La compilation des classes Tailwind
 
-### 2.1 Utilisation de Flexbox
+Le navigateur ne connaît pas spontanément ces classes. Le projet doit charger une feuille qui contient leurs règles. La compilation Tailwind repère les classes utilisées et génère le CSS. Le compilateur fourni dans les aperçus du cours sert aux essais ; le projet remis doit suivre les commandes de compilation du support.
 
-Tailwind facilite la gestion des mises en page avec **flexbox**.
+Les démonstrations locales utilisent Tailwind 3.4.17. Les instructions de projet doivent annoncer leur version : Tailwind 4 utilise un autre mode d’installation et d’import CSS. Mélanger un tutoriel v3 et une commande v4 peut donner un projet qui semble correct mais ne génère aucune règle attendue.
 
-```html
-<div class="flex items-center justify-center h-screen bg-gray-200">
-    <div class="p-6 bg-white rounded-lg shadow-lg">
-        <p class="text-lg">Contenu centré avec flexbox.</p>
-        <p class="text-lg">Contenu centré avec flexbox.</p>
-    </div>
-</div>
-```
+## Les variantes d’état et de largeur
 
-**Résultat visuel :**
+`hover:bg-blue-700` concerne l’état de survol ; `focus-visible:outline` concerne un repère de focus ; `md:grid-cols-2` applique deux colonnes au seuil `md` et au-delà, selon la configuration de la version. Le préfixe ne choisit pas une marque de téléphone. Les classes sans préfixe donnent la base.
 
-<div class="flex items-center justify-center h-screen bg-gray-200">
-    <div class="p-6 bg-white rounded-lg shadow-lg">
-        <p class="text-lg">Contenu centré avec flexbox.</p>
-        <p class="text-lg">Contenu centré avec flexbox.</p>
-    </div>
-</div>
+Construisez une petite carte avec des classes complètes et explicites. Dans un projet compilé, fabriquer une classe comme `'bg-' + couleur + '-500'` peut empêcher sa détection. Préférez un choix parmi des noms complets présents dans les fichiers analysés.
 
-### 2.2 Utilisation de Grid
+<a id="apprentissage"></a>
 
-La grille CSS de Tailwind permet d’aligner facilement des éléments.
+## La syntaxe des classes utilitaires
+
+Tailwind est un framework CSS utilitaire : une classe fournit une règle limitée, puis plusieurs classes construisent un composant. `p-4` ajoute du padding ; `m-4` ajoute une marge. Ce n’est pas un langage HTML différent. Les balises gardent leur sens, leurs attributs et leurs responsabilités d’accessibilité.
+
+Le projet de cours utilise **Tailwind 3.4**, comme le site existant. L’aperçu charge le compilateur pédagogique Tailwind 3.4.17 depuis les fichiers du site : aucune connexion à un CDN n’est nécessaire et les nouvelles classes saisies sont prises en compte automatiquement. Ce compilateur dans le navigateur sert aux essais. Dans votre projet livré, utilisez la compilation CLI décrite ci-dessous et chargez la feuille CSS produite ; ne recopiez pas le chemin interne `/vendor/` du site de cours.
 
 ```html
-<div class="grid grid-cols-3 gap-4 p-4">
-    <div class="p-6 bg-blue-300">1</div>
-    <div class="p-6 bg-blue-400">2</div>
-    <div class="p-6 bg-blue-500">3</div>
-</div>
+<article class="rounded-lg border border-slate-300 bg-white p-4 shadow-md">
+  <h2 class="text-xl font-bold text-slate-900">Atelier photo</h2>
+  <p class="mt-2 text-slate-700">Une première rencontre autour de l’image.</p>
+  <a class="mt-4 inline-block text-blue-700 underline" href="#contact">
+    Découvrir l’atelier photo
+  </a>
+</article>
 ```
 
-**Résultat visuel :**
+**Lecture accompagnée :** la balise `article` décrit la fiche ; la classe `p-4` règle son espace intérieur. `mt-2` crée un espace avant le paragraphe. `text-xl` règle la taille et `text-slate-700` la couleur : le préfixe seul ne suffit pas pour deviner la propriété.
 
-<div class="grid grid-cols-3 gap-4 p-4">
-    <div class="p-6 bg-blue-300">1</div>
-    <div class="p-6 bg-blue-400">2</div>
-    <div class="p-6 bg-blue-500">3</div>
-</div>
+```html live title="Lire les utilitaires d’une carte"
+<style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: system-ui, sans-serif;
+        color: #18324c;
+        background: #f1f5f9;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        max-width: 100%;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      input,
+      select,
+      textarea {
+        padding: 8px;
+      }
+      :focus-visible {
+        outline: 3px solid #2563eb;
+        outline-offset: 3px;
+      }
+      .panel {
+        padding: 16px;
+        background: white;
+        border-radius: 12px;
+        min-width: 0;
+      }
+      .cards {
+        display: grid;
+        gap: 16px;
+      }
+      label {
+        display: block;
+        margin-block: 12px 4px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+      }
+      p,
+      h2,
+      a {
+        overflow-wrap: anywhere;
+      }
+      .note {
+        font-size: 0.9rem;
+      }
+    </style>
+    <script src="/vendor/tailwind/tailwind-3.4.17.js"></script>
 
----
+<h1>Une fiche, plusieurs utilitaires</h1>
+    <section class="grid grid-cols-1 gap-4">
+      <article
+        class="rounded-lg border border-slate-300 bg-white p-4 shadow-md"
+      >
+        <h2 class="text-xl font-bold text-slate-900">Atelier photo</h2>
+        <p class="mt-2 text-slate-700">
+          Une première rencontre autour de l’image.
+        </p>
+        <a class="mt-4 inline-block text-blue-700 underline" href="#contact">
+          Découvrir l’atelier
+        </a>
+      </article>
+    </section>
+    <p id="contact">Contact : association du campus.</p>
+    <p class="note">
+      Tailwind 3.4.17 généré dans cet aperçu pédagogique. Essayez p-8, m-4 ou
+      grid-cols-3.
+    </p>
 
-## 3. Typographie et couleurs
-
-### 3.1 Modifier la taille et la couleur du texte
-
-```html
-<p class="text-xl text-gray-700">Texte en gris foncé et taille XL.</p>
+    <script></script>
 ```
 
-**Résultat visuel :**
+## Installation et compilation de Tailwind 3.4
 
-<div class="flex justify-center p-4">
-    <p class="text-xl text-gray-700">Texte en gris foncé et taille XL.</p>
-</div>
+Dans un dossier neuf avec Node/npm disponibles : `npm init -y`, puis `npm install -D tailwindcss@3.4` et `npx tailwindcss init`. Le fichier de configuration doit scanner vos fichiers, par exemple `content: ['./*.html', './js/*.js']`. Dans `input.css`, ajoutez les trois directives `@tailwind base;`, `@tailwind components;`, `@tailwind utilities;`, puis lancez `npx tailwindcss -i input.css -o styles.css --watch`. Le HTML charge `styles.css` avec un `link rel="stylesheet"`. Ces commandes concernent la version 3.4 ; ne mélangez pas les procédures des versions 3 et 4.
 
-### 3.2 Ajouter une police personnalisée
+## Tableau de référence — notions et opérations
 
-```html
-<p class="font-serif text-lg text-red-500">Texte en rouge avec une police serif.</p>
-```
-
-**Résultat visuel :**
-
-<div class="flex justify-center p-4">
-    <p class="font-serif text-lg text-red-500">Texte en rouge avec une police serif.</p>
-</div>
-
----
-
-## 4. Boutons et effets de survol
-
-### 4.1 Bouton stylisé avec Tailwind
-
-```html
-<button class="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700">
-    Cliquez-moi
-</button>
-```
-
-**Résultat visuel :**
-
-<div class="flex justify-center p-4">
-    <button class="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700">
-        Cliquez-moi
-    </button>
-</div>
-
-### 4.2 Bouton avec une ombre au survol
-
-```html
-<button class="px-4 py-2 text-white bg-green-500 rounded-lg shadow-md hover:shadow-lg">
-    Effet d'ombre
-</button>
-```
-
-**Résultat visuel :**
-
-<div class="flex justify-center p-4">
-    <button class="px-4 py-2 text-white bg-green-500 rounded-lg shadow-md hover:shadow-lg">
-        Effet d'ombre
-    </button>
-</div>
-
----
-
-## 5. Gestion des cartes et des bordures arrondies
-
-### 5.1 Carte simple
-
-```html
-<div class="max-w-sm p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold">Titre de la carte</h2>
-    <p class="text-gray-600">Ceci est une carte stylisée avec Tailwind.</p>
-</div>
-```
-
-**Résultat visuel :**
-
-<div class="flex justify-center p-4">
-    <div class="max-w-sm p-6 bg-white rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold">Titre de la carte</h2>
-        <p class="text-gray-600">Ceci est une carte stylisée avec Tailwind.</p>
-    </div>
-</div>
-
----
-
-## 6. Formulaires et champs de saisie
-
-### 6.1 Champ de saisie stylisé
-
-```html
-<input type="text" placeholder="Entrez votre texte" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-```
-
-**Résultat visuel :**
-
-<div class="flex justify-center p-4">
-    <input type="text" placeholder="Entrez votre texte" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-</div>
-
----
-
-# Exercice : Création d'un site avec Tailwind CSS
-
-## Objectif
-
-Développer une page web complète avec **Tailwind CSS**, comprenant :
-- Un **header** flexible avec des boutons interactifs.
-- Un **main** contenant une galerie d’images en **flexbox**, avec des images de tailles différentes.
-- Un **footer** structuré avec toutes les informations nécessaires.
-- Une **personnalisation des couleurs** et des marges bien définies.
-
----
-
-## Consignes
-
-1. **Header (barre de navigation) :**
-   - Utiliser **Flexbox** pour aligner les éléments horizontalement.
-   - Ajouter des boutons avec des effets au **hover**.
-
-   Exemple simple de bouton :
-   ```html
-   <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
-       Mon bouton
-   </button>
-   ```
-
-2. **Main (galerie d’images) :**
-   - Utiliser **Flexbox** pour afficher les images en ligne.
-   - Les images doivent avoir des tailles différentes tout en restant bien agencées.
-   
-   Exemple d’image avec bord arrondi et ombre :
-   ```html
-   <img src="https://via.placeholder.com/150" class="rounded-lg shadow-md">
-   ```
-
-3. **Footer :**
-   - Doit contenir toutes les **informations nécessaires** (ex. : copyright, contacts, liens).
-   - Bien espacé avec des marges adaptées.
-
-4. **Personnalisation des couleurs et marges :**
-   - Définir une palette de couleurs cohérente.
-   - Utiliser des **marges adaptées** (`m-`, `p-` pour padding et margin).
-
-   Exemple d’élément avec une couleur personnalisée et une bonne marge :
-   ```html
-   <div class="bg-indigo-600 text-white p-6 m-4 rounded-lg">
-       Élément stylisé
-   </div>
-   ```
-
----
-
-## Critères d’évaluation
-
-- **Utilisation correcte de Flexbox** pour le header et la galerie.
-- **Effets au survol** correctement appliqués aux boutons.
-- **Disposition harmonieuse** des images de la galerie.
-- **Informations bien structurées** dans le footer.
-- **Cohérence des couleurs et bonne utilisation des marges.**
-
-**Bon développement !** 🚀
-
+| Notion | Règle à retenir |
+|---|---|
+| <a id="notion-1"></a>Utilitaires | Une classe utilitaire exprime une règle CSS limitée. |
+| <a id="notion-2"></a>Padding | p-4 règle l'espace intérieur du composant. |
+| <a id="notion-3"></a>Marge | m-4 règle la marge extérieure. |
+| <a id="notion-4"></a>Marge supérieure | mt-2 ajoute une marge en haut. |
+| <a id="notion-5"></a>Taille | text-xl règle la taille du texte. |
+| <a id="notion-6"></a>Couleur du texte | text-slate-700 règle la couleur du texte. |
+| <a id="notion-7"></a>Fond | bg-white donne un fond blanc. |
+| <a id="notion-8"></a>Graisse | font-bold donne une graisse de texte élevée. |
+| <a id="notion-9"></a>Bordure | border active une bordure ; border-slate-300 en règle la couleur. |
+| <a id="notion-10"></a>Coins | rounded-lg arrondit les coins. |
+| <a id="notion-11"></a>Ombre | shadow-md ajoute une ombre. |
+| <a id="notion-12"></a>Grid | grid active la mise en page Grid sur le parent. |
+| <a id="notion-13"></a>Colonnes | grid-cols-3 définit trois colonnes d'une grille active. |
+| <a id="notion-14"></a>Flexbox | flex active Flexbox sur le parent. |
+| <a id="notion-15"></a>Espacement | gap-4 règle l'espace entre les éléments du parent Grid ou Flex. |
+| <a id="notion-16"></a>Sémantique | article décrit une fiche autonome ; les classes ne changent pas ce sens. |
+| <a id="notion-17"></a>Compilation | Tailwind 3.4 génère une feuille CSS à partir des classes détectées. |
+| <a id="notion-18"></a>Sources analysées | La configuration content indique les fichiers où chercher les classes. |
+| <a id="notion-19"></a>Surveillance | --watch relance la compilation après les modifications surveillées. |
+| <a id="notion-20"></a>Version | Les commandes de ce support ciblent Tailwind 3.4. |

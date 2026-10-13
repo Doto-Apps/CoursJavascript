@@ -1,6 +1,9 @@
 ---
 import { PATHS } from "paths";
 import { getCookieName } from "utils/getCookieName";
+import { getLocalQuiz } from "utils/getQuiz";
+import { getRandomQuestion } from "utils/getRandomQuestion";
+import { clearLocalQuizAttempt } from "utils/clearLocalQuizAttempt";
 
 export const prerender = false;
 
@@ -9,9 +12,17 @@ if (!quizId) {
   return Astro.redirect("/404");
 }
 const cookieKey = getCookieName(quizId);
+const quiz = getLocalQuiz(quizId);
+
+if (quiz) {
+  await clearLocalQuizAttempt(quizId, quiz, Astro.session);
+  const firstQuestion = getRandomQuestion(quiz.questions, []);
+  if (!firstQuestion) return Astro.redirect("/404");
+  return Astro.redirect(PATHS.quiz(quizId, firstQuestion[1]));
+}
 
 if (await Astro.session?.has(cookieKey)) {
-  Astro.session?.delete(cookieKey);
+  await Astro.session?.delete(cookieKey);
 }
 
 return Astro.redirect(

@@ -1,0 +1,220 @@
+{
+  "name": "Révision — CSS : sélecteurs, boîtes et Flexbox",
+  "uid": "s1-integration-css",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/integration/csstd",
+  "sourceSession": "INT-03",
+  "targetCourse": "/semestre_1/integration/html",
+  "questions": [
+    {
+      "question": "Dans une règle CSS, que fait le sélecteur ?",
+      "answers": [
+        "Il choisit les éléments concernés",
+        "Il donne la nouvelle valeur",
+        "Il définit le nom du fichier",
+        "Il indique le navigateur à utiliser"
+      ],
+      "explanation": "Une règle associe des éléments ciblés à des déclarations de présentation.",
+      "sourceSection": "comprendre",
+      "evidence": "Une règle CSS associe un sélecteur à des déclarations.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel sélecteur cible class=\"carte\" ?",
+      "answers": [
+        "[id=\"carte\"]",
+        ".carte",
+        "#carte",
+        "carte"
+      ],
+      "explanation": "Un point introduit un sélecteur de classe ; le dièse introduit un identifiant.",
+      "sourceSection": "comprendre",
+      "evidence": "`.carte` choisit les éléments ayant la classe `carte`.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Pour changer le texte sans changer le fond, quelle propriété utiliser ?",
+      "answers": [
+        "border-color",
+        "outline-color",
+        "color",
+        "background-color"
+      ],
+      "explanation": "color règle la couleur du texte ; background-color règle le fond.",
+      "sourceSection": "selecteurs",
+      "evidence": "`color` règle la couleur du texte ; `background-color` règle celle du fond.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pour éloigner le texte de sa propre bordure, que modifier ?",
+      "answers": [
+        "margin",
+        "gap",
+        "border-radius",
+        "padding"
+      ],
+      "explanation": "Le padding crée l’espace intérieur de la boîte.",
+      "sourceSection": "boites",
+      "evidence": "`padding` éloigne le contenu de sa bordure.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Pour éloigner une boîte de sa voisine, que modifier ?",
+      "answers": [
+        "margin",
+        "padding",
+        "border-width",
+        "line-height"
+      ],
+      "explanation": "La marge se trouve à l’extérieur de la bordure.",
+      "sourceSection": "boites",
+      "evidence": "`margin` éloigne la boîte de son environnement.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "En border-box, width: 240px inclut quoi, hors marge ?",
+      "answers": [
+        "Contenu et marge mais pas la bordure",
+        "Contenu, padding et bordures",
+        "Le contenu seulement",
+        "La marge seulement"
+      ],
+      "explanation": "border-box inclut padding et bordures dans la largeur déclarée.",
+      "sourceSection": "boites",
+      "evidence": "Avec `border-box`, les 240 px incluent padding et bordures",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "En content-box : width 240px, padding 16px et bordure 2px de chaque côté. Largeur hors marge ?",
+      "answers": [
+        "258px",
+        "272px",
+        "276px",
+        "240px"
+      ],
+      "explanation": "La largeur totale est 240 plus deux paddings de 16 et deux bordures de 2.",
+      "sourceSection": "boites",
+      "evidence": "**276 px hors marge** (`240 + 2 × 16 + 2 × 2`)",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "À quelle référence correspond rem ?",
+      "answers": [
+        "La largeur du parent",
+        "La hauteur de l’écran",
+        "La taille de police du voisin",
+        "La taille de police de la racine"
+      ],
+      "explanation": "rem se réfère à la taille de police de l’élément racine.",
+      "sourceSection": "boites",
+      "evidence": "`rem` dépend de la taille de police de la racine.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que fait display: none ?",
+      "answers": [
+        "Retire la boîte de la mise en page",
+        "La rend transparente en gardant sa place",
+        "Supprime le HTML du fichier",
+        "Déplace l’élément en fin de page"
+      ],
+      "explanation": "L’élément reste dans le document mais sa boîte n’est plus disposée.",
+      "sourceSection": "display",
+      "evidence": "| `none` | Élément retiré de la mise en page",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pour organiser trois enfants en Flexbox, où mettre display: flex ?",
+      "answers": [
+        "Sur chaque enfant sans changer le parent",
+        "Sur leur parent",
+        "Sur leur texte seulement",
+        "Sur une image voisine"
+      ],
+      "explanation": "Le conteneur Flexbox organise ses enfants directs.",
+      "sourceSection": "flex",
+      "evidence": "`display: flex` s’applique au parent ; ses enfants directs deviennent les éléments flex.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Dans Flexbox, sur quel axe agit justify-content ?",
+      "answers": [
+        "Toujours l’axe vertical",
+        "Toujours l’axe horizontal",
+        "L’axe principal",
+        "L’axe transversal"
+      ],
+      "explanation": "L’axe principal dépend de flex-direction ; il n’est pas toujours horizontal.",
+      "sourceSection": "flex",
+      "evidence": "`justify-content` distribue l’espace libre sur l’axe principal",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "À quoi sert flex-wrap: wrap ?",
+      "answers": [
+        "Cacher les enfants supplémentaires",
+        "Tourner chaque enfant",
+        "Changer le sens du texte",
+        "Autoriser les enfants à passer sur plusieurs lignes"
+      ],
+      "explanation": "Le retour à la ligne évite d’imposer une ligne unique quand l’espace manque.",
+      "sourceSection": "flex",
+      "evidence": "`flex-wrap: wrap` autorise plusieurs lignes quand la place manque.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Sur quel axe agit align-items en Flexbox ?",
+      "answers": [
+        "L’axe transversal",
+        "L’axe principal",
+        "Toujours horizontal",
+        "Toujours vertical"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "L’axe transversal dépend de flex-direction ; son orientation n’est pas fixe.",
+      "sourceSection": "flex",
+      "evidence": "`align-items` agit sur l’axe transversal"
+    },
+    {
+      "question": "Quel display garde un élément dans une ligne tout en acceptant largeur et hauteur ?",
+      "answers": [
+        "none",
+        "inline-block",
+        "inline",
+        "block"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "inline-block combine une boîte dimensionnable avec une participation à une ligne.",
+      "sourceSection": "display",
+      "evidence": "| `inline-block` | Dans la ligne, avec largeur et hauteur réglables |"
+    },
+    {
+      "question": "Quelle propriété arrondit les coins d’une boîte ?",
+      "answers": [
+        "padding",
+        "box-shadow",
+        "border-radius",
+        "border-width"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "L’arrondi ne remplace ni l’épaisseur de bordure ni l’espace intérieur.",
+      "sourceSection": "boites",
+      "evidence": "`border-radius` arrondit les coins sans définir une nouvelle marge."
+    },
+    {
+      "question": "Comment charger une feuille CSS externe ?",
+      "answers": [
+        "Avec script src vers le CSS",
+        "Avec un lien a seulement",
+        "Avec une image src vers le CSS",
+        "Avec link rel=\"stylesheet\" dans head"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le navigateur reconnaît la relation stylesheet pour charger les règles.",
+      "sourceSection": "selecteurs",
+      "evidence": "Le document charge ce fichier dans son `head` avec `<link rel=\"stylesheet\" href=\"style.css\">`."
+    }
+  ]
+}

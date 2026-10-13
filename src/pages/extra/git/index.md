@@ -1,232 +1,68 @@
 ---
+order: 1
 layout: "layouts/Layout.astro"
 title: Introduction au Git CLI
 ---
 
-Ce cours vous apprend les bases de Git CLI. Nous couvrirons l'installation, la configuration, SSH, les opérations de base, la gestion des conflits, Git Flow et les conventions de commit.
+## Git : versions locales et dépôt distant
 
-## 1. Installation et Configuration de Git
+Git enregistre des versions d’un projet. Un dépôt contient son historique dans `.git` ; les fichiers ordinaires forment le répertoire de travail. GitHub héberge des dépôts distants et des outils de collaboration : Git fonctionne aussi sans compte GitHub.
 
-### 1.1 Installation de Git
+## Configurer l’auteur et créer un dépôt
 
-Vérifiez l'installation de Git :
-
-```bash
-git --version
+```sh
+git config --global user.name "Votre nom"
+git config --global user.email "votre-adresse@example.org"
+git init
+git status
 ```
 
-Si Git n'est pas installé, téléchargez-le depuis [le site officiel](https://git-scm.com/).
+Ces commandes s’exécutent dans le dossier du projet. Nom et adresse identifient l’auteur des commits ; ils ne connectent pas à GitHub. `status` indique la branche et les fichiers suivis, modifiés ou non suivis. Sa formulation peut dépendre de la langue et de la version installées.
 
-### 1.2 Configuration de Git
+## Répertoire de travail, index et commit
 
-Configurez votre nom et votre email pour les commits :
-
-```bash
-git config --global user.name "Votre Nom"
-git config --global user.email "votre-email@example.com"
+```sh
+git add index.html
+git diff --cached
+git commit -m "Ajoute la page d’accueil"
+git log --oneline -3
 ```
 
-### 1.3 Configuration de SSH
+`add` prépare la version actuelle du fichier dans l’index. `diff --cached` montre ce qui sera enregistré. `commit` crée une version locale ; il n’envoie rien sur GitHub. Si le fichier est à nouveau modifié après `add`, cette nouvelle modification doit être ajoutée avant le commit pour y figurer. Un identifiant de commit varie selon son contenu : ne cherchez pas à reproduire un hash donné dans un exemple.
 
-Pour utiliser SSH avec Git, générez une clé SSH et ajoutez-la à votre compte Git :
+Ajoutez un `.gitignore` avant de préparer des fichiers générés ou privés : `node_modules/`, `.env` et les sorties de compilation sont des cas fréquents. Un fichier déjà suivi ne devient pas non suivi par simple ajout à `.gitignore`. Vérifiez le diff avant chaque commit.
 
-1. **Générer une clé SSH** :
+## clone, remote, fetch, pull et push
 
-    ```bash
-    ssh-keygen -t rsa -b 4096 -C "votre-email@example.com"
-    ```
+| Commande | Effet |
+|---|---|
+| `git clone URL` | Crée une copie locale d’un dépôt et configure généralement `origin` |
+| `git remote -v` | Affiche les dépôts distants configurés |
+| `git fetch origin` | Récupère l’historique distant sans intégrer ses changements à la branche courante |
+| `git pull --ff-only` | Récupère et avance la branche uniquement si aucun rapprochement divergent n’est nécessaire |
+| `git push` | Envoie les commits de la branche vers le distant configuré |
 
-2. **Ajouter la clé SSH à l'agent SSH** :
+`origin/main` est une référence locale à l’état distant connu lors du dernier échange ; `main` est une branche locale. Leur nom ne prouve pas que leurs contenus sont identiques. L’authentification HTTPS ou SSH donne accès au distant ; une clé privée SSH reste sur le poste et seule la clé publique est enregistrée sur le service.
 
-    ```bash
-    eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_rsa
-    ```
+## Branches et fusion
 
-3. **Ajouter la clé SSH à votre compte Git** :
-
-    ```bash
-    cat ~/.ssh/id_rsa.pub
-    ```
-
-    Collez ce contenu dans la section des clés SSH de votre compte Git (par exemple, [GitHub](https://github.com/settings/keys)).
-
-### Avantages de SSH
-
-- **Sécurité** : Utilise des clés cryptographiques.
-- **Confort** : Pas de mot de passe à chaque interaction.
-- **Performance** : Opérations plus rapides.
-
-## 2. Opérations de Base
-
-### 2.1 Cloner un Dépôt
-
-Pour cloner un dépôt :
-
-```bash
-git clone https://github.com/username/repository.git
+```sh
+git switch -c navigation
+# Modifier les fichiers puis préparer et enregistrer le changement.
+git add index.html
+git commit -m "Ajoute la navigation"
+git switch main
+git merge navigation
 ```
 
-### 2.2 Fetch
+Une branche est un nom mobile qui désigne une suite de commits. La fusion intègre l’autre branche dans celle où vous vous trouvez. Elle peut être une simple avance ou produire un commit de fusion selon l’historique.
 
-Pour récupérer les dernières modifications du dépôt distant sans les fusionner :
+## Conflits et rebase
 
-```bash
-git fetch origin
-```
+Un conflit demande de choisir le contenu à conserver dans les fichiers signalés. Les marqueurs `<<<<<<<`, `=======` et `>>>>>>>` délimitent les versions en concurrence. Après correction, vérifiez le résultat, ajoutez les fichiers puis terminez l’opération. `git merge --abort` annule une fusion non terminée ; `git rebase --abort` annule un rebase en cours.
 
-### 2.3 Pull
+Un rebase rejoue des commits sur une nouvelle base et change leurs identifiants. Évitez de réécrire une branche déjà utilisée par d’autres sans coordination. `stash` met temporairement de côté des changements locaux ; vérifiez ce qui a été conservé avant de compter dessus, notamment pour les fichiers non suivis.
 
-Pour récupérer et fusionner les dernières modifications du dépôt distant :
+## Historique et conventions
 
-```bash
-git pull origin main
-```
-
-### 2.4 Ajouter des Fichiers
-
-Pour ajouter des fichiers à la zone de staging :
-
-```bash
-git add fichier1 fichier2
-```
-
-Pour ajouter tous les fichiers modifiés :
-
-```bash
-git add .
-```
-
-### 2.5 Commit
-
-Pour valider les modifications :
-
-```bash
-git commit -m "Description des modifications"
-```
-
-### 2.6 Rebase
-
-Pour réappliquer vos commits sur la dernière version du dépôt distant :
-
-```bash
-git rebase origin/main
-```
-
-### 2.7 Merge
-
-Pour fusionner une branche dans la branche courante :
-
-```bash
-git merge nom-de-la-branche
-```
-
-### 2.8 Stash
-
-Pour sauvegarder les modifications non validées :
-
-```bash
-git stash
-```
-
-Pour récupérer les modifications sauvegardées :
-
-```bash
-git stash pop
-```
-
-## 3. Gestion des Conflits
-
-### 3.1 Résolution de Conflits lors d'un Rebase
-
-Si des conflits surviennent lors d'un rebase, Git vous indiquera les fichiers concernés. Ouvrez ces fichiers et résolvez les conflits manuellement. Une fois les conflits résolus, ajoutez les fichiers modifiés :
-
-```bash
-git add fichier1 fichier2
-```
-
-Puis continuez le rebase :
-
-```bash
-git rebase --continue
-```
-
-### 3.2 Finir un Rebase
-
-Si vous souhaitez abandonner un rebase en cours :
-
-```bash
-git rebase --abort
-```
-
-## 4. Git Flow et Conventional Commit
-
-### 4.1 Git Flow
-
-Git Flow est une méthode de gestion de branches pour Git qui aide à organiser le développement de logiciels. Elle définit une structure de branches standardisée pour gérer les fonctionnalités, les releases et les hotfixes. Voici les principales branches utilisées dans Git Flow :
-
-- **`main`** : La branche principale qui contient le code stable et prêt à être déployé.
-- **`develop`** : La branche de développement où toutes les nouvelles fonctionnalités sont intégrées avant d'être fusionnées dans `main`.
-- **`feature/*`** : Les branches de fonctionnalités où chaque nouvelle fonctionnalité est développée indépendamment.
-- **`release/*`** : Les branches de release préparées pour une nouvelle version du logiciel.
-- **`hotfix/*`** : Les branches de hotfix pour corriger rapidement des bugs critiques dans le code en production.
-
-### 4.2 Conventional Commit
-
-Les commits conventionnels suivent une structure spécifique pour faciliter la lecture et la compréhension des modifications. Cette convention aide à générer automatiquement des journaux de changements et à semaphorer les versions des logiciels. Voici la structure d'un commit conventionnel :
-
-```
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
-
-- **`type`** : Le type de commit (par exemple, `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`).
-- **`scope`** : Le module ou la partie du code affectée par le commit (facultatif).
-- **`subject`** : Une description concise des modifications.
-- **`body`** : Une description détaillée des modifications (facultatif).
-- **`footer`** : Informations supplémentaires, comme les références de bugs (facultatif).
-
-Voici quelques exemples de commits conventionnels :
-
-- `feat(user): ajouter la fonctionnalité de connexion`
-- `fix(payment): corriger le bug de paiement`
-- `docs(readme): mettre à jour le README`
-- `style(button): améliorer l'apparence des boutons`
-- `refactor(api): simplifier la logique de l'API`
-- `test(user): ajouter des tests pour la fonctionnalité de connexion`
-- `chore(deps): mettre à jour les dépendances`
-
-## 5. Récapitulatif des Commandes
-
-### 5.1 Commandes de Base
-
-| Commande            | Description                                      |
-|---------------------|--------------------------------------------------|
-| `git clone`         | Cloner un dépôt                                  |
-| `git fetch`         | Récupérer les dernières modifications            |
-| `git pull`          | Récupérer et fusionner les dernières modifications |
-| `git add`           | Ajouter des fichiers à la zone de staging        |
-| `git commit`        | Valider les modifications                        |
-| `git rebase`        | Réappliquer les commits sur la dernière version  |
-| `git merge`         | Fusionner une branche dans la branche courante   |
-| `git stash`         | Sauvegarder les modifications non validées       |
-
-### 5.2 Commandes Chainées
-
-| Commandes Chainées            | Description                                      |
-|-------------------------------|--------------------------------------------------|
-| `git fetch && git pull`       | Récupérer et fusionner les dernières modifications |
-| `git fetch && git checkout -b nom-de-la-branche origin/nom-de-la-branche && git branch --set-upstream-to=origin/nom-de-la-branche` | Cloner une branche distante et la suivre |
-
-### 5.3 Pourquoi utiliser `origin/main` plutôt que `main` ?
-
-Utiliser `origin/main` spécifie explicitement que vous travaillez avec la branche `main` du dépôt distant `origin`. Cela évite toute ambiguïté et garantit que vous travaillez avec la version la plus récente du dépôt distant.
-
-Pour plus d'informations sur les commandes Git, consultez la [documentation officielle](https://git-scm.com/doc).
-
-
-
-
+Un message de commit décrit un changement cohérent, par exemple « Corrige le lien de contact ». Conventional Commits ajoute des préfixes tels que `fix:` et `feat:` quand le projet suit cette convention. Git Flow est une organisation possible des branches, pas une obligation de Git. Pour un petit projet étudiant, une branche principale stable et des branches de travail courtes peuvent suffire.

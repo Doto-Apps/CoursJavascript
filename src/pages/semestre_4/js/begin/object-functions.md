@@ -4,43 +4,35 @@ title: "Object functions"
 type: "tp"
 ---
 
-# Utilisation de la classe Object
+## Object.keys, Object.values et Object.entries
 
-## Fonction Object.entries()
+Ces méthodes statiques transforment les propriétés propres, énumérables et nommées par des chaînes d’un objet en tableaux. Elles ne nécessitent pas de créer une instance de `Object`. Les propriétés héritées ne font pas partie de ces résultats.
 
-La fonction <code>Object.entries()</code> permet de retourner un tableau
-de toutes les propriétés et valeurs d'un objet. L'exemple suivant
-utilise <code>Object.entries()</code> pour retourner un tableau des
-propriétés et valeurs d'un objet:
-
-```js
-let person = { name: "John", age: 30 };
-let entries = Object.entries(person);
-console.log(entries); // [['name', 'John'], ['age', 30]]
+```js live title="Noms, valeurs et couples"
+const projet = { titre: 'Affiche', annee: 2026 };
+console.log(Object.keys(projet));
+console.log(Object.values(projet));
+console.log(Object.entries(projet));
 ```
 
-## Fonction Object.keys()
+Sorties : `['titre', 'annee']`, `['Affiche', 2026]`, puis `[['titre', 'Affiche'], ['annee', 2026]]`. Une entrée est un tableau de deux valeurs : le nom puis la valeur.
 
-La fonction <code>Object.keys()</code> permet de retourner un tableau
-des propriétés d'un objet. L'exemple suivant utilise{" "}
-<code>Object.keys()</code> pour retourner un tableau des propriétés d'un
-objet:
+## Parcourir les couples avec la déstructuration
 
 ```js
-let person = { name: "John", age: 30 };
-let keys = Object.keys(person);
-console.log(keys); // ['name', 'age']
+const projet = { titre: 'Affiche', annee: 2026 };
+for (const [nom, valeur] of Object.entries(projet)) {
+  console.log(`${nom} : ${valeur}`);
+}
 ```
 
-## Fonction Object.values()
+La console affiche `titre : Affiche` puis `annee : 2026`. `[nom, valeur]` déstructure chaque couple. Cette forme est utile pour générer un récapitulatif de champs sans écrire un traitement par propriété.
 
-La fonction <code>Object.values()</code> permet de retourner un tableau
-des valeurs des propriétés d'un objet. L'exemple suivant utilise{" "}
-<code>Object.values()</code> pour retourner un tableau des valeurs des
-propriétés d'un objet:
+## Reconstituer un objet avec Object.fromEntries
 
 ```js
-let person = { name: "John", age: 30 };
-let values = Object.values(person);
-console.log(values); // ['John', 30]
+const valeurs = [['titre', 'Photo'], ['annee', 2026]];
+console.log(Object.fromEntries(valeurs)); // { titre: 'Photo', annee: 2026 }
 ```
+
+Si le même nom apparaît plusieurs fois, la dernière valeur remplace les précédentes. Cette limite est importante pour `Object.fromEntries(new FormData(form))` : plusieurs cases partageant le même `name` demandent plutôt `FormData.getAll`. Ne supposez pas non plus que l’ordre des clés d’un objet représente l’ordre métier d’une liste ; utilisez un tableau quand cet ordre est essentiel.

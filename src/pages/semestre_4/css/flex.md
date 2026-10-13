@@ -3,83 +3,40 @@ layout: "layouts/Layout.astro"
 title: "Flexbox"
 ---
 
-## Introduction à Flexbox
+## Flexbox : dimensions et espace disponible
 
-Flexbox est un modèle de disposition unidimensionnel qui permet de créer des mises en page flexibles et dynamiques. Il offre un contrôle puissant sur la disposition des éléments à l'intérieur d'un conteneur, en alignant, en espaçant et en réorganisant les éléments de manière intuitive.
+Les [axes et alignements de Flexbox](/semestre_1/integration/csstd#flex) ont été introduits au S1. Le conteneur organise ses enfants directs ; `justify-content` distribue sur l’axe principal et `align-items` aligne sur l’axe transversal. Ici, la difficulté porte sur les dimensions flexibles et les contenus longs.
 
-### Principes fondamentaux de Flexbox :
+## flex-basis, flex-grow et flex-shrink
 
-- **Conteneur Flex** : Un élément qui définit un contexte de flexbox en appliquant la propriété `display: flex`.
-- **Axe Principal et Transversal** : Dans Flexbox, il y a toujours un axe principal et un axe transversal. Par défaut, l'axe principal est horizontal (de gauche à droite) et l'axe transversal est vertical (de haut en bas).
-- **Alignement** : Les éléments flexibles peuvent être alignés le long de l'axe principal ou transversal à l'aide des propriétés `justify-content` et `align-items`.
-- **Espacement** : L'espacement entre les éléments flexibles peut être défini avec la propriété `margin`, et l'espacement entre les conteneurs flexibles peut être défini avec `justify-content` et `align-items`.
-
-## Création d'un conteneur Flex
-
-Pour créer un conteneur Flex, utilisez la propriété `display: flex` sur l'élément parent.
-
-```css
-.container {
-  display: flex;
-}
+```html live title="Taille de base et partage de l’espace"
+<div class="ligne"><article>A</article><article class="prioritaire">B</article></div>
+<style>
+  .ligne { display: flex; gap: 16px; border: 2px dashed #1d4ed8; }
+  article { flex: 1 1 120px; min-width: 0; padding-block: 24px; background: #dbeafe; }
+  .prioritaire { flex-grow: 2; }
+</style>
 ```
 
-## Définition de la direction principale
+Chaque enfant part de 120 px. L’espace restant après les bases et la gouttière est partagé en trois parts : une pour A, deux pour B. Quand il manque de la place, `flex-shrink: 1` autorise une réduction. `flex: 0 0 120px` empêcherait à la fois croissance et réduction.
 
-La direction principale détermine l'orientation des éléments flexibles à l'intérieur du conteneur flex. Par défaut, la direction principale est horizontale (de gauche à droite).
+## La taille minimale d’un enfant
 
-```css
-.container {
-  display: flex;
-  flex-direction: row; /* Direction horizontale (par défaut) */
-}
+La taille minimale automatique peut empêcher un élément flex de devenir plus étroit que son contenu. `min-width: 0` autorise la réduction de sa boîte ; le texte doit aussi pouvoir revenir à la ligne.
+
+```html preview title="Texte long dans une colonne flexible" height=170
+<div class="ligne"><aside>Menu</aside><p>UnTitreSansEspaceTrèsLongQuiDoitResterDansLeConteneur</p></div>
+<style>
+  .ligne { display: flex; gap: 16px; max-width: 300px; border: 2px solid #1d4ed8; }
+  aside { flex: 0 0 70px; }
+  p { flex: 1; min-width: 0; overflow-wrap: anywhere; margin: 0; background: #dbeafe; }
+</style>
 ```
 
-## Alignement des éléments flexibles
+Le menu garde 70 px et le texte utilise l’espace restant sans imposer un débordement horizontal. Masquer ce texte avec `overflow: hidden` aurait dissimulé l’information.
 
-Les éléments flexibles peuvent être alignés le long de l'axe principal et transversal à l'intérieur du conteneur flex.
+## Retour à la ligne et alignement de plusieurs lignes
 
-```css
-.container {
-  display: flex;
-  justify-content: center; /* Centre les éléments horizontalement */
-  align-items: center; /* Centre les éléments verticalement */
-}
-```
+`flex-wrap: wrap` crée de nouvelles lignes. `align-items` règle les enfants dans leur ligne ; `align-content` distribue les lignes sur l’axe transversal quand le conteneur possède de l’espace libre. Si plusieurs rangées doivent partager les mêmes colonnes, utilisez [Grid](/semestre_4/css/grid) plutôt que de forcer les largeurs de lignes flex indépendantes.
 
-## Espacement entre les éléments flexibles
-
-L'espacement entre les éléments flexibles peut être défini à l'aide de la propriété `margin`.
-
-```css
-.item {
-  margin: 10px; /* Espacement de 10 pixels autour de chaque élément */
-}
-```
-
-## Réorganisation des éléments flexibles
-
-Flexbox offre des fonctionnalités puissantes pour réorganiser les éléments flexibles en fonction de l'espace disponible et des besoins de mise en page.
-
-```css
-.container {
-  display: flex;
-  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
-}
-```
-
-## Media Queries avec Flexbox
-
-Les Media Queries peuvent être utilisées avec Flexbox pour créer des mises en page réactives et adaptatives.
-
-```css
-@media screen and (max-width: 768px) {
-  .container {
-    flex-direction: column; /* Change la direction en colonne pour les petits écrans */
-  }
-}
-```
-
-## Conclusion
-
-Flexbox est un outil puissant pour créer des mises en page flexibles et réactives. En comprenant les principes fondamentaux de Flexbox et en utilisant ses fonctionnalités avancées telles que l'alignement, l'espacement et la réorganisation, les développeurs web peuvent créer des interfaces utilisateur modernes et dynamiques.
+`order` change l’ordre visuel sans changer le DOM ni l’ordre de tabulation. Une navigation ou un formulaire doit conserver une lecture cohérente ; privilégiez l’ordre du document.

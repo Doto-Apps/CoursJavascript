@@ -4,106 +4,45 @@ title: "Variables"
 type: "tp"
 ---
 
-# Les variables
+## Déclarer une variable avec const ou let
 
-## Déclaration de variables
+Une variable associe un nom à une valeur. `const` empêche de réaffecter ce nom ; `let` autorise une nouvelle affectation. Utilisez `const` tant qu’une réaffectation n’est pas nécessaire. `=` affecte une valeur, il ne compare pas deux valeurs.
 
-Voici comment déclarer une variable en JavaScript :
-
-Vous pouvez également initialiser une variable en lui affectant une
-valeur lors de sa déclaration :
-
-```js
-let maVariable;
+```js live title="Prix et quantité"
+const prix = 12;
+let quantite = 2;
+quantite = quantite + 1;
+const total = prix * quantite;
+console.log(quantite);
+console.log(total);
 ```
 
-## Types de données
+La console affiche successivement `3` et `36`. Les instructions s’exécutent dans leur ordre : `total` reçoit le résultat du calcul à cet instant. Une modification ultérieure de `quantite` ne recalcule pas automatiquement `total`.
 
-Il existe différents types de données que vous pouvez stocker dans une
-variable, tels que des nombres (entiers ou flottants), des chaînes de
-caractères, des booléens (`true` ou `false`), et des valeurs spéciales
-comme `null` et `undefined`.
+## Affectation et incrémentation
 
-Voici quelques exemples de variables de différents types :
+`quantite += 2` signifie `quantite = quantite + 2`. `quantite++` ajoute un. Préférez une instruction séparée pour éviter de mêler le calcul et son effet de bord. Lire une variable `let` ou `const` avant sa déclaration provoque une `ReferenceError` ; réaffecter une constante provoque une `TypeError`.
 
-```js
-let nombre = 10; // nombre entier
-let decimal = 3.14; // nombre à virgule flottante
-let chaine = "Bonjour"; // chaîne de caractères
-let boolean = true; // booléen
-let vide = null; // valeur null
-let indefini; // valeur undefined
-```
-
-## Opérateurs d'affectation
-
-Vous pouvez utiliser des opérateurs pour affecter des valeurs à une
-variable, comme l'opérateur `=` pour l'affectation de base, ou
-l'opérateur `+=` pour ajouter une valeur à une variable existante :
+## Portée de bloc
 
 ```js
-let nombre = 10;
-nombre += 5; // nombre vaut maintenant 15
+const nom = 'Léa';
+if (true) {
+  const message = `Bonjour ${nom}`;
+  console.log(message);
+}
+// console.log(message); // ReferenceError si cette ligne est exécutée
 ```
 
-## Déclaration multiple
+La sortie est `Bonjour Léa`. `message` n’est accessible que dans les accolades du `if`. `nom`, déclaré à l’extérieur, reste lisible dans ce bloc. L’ancienne déclaration `var` a une portée de fonction et des comportements de remontée différents ; elle sera surtout rencontrée dans du code existant.
 
-Il est possible de déclarer plusieurs variables en utilisant la syntaxe
-suivante :
+## Constantes et objets modifiables
 
 ```js
-let variable1, variable2, variable3;
+const projet = { titre: 'Affiche' };
+projet.titre = 'Portfolio';
+console.log(projet.titre); // Portfolio
+// projet = {}; // TypeError : réaffectation interdite
 ```
 
-## Nommage de variables
-
-Il est recommandé de donner des noms significatifs aux variables pour
-rendre votre code plus facile à lire et à comprendre. Vous pouvez
-utiliser des lettres, des chiffres et des underscores (`_`) dans les
-noms de variables, mais les noms de variables ne peuvent pas commencer
-par un chiffre. Il est également conseillé d'utiliser des camelCases
-(première lettre en minuscule, suivies de mots avec la première lettre
-en majuscule) pour les noms de variables composées de plusieurs mots,
-comme `maVariable`.
-
-Voici quelques exemples de noms de variables valides :
-
-```js
-let nom;
-let age;
-let estClient;
-let nombreDeCommandes;
-```
-
-Voici quelques exemples de noms de variables non valides :
-
-```js
-let 123; // ne peut pas commencer par un chiffre
-let mon-nom; // ne peut pas contenir de tirets
-let mon nom; // ne peut pas contenir d'espaces
-```
-
-## var, let et const
-
-Il est possible de déclarer une variable de différentes façon.{" "}
-<code>var</code> ne doit plus être utilisé il est remplacé par{" "}
-<code>let</code> qui sert à déclarer une variable qui peut être
-réaffectée par la suite. <code>const</code> permet de déclarer une
-variable qui ne doit pas être ré&affectée par la suite. Quelques soit le
-mot clef utilisé le code sera fonctionnel mais votre éditeur de code à
-de grande chance de vous signalez une erreur de déclaration permettant
-de garder votre code propre et cohérent
-
-```js
-var nom = "toto"; // ne doit pas être utilisé mais fonctionne encore
-
-//Exemple valide
-const nom = "toto";
-let age = 18;
-age = 19;
-
-//Exemple incorrect
-let nom = "toto"; // cette variable n'est jamais réaffectée
-const age = 18;
-age = 19; // cette variable est une constante elle ne doit pas être réaffectée
-```
+`const` protège l’association entre le nom et l’objet, pas les propriétés de cet objet. Les [types](/semestre_4/js/begin/types) expliquent la différence entre valeurs primitives et références. Choisissez des noms comme `nombreProjets` plutôt que `x` et respectez la casse : `prix` et `Prix` sont deux noms différents.

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { CheckIcon, XIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Question } from "types";
 import { isNullOrUndefined } from "utils/isNullOrUndefined";
 import pkg from "he";
@@ -15,6 +15,8 @@ type AnswerFormProps = {
   nextQuestionIndex: number;
   hasMoreQuestions: boolean;
   currentLocale: string;
+  explanation?: string;
+  sourceLink?: string;
 };
 
 type QuestionIconProps = Pick<
@@ -61,12 +63,7 @@ const QuestionRow = ({
       value={currentIndex}
       className="peer appearance-none focus:outline-none"
       disabled={!isNullOrUndefined(answerIndex)}
-      checked={
-        !isNullOrUndefined(answerIndex)
-          ? answerIndex === currentIndex
-          : currentIndex === 0
-      }
-      onChange={() => {}}
+      defaultChecked={!isNullOrUndefined(answerIndex) && answerIndex === currentIndex}
       required
       data-is-correct={
         !isNullOrUndefined(answerIndex)
@@ -81,7 +78,7 @@ const QuestionRow = ({
           : undefined
       }
       className={clsx(
-        `flex-grow flex cursor-pointer items-center gap-4 rounded-xl border-2 border-base-content bg-base-200 p-2 font-medium shadow transition-colors`,
+        `flex-grow flex cursor-pointer items-center gap-4 rounded-xl border-2 border-base-content bg-base-200 p-2 font-medium shadow transition-colors peer-focus-visible:outline peer-focus-visible:outline-4 peer-focus-visible:outline-primary peer-focus-visible:outline-offset-4`,
         {
           "peer-checked:[&>_span[data-letter]]:bg-primary peer-checked:border-primary":
             isNullOrUndefined(answerIndex),
@@ -123,6 +120,8 @@ export const AnswerForm = ({
   quizId,
   nextQuestionIndex,
   currentLocale,
+  explanation,
+  sourceLink,
 }: AnswerFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -161,8 +160,10 @@ export const AnswerForm = ({
       </fieldset>
       {!isNullOrUndefined(answerIndex) ? (
         <>
+          {explanation && <aside className="rounded-xl bg-base-200 p-4"><p>{explanation}</p>{sourceLink && <a href={sourceLink}>Revoir cette notion dans le cours</a>}</aside>}
           {hasMoreQuestions ? (
             <a
+              data-astro-prefetch="false"
               href={
                 `${nextQuestionIndex}`}
               className="btn btn-primary w-full btn-md"

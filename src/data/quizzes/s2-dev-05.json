@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Modifier et supprimer une tâche sans perdre le contexte",
+  "uid": "s2-dev-05",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/tp/modification",
+  "sourceSession": "S2-DEV-05",
+  "targetCourse": "/semestre_2/developpement_Web/tp/erreurs",
+  "questions": [
+    {
+      "question": "Quel identifiant utiliser pour modifier une tâche ?",
+      "answers": [
+        "Son id stable",
+        "Sa position dans le tableau affiché",
+        "Son titre uniquement",
+        "Le numéro du clic"
+      ],
+      "explanation": "Le tri et le filtre changent les positions, pas l’identité de la tâche.",
+      "sourceSection": "notion-1",
+      "evidence": "Les opérations utilisent l'id stable et pas la position affichée.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel rôle joue PATCH dans notre API ?",
+      "answers": [
+        "Supprimer toute la table",
+        "Modifier partiellement une ressource",
+        "Lire uniquement la liste",
+        "Créer toujours un nouvel id"
+      ],
+      "explanation": "Notre contrat emploie PATCH pour changer des champs d’une tâche existante.",
+      "sourceSection": "notion-2",
+      "evidence": "PATCH change certains champs de la tâche existante.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle méthode réalise une suppression ?",
+      "answers": [
+        "POST de lecture",
+        "HEAD",
+        "DELETE",
+        "GET"
+      ],
+      "explanation": "DELETE représente la suppression de la ressource ciblée.",
+      "sourceSection": "notion-3",
+      "evidence": "DELETE supprime la tâche ciblée.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel type envoyer pour done ?",
+      "answers": [
+        "Le texte true ou false",
+        "Un tableau de titres",
+        "Une couleur CSS",
+        "Un booléen true ou false"
+      ],
+      "explanation": "Le contrat attend un booléen, pas sa représentation entre guillemets.",
+      "sourceSection": "notion-5",
+      "evidence": "Le champ done est un booléen JSON dans le contrat.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle clause cible une seule identité ?",
+      "answers": [
+        "WHERE id = :id",
+        "ORDER BY id seulement",
+        "LIMIT sans identité",
+        "SELECT title seulement"
+      ],
+      "explanation": "La clause de ciblage limite l’opération à l’identité voulue.",
+      "sourceSection": "notion-8",
+      "evidence": "WHERE id = :id limite la modification à la tâche visée.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel risque présente UPDATE todos SET done = 1 sans WHERE ?",
+      "answers": [
+        "Le tri décide de la première ligne",
+        "Toutes les lignes sont modifiées",
+        "Une seule ligne est choisie automatiquement",
+        "Aucune ligne ne peut changer"
+      ],
+      "explanation": "Sans condition de ciblage, la modification s’applique à toutes les lignes.",
+      "sourceSection": "notion-9",
+      "evidence": "Un UPDATE sans WHERE peut toucher toutes les lignes.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment fournir l'id à SQL ?",
+      "answers": [
+        "Un id obtenu uniquement de la position DOM",
+        "Le titre utilisé comme code SQL",
+        "Un paramètre préparé après validation",
+        "Une concaténation directe de toute entrée"
+      ],
+      "explanation": "L’id doit être valide puis transmis comme donnée.",
+      "sourceSection": "notion-10",
+      "evidence": "Les valeurs et l'id sont transmis par paramètres préparés.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel statut correspond à un id inexistant ?",
+      "answers": [
+        "201",
+        "200 avec faux succès",
+        "500 systématiquement",
+        "404"
+      ],
+      "explanation": "Une identité absente est une erreur de ressource, pas forcément une panne.",
+      "sourceSection": "notion-12",
+      "evidence": "Une tâche absente reçoit 404.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "rowCount égal à zéro signifie-t-il toujours un id absent ?",
+      "answers": [
+        "Non, la valeur peut déjà être identique",
+        "Oui, zéro prouve toujours l’absence",
+        "Oui, si la table est triée",
+        "Oui, si l’id est numérique"
+      ],
+      "explanation": "Une ligne existante peut ne subir aucun changement effectif.",
+      "sourceSection": "notion-13",
+      "evidence": "Un UPDATE sans changement de valeur ne prouve pas que la ligne est absente.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quand annoncer une modification réussie ?",
+      "answers": [
+        "Après changement de couleur du bouton",
+        "Après confirmation de réussite du serveur",
+        "Dès le clic avant toute réponse",
+        "Après une erreur de réseau"
+      ],
+      "explanation": "L’interface doit distinguer l’intention de l’état enregistré.",
+      "sourceSection": "notion-15",
+      "evidence": "response.ok doit être vérifié avant d'annoncer le succès.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel garde-fou d'interface prévoit le TP avant DELETE ?",
+      "answers": [
+        "Une suppression de toutes les cartes",
+        "Une modification silencieuse de l’id",
+        "Une confirmation explicite",
+        "Une suppression dès le survol"
+      ],
+      "explanation": "La confirmation limite les suppressions accidentelles ; elle ne remplace pas les contrôles serveur.",
+      "sourceSection": "notion-18",
+      "evidence": "Une suppression est précédée d'une confirmation explicite dans le travail attendu.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel test confirme le ciblage de la modification ?",
+      "answers": [
+        "Vérifier uniquement la couleur du bouton",
+        "Comparer le nombre de fichiers",
+        "Changer l’ordre des cartes sans relire",
+        "Vérifier aussi que les autres tâches n’ont pas changé"
+      ],
+      "explanation": "Le test doit prouver le ciblage, pas seulement un changement visible.",
+      "sourceSection": "notion-20",
+      "evidence": "Un test vérifie que les tâches voisines restent intactes.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

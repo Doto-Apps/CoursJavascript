@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Projet : adapter le site aux écrans",
+  "uid": "s1-site-06",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/produire_Un_Site_Web/responsive",
+  "sourceSession": "SITE-06",
+  "targetCourse": "/semestre_1/produire_Un_Site_Web/norme",
+  "questions": [
+    {
+      "question": "Quelle métadonnée prépare la largeur mobile ?",
+      "answers": [
+        "viewport avec width=device-width",
+        "Un id phone sur body",
+        "Une classe mobile sur title",
+        "Une couleur différente sur téléphone"
+      ],
+      "explanation": "Le viewport prépare une largeur de mise en page adaptée à l’appareil.",
+      "sourceSection": "comprendre",
+      "evidence": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel risque présente une largeur fixe de 1100 px ?",
+      "answers": [
+        "Elle garantit le confort mobile",
+        "Elle peut déborder de l’espace disponible",
+        "Elle devient automatiquement fluide",
+        "Elle rétrécit toujours le texte sans limite"
+      ],
+      "explanation": "Une largeur fixe peut être plus grande que la fenêtre.",
+      "sourceSection": "comprendre",
+      "evidence": "Une largeur fixe de 1100 px peut déborder d’une fenêtre étroite.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment garder un conteneur adaptable ?",
+      "answers": [
+        "Une hauteur fixe sur tout le document",
+        "Un texte réduit à zéro",
+        "Une largeur fluide limitée par max-width",
+        "Une largeur fixe supérieure à l’écran"
+      ],
+      "explanation": "Le conteneur s’adapte à l’espace disponible et reste borné sur grand écran.",
+      "sourceSection": "comprendre",
+      "evidence": "Une largeur fluide limitée par `max-width` s’adapte.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle contrainte de média aide le responsive ?",
+      "answers": [
+        "Forcer une largeur de 4000px",
+        "Fixer la même hauteur sur toute image",
+        "Masquer toutes les images",
+        "Limiter l’image à son conteneur"
+      ],
+      "explanation": "Une image adaptable ne doit pas forcer un débordement.",
+      "sourceSection": "comprendre",
+      "evidence": "Les images doivent aussi rester limitées à leur conteneur",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "À 700px, la condition min-width: 700px est-elle vraie ?",
+      "answers": [
+        "Oui, le seuil est inclus",
+        "Non, uniquement à partir de 701px",
+        "Non, seulement sous 700px",
+        "Seulement en mode portrait"
+      ],
+      "explanation": "min-width inclut la largeur indiquée dans sa condition.",
+      "sourceSection": "comprendre",
+      "evidence": "Le seuil est inclus : `min-width: 700px` est vrai à 700 px.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Grille : 1 colonne par défaut, 2 dès 700 px, 3 dès 1000 px. Combien à 768 px ?",
+      "answers": [
+        "Six colonnes",
+        "Deux colonnes",
+        "Une colonne",
+        "Trois colonnes"
+      ],
+      "explanation": "768 atteint 700 mais pas 1000 ; la règle de deux colonnes s’applique.",
+      "sourceSection": "comprendre",
+      "evidence": "| 700 px ou 768 px | Base et seuil 700 | 2 |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Dans un même fichier et une même couche, deux règles normales actives de même spécificité définissent les colonnes. Laquelle gagne ?",
+      "answers": [
+        "La classe écrite en dernier dans HTML",
+        "La déclaration la plus longue",
+        "La dernière règle applicable",
+        "Toujours la première règle"
+      ],
+      "explanation": "À égalité des autres critères de cascade, l’ordre des règles départage.",
+      "sourceSection": "comprendre",
+      "evidence": "la dernière règle applicable gagne pour une même propriété.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Comment choisir les seuils responsive ?",
+      "answers": [
+        "Selon la marque du téléphone",
+        "Selon le prénom de l’utilisateur",
+        "Selon le nombre de fichiers CSS",
+        "Selon les besoins du contenu"
+      ],
+      "explanation": "Un seuil répond à une difficulté réelle de disposition, pas à une catégorie commerciale.",
+      "sourceSection": "comprendre",
+      "evidence": "choisissez-le selon les besoins du contenu.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle règle simple aide une navigation à s'adapter ?",
+      "answers": [
+        "flex-wrap: wrap",
+        "flex-wrap: nowrap",
+        "align-items: stretch seulement",
+        "justify-content: center seulement"
+      ],
+      "explanation": "Le retour à la ligne permet de garder les liens visibles quand l’espace manque.",
+      "sourceSection": "comprendre",
+      "evidence": "`flex-wrap: wrap` adapte la navigation sans masquer les liens.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Pourquoi un menu uniquement au survol est-il insuffisant ?",
+      "answers": [
+        "Le survol rend les titres invalides",
+        "Le survol seul ne couvre pas le tactile et le clavier",
+        "Le survol empêche tout chargement CSS",
+        "Le survol change la destination des liens"
+      ],
+      "explanation": "Un menu doit disposer d’autres moyens d’ouverture accessibles.",
+      "sourceSection": "comprendre",
+      "evidence": "Un menu uniquement au survol ne couvre pas le tactile et le clavier.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quels tests supplémentaires encadrent une media query ?",
+      "answers": [
+        "Seulement à une très grande largeur",
+        "Seulement à la largeur du terminal",
+        "Juste avant le seuil, au seuil et juste après",
+        "Seulement au seuil"
+      ],
+      "explanation": "Tester les frontières révèle les conditions mal écrites et les ruptures.",
+      "sourceSection": "comprendre",
+      "evidence": "Vérifiez juste avant le seuil, au seuil et juste après",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel test de zoom est explicitement demandé ?",
+      "answers": [
+        "50 pour cent",
+        "100 pour cent seulement",
+        "Le zoom doit être interdit",
+        "200 pour cent"
+      ],
+      "explanation": "Le zoom vérifie que l’usage reste possible lorsque l’espace apparent diminue.",
+      "sourceSection": "comprendre",
+      "evidence": "un zoom à 200 pour cent",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

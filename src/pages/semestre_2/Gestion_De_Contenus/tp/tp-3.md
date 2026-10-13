@@ -1,113 +1,34 @@
 ---
+hidden: true
+order: 5
 layout: "layouts/Layout.astro"
-title: "🛠️ TP WordPress – Séance 3 : Personnalisation et finalisation"
+title: "WooCommerce : présentation, tests et sauvegarde"
 ---
 
-## 🎯 Objectifs de la séance
-- Personnaliser l’apparence générale du site
-- Créer un menu de navigation complet
-- Vérifier le bon fonctionnement de toutes les pages
-- Présenter le site finalisé
+## Présentation et navigation d’une boutique
 
----
+Après le [catalogue](/semestre_2/Gestion_De_Contenus/tp/tp-2), la présentation doit permettre de trouver, comparer et choisir un produit. Les couleurs et la typographie soutiennent ce parcours ; elles ne remplacent pas des intitulés explicites et des prix lisibles.
 
-## ⏱️ Durée : 2h  
-## 🔧 Pré-requis :
-- WooCommerce configuré
-- Produits ajoutés (minimum 3)
-- Pages principales créées
+## Modèles, styles et menus
 
----
+Un modèle détermine la structure de plusieurs pages, par exemple les fiches produit. Un contenu appartient à une fiche particulière. Une modification de modèle peut donc affecter tous les produits. Dans un thème à blocs, utilisez l’éditeur de site et le bloc Navigation ; dans un thème classique, le personnalisateur et les menus disponibles dépendent du thème.
 
-## 🧭 Étapes du TP
+Conservez une hiérarchie de texte régulière et des états de focus visibles. Un lien « Boutique » ouvre le catalogue ; un bouton « Ajouter au panier » exécute une action. Cette distinction reste celle des éléments HTML étudiés au S1, même quand le CMS produit le code.
 
-### 1. Personnaliser un thème (30 min)
+## Vérifier un parcours public
 
-1. Aller dans **Apparence > Personnaliser** pour :
-   - Ajouter un **logo** (optionnel)
-   - Modifier les **couleurs principales** (boutons, texte, fond…)
-   - Changer la **typographie** si souhaité
-   - Adapter l’**en-tête** et le **pied de page**
+| Action | Résultat attendu | Cause possible d’échec |
+|---|---|---|
+| Ouvrir l’accueil sans connexion | Contenu publié | Page restée en brouillon |
+| Suivre Boutique | Catalogue | Mauvaise destination du menu |
+| Ouvrir un produit | Fiche et prix | Produit masqué ou non publié |
+| Ajouter deux unités | Quantité et total cohérents | Stock ou type de produit mal configuré |
+| Réduire la largeur | Contenus et commandes accessibles | Image ou conteneur de largeur fixe |
 
-💡 Utilisez une palette harmonieuse. Vous pouvez vous inspirer de : https://coolors.co/
+Vérifiez la page publique après mise à jour. Le cache peut conserver une ancienne version ; vider le cache ne doit toutefois pas remplacer la vérification de la publication et de l’URL.
 
----
+## Sauvegarde et restauration
 
-### 2. Créer et organiser le menu principal (15 min)
+Une sauvegarde inclut la base SQL et les fichiers, notamment `wp-content` pour les médias, thèmes et extensions. Restaurer seulement le dossier sans la base ne retrouve pas le catalogue. Une migration doit également traiter les adresses du site : un contenu qui référence `localhost` ne pointe pas vers le nouveau domaine.
 
-1. Aller dans **Apparence > Menus**.
-2. Créer un nouveau menu appelé `Menu principal`.
-3. Ajouter les pages suivantes :
-   - Accueil
-   - Boutique
-   - À propos
-   - Contact
-   - (Optionnel) Catégories de produits
-
-4. Définir ce menu comme **menu principal** dans l’en-tête.
-
----
-
-### 3. Vérifications générales (15 min)
-
-Passez en revue votre site pour vérifier :
-- Affichage correct sur ordinateur
-- Navigation fluide et logique
-- Tous les liens fonctionnent
-- Produits bien affichés dans la boutique
-- Panier et commande testés une dernière fois
-
----
-
-### 4. (Bonus) Ajouter un plugin utile (15 min)
-
-Exemples de plugins gratuits à tester :
-- **Contact Form 7** (formulaire de contact)
-- **Elementor** (constructeur de pages)
-- **Smash Balloon Instagram Feed** (intégration Instagram)
-- **MailPoet** (newsletter)
-
-> N’installez pas plus d’un ou deux plugins, restez légers.
-
----
-
-### 5. Présentation de la boutique (45 min)
-
-Chaque étudiant (ou groupe) présentera rapidement sa boutique :
-- Nom de la boutique et identité visuelle
-- Produits proposés
-- Organisation du site
-- Points forts / difficultés rencontrées
-
-⏱️ Durée recommandée : **5 minutes par présentation**
-
----
-
-## ✅ Travail attendu à la fin de la séance
-- Site e-commerce complet, esthétique et fonctionnel
-- Menu de navigation clair
-- Personnalisation visible
-- Présentation orale réalisée
-
----
-
-## 📊 Évaluation (rappel)
-
-| Critère                                         | Points |
-|-------------------------------------------------|--------|
-| Pages de base (Accueil, Boutique, Contact, etc.)| 5 pts  |
-| WooCommerce installé et configuré               | 3 pts  |
-| Produits bien renseignés (≥ 3, avec photo)      | 5 pts  |
-| Thème et personnalisation (logo, menu, design)  | 4 pts  |
-| Cohérence du site et ergonomie                  | 3 pts  |
-| **Total**                                       | **/20** |
-
-> ✅ Bonus : +1 pt pour l’ajout d’un plugin pertinent
-
----
-
-## 📝 Conseils finaux
-- Faites des captures d’écran de votre site en cas de bug
-- Sauvegardez votre dossier LocalWP ou vos fichiers WordPress localement
-- Soyez créatifs et professionnels dans vos présentations
-
+Conservez un état avant une mise à jour et vérifiez une restauration dans un environnement de test. Une archive présente sur disque prouve l’existence d’un fichier ; une restauration réussie prouve que le site peut être repris.

@@ -1,93 +1,37 @@
 ---
+hidden: true
+order: 4
 layout: "layouts/Layout.astro"
-title: "🛠️ TP WordPress – Séance 2 : Catalogue de produits"
+title: "WooCommerce : produits, variations et panier"
 ---
 
-## 🎯 Objectifs de la séance
-- Ajouter des produits dans WooCommerce
-- Remplir correctement les fiches produit (prix, description, stock, image…)
-- Organiser les produits avec des catégories
-- Commencer à structurer la boutique
+## Les produits WooCommerce
 
----
+Un produit regroupe des données métier : nom, description, prix, disponibilité et médias. Le thème affiche ces données mais ne doit pas servir à saisir un prix sous forme d’image. Les [réglages de boutique](/semestre_2/Gestion_De_Contenus/tp/tp-1) déterminent notamment la devise.
 
-## ⏱️ Durée : 2h  
-## 🔧 Pré-requis :
-- Site WordPress + WooCommerce installé (séance 1 terminée)
-- Pages de base créées
-- Idées de produits fictifs apportées
+## Produit simple : une fiche complète
 
----
+Dans la gestion des produits, ajoutez un produit simple nommé « Carnet sérigraphié ». Saisissez une description, un prix de 12 €, une image et une catégorie « Papeterie », puis publiez-le.
 
-## 🧭 Étapes du TP
+| Donnée | Exemple | Effet |
+|---|---|---|
+| Nom | Carnet sérigraphié | Titre du catalogue et de la fiche |
+| Description courte | Carnet A5, couverture imprimée | Présentation synthétique |
+| Description longue | Papier, dimensions et fabrication | Détails de la fiche |
+| Prix | 12 | Valeur numérique utilisée dans le panier |
+| Stock | 5 si la gestion est activée | Quantité disponible |
+| Image | Vue du carnet | Illustration et alternative adaptée |
 
-### 1. Ajouter vos produits (45 min)
+**Résultat attendu :** le produit apparaît dans la boutique et le clic ouvre sa fiche. Un brouillon n’apparaît pas comme un produit publié ; une visibilité de catalogue masquée peut également expliquer une absence.
 
-1. Dans le menu WordPress, allez dans **Produits > Ajouter un produit**.
-2. Remplissez les champs suivants :
-   - **Nom du produit** : nom clair et accrocheur
-   - **Description longue** : texte complet pour la page produit
-   - **Prix** : entre 5 € et 50 € fictifs
-   - **Stock** : entre 1 et 20
-   - **Image produit** : utilisez une image libre de droit (pexels.com, pixabay.com…)
-   - (Optionnel) **Galerie produit** : ajoutez plusieurs images
+## Catégories, attributs et variations
 
-✅ Créez **au moins 3 produits différents**
+Une catégorie organise le catalogue, par exemple « Papeterie ». Un attribut décrit une caractéristique, par exemple « Couleur ». Une variation représente une combinaison achetable, par exemple le carnet bleu, qui peut avoir son propre stock et son propre prix. Créer un attribut ne crée pas automatiquement toutes les variations.
 
----
+Pour un produit variable, définissez les valeurs de l’attribut, activez son utilisation pour les variations, puis créez et renseignez les variations. **Attendu :** le visiteur choisit la variante avant de l’ajouter au panier. Une variation sans prix ou indisponible peut ne pas être achetable.
 
-### 2. Organiser les produits avec des catégories (15 min)
+## Panier et stock
 
-1. Dans **Produits > Catégories**, créez 2 ou 3 catégories (ex. : Cosmétiques, Épicerie, Accessoires).
-2. Retournez dans chaque fiche produit pour leur attribuer une ou plusieurs catégories.
-3. Créer une section dans votre page proposant les produit d'une seul catégorie.
+Avec deux carnets à 12 €, le sous-total des articles vaut 24 €. Le total final peut aussi inclure transport et taxes selon la configuration : ne confondez pas sous-total et total. Augmenter la quantité doit recalculer le panier. La gestion du stock dépend de son activation et du statut des commandes ; ajouter au panier ne prouve pas à lui seul une vente définitive.
 
----
-
-### 3. Tester la boutique (15 min)
-
-1. Allez sur la **page Boutique** de votre site.
-2. Vérifiez que :
-   - Les produits s’affichent correctement
-   - Les filtres ou tri par catégories fonctionnent
-   - Le clic sur un produit ouvre bien sa fiche
-
----
-
-### 4. Vérifier le fonctionnement du panier (15 min)
-
-1. Ajoutez un ou plusieurs produits au panier.
-2. Accédez à la page **Panier** puis **Commander**.
-3. Vérifiez que :
-   - Le récapitulatif est correct
-   - Les étapes s’affichent même sans moyen de paiement réel
-
-💡 *Pour rappel, nous ne configurons pas de paiement réel, c’est une boutique fictive.*
-
----
-
-### 5. (Bonus) Ajouter des attributs ou variations (30 min)
-
-- Exemple : un tote bag disponible en plusieurs couleurs
-- Dans un produit, utilisez l’onglet **Attributs** puis **Variations**
-
----
-
-## ✅ Travail attendu à la fin de la séance
-- Minimum 3 produits créés avec description, prix, image, stock
-- Produits rangés dans des catégories
-- Boutique testée avec panier fonctionnel
-
----
-
-## 📌 Pour la séance suivante
-- Apportez un logo ou une idée de charte graphique
-- Vous personnaliserez l’apparence du site, finaliserez le menu, et présenterez votre boutique
-
----
-
-## 📝 Ressources utiles
-- [Guide WooCommerce – Produits](https://woocommerce.com/document/managing-products/)
-- [Images libres de droit](https://www.pexels.com/fr-fr/)
-- [Documentation WordPress](https://wordpress.org/support/)
-
+[Gestion des produits — documentation WooCommerce](https://woocommerce.com/document/managing-products/).

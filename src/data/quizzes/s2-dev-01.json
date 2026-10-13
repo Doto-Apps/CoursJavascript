@@ -1,0 +1,220 @@
+{
+  "name": "Révision — HTTP et JSON : comprendre le contrat d’une API",
+  "uid": "s2-dev-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/td/http-json",
+  "sourceSession": "S2-DEV-01",
+  "targetCourse": "/semestre_2/developpement_Web/td/fetch-php",
+  "questions": [
+    {
+      "question": "Quel composant joue le rôle de client ?",
+      "answers": [
+        "Le navigateur",
+        "MySQL",
+        "Le script PHP",
+        "Le serveur Web uniquement"
+      ],
+      "explanation": "Le navigateur demande les données et présente les résultats.",
+      "sourceSection": "notion-1",
+      "evidence": "Le navigateur est le client qui demande et affiche les données.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel composant exécute les règles côté serveur ?",
+      "answers": [
+        "Le navigateur seulement",
+        "PHP",
+        "CSS",
+        "Le résolveur DNS"
+      ],
+      "explanation": "PHP applique les règles du serveur avant de lire ou modifier la base.",
+      "sourceSection": "notion-2",
+      "evidence": "PHP traite la requête côté serveur.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel composant conserve les tâches entre requêtes ?",
+      "answers": [
+        "Une constante JavaScript",
+        "Un élément du DOM",
+        "MySQL",
+        "Une variable locale PHP"
+      ],
+      "explanation": "Une base conserve les enregistrements au-delà d’une seule requête.",
+      "sourceSection": "notion-3",
+      "evidence": "MySQL conserve les données persistantes.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que représente le contrat de l'API ?",
+      "answers": [
+        "Seulement les couleurs de l’interface",
+        "Seulement le nom de la base",
+        "La capture finale du site",
+        "Adresses, méthodes, formats et statuts"
+      ],
+      "explanation": "Le contrat décrit ce que chaque programme envoie et attend.",
+      "sourceSection": "notion-4",
+      "evidence": "Une API définit un contrat d'échange.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle méthode lit les tâches ?",
+      "answers": [
+        "GET",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ],
+      "explanation": "Dans notre contrat, GET lit la liste sans la modifier.",
+      "sourceSection": "notion-5",
+      "evidence": "GET sert à lire dans le contrat de notre API.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle méthode modifie partiellement une tâche ?",
+      "answers": [
+        "HEAD",
+        "PATCH",
+        "GET",
+        "POST de lecture"
+      ],
+      "explanation": "Notre API emploie PATCH pour une modification partielle.",
+      "sourceSection": "notion-7",
+      "evidence": "PATCH modifie certains champs d'une tâche.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel statut annonce un objet créé ?",
+      "answers": [
+        "404",
+        "422",
+        "201",
+        "200 de lecture"
+      ],
+      "explanation": "201 annonce une ressource créée.",
+      "sourceSection": "notion-10",
+      "evidence": "HTTP 201 confirme une création réussie.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel statut convient à une tâche absente ?",
+      "answers": [
+        "200",
+        "201",
+        "500",
+        "404"
+      ],
+      "explanation": "Une identité absente est distincte d’une panne du serveur.",
+      "sourceSection": "notion-11",
+      "evidence": "HTTP 404 indique une ressource absente.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel statut du TP indique une valeur refusée ?",
+      "answers": [
+        "422",
+        "200",
+        "201",
+        "404"
+      ],
+      "explanation": "Une donnée analysable mais refusée par la règle produit 422 dans ce contrat.",
+      "sourceSection": "notion-12",
+      "evidence": "HTTP 422 signale des données analysables mais refusées par les règles.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel en-tête décrit le format du corps ?",
+      "answers": [
+        "Cookie",
+        "Content-Type",
+        "Accept",
+        "Host"
+      ],
+      "explanation": "Content-Type annonce le format du corps envoyé.",
+      "sourceSection": "notion-14",
+      "evidence": "Content-Type décrit le format du corps envoyé.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle structure représente la liste de tâches ?",
+      "answers": [
+        "Une fonction JavaScript",
+        "Un nombre de fichiers",
+        "Un tableau JSON",
+        "Un objet unique obligatoire"
+      ],
+      "explanation": "La liste est un tableau d’objets ; une liste vide reste un tableau.",
+      "sourceSection": "notion-17",
+      "evidence": "La liste JSON est un tableau d'objets.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel type a la valeur \"false\" ?",
+      "answers": [
+        "Un booléen",
+        "Un entier",
+        "Une valeur null",
+        "Une chaîne de caractères"
+      ],
+      "explanation": "Les guillemets changent le type : le texte false n’est pas le booléen false.",
+      "sourceSection": "notion-19",
+      "evidence": "\"false\" avec guillemets est une chaîne, pas un booléen.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Dans JSON, que représente null ?",
+      "answers": [
+        "Une absence de valeur explicitement prévue",
+        "La chaîne null",
+        "Un booléen faux",
+        "Un tableau vide"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Le contrat doit distinguer l’absence, le texte, le booléen et la liste vide.",
+      "sourceSection": "comprendre",
+      "evidence": "au utilise `[]`. `false` est un booléen ; `\"false\"` est une chaîne ; `null` signale une absence explicitement prévue. JSON ne contient pas de fonction, de commentaire ni de virgule finale. Il s’agit d’un format de données, pas d’un programm"
+    },
+    {
+      "question": "Quel en-tête annonce le format souhaité par le client ?",
+      "answers": [
+        "Cookie",
+        "Accept",
+        "Content-Type de la réponse",
+        "Host"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Accept décrit une préférence du client ; Content-Type annonce le format du corps envoyé.",
+      "sourceSection": "comprendre",
+      "evidence": "onnées. `Content-Type: application/json` annonce le format du corps. `Accept` exprime le format souhaité par le client. Un statut 200 ne garantit pas que le corps possède les champs attendus : le client doit aussi contrôler sa forme."
+    },
+    {
+      "question": "Quelle particularité est interdite dans le JSON strict enseigné ?",
+      "answers": [
+        "Un tableau d’objets",
+        "Un nombre entier sans guillemets",
+        "Une virgule finale après la dernière propriété",
+        "Des guillemets doubles sur les chaînes"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "JSON a une syntaxe plus limitée qu’un objet écrit dans un programme JavaScript.",
+      "sourceSection": "comprendre",
+      "evidence": "tement prévue. JSON ne contient pas de fonction, de commentaire ni de virgule finale. Il s’agit d’un format de données, pas d’un programme exécuté."
+    },
+    {
+      "question": "Quel statut du contrat signale une panne côté serveur ?",
+      "answers": [
+        "201",
+        "200",
+        "422",
+        "500"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Une panne de traitement n’est pas une valeur refusée ni une création réussie.",
+      "sourceSection": "apprentissage",
+      "evidence": "\"PHP : réponse 500 application/json\","
+    }
+  ]
+}

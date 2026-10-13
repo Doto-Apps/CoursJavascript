@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Outils web et atelier d’IA locale",
+  "uid": "s1-dev-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/developpement_Web/util_dev_tool",
+  "sourceSession": "DEV-01",
+  "targetCourse": "/semestre_1/developpement_Web/PHP_inter",
+  "questions": [
+    {
+      "question": "Quel est le rôle principal de VS Code dans l'atelier ?",
+      "answers": [
+        "L’éditeur de fichiers",
+        "Le serveur PHP",
+        "Le serveur du modèle",
+        "Le navigateur"
+      ],
+      "explanation": "VS Code permet d’éditer les fichiers ; leur exécution appartient à d’autres outils.",
+      "sourceSection": "comprendre",
+      "evidence": "fichiers",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Dans VS Code, que faut-il ouvrir pour travailler sur tous les fichiers du projet ?",
+      "answers": [
+        "Le dossier des logiciels installés",
+        "Le dossier complet du projet",
+        "Seulement le premier fichier HTML",
+        "Uniquement la feuille CSS"
+      ],
+      "explanation": "Ouvrir le dossier rend accessibles les fichiers liés et leur organisation.",
+      "sourceSection": "editeur",
+      "evidence": "dossier complet",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel outil exécute une commande dans un répertoire courant ?",
+      "answers": [
+        "L’onglet Réseau",
+        "Le panneau des extensions",
+        "Le terminal",
+        "L’inspecteur de styles"
+      ],
+      "explanation": "Le terminal exécute des commandes dans un répertoire courant.",
+      "sourceSection": "comprendre",
+      "evidence": "terminal",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "En PowerShell ou dans le terminal macOS du cours, quelle commande affiche le répertoire courant ?",
+      "answers": [
+        "ls",
+        "cd",
+        "php -l",
+        "pwd"
+      ],
+      "explanation": "pwd affiche le répertoire courant ; ls liste son contenu et cd en change.",
+      "sourceSection": "editeur",
+      "evidence": "pwd",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel fichier le serveur peut-il lire après une modification ?",
+      "answers": [
+        "Le fichier enregistré sur le disque",
+        "Le tampon encore non enregistré dans l’éditeur",
+        "Le contenu de l’onglet actif du navigateur",
+        "Le texte proposé mais non appliqué par l’assistant"
+      ],
+      "explanation": "Le serveur lit le fichier enregistré ; il faut sauvegarder puis vérifier la page.",
+      "sourceSection": "comprendre",
+      "evidence": "enregistré",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Deux étudiants ouvrent localhost sur deux ordinateurs différents. Désignent-ils forcément le même serveur ?",
+      "answers": [
+        "Oui, si le port est identique",
+        "Non, chacun désigne son propre ordinateur",
+        "Oui, ils désignent le serveur de la faculté",
+        "Oui, si les navigateurs sont identiques"
+      ],
+      "explanation": "localhost est relatif à la machine qui effectue la demande.",
+      "sourceSection": "comprendre",
+      "evidence": "localhost",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "À quoi correspond 8000 dans localhost:8000 ?",
+      "answers": [
+        "Le nom de l’hôte",
+        "Le protocole de transport",
+        "Le port du service",
+        "Le chemin du fichier"
+      ],
+      "explanation": "Le port identifie le service à joindre sur la machine.",
+      "sourceSection": "comprendre",
+      "evidence": "8000",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pourquoi ne pas ouvrir le PHP simplement par file:// ?",
+      "answers": [
+        "Ouvrir uniquement le fichier avec file://",
+        "Changer l’extension PHP en HTML",
+        "Afficher le PHP dans l’éditeur seulement",
+        "Utiliser une URL du serveur PHP"
+      ],
+      "explanation": "PHP doit être interprété par un serveur ; ouvrir le fichier brut ne l’exécute pas.",
+      "sourceSection": "comprendre",
+      "evidence": "file://",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que faire si le port choisi est déjà occupé ?",
+      "answers": [
+        "Choisir un port libre et adapter l’URL",
+        "Changer seulement l’URL sans relancer le serveur",
+        "Relancer un second serveur sur le même port occupé",
+        "Changer le nom du fichier PHP"
+      ],
+      "explanation": "L’adresse du client doit correspondre au port sur lequel le serveur écoute.",
+      "sourceSection": "serveur",
+      "evidence": "occupé",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel rôle joue OpenCode dans la chaîne locale ?",
+      "answers": [
+        "Le serveur qui interprète PHP",
+        "L’assistant qui sollicite le modèle",
+        "L’éditeur des fichiers uniquement",
+        "Le modèle chargé lui-même"
+      ],
+      "explanation": "OpenCode coordonne la demande ; le modèle génère les réponses.",
+      "sourceSection": "comprendre",
+      "evidence": "OpenCode",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel outil expose l’API locale du modèle utilisée par OpenCode dans l’atelier ?",
+      "answers": [
+        "Le serveur PHP",
+        "Le navigateur",
+        "LM Studio",
+        "VS Code"
+      ],
+      "explanation": "LM Studio sert l’API locale du modèle dans cet atelier.",
+      "sourceSection": "comprendre",
+      "evidence": "LM Studio",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Une réponse plausible du modèle suffit-elle à valider une modification ?",
+      "answers": [
+        "Accepter le changement dès qu’il semble plausible",
+        "Vérifier seulement la longueur de la réponse",
+        "Remplacer tous les tests par une seconde demande",
+        "Lire et tester le changement dans le navigateur"
+      ],
+      "explanation": "Le modèle peut produire un code incorrect ; le résultat doit être vérifié.",
+      "sourceSection": "ia",
+      "evidence": "tromper",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

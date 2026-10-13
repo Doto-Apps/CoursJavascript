@@ -1,285 +1,74 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP Noté : Création d'une API RESTful pour un Système de Devoirs"
+title: "Complément : une API de devoirs avec Express et MySQL"
+hidden: true
 ---
 
-# TP Noté : Création d'une API RESTful pour un Système de Devoirs
+Cette API transpose le CRUD PHP du S2 à Node.js. Les exemples et leur implémentation complète utilisent Node.js 22+, Express 5 et mysql2 3, avec un serveur MySQL ou MariaDB disponible. La [configuration exécutable](/semestre_3/deploiement_Services/correctionApi) détaille l’installation et les variables d’environnement.
 
-## Objectif
+## Modèle et contrat
 
-L'objectif de ce TP est de créer une API RESTful en utilisant Node.js, Express, MySQL, CORS et JSON Web Tokens (JWT). L'API doit être compatible avec l'outil de backend Retool et permettre de gérer un système de devoirs.
+| Champ | Type et règle | Rôle |
+|---|---|---|
+| id | Entier positif généré. | Identité stable. |
+| nom | Texte non vide, 120 caractères maximum. | Intitulé du devoir. |
+| description | Texte non vide, 2000 caractères maximum. | Travail demandé. |
+| date_debut | Date réelle année-mois-jour. | Début du travail. |
+| date_rendu | Date réelle, pas avant le début. | Échéance. |
+| matiere, professeur | Textes non vides, 80 caractères maximum. | Contexte pédagogique. |
 
-## Description du Système de Devoirs
+| Route | Résultat |
+|---|---|
+| GET /devoirs | 200 et tableau, vide si aucune ligne. |
+| GET /devoirs/:id | 200 et objet, ou 404. |
+| POST /devoirs | 201 et objet créé. |
+| PUT /devoirs/:id | 200 et objet remplacé : tous les champs sont requis. |
+| DELETE /devoirs/:id | 200 et confirmation, ou 404. |
 
-L'API doit permettre de gérer les devoirs avec les informations suivantes :
-- Nom du devoir
-- Description
-- Date de début
-- Date de rendu (deadline)
-- Matière
-- Nom du professeur
+Ici PUT remplace les champs métier complets ; ce n’est pas le PATCH partiel de la Todo List. Une méthode non prévue reçoit 405. Un JSON mal formé reçoit 400 ; des valeurs refusées reçoivent 422. Les écritures exigent un jeton de démonstration configuré côté serveur.
 
-## Étapes à Suivre
-
-### 1. Préparation de l'Environnement
-
-#### Installation des Outils Nécessaires
-
-Assurez-vous d'avoir Node.js et MySQL installés sur votre machine. Vous pouvez vérifier leur installation avec les commandes suivantes :
-```sh
-node -v
-mysql -V
-```
-
-##### Pour installer Node.js et MySQL :
-
-**Windows :**
-1. Téléchargez le programme d'installation de Node.js depuis le [site officiel](https://nodejs.org).
-2. Téléchargez et installez MySQL Community Server depuis le [site officiel de MySQL](https://dev.mysql.com/downloads/mysql/).
-
-**macOS :**
-1. Utilisez Homebrew pour installer Node.js et MySQL :
-```sh
-brew install node
-brew install mysql
-```
-
-**Linux (Ubuntu) :**
-1. Utilisez le gestionnaire de paquets `apt` :
-```sh
-sudo apt update
-sudo apt install nodejs npm
-sudo apt install mysql-server
-```
-
-### 2. Création de la Base de Données MySQL
-
-Créez une base de données MySQL nommée `devoirs` et une table `devoir` avec les champs suivants :
-- `id` INT AUTO_INCREMENT PRIMARY KEY
-- `nom` VARCHAR(255) NOT NULL
-- `description` TEXT
-- `date_debut` DATE
-- `date_rendu` DATE
-- `matiere` VARCHAR(255)
-- `professeur` VARCHAR(255)
-
-Exécutez cette commande SQL pour créer la table :
 ```sql
-CREATE DATABASE devoirs;
-USE devoirs;
 CREATE TABLE devoir (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nom VARCHAR(255) NOT NULL,
-  description TEXT,
-  date_debut DATE,
-  date_rendu DATE,
-  matiere VARCHAR(255),
-  professeur VARCHAR(255)
+  nom VARCHAR(120) NOT NULL,
+  description TEXT NOT NULL,
+  date_debut DATE NOT NULL,
+  date_rendu DATE NOT NULL,
+  matiere VARCHAR(80) NOT NULL,
+  professeur VARCHAR(80) NOT NULL
 );
 ```
 
-### 3. Initialisation du Projet Node.js
+Créez une base de test avec encodage utf8mb4 et exécutez ce schéma. NOT NULL ne refuse pas à lui seul une chaîne vide ; les règles du tableau restent appliquées dans l’API.
 
-Créez un nouveau projet Node.js et installez les dépendances nécessaires :
-```sh
-mkdir api-devoirs
-cd api-devoirs
-npm init -y
-npm install express mysql cors jsonwebtoken bcrypt dotenv
-```
+## Route, middleware et pool
 
-### 4. Création du Fichier de Configuration `.env`
-
-Créez un fichier `.env` à la racine de votre projet et ajoutez les variables d'environnement suivantes :
-```env
-SECRET_KEY=yourSecretKey
-PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=password
-DB_NAME=devoirs
-```
-
-### 5. Mise en Place du Serveur Express
-
-Créez un fichier `app.js` et configurez le serveur Express avec les modules nécessaires.
-
-### 6. Mise en Place de l'Authentification
-
-#### Routes de Registration et Login
-
-Ajoutez les routes de registration et login pour gérer l'authentification des utilisateurs :
-```js
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
-const dotenv = require('dotenv');
-
-dotenv.config();
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-});
-
-connection.connect(err => {
-  if (err) throw err;
-  console.log('Connecté à la base de données MySQL');
-});
-
-const users = []; // Utiliser une base de données réelle en production
-
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  users.push({ username, password: hashedPassword });
-  res.status(201).send('Utilisateur créé');
-});
-
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-  if (user && await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign({ username }, process.env.SECRET_KEY, { expiresIn: '1h' });
-    res.json({ token });
-  } else {
-    res.status(401).send('Identifiants invalides');
-  }
-});
-```
-
-### 7. Routes CRUD pour les Devoirs
-
-Ajoutez les routes pour gérer les devoirs. Ces routes doivent être protégées par JWT.
-
-#### Middleware d'Authentification
-
-Ajoutez un middleware pour vérifier les tokens JWT :
-```js
-const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
-  if (!token) return res.status(401).send('Accès refusé');
-
-  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).send('Token invalide');
-    req.user = decoded;
-    next();
-  });
-};
-```
-
-#### Routes CRUD pour les Devoirs
-
-Ajoutez les routes suivantes dans votre fichier `app.js` pour gérer les devoirs :
-
-1. Récupérer tous les devoirs :
-```js
-app.get('/devoirs', authenticateToken, (req, res) => {
-  connection.query('SELECT * FROM devoir', (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-});
-```
-
-2. Créer un nouveau devoir :
-```js
-app.post('/devoirs', authenticateToken, (req, res) => {
-  const devoir = req.body;
-  connection.query('INSERT INTO devoir SET ?', devoir, (err, results) => {
-    if (err) throw err;
-    res.status(201).json({ id: results.insertId, ...devoir });
-  });
-});
-```
-
-3. Mettre à jour un devoir existant :
-```js
-app.put('/devoirs/:id', authenticateToken, (req, res) => {
-  const id = req.params.id;
-  const updatedDevoir = req.body;
-  connection.query('UPDATE devoir SET ? WHERE id = ?', [updatedDevoir, id], (err) => {
-    if (err) throw err;
-    res.json(updatedDevoir);
-  });
-});
-```
-
-4. Supprimer un devoir :
-```js
-app.delete('/devoirs/:id', authenticateToken, (req, res) => {
-  const id = req.params.id;
-  connection.query('DELETE FROM devoir WHERE id = ?', id, (err) => {
-    if (err) throw err;
-    res.status(204).send();
-  });
-});
-```
-
-### Exercice
-
-1. Configurez une base de données MySQL et créez la table `devoir` avec les champs spécifiés.
-2. Établissez une connexion à la base de données MySQL depuis votre application Node.js.
-3. Créez les routes CRUD pour la gestion des devoirs.
-4. Ajoutez l'authentification JWT et protégez les routes.
-5. Utilisez Postman pour tester les routes `POST /register`, `POST /login`, `GET /devoirs`, `POST /devoirs`, `PUT /devoirs/:id`, `DELETE /devoirs/:id`.
-
-### Exemples Utiles
-
-#### Exemple de JSON pour Ajouter un Devoir
-
-Pour ajouter un devoir, vous pouvez envoyer un JSON via un outil comme Postman :
-
-Exemple de JSON :
-```json
-{
-  "nom": "Devoir de Mathématiques",
-  "description": "Résoudre les exercices du chapitre 3",
-  "date_debut": "2024-08-01",
-  "date_rendu": "2024-08-10",
-  "matiere": "Mathématiques",
-  "professeur": "M. Dupont"
-}
-```
-
-Postman est un outil permettant de tester et de manipuler des API. Vous pouvez le télécharger et l'utiliser pour envoyer des requêtes à votre serveur. [Téléchargez Postman](https://www.postman.com/downloads/)
-
-#### Exemple de Route `PUT` pour Mettre à Jour un Devoir
+Une **route** associe méthode, chemin et fonction. Un **middleware** traite la requête avant la route, par exemple pour analyser JSON ou vérifier une permission ; il appelle next pour poursuivre ou termine avec une réponse. Un **pool** gère des connexions réutilisables vers MySQL.
 
 ```js
-app.put('/devoirs/:id', authenticateToken, (req, res) => {
-  const id = req.params.id;
-  const updatedDevoir = req.body;
-  connection.query('UPDATE devoir SET ? WHERE id = ?', [updatedDevoir, id], (err) => {
-    if (err) throw err;
-    res.json(updatedDevoir);
-  });
+app.post("/devoirs", autoriser, async (req, res) => {
+  const devoir = valider(req.body);
+  const [resultat] = await pool.execute(
+    "INSERT INTO devoir (nom, description, date_debut, date_rendu, matiere, professeur) VALUES (?, ?, ?, ?, ?, ?)",
+    Object.values(devoir),
+  );
+  res.status(201).json({ id: resultat.insertId, ...devoir });
 });
 ```
 
-## Critères d'Évaluation
+**Sortie attendue :** un objet JSON avec les six champs validés et un nouvel id. Les points d’interrogation sont des paramètres, pas des guillemets à ajouter manuellement. La validation construit ici l’objet dans l’ordre des colonnes. Dans la correction complète, les valeurs sont explicites pour rendre cette correspondance visible.
 
-### Barème
+Avec Express 5, le rejet d’une fonction de route async est transmis au middleware d’erreur. Ce middleware possède quatre paramètres et doit répondre sans envoyer les identifiants de base au client. Cela ne capture pas n’importe quelle opération détachée : une promesse non attendue reste une erreur de conception.
 
-- Fonctionnalité complète de l'API (routes CRUD, authentification JWT, gestion des CORS) : 5 points
-- Structure et organisation du code : 2 points
-- Utilisation correcte des variables d'environnement : 1 point
-- Qualité de la documentation et des commentaires dans le code : 1 point
-- Test des routes avec Postman (screenshots ou démonstration) : 1 point
+## Authentification et autorisation : deux questions
 
-## Ressources Supplémentaires
+L’authentification vérifie l’identité ; l’autorisation vérifie l’opération permise. Cacher un bouton dans Retool ne protège pas une route. Le jeton partagé du complément démontre un contrôle d’écriture mais n’identifie pas chaque étudiant : il n’est pas une gestion de comptes destinée à la production.
 
-- [Documentation officielle de Node.js](https://nodejs.org/en/docs/)
-- [Documentation officielle d'Express.js](https://expressjs.com/)
-- [Guide sur les meilleures pratiques de sécurité des API RESTful](https://www.owasp.org/index.php/REST_Security_Cheat_Sheet)
-- [Tutoriel sur l'utilisation de Postman](https://learning.postman.com/docs/getting-started/introduction/)
+L’ancien exercice utilisait JWT et bcrypt. Ces notions restent une **extension** : le serveur conserve des comptes, compare un mot de passe avec son empreinte, émet un jeton signé à durée limitée, vérifie la signature puis les droits pour chaque opération. Un JWT signé n’est pas automatiquement chiffré ; ne placez pas de secret dans son contenu. Les comptes en tableau mémoire disparaissent au redémarrage. Prévoir la persistance et les droits exige un travail distinct du CRUD de base.
 
-Bonne chance !
+## Pour approfondir
+
+- [Routage Express](https://expressjs.com/en/guide/routing.html).
+- [Erreurs dans Express 5](https://expressjs.com/en/5x/guide/error-handling/).
+- [Paramètres préparés mysql2](https://sidorares.github.io/node-mysql2/docs/documentation/prepared-statements).
+- [Présentation de JWT](https://jwt.io/introduction).

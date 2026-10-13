@@ -3,77 +3,38 @@ layout: "layouts/Layout.astro"
 title: "Grid"
 ---
 
-## Introduction à CSS Grid
+## Grid : pistes communes et contenus variables
 
-CSS Grid est un système de disposition bidimensionnel qui permet de créer des mises en page complexes et flexibles. Il introduit une nouvelle façon de concevoir des mises en page web, en permettant un contrôle précis sur les lignes et les colonnes.
+La [grille du S1](/semestre_1/integration/grid) introduit conteneur, lignes et placement. Grid organise simultanément lignes et colonnes ; Flexbox répartit principalement les éléments sur un axe. La taille des pistes doit aussi résister aux titres longs et à l’espace disponible.
 
-### Principes fondamentaux de CSS Grid :
+## fr et minmax
 
-- **Conteneur Grid** : Un élément qui définit un contexte de grille en appliquant la propriété `display: grid`.
-- **Lignes et Colonnes** : CSS Grid permet de définir explicitement des lignes et des colonnes dans le conteneur de grille.
-- **Espacement** : Les espaces entre les lignes et les colonnes peuvent être définis avec `grid-gap` ou ses variantes (`grid-row-gap`, `grid-column-gap`).
-- **Placement d'éléments** : Les éléments peuvent être placés dans la grille en utilisant des propriétés telles que `grid-row`, `grid-column`, `grid-area`.
+`fr` représente une part de l’espace distribuable, après les pistes fixes et les gouttières. `1fr 2fr` réserve deux parts à la seconde piste, sous réserve des contraintes minimales du contenu. `minmax(0, 1fr)` permet une piste flexible dont le minimum ne soit pas imposé par un long mot.
 
-## Création d'une grille de base
-
-Pour créer une grille de base, vous pouvez utiliser la propriété `display: grid` sur le conteneur de grille. Vous pouvez également définir le nombre de colonnes et de lignes ainsi que leur taille.
-
-```css
-.container {
-  display: grid;
-  grid-template-columns: 100px 100px 100px; /* Trois colonnes de largeur égale */
-  grid-template-rows: 50px 50px; /* Deux lignes de hauteur égale */
-}
+```html live title="Deux pistes de largeur différente"
+<div class="grille"><article>A</article><article>B</article><article>C</article><article>D</article></div>
+<style>
+  .grille { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px; }
+  article { padding: 16px; background: #dbeafe; overflow-wrap: anywhere; }
+</style>
 ```
 
-## Placement des éléments dans la grille
+A et C occupent la première colonne ; B et D, la seconde. Les lignes partagent leurs pistes, contrairement à plusieurs lignes Flexbox indépendantes.
 
-Les éléments peuvent être placés dans la grille en spécifiant les lignes et les colonnes qu'ils doivent occuper à l'aide des propriétés `grid-column` et `grid-row`.
+## repeat, auto-fit et auto-fill
 
-```css
-.item {
-  grid-column: 1 / 3; /* occupe les colonnes 1 à 3 */
-  grid-row: 1 / 2; /* occupe la ligne 1 */
-}
+```html live title="Une grille qui adapte son nombre de colonnes"
+<div class="grille"><article>Photo</article><article>Vidéo</article><article>Son</article></div>
+<style>
+  .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 16px; }
+  article { padding: 16px; background: #dbeafe; }
+</style>
 ```
 
-## Grilles automatiques avec CSS Grid
+La grille crée autant de pistes de 160 px minimum que l’espace le permet, puis les étire. `min(100%, 160px)` évite d’imposer 160 px à un conteneur encore plus étroit. `auto-fit` replie les pistes vides ; `auto-fill` conserve leur place. Avec peu de cartes dans un grand conteneur, cette différence devient visible.
 
-CSS Grid propose également des fonctionnalités pour créer des grilles automatiques, où le navigateur détermine automatiquement le nombre de colonnes et/ou de lignes en fonction du contenu.
+## Placement et zones nommées
 
-```css
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  /* Crée des colonnes automatiques de 100px minimum et 1 fraction flexible */
-}
-```
+`grid-column: 1 / -1` traverse de la première à la dernière ligne de la grille explicite. `grid-column: span 2` occupe deux pistes à partir du placement choisi. Une disposition nommée utilise `grid-template-areas` sur le parent et `grid-area` sur chaque enfant ; chaque zone doit former un rectangle.
 
-## Alignement et espacement avec CSS Grid
-
-CSS Grid offre des fonctionnalités puissantes pour l'alignement et l'espacement des éléments dans la grille. Vous pouvez utiliser les propriétés `justify-content` et `align-items` pour aligner les éléments, ainsi que `grid-gap` pour définir l'espacement entre eux.
-
-```css
-.container {
-  display: grid;
-  justify-content: center; /* Centre les éléments horizontalement */
-  align-items: center; /* Centre les éléments verticalement */
-  grid-gap: 20px; /* Espacement entre les éléments de la grille */
-}
-```
-
-## Media Queries avec CSS Grid
-
-Comme avec d'autres fonctionnalités CSS, les Media Queries peuvent être utilisées avec CSS Grid pour créer des mises en page réactives et adaptatives. Par exemple, vous pouvez modifier le nombre de colonnes en fonction de la taille de l'écran.
-
-```css
-@media screen and (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr; /* Une colonne pour les petits écrans */
-  }
-}
-```
-
-## Conclusion
-
-CSS Grid offre une flexibilité et un contrôle puissants pour la création de mises en page web complexes et réactives. En combinant les fonctionnalités de CSS Grid avec d'autres outils de mise en page CSS, comme Flexbox et les Media Queries, les développeurs web peuvent créer des interfaces utilisateur modernes et dynamiques.
+Le placement visuel ne modifie pas l’ordre du DOM. Gardez un document lisible sans CSS et un parcours clavier logique. Une piste explicite de hauteur fixe peut couper un contenu long : laissez la hauteur automatique lorsque le texte décide de la dimension.

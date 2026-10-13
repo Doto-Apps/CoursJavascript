@@ -1,60 +1,56 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Introduction à Figma"
-type: "TD"
+title: "Lire une maquette et préparer l’intégration"
+type: "CM"
+order: 2
+quizId: "s1-site-01"
+previousSession: "/semestre_1/produire_Un_Site_Web/projet"
+nextSession: "/semestre_1/produire_Un_Site_Web/integration"
 ---
 
-## Qu'est-ce que Figma ?
+<a id="comprendre"></a>
+## Wireframe, maquette et prototype
 
-Figma est un outil de conception d'interface utilisateur (UI) et d'expérience utilisateur (UX) basé sur le cloud. Il permet aux concepteurs de créer des prototypes interactifs et de collaborer en temps réel avec d'autres membres de leur équipe. Figma est particulièrement apprécié pour sa facilité d'utilisation, ses puissantes fonctionnalités de collaboration et sa compatibilité multiplateforme.
+Un wireframe décrit la structure et la hiérarchie du contenu. Une maquette visuelle précise la présentation : couleurs, typographie, dimensions et médias. Un prototype simule des parcours et des interactions. Un prototype cliquable n’est pas encore un site HTML/CSS fonctionnel.
 
-## Pourquoi utiliser Figma ?
+| Représentation | Ce qu’elle précise | Ce qu’elle ne prouve pas |
+|---|---|---|
+| Wireframe | Zones, priorités et organisation | Choix visuels finalisés |
+| Maquette | Présentation d’un écran dans un état | Tous les états et toutes les largeurs |
+| Prototype | Enchaînement simulé d’actions | Traitement d’un formulaire ou persistance |
 
-Figma est utilisé par les concepteurs pour plusieurs raisons :
+Dans Figma, un frame est un conteneur de conception : il peut représenter un écran ou une zone. Un composant regroupe une structure réutilisable ; ses instances peuvent recevoir des contenus différents selon la configuration. Une capture fixe ne décrit pas tous les états d’une interface.
 
-1. **Collaboration en temps réel** : Plusieurs utilisateurs peuvent travailler simultanément sur le même projet, ce qui facilite la collaboration entre les concepteurs, les développeurs et les autres parties prenantes.
-2. **Prototypage interactif** : Figma permet de créer des prototypes interactifs qui simulent le comportement d'une application ou d'un site web. Cela permet de tester les interactions et de recueillir des retours avant la phase de développement.
-3. **Compatibilité multiplateforme** : Étant basé sur le cloud, Figma est accessible depuis n'importe quel appareil avec un navigateur web, que ce soit un PC, un Mac ou même une tablette.
-4. **Versioning et historique** : Figma garde une trace de toutes les modifications apportées à un projet, permettant de revenir à des versions antérieures si nécessaire.
-5. **Intégrations** : Figma s'intègre facilement avec d'autres outils populaires comme Slack, Trello, et même avec des systèmes de gestion de code source comme GitHub.
+## Les dimensions et les relations de disposition
 
-## Fonctionnalités principales de Figma
+Pour intégrer une zone, relevez dimensions, espacements, couleurs, typographie et alignements. Une coordonnée x/y dans l’outil ne vous impose pas un positionnement absolu CSS : il faut traduire les relations entre les éléments.
 
-### Interface utilisateur
+```html preview title="Des règles de disposition plutôt que des coordonnées" height=230
+<section><h2>Projets</h2><div class="projets"><article>Photo</article><article>Vidéo</article></div></section>
+<style>
+  section { max-width: 600px; margin-inline: auto; padding: 24px; border: 2px solid #1d4ed8; }
+  .projets { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  article { padding: 16px; background: #dbeafe; }
+</style>
+```
 
-Figma offre une interface utilisateur intuitive qui permet aux concepteurs de créer et de manipuler des éléments de conception facilement. Voici quelques-unes des fonctionnalités principales :
+Cette représentation locale exprime une largeur maximale, un espace intérieur et une gouttière entre deux cartes. Ajouter du texte agrandit leur hauteur sans modifier leurs coordonnées manuellement. La grille traduit un alignement commun observable dans la maquette.
 
-- **Outils de dessin** : Créez des formes, des lignes, et du texte avec des outils de dessin simples et puissants.
-- **Grilles et règles** : Utilisez des grilles et des règles pour aligner et organiser vos éléments de manière précise.
-- **Composants et instances** : Créez des composants réutilisables et utilisez des instances de ces composants pour maintenir la cohérence de la conception.
+## Composants et valeurs partagées
 
-### Prototypage
+Plusieurs cartes partageant structure et styles forment un composant réutilisable, même si leurs contenus diffèrent. Un token est une valeur de conception partagée : une couleur accent, une taille de texte ou un espacement. Dans la feuille CSS, une propriété personnalisée peut représenter cette valeur.
 
-Figma permet de créer des prototypes interactifs en ajoutant des interactions entre les différentes pages et éléments de votre conception. Cela inclut :
+| Observation dans la maquette | Règle d’intégration |
+|---|---|
+| Même bord gauche pour plusieurs zones | Conteneur commun |
+| Même distance entre cartes | Gouttière partagée |
+| Même structure de fiche | Classe de composant |
+| Même accent sur titres et liens | Valeur CSS commune |
 
-- **Transitions** : Définissez des transitions entre les écrans pour simuler la navigation dans une application.
-- **Animations** : Ajoutez des animations pour rendre votre prototype plus réaliste et interactif.
-- **Test utilisateur** : Partagez votre prototype avec des utilisateurs pour recueillir des retours sur l'expérience utilisateur.
+## Médias, licences et états manquants
 
-### Collaboration
+Gardez le texte comme texte et exportez les médias utiles. Une capture globale empêche de sélectionner les textes et d’utiliser leurs liens. SVG convient à de nombreux éléments vectoriels ; les photographies demandent un format et des dimensions adaptés. Conservez les crédits et les licences avec les ressources exportées.
 
-La collaboration est l'une des forces principales de Figma. Les fonctionnalités de collaboration incluent :
+Si un état mobile, vide ou en erreur manque, notez la question et clarifiez le comportement au lieu d’inventer une fonction. Précisez aussi le focus clavier, le texte long et le recadrage des images. Les outils d’inspection disponibles dépendent des permissions et du compte Figma : le fichier doit être consultable, sans supposer un accès payant particulier.
 
-- **Commentaires** : Les membres de l'équipe peuvent laisser des commentaires directement sur le design pour une communication efficace.
-- **Édition en temps réel** : Travaillez simultanément avec d'autres concepteurs sur le même fichier sans avoir besoin de fusionner des modifications.
-- **Partage** : Partagez des liens vers vos projets pour que les autres puissent les consulter ou y travailler.
-
-## Comment commencer avec Figma ?
-
-Pour commencer avec Figma, suivez ces étapes simples :
-
-1. **Inscription** : Rendez-vous sur [Figma.com](https://www.figma.com/) et inscrivez-vous pour un compte gratuit.
-2. **Créer un nouveau projet** : Une fois connecté, cliquez sur "New File" pour créer un nouveau projet.
-3. **Explorer l'interface** : Familiarisez-vous avec les différents outils et panneaux de l'interface utilisateur de Figma.
-4. **Suivre des tutoriels** : Figma propose de nombreux tutoriels et ressources pour vous aider à apprendre les bases et à maîtriser l'outil. Consultez leur [centre de formation](https://www.figma.com/resources/learn-design/) pour commencer.
-
-## Conclusion
-
-Figma est un outil puissant et polyvalent pour la conception d'UI/UX, offrant des fonctionnalités robustes de collaboration et de prototypage. Que vous soyez un concepteur débutant ou expérimenté, Figma peut améliorer votre flux de travail et vous aider à créer des designs impressionnants. Commencez dès aujourd'hui en vous inscrivant sur [Figma.com](https://www.figma.com/).
-
----
+La [structure HTML](integration) décrit ensuite les rôles des zones ; leur apparence sera traitée avec les conteneurs et les composants CSS.

@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Tailwind : comprendre les classes utilitaires",
+  "uid": "s2-int-01",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/td/bootstrap",
+  "sourceSession": "S2-INT-01",
+  "targetCourse": "/semestre_2/integration/td/tailwind-composants",
+  "questions": [
+    {
+      "question": "Quel rôle joue une classe utilitaire Tailwind ?",
+      "answers": [
+        "Une règle CSS ciblée",
+        "Une structure HTML complète",
+        "Un programme JavaScript",
+        "Une nouvelle balise du navigateur"
+      ],
+      "explanation": "Les utilitaires combinent des règles de style sans changer les balises.",
+      "sourceSection": "notion-1",
+      "evidence": "Une classe utilitaire exprime une règle CSS limitée.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Dans une carte, quel espace modifie p-4 ?",
+      "answers": [
+        "La couleur de fond",
+        "L’espace intérieur",
+        "La marge extérieure",
+        "La taille du texte"
+      ],
+      "explanation": "Le préfixe p désigne le padding.",
+      "sourceSection": "notion-2",
+      "evidence": "p-4 règle l'espace intérieur du composant.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quelle classe règle la marge extérieure ?",
+      "answers": [
+        "gap-4",
+        "mt-2",
+        "m-4",
+        "p-4"
+      ],
+      "explanation": "m règle la marge de tous les côtés ; p règle l’intérieur.",
+      "sourceSection": "notion-3",
+      "evidence": "m-4 règle la marge extérieure.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle classe règle une taille de texte ?",
+      "answers": [
+        "text-slate-700",
+        "bg-white",
+        "rounded-lg",
+        "text-xl"
+      ],
+      "explanation": "Le suffixe xl indique ici une taille ; slate-700 indique une couleur.",
+      "sourceSection": "notion-5",
+      "evidence": "text-xl règle la taille du texte.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle classe donne une couleur de texte ?",
+      "answers": [
+        "text-slate-700",
+        "text-xl",
+        "font-bold",
+        "bg-white"
+      ],
+      "explanation": "text-slate-700 règle la couleur du texte, pas sa taille.",
+      "sourceSection": "notion-6",
+      "evidence": "text-slate-700 règle la couleur du texte.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel couple active la bordure et lui donne une couleur ?",
+      "answers": [
+        "text-slate-300 shadow-md",
+        "border border-slate-300",
+        "border-0 border-slate-300",
+        "bg-slate-300 rounded-lg"
+      ],
+      "explanation": "Une bordure a une épaisseur et une couleur ; changer seulement le fond ne la crée pas.",
+      "sourceSection": "notion-9",
+      "evidence": "border active une bordure ; border-slate-300 en règle la couleur.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que définit grid-cols-3 dans un parent Grid ?",
+      "answers": [
+        "Trois cartes obligatoires",
+        "Une largeur de 3px",
+        "Trois colonnes",
+        "Trois lignes imposées"
+      ],
+      "explanation": "Le nombre de colonnes décrit la disposition du parent, pas le nombre total d’enfants.",
+      "sourceSection": "notion-13",
+      "evidence": "grid-cols-3 définit trois colonnes d'une grille active.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel rôle joue gap-4 ?",
+      "answers": [
+        "Le padding de chaque carte",
+        "La marge du document",
+        "La hauteur des lignes de texte",
+        "L’espace entre les enfants Grid ou Flexbox"
+      ],
+      "explanation": "gap espace la disposition ; il ne règle pas l’intérieur des cartes.",
+      "sourceSection": "notion-15",
+      "evidence": "gap-4 règle l'espace entre les éléments du parent Grid ou Flex.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que décrit article dans cet exemple ?",
+      "answers": [
+        "Une unité de contenu autonome",
+        "Un simple style sans rôle HTML",
+        "Un champ de formulaire",
+        "Une liste ordonnée"
+      ],
+      "explanation": "Les classes Tailwind ne changent pas le sens de article.",
+      "sourceSection": "notion-16",
+      "evidence": "article décrit une fiche autonome ; les classes ne changent pas ce sens.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel fichier le navigateur charge-t-il pour les styles compilés ?",
+      "answers": [
+        "package.json chargé comme CSS",
+        "styles.css",
+        "input.css avec directives non compilées",
+        "tailwind.config.js chargé comme CSS"
+      ],
+      "explanation": "Le navigateur charge la feuille CSS produite par la compilation.",
+      "sourceSection": "notion-17",
+      "evidence": "Tailwind 3.4 génère une feuille CSS à partir des classes détectées.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "À quoi sert content dans la configuration Tailwind 3 ?",
+      "answers": [
+        "Les couleurs saisies par l’utilisateur",
+        "Les versions des navigateurs",
+        "Les chemins des fichiers où détecter les classes",
+        "Le texte du titre HTML"
+      ],
+      "explanation": "En Tailwind 3, content indique les fichiers analysés ; des chemins absents peuvent faire manquer des classes.",
+      "sourceSection": "notion-18",
+      "evidence": "La configuration content indique les fichiers où chercher les classes.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que permet --watch pendant le travail sur les styles ?",
+      "answers": [
+        "Publier automatiquement le site",
+        "Tester toutes les interactions",
+        "Effacer les classes inutilisées du HTML",
+        "Recompiler lorsque les sources surveillées changent"
+      ],
+      "explanation": "La surveillance relance la compilation ; elle ne remplace pas les tests.",
+      "sourceSection": "notion-19",
+      "evidence": "--watch relance la compilation après les modifications surveillées.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

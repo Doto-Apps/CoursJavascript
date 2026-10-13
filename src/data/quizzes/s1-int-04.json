@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Consolider HTML et CSS : lire, tester, corriger",
+  "uid": "s1-int-04",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/integration/html",
+  "sourceSession": "INT-04",
+  "targetCourse": "/semestre_1/integration/grid",
+  "questions": [
+    {
+      "question": "Que montre le DOM dans l’inspecteur ?",
+      "answers": [
+        "La structure construite par le navigateur",
+        "Seulement le fichier CSS original",
+        "La liste des ports occupés",
+        "Seulement les valeurs des couleurs"
+      ],
+      "explanation": "Le navigateur construit le DOM à partir du document ; cette vue n’est pas simplement le fichier source.",
+      "sourceSection": "comprendre",
+      "evidence": "Le fichier enregistré est le texte que vous avez écrit. Le **DOM** est l’organisation d’éléments construite par le navigateur ; celui-ci peut corriger certains défauts d’imbrication. Le style calculé est la valeur effectivement utilisée apr",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle différence existe entre title et h1 ?",
+      "answers": [
+        "Les deux sont seulement des tailles CSS",
+        "title nomme l’onglet et h1 le contenu principal visible",
+        "Les deux appartiennent au head",
+        "h1 nomme l’onglet et title une carte"
+      ],
+      "explanation": "Le titre du document et le titre de contenu ont des fonctions distinctes.",
+      "sourceSection": "comprendre",
+      "evidence": "```html live title=\"Observer les règles concurrentes\"",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Une classe sert à plusieurs cartes. Quelle contrainte concerne un id ?",
+      "answers": [
+        "Être identique au nom de la balise",
+        "Commencer nécessairement par un chiffre",
+        "Être unique dans le document",
+        "Être répété sur chaque carte"
+      ],
+      "explanation": "Une classe peut être partagée ; un identifiant doit désigner une cible unique.",
+      "sourceSection": "cascade",
+      "evidence": "e imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel sélecteur vise les liens à l’intérieur de .carte, même plus profondément imbriqués ?",
+      "answers": [
+        ".carte > a",
+        ".carte + a",
+        "a.carte",
+        ".carte a"
+      ],
+      "explanation": "Le sélecteur descendant vise aussi les descendants qui ne sont pas des enfants directs.",
+      "sourceSection": "cascade",
+      "evidence": "chez la règle concurrente dans l'inspecteur. Le sélecteur descendant `.carte a` cible les liens dans une carte, même imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Une couleur de texte définie sur le parent peut arriver à l’enfant par quel mécanisme ?",
+      "answers": [
+        "L’héritage",
+        "Une redirection HTTP",
+        "Le changement du DOM",
+        "Le téléchargement d’un fichier"
+      ],
+      "explanation": "Certaines propriétés, dont la couleur du texte, peuvent être héritées.",
+      "sourceSection": "comprendre",
+      "evidence": "`inherit` demande la valeur héritée ; une valeur définie directement sur l’enfant l’emporte sur une valeur simplement héritée. `!important` n’est pas une solution de diagnostic : il peut masquer une organisation incorrecte et rendre les mod",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "À importance et origine égales, deux règles ciblent un élément. Que comparer avant leur ordre ?",
+      "answers": [
+        "La couleur du navigateur",
+        "La spécificité des sélecteurs",
+        "Le nombre d’images de la page",
+        "La taille des fichiers"
+      ],
+      "explanation": "L’ordre départage les règles encore à égalité après les critères de priorité.",
+      "sourceSection": "comprendre",
+      "evidence": "sélecteur de classe est plus spécifique qu’un sélecteur de balise. À spécificité égale, la déclaration située plus tard gagne pour la même propriété. Cette règle ne signifie pas « la dernière règle gagne toujours ».",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Dans le panneau Styles, que signale généralement une déclaration barrée ?",
+      "answers": [
+        "Une balise supprimée du DOM",
+        "Un serveur PHP arrêté",
+        "Une déclaration supplantée par une autre règle",
+        "Un fichier toujours absent"
+      ],
+      "explanation": "Une déclaration barrée peut être valide mais perdre dans la cascade.",
+      "sourceSection": "comprendre",
+      "evidence": "| Une déclaration est barrée. | Règle gagnante dans Styles. | Une autre déclaration a été retenue. |",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Où observer la valeur finalement appliquée à une propriété ?",
+      "answers": [
+        "Dans le nom de l’onglet",
+        "Dans l’adresse DNS",
+        "Dans le contenu du cookie",
+        "Dans les styles calculés de l’élément"
+      ],
+      "explanation": "Les styles calculés rendent visible le résultat de la cascade.",
+      "sourceSection": "comprendre",
+      "evidence": "Le style calculé est la valeur effectivement utilisée",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Une feuille CSS n’est pas chargée. Quel contrôle est prioritaire ?",
+      "answers": [
+        "Son adresse et son statut dans Réseau",
+        "Le choix entre h1 et h2",
+        "La longueur du texte",
+        "La valeur de border-radius"
+      ],
+      "explanation": "Vérifier le chargement précède le diagnostic des règles elles-mêmes.",
+      "sourceSection": "comprendre",
+      "evidence": "| Aucun style ne semble chargé. | Onglet Réseau et chemin de `style.css`. | Une règle correcte ne sert pas si son fichier manque. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Une boîte dépasse sa largeur prévue. Que mesurer ?",
+      "answers": [
+        "Seulement son URL",
+        "Contenu, padding, bordure et box-sizing",
+        "Seulement sa couleur",
+        "Seulement son titre"
+      ],
+      "explanation": "Le modèle de boîte permet d’expliquer la dimension totale observée.",
+      "sourceSection": "comprendre",
+      "evidence": "| La boîte dépasse. | Largeur calculée, padding, bordure et contenu. | La largeur déclarée n’explique pas seule la taille extérieure. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Depuis quelle adresse résoudre url(...) dans une feuille CSS externe ?",
+      "answers": [
+        "Toujours depuis les favoris",
+        "Depuis le texte du titre",
+        "Depuis l’adresse de la feuille CSS",
+        "Toujours depuis la racine du disque"
+      ],
+      "explanation": "Une ressource référencée par CSS est résolue relativement à cette feuille.",
+      "sourceSection": "organisation",
+      "evidence": "la feuille depuis le dossier `css`. Dans une feuille CSS, un chemin `url(...)` est résolu par rapport au fichier CSS. Les noms de fichiers et leur casse doivent correspondre à leur utilisation. `head` contient les métadonnées, tandis que `",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle méthode facilite un diagnostic CSS ?",
+      "answers": [
+        "Changer toutes les règles simultanément",
+        "Supprimer les styles calculés",
+        "Renommer toutes les balises",
+        "Changer une propriété puis observer"
+      ],
+      "explanation": "Une modification isolée permet d’attribuer l’effet observé à une cause.",
+      "sourceSection": "comprendre",
+      "evidence": "n style ne semble chargé. | Onglet Réseau et chemin de `style.css`. | Une règle correcte ne sert pas si son fichier manque. |",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

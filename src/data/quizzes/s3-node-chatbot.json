@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Node.js : créer une API de personnage",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "questions": [
+    {
+      "question": "Où Node exécute-t-il le code du serveur ?",
+      "answers": [
+        "Dans un processus hors du navigateur",
+        "Dans la feuille CSS",
+        "Dans chaque titre HTML",
+        "Dans le résolveur DNS"
+      ],
+      "explanation": "Node fournit un environnement JavaScript distinct de celui de la page.",
+      "sourceSection": "execution",
+      "evidence": "gateur, JavaScript peut manipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interfac",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que combine une route de notre API ?",
+      "answers": [
+        "Un nom de personnage et une image seulement",
+        "Une méthode HTTP et un chemin",
+        "Une couleur et une police",
+        "Un fichier et sa taille seulement"
+      ],
+      "explanation": "GET /health et POST /message ont des usages distincts.",
+      "sourceSection": "execution",
+      "evidence": "| Route | Méthode HTTP et chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "À quoi sert le port 3000 ?",
+      "answers": [
+        "Limiter le texte à trois caractères",
+        "Fixer le statut HTTP",
+        "Joindre le service qui écoute sur la machine",
+        "Identifier la troisième page"
+      ],
+      "explanation": "Le port distingue un service sur une machine donnée.",
+      "sourceSection": "execution",
+      "evidence": "anipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interface : elle fixe les adresse",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle requête teste la santé du squelette ?",
+      "answers": [
+        "POST /health",
+        "GET /message",
+        "DELETE /message",
+        "GET /health"
+      ],
+      "explanation": "Le contrat prévoit une route de santé accessible sans corps de message.",
+      "sourceSection": "execution",
+      "evidence": "| Route | Méthode HTTP et chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel champ est attendu dans le corps de POST /message ?",
+      "answers": [
+        "message",
+        "personnage uniquement",
+        "reply uniquement",
+        "port"
+      ],
+      "explanation": "Le client envoie un texte dans message ; le serveur fournit la réplique.",
+      "sourceSection": "execution",
+      "evidence": "chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel statut renvoie le squelette pour un message vide ?",
+      "answers": [
+        "404",
+        "400",
+        "200",
+        "201"
+      ],
+      "explanation": "Le serveur refuse le texte vide après contrôle et nettoyage.",
+      "sourceSection": "contrat",
+      "evidence": "| POST /message invalide | JSON mal formé ou message invalide. | 400, objet avec error. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment traiter une route inconnue ?",
+      "answers": [
+        "Inventer une réplique",
+        "Ne jamais terminer la réponse",
+        "Répondre 404 avec une erreur",
+        "Annoncer un succès 200"
+      ],
+      "explanation": "Une adresse non reconnue doit avoir une réponse explicite.",
+      "sourceSection": "contrat",
+      "evidence": "| Autre route | — | 404, objet avec error. |",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel rôle joue JSON.stringify dans envoyer ?",
+      "answers": [
+        "Analyser une réponse reçue",
+        "Modifier le DOM",
+        "Valider automatiquement tous les champs",
+        "Produire le texte JSON de la réponse"
+      ],
+      "explanation": "Les données sont sérialisées avant leur envoi.",
+      "sourceSection": "serveur",
+      "evidence": "response.end(JSON.stringify(data));",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Pourquoi lire le corps par morceaux ?",
+      "answers": [
+        "Le réseau ne garantit pas un seul morceau",
+        "JSON exige un fichier par lettre",
+        "Node ne peut recevoir que des nombres",
+        "Chaque morceau doit créer un service"
+      ],
+      "explanation": "La réception peut être fragmentée ; la fonction reconstitue le corps.",
+      "sourceSection": "serveur",
+      "evidence": "de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deu",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle valeur valide le contrat du message ?",
+      "answers": [
+        "Un nombre seul",
+        "Un texte non vide de longueur autorisée",
+        "Un tableau de nombres",
+        "Un objet sans message"
+      ],
+      "explanation": "Le serveur vérifie le type et les limites, pas seulement la présence d’un corps.",
+      "sourceSection": "contrat",
+      "evidence": "| POST /message | Objet JSON avec message, texte de 1 à 1000 caractères. | 200, objet avec personnage et reply. |",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "À quoi sert le mode simulé ?",
+      "answers": [
+        "Remplacer définitivement la validation",
+        "Garantir la qualité littéraire finale",
+        "Tester le contrat sans dépendre d’un modèle",
+        "Entraîner les poids du modèle"
+      ],
+      "explanation": "La simulation sépare les erreurs d’API des pannes de génération.",
+      "sourceSection": "serveur",
+      "evidence": "return `Je suis ${personnage}. J’ai reçu : ${message}`;",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pourquoi retourner après l’envoi d’une réponse ?",
+      "answers": [
+        "Relancer le serveur",
+        "Supprimer la requête du client",
+        "Changer le port",
+        "Éviter de poursuivre vers une deuxième réponse"
+      ],
+      "explanation": "Chaque branche doit terminer son traitement après sa réponse.",
+      "sourceSection": "serveur",
+      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la lim",
+      "correctAnswerIndex": 3
+    }
+  ],
+  "sourceCourse": "/semestre_3/deploiement_Services/nodeS1",
+  "sourceSession": "S3-DEP-01",
+  "targetCourse": "/semestre_3/deploiement_Services/nodeS2",
+  "uid": "s3-node-chatbot"
+}

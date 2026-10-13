@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Transitions, transformations et apparition au défilement",
+  "uid": "s2-int-03",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/tp/transition",
+  "sourceSession": "S2-INT-03",
+  "targetCourse": "/semestre_2/integration/tp/hover",
+  "questions": [
+    {
+      "question": "Que fait une transition CSS ?",
+      "answers": [
+        "Interpoler une propriété entre deux états",
+        "Rejouer obligatoirement une suite infinie",
+        "Modifier le HTML source",
+        "Ajouter une piste Grid"
+      ],
+      "explanation": "Une transition accompagne un changement d’état d’une propriété animable.",
+      "sourceSection": "notion-1",
+      "evidence": "Une transition interpole le changement d'une propriété entre deux états.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Combien de secondes représentent 200ms ?",
+      "answers": [
+        "0,02 seconde",
+        "0,2 seconde",
+        "2 secondes",
+        "20 secondes"
+      ],
+      "explanation": "Une seconde contient mille millisecondes.",
+      "sourceSection": "notion-2",
+      "evidence": "200ms représente deux dixièmes de seconde.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que permet transform sur une carte ?",
+      "answers": [
+        "Changer le texte HTML",
+        "Envoyer une requête réseau",
+        "Modifier visuellement sans redisposer les voisins comme une marge",
+        "Modifier directement la place dans le flux comme margin"
+      ],
+      "explanation": "Une transformation agit sur le rendu visuel ; elle ne redispose pas les voisins comme une marge.",
+      "sourceSection": "notion-4",
+      "evidence": "transform change la représentation visuelle sans réorganiser comme une marge les éléments voisins.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel effet produit translateY(-5px) ?",
+      "answers": [
+        "5px vers le bas",
+        "5px vers la droite",
+        "5px vers la gauche",
+        "5px vers le haut"
+      ],
+      "explanation": "La direction Y positive descend ; une valeur négative déplace vers le haut.",
+      "sourceSection": "notion-5",
+      "evidence": "translateY(-5px) déplace visuellement l'élément de 5 px vers le haut.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle fonction transforme la taille visuelle ?",
+      "answers": [
+        "scale",
+        "rotate",
+        "translateX",
+        "translateY"
+      ],
+      "explanation": "scale change la taille visuelle ; les autres fonctions déplacent ou tournent.",
+      "sourceSection": "notion-6",
+      "evidence": "scale agrandit ou réduit visuellement un élément.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que décrivent les keyframes ?",
+      "answers": [
+        "Des types de données",
+        "Des étapes d’animation",
+        "Des colonnes de grille",
+        "Des champs de formulaire"
+      ],
+      "explanation": "Les keyframes décrivent des valeurs à différentes étapes.",
+      "sourceSection": "notion-8",
+      "evidence": "Une animation avec keyframes décrit des étapes nommées.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que détecte :focus-within ?",
+      "answers": [
+        "Le dernier enfant uniquement",
+        "L’absence totale de contenu",
+        "Le focus dans l’élément ou un descendant",
+        "Le survol d’un voisin"
+      ],
+      "explanation": "Le composant peut réagir au focus d’un contrôle qu’il contient.",
+      "sourceSection": "notion-10",
+      "evidence": ":focus-within correspond à la présence du focus dans l'élément ou un descendant.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle condition CSS consulte la préférence de mouvement réduit ?",
+      "answers": [
+        "prefers-color-scheme",
+        "orientation",
+        "min-width",
+        "prefers-reduced-motion"
+      ],
+      "explanation": "Cette préférence aide à proposer moins de mouvement.",
+      "sourceSection": "notion-11",
+      "evidence": "prefers-reduced-motion permet de tenir compte d'une préférence de mouvement réduit.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que surveille IntersectionObserver ?",
+      "answers": [
+        "L’intersection d’un élément avec une zone de référence",
+        "La validation d’un formulaire",
+        "La réception d’une réponse JSON",
+        "La modification d’un fichier CSS"
+      ],
+      "explanation": "L’observateur peut déclencher un effet lorsque l’élément entre dans la zone visible.",
+      "sourceSection": "notion-13",
+      "evidence": "IntersectionObserver observe l'intersection avec une zone de référence.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle méthode ajoute la classe visible ?",
+      "answers": [
+        "setAttribute('id', ...)",
+        "classList.add",
+        "classList.remove",
+        "replaceChildren"
+      ],
+      "explanation": "Ajouter une classe conserve les autres classes de l’élément.",
+      "sourceSection": "notion-16",
+      "evidence": "classList.add('visible') ajoute une classe d'état sans remplacer toutes les classes.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Comment ne plus observer la carte après sa première apparition ?",
+      "answers": [
+        "preventDefault",
+        "stopPropagation",
+        "unobserve",
+        "disconnect puis réobserver tous les éléments"
+      ],
+      "explanation": "unobserve arrête l’observation de cet élément après son apparition.",
+      "sourceSection": "notion-17",
+      "evidence": "unobserve arrête l'observation d'un élément donné.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel type d'effet produit l'exemple du cours ?",
+      "answers": [
+        "Un suivi continu exact de chaque pixel de défilement",
+        "Une animation qui nécessite une nouvelle page",
+        "Une translation de la page entière",
+        "Une apparition déclenchée par la visibilité"
+      ],
+      "explanation": "Le déclenchement par visibilité ne lie pas continuellement la progression au défilement.",
+      "sourceSection": "notion-18",
+      "evidence": "Une apparition déclenchée par IntersectionObserver n'est pas une animation continuellement pilotée par la position de défilement.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

@@ -4,68 +4,52 @@ title: "Conditions"
 type: "tp"
 ---
 
-# Les conditions
+## if, else if et else
 
-## If, Else
+Une condition choisit les instructions à exécuter. Le programme teste les branches dans l’ordre et exécute seulement la première dont la condition est vraie ; `else` couvre les autres cas.
 
-```js
-let x = 5;
-
-if (x > 10) {
-  console.log("x est plus grand que 10");
+```js live title="Classer une note"
+const note = 14;
+let mention;
+if (note >= 16) {
+  mention = 'Très bien';
+} else if (note >= 10) {
+  mention = 'Validé';
 } else {
-  console.log("x est plus petit ou égal à 10");
+  mention = 'À retravailler';
 }
+console.log(mention);
 ```
 
-Dans cet exemple, la condition vérifie si la variable <code>x</code> est
-supérieure à 10. Comme <code>x</code> est égal à 5, la condition est
-fausse et le message "<code>x est plus petit ou égal à 10</code>" est
-affiché dans la console.
+Résultat : `Validé`. Le seuil 16 doit être testé avant 10 : sinon une note de 18 entrerait déjà dans la première branche. À 10, la validation est acquise ; à 9, elle ne l’est pas. Le contrôle du domaine, par exemple de 0 à 20, reste distinct de cette classification.
 
-Il existe plusieurs opérateurs de comparaison que tu peux utiliser
-dans les conditions :
+## Comparaisons et opérateurs logiques
 
-- <code>></code> (strictement supérieur)
-- <code><</code> (strictement inférieur)
-- <code>=</code> (supérieur ou égal)
-- <code><=</code> (inférieur ou égal)
-- <code>==</code> (égal)
-- <code>!=</code> (différent)
+| Syntaxe | Sens | Exemple vrai |
+|---|---|---|
+| `===`, `!==` | Égalité ou différence strictes | `12 !== '12'` |
+| `>`, `>=`, `<`, `<=` | Ordre et seuils | `10 >= 10` |
+| `&&` | Les deux conditions | `age >= 18 && inscrit` si les deux sont vrais |
+| `\|\|` | Au moins une condition | `admin \|\| auteur` |
+| `!` | Négation | `!false` |
 
-Tu peux également utiliser des conditions de type "ET" (
-<code>&&</code>) et "OU" (<code>||</code>) :
+`if (age = 18)` affecte 18 au lieu de comparer : c’est une erreur courante. Convertissez et validez les données avant de comparer une saisie numérique.
+
+## switch : plusieurs valeurs d’un même champ
 
 ```js
-let x = 5;
-let y = 10;
-
-if (x > 0 && y > 0) {
-  console.log("x et y sont tous les deux positifs");
+const format = 'image';
+let extension;
+switch (format) {
+  case 'image': extension = '.png'; break;
+  case 'texte': extension = '.txt'; break;
+  default: extension = 'inconnue';
 }
-
-if (x > 0 || y > 0) {
-  console.log("au moins un des deux est positif");
-}
+console.log(extension); // .png
 ```
 
-## Switch
+`switch` compare strictement sa valeur aux `case`. `break` quitte le bloc ; sans lui, l’exécution continue dans le cas suivant. Pour des intervalles comme une note, `if` est généralement plus lisible.
 
-Tu peux utiliser la structure <code>switch</code> pour vérifier
-plusieurs valeurs différentes d'une même variable :
+## L’opérateur conditionnel
 
-```js
-let x = 5;
-
-switch (x) {
-  case 1:
-    console.log("x est égal à 1");
-    break;
-  case 5:
-    console.log("x est égal à 5");
-    break;
-  default:
-    console.log("x est différent de 1 et 5");
-    break;
-}
-```
+`const statut = publie ? 'En ligne' : 'Brouillon';` choisit une valeur. Cette forme convient à une alternative courte ; les branches comportant plusieurs instructions restent plus claires avec `if`.

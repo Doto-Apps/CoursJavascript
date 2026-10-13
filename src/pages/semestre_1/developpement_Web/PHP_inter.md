@@ -1,321 +1,201 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Base de l'algorithmique à partir de PHP"
+title: "Algorithmique PHP : données, décisions et traces"
 type: "TD"
+order: 2
+quizId: "s1-dev-01"
+previousSession: "/semestre_1/developpement_Web/util_dev_tool"
+nextSession: "/semestre_1/developpement_Web/PHP_begin"
 ---
 
-## Introduction
+<a id="comprendre"></a>
 
-Dans ce TD, nous allons explorer les bases de l'algorithmique en utilisant PHP. Vous apprendrez à utiliser des variables, des tableaux, et des structures conditionnelles pour écrire des scripts PHP plus complexes.
+## Variables, valeurs et instructions PHP
 
-### Variables en PHP
+« Calculer le prix de trois billets et appliquer une réduction » doit devenir une suite de décisions explicites : lire la quantité, calculer le total initial, décider si la réduction s’applique, calculer le total final puis l’afficher. Une **entrée** est une donnée utilisée par le programme ; le **traitement** transforme ces données ; la **sortie** est le résultat produit.
 
-Les variables sont utilisées pour stocker des données. En PHP, vous pouvez créer une variable en utilisant le signe `$`.
+| Élément PHP | Syntaxe | Rôle et vigilance |
+|---|---|---|
+| Affectation | `$prix = 12;` | Stocker une valeur dans une variable ; `=` n’est pas une comparaison. |
+| Chaîne | `$nom = 'Léa';` | Représenter du texte, avec des guillemets. |
+| Booléen | `$ouvert = true;` | Représenter une condition vraie ou fausse, sans guillemets. |
+| Concaténation | `$nom . ' : ' . $prix` | Assembler du texte et des valeurs pour l’affichage. |
+| Comparaison stricte | `$age === 18` | Comparer la valeur et le type. |
+| Condition | `if (...) { ... } else { ... }` | Exécuter une branche selon un résultat booléen. |
 
-#### Exemple de variables
+Une **expression** est un calcul qui produit une valeur. Une **instruction** réalise une étape, souvent terminée par `;`. `$total = $prix * $quantite;` calcule une expression puis affecte son résultat. Les accolades délimitent les instructions d’une branche ; l’indentation rend cette structure lisible, mais ne remplace pas les accolades.
+
+## Comparaisons et conditions PHP
 
 ```php
 <?php
-  $nom = "Alice";
-  $age = 30;
-  $estEtudiant = false;
-
-  echo "Nom: $nom, Âge: $age, Est étudiant: " . ($estEtudiant ? 'Oui' : 'Non');
-?>
+$total = 30;
+$reduction = 0;
+if ($total >= 30) {
+    $reduction = 5;
+}
+echo $total - $reduction;
 ```
 
-### Explications
+**Sortie attendue :** `25`. La réduction commence à zéro ; elle change seulement si le seuil est atteint. Avec 29, la sortie serait 29. Utiliser `>` au lieu de `>=` exclurait le cas exactement égal à 30. Une comparaison fournit un booléen, pas directement le montant d’une réduction.
 
-- `$nom`, `$age`, `$estEtudiant` : Ce sont des variables qui stockent des valeurs.
-- `echo` : Cette fonction affiche le contenu des variables à l'écran.
-- `.` : L'opérateur de concaténation joint des chaînes de caractères.
-- `($estEtudiant ? 'Oui' : 'Non')` : Ceci est un opérateur ternaire qui vérifie si `$estEtudiant` est vrai ou faux et affiche "Oui" ou "Non" en conséquence.
+`&&` demande que deux conditions soient vraies ; `||` demande qu’au moins l’une soit vraie. Écrivez d’abord les conditions séparément et testez chaque cas. Pour « quantité valide entre 1 et 12 », il faut une borne basse **et** une borne haute, pas une seule comparaison.
 
-### Tableaux en PHP
+## Clés et valeurs des tableaux PHP
 
-Les tableaux sont des structures de données qui permettent de stocker plusieurs valeurs dans une seule variable.
+Dans `['web', 'image', 'son']`, l’indice 0 désigne la première valeur. Dans `['nom' => 'Léa']`, la clé textuelle `nom` désigne la valeur `Léa`. La clé sert à retrouver la donnée ; elle n’est pas la donnée elle-même. Avant un accès, vérifiez quelles clés existent. La séance de parcours ajoutera les boucles : une collection n’oblige pas à écrire une ligne d’affichage par élément.
 
-#### Tableaux indexés
+## L’exécution des instructions PHP
+
+Un programme n’interprète pas une intention générale : il applique les instructions dans leur ordre. Une variable donne un nom à une valeur ; une affectation peut remplacer cette valeur. Pour comprendre un calcul, écrivez une trace avant de demander au programme de l’exécuter.
 
 ```php
 <?php
-  $fruits = array("Pomme", "Banane", "Orange");
-  echo $fruits[1]; // Affiche "Banane"
-?>
+$quantite = 3;
+$prix = 12.5;
+$total = $quantite * $prix;
+$total = $total - 5;
+echo $total;
 ```
 
-### Explications
+| Après l’instruction | Valeur de `$total` |
+|---|---|
+| Multiplication | `37.5` |
+| Soustraction | `32.5` |
 
-- `$fruits` : C'est un tableau indexé qui contient trois valeurs.
-- `array("Pomme", "Banane", "Orange")` : Utilisé pour créer un tableau avec des valeurs.
-- `$fruits[1]` : Accède à l'élément à l'index 1 du tableau, qui est "Banane".
+**Sortie attendue :** `32.5`. Le dernier `echo` affiche la valeur courante. Le signe `=` affecte ; `==` compare avec des conversions possibles, et `===` compare également les types. Un entier `5` et une chaîne `'5'` ne sont donc pas identiques au sens strict.
 
-#### Tableaux associatifs
+**Erreur à éviter :** lire `=` comme « est égal à » dans un test. Décrivez oralement les opérations : « stocker », « calculer », « comparer », « afficher ». Ces verbes aident à traduire une règle métier en pseudo-code, puis en PHP.
+
+<a id="variables"></a>
+
+## Déclarer et modifier une variable PHP
+
+Une variable PHP commence par `$`. L'affectation `=` stocke une valeur ; elle ne compare pas. Les noms sont sensibles à la casse : `$prix` et `$Prix` sont distincts. Chaque instruction usuelle se termine par `;`. Les chaînes, les entiers, les nombres décimaux et les booléens sont des types différents.
 
 ```php
 <?php
-  $personne = array("nom" => "Alice", "age" => 30, "ville" => "Paris");
-  echo $personne["ville"]; // Affiche "Paris"
-?>
+$nom = 'Léa';       // chaîne
+$quantite = 3;      // entier
+$prix = 12.5;       // nombre décimal, point dans le code
+$disponible = true; // booléen
+$total = $quantite * $prix;
+echo $nom . ' : ' . $total;
 ```
 
-### Explications
+**Sortie attendue :** `Léa : 37.5`. Le point `.` concatène des chaînes ; `*` multiplie. `echo` produit une sortie. Une variable déclarée après son utilisation ne fournit pas magiquement une valeur à la ligne précédente.
 
-- `$personne` : C'est un tableau associatif avec des clés et des valeurs.
-- `array("nom" => "Alice", "age" => 30, "ville" => "Paris")` : Utilisé pour créer un tableau associatif.
-- `$personne["ville"]` : Accède à la valeur associée à la clé "ville", qui est "Paris".
+<a id="operateurs"></a>
 
-### Structures conditionnelles
+## Les opérateurs de calcul et de comparaison
 
-Les structures conditionnelles permettent d'exécuter du code de manière conditionnelle.
-
-#### Exemple de condition if
+`+`, `-`, `*`, `/` réalisent les calculs usuels ; `%` calcule le reste d'une division entière. Les parenthèses rendent l'ordre d'un calcul explicite. `===` compare la valeur et le type, tandis que `==` autorise des conversions de types. Pour des tests prévisibles, privilégiez une comparaison stricte après avoir obtenu des données du bon type.
 
 ```php
-<?php
-  $age = 20;
+var_dump(5 === '5'); // bool(false)
+var_dump(5 > 3);     // bool(true)
+```
 
-  if ($age >= 18) {
-    echo "Vous êtes majeur.";
-  } else {
-    echo "Vous êtes mineur.";
+`&&` signifie « et », `||` signifie « ou », `!` inverse un booléen. `>=` inclut l'égalité ; `>` ne l'inclut pas. Ne confondez pas `$age = 18` avec `$age === 18`.
+
+<a id="conditions"></a>
+
+## Les conditions if, elseif et else
+
+```php
+$age = 18;
+if ($age >= 18) {
+    echo 'Accès adulte';
+} else {
+    echo 'Accès junior';
+}
+```
+
+Une seule de ces deux branches est exécutée. Avec 18, la sortie est `Accès adulte`. `elseif` permet une condition intermédiaire ; la première branche vraie d'une chaîne if/elseif est retenue. Testez les limites, par exemple 17, 18 et 19, plutôt qu'une seule valeur éloignée du seuil.
+
+<a id="tableaux"></a>
+
+## Tableaux et parcours foreach
+
+```php
+$tags = ['web', 'image', 'son'];
+$profil = ['nom' => 'Léa', 'age' => 18];
+echo $tags[0];          // web
+echo $profil['nom'];    // Léa
+```
+
+Un tableau indexé commence ici à l'indice 0. Un tableau associatif utilise des clés choisies. `count($tags)` donne le nombre d'éléments, ici 3. Une clé et sa valeur ne sont pas la même chose. Ne lisez pas un indice absent sans décider comment traiter ce cas.
+
+Une trace note l'évolution des variables dans l'ordre des instructions :
+
+```php
+$points = 2;
+$points = $points + 3;
+$points = $points * 2;
+echo $points; // 10
+```
+
+Sur papier : 2 → 5 → 10. Une trace permet d'expliquer un résultat sans dépendre de l'essai au hasard.
+
+## La sortie d’un calcul PHP
+
+Les expressions PHP ci-dessus sont exécutées avec PHP. Ce modèle visuel utilise JavaScript pour rendre visibles les valeurs intermédiaires : ce n’est pas un interpréteur PHP. Une affectation remplace une valeur ; une condition choisit une branche.
+
+```html live title="Voir les étapes d’un calcul"
+<style>
+  body {
+    margin: 16px;
+    font-family: system-ui, sans-serif;
+    color: #18324c;
   }
-?>
-```
-
-### Explications
-
-- `if` : Utilisé pour vérifier une condition.
-- `$age >= 18` : Condition qui vérifie si l'âge est supérieur ou égal à 18.
-- `else` : Bloc de code qui s'exécute si la condition `if` est fausse.
-
-#### Exemple de condition switch
-
-```php
-<?php
-  $couleur = "rouge";
-
-  switch ($couleur) {
-    case "rouge":
-      echo "La couleur est rouge.";
-      break;
-    case "bleu":
-      echo "La couleur est bleue.";
-      break;
-    default:
-      echo "Couleur inconnue.";
-      break;
+  .cartes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
   }
-?>
-```
-
-### Explications
-
-- `switch` : Structure conditionnelle utilisée pour exécuter différents blocs de code basés sur la valeur d'une variable.
-- `case "rouge":` : Bloc de code exécuté si la variable `$couleur` est égale à "rouge".
-- `default` : Bloc de code exécuté si aucune des valeurs `case` ne correspond.
-
-### Boucles en PHP
-
-Les boucles permettent de répéter du code plusieurs fois.
-
-#### Boucle for
-
-```php
-<?php
-  for ($i = 0; $i < 5; $i++) {
-    echo "Nombre: $i<br>";
+  article,
+  output {
+    display: block;
+    padding: 16px;
+    border: 1px solid #9aaabe;
   }
-?>
-```
-
-### Explications
-
-- `for` : Utilisé pour créer une boucle qui s'exécute un nombre spécifique de fois.
-- `$i = 0; $i < 5; $i++` : Initialisation de la boucle avec `$i` commençant à 0, se terminant à moins de 5, et s'incrémentant de 1 à chaque itération.
-- `echo "Nombre: $i<br>";` : Affiche la valeur de `$i` à chaque itération de la boucle.
-
-#### Boucle while
-
-```php
-<?php
-  $i = 0;
-
-  while ($i < 5) {
-    echo "Nombre: $i<br>";
-    $i++;
+  button,
+  input {
+    font: inherit;
+    padding: 8px;
   }
-?>
-```
-
-### Explications
-
-- `while` : Utilisé pour créer une boucle qui s'exécute tant qu'une condition est vraie.
-- `$i < 5` : Condition qui doit être vraie pour que la boucle continue de s'exécuter.
-- `$i++` : Incrémente la variable `$i` de 1 à chaque itération.
-
-### Boucle foreach
-
-La boucle `foreach` est utilisée pour itérer sur les éléments d'un tableau.
-
-#### Exemple de boucle foreach
-
-```php
-<?php
-  $fruits = array("Pomme", "Banane", "Orange");
-
-  foreach ($fruits as $fruit) {
-    echo "Fruit: $fruit<br>";
+  label {
+    display: block;
+    margin-block: 12px 4px;
   }
-?>
-```
-
-### Explications
-
-- `foreach` : Utilisé pour itérer sur chaque élément d'un tableau.
-- `$fruits as $fruit` : À chaque itération, `$fruit` prend la valeur de l'élément courant du tableau `$fruits`.
-
-### Fonctions en PHP
-
-Les fonctions permettent de regrouper du code réutilisable.
-
-#### Exemple de fonction
-
-```php
-<?php
-  function saluer($nom) {
-    return "Bonjour, $nom!";
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
   }
+</style>
 
-  echo saluer("Alice");
-?>
-```
-
-### Explications
-
-- `function` : Mot-clé utilisé pour définir une fonction en PHP.
-- `saluer($nom)` : Déclare une fonction nommée `saluer` qui prend un argument `$nom`.
-- `return "Bonjour, $nom!";` : La fonction retourne une chaîne de caractères "Bonjour, $nom!".
-
-## Exercices pratiques
-
-### Exercice 1 : Afficher des informations sur une personne
-
-Créez un script PHP qui définit des variables pour le nom, l'âge et la ville d'une personne, puis affiche ces informations.
-
-```php
-<?php
-  $nom = "Marie";
-  $age = 28;
-  $ville = "Lyon";
-
-  echo "Nom: $nom<br>";
-  echo "Âge: $age<br>";
-  echo "Ville: $ville<br>";
-?>
-```
-
-### Explications
-
-- Créez trois variables `$nom`, `$age`, et `$ville`.
-- Utilisez `echo` pour afficher les valeurs de ces variables avec des sauts de ligne `<br>`.
-
-### Exercice 2 : Calculer la somme des éléments d'un tableau
-
-Créez un script PHP qui définit un tableau de nombres et calcule la somme des éléments du tableau.
-
-```php
-<?php
-  $nombres = array(1, 2, 3, 4, 5);
-  $somme = 0;
-
-  foreach ($nombres as $nombre) {
-    $somme += $nombre;
+<h1>Tracer un calcul</h1>
+<ol id="trace"></ol>
+<script>
+  const quantite = 3;
+  const prix = 12.5;
+  const totalInitial = quantite * prix;
+  const total = totalInitial - 5;
+  const autorise = total <= 40;
+  const etapes = [
+    `quantite = ${quantite}`,
+    `prix = ${prix}`,
+    `total initial = ${totalInitial}`,
+    `total = ${total}`,
+    `total <= 40 : ${autorise}`,
+    autorise ? "Budget respecté" : "Budget dépassé",
+  ];
+  for (const etape of etapes) {
+    const li = document.createElement("li");
+    li.textContent = etape;
+    document.querySelector("#trace").append(li);
   }
-
-  echo "La somme des nombres est: $somme";
-?>
+</script>
 ```
 
-### Explications
-
-- Créez un tableau `$nombres` avec plusieurs valeurs numériques.
-- Initialisez une variable `$somme` à 0.
-- Utilisez une boucle `foreach` pour ajouter chaque valeur du tableau à `$somme`.
-- Affichez la somme totale avec `echo`.
-
-### Exercice 3 : Vérifier l'âge pour voter
-
-Créez un script PHP qui demande l'âge d'une personne et affiche un message indiquant si cette personne est en âge de voter (18 ans et plus).
-
-```php
-<?php
-  $age = 16;
-
-  if ($age >= 18) {
-    echo "Vous pouvez voter.";
-  } else {
-    echo "Vous ne pouvez pas voter.";
-  }
-?>
-```
-
-### Explications
-
-- Définissez une variable `$age`.
-- Utilisez une structure conditionnelle `if` pour vérifier si l'âge est supérieur ou égal à 18.
-- Affichez un message différent selon que la personne peut ou non voter.
-
-### Exercice 4 : Afficher une table de multiplication
-
-Créez un script PHP qui affiche la table de multiplication de 1 à 10 pour un nombre donné.
-
-```php
-<?php
-  $nombre = 3;
-
-  for ($i = 1; $i <= 10; $i++) {
-    echo "$nombre x $i = " . ($nombre * $i) . "<br>";
-  }
-?>
-```
-
-### Explications
-
-- Définissez une variable `$nombre` pour le nombre dont vous voulez afficher la table de multiplication.
-- Utilisez une boucle `for` pour multiplier `$nombre` par chaque nombre de 1 à 10.
-- Affichez le résultat de chaque multiplication avec `echo`.
-
-### Exercice 5 : Afficher les jours de la semaine
-
-Créez un script PHP qui utilise un tableau associatif pour afficher les jours de la semaine en français.
-
-```php
-<?php
-  $jours = array(
-    "Lundi" => "Monday",
-    "Mardi" => "Tuesday",
-    "Mercredi" => "Wednesday",
-    "Jeudi" => "Thursday",
-    "Vendredi" => "Friday",
-    "Samedi" => "Saturday",
-    "Dimanche" => "Sunday"
-  );
-
-  foreach ($jours as $francais => $anglais) {
-    echo "$francais en anglais est $anglais<br>";
-  }
-?>
-```
-
-### Explications
-
-- Créez un tableau associatif `$jours` où les clés sont les jours en français et les valeurs sont les jours en anglais.
-- Utilisez une boucle `foreach` pour itérer sur chaque paire clé-valeur.
-- Affichez chaque jour en français et sa traduction en anglais avec `echo`.
-
-## Conclusion
-
-Dans ce TD, nous avons exploré les bases de l'algorithmique avec PHP, y compris les variables, les tableaux, les structures conditionnelles et les boucles. Ces concepts sont essentiels pour écrire des scripts PHP efficaces et fonctionnels. Pratiquez en écrivant vos propres scripts pour renforcer vos compétences.
-
----
+**Résultat à observer :** Comme dans le premier exemple PHP, trois éléments à 12,50 euros donnent 37,50 euros, puis retirer 5 euros produit 32,50 euros. Le modèle ajoute une condition de budget : changez uniquement le prix pour dépasser 40 euros, puis reproduisez cette condition en PHP.

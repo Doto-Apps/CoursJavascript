@@ -1,35 +1,42 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Simple exercises"
+title: "Exemples commentés : calculs et collections"
 type: "td"
 ---
 
-# Exercices
+## Calculer un total à partir d’une collection
 
-## Exercice 1
+Ces exemples corrigés réunissent les [fonctions](/semestre_4/js/begin/functions), les [tableaux](/semestre_4/js/begin/arrays) et les [conditions](/semestre_4/js/begin/conditions). Ils peuvent être lus et modifiés librement ; ils ne constituent pas un travail à remettre.
 
-- Créer une page HTML avec 3 boutons et une balise div avec un id
-- Si je clique sur un bouton le texte change, le texte est différent selon le bouton cliqué
-- Si je clique sur un bouton la couleur d’arrière plan (background) de la div change (différents pour chaque bouton)
-- Reproduire avec les différentes syntaxes
+```js live title="Le total d’un panier"
+const panier = [
+  { titre: 'Affiche', prix: 12, quantite: 2 },
+  { titre: 'Carte', prix: 3, quantite: 4 }
+];
+const total = panier.reduce((somme, ligne) => somme + ligne.prix * ligne.quantite, 0);
+console.log(total);
+```
 
-Lorsque vous récupérer un élément du DOM deux propriétés permettent de lire et de modifier son contenu : `innerHTML` et `innerText`
+Résultat : `36`, soit `12 × 2 + 3 × 4`. L’accumulateur démarre à zéro ; chaque objet fournit le prix et la quantité de sa ligne. Un panier vide donne zéro.
 
----
+## Sélectionner les projets publiés
 
-## Exercice 2
+```js
+const projets = [{ titre: 'Photo', publie: true }, { titre: 'Son', publie: false }];
+const titres = projets.filter(p => p.publie).map(p => p.titre);
+console.log(titres); // ['Photo']
+console.log(projets.length); // 2
+```
 
-- Créer une page HTML avec deux boutons et une div avec un id :
-- Quand je clique sur un bouton une couleur d’arrière plan aléatoire est générée
-- Quand je clique sur l’autre bouton la couleur d’arrière plan revient à la précédente
-- Par défaut la couleur d’arrière plan sera “magenta”
-- Reproduire avec les différentes syntaxes
+`filter` conserve l’objet publié ; `map` extrait son titre. La source reste complète : elle pourra servir à une autre vue. Inverser ces opérations retirerait d’abord l’information `publie`, nécessaire au filtre.
 
-Le css est modifiable soit par la propriété `style` soit par `style.XXXX` en remplacant XXX par la propriété CSS écrite en camelCase
+## Traiter une collection vide
 
----
+```js
+function decrireResultats(projets) {
+  return projets.length === 0 ? 'Aucun projet' : `${projets.length} projet(s)`;
+}
+console.log(decrireResultats([])); // Aucun projet
+```
 
-## Exercice 3
-
-- Créer une page HTML avec un formulaire contenant les champs: nom, prénom, âge et une zone de texte pour écrire ses ambitions dans le futur
-- Lorsque je soumet le formulaire les valeurs entrées s’affichent dans le DOM
+Le test porte sur `length` : le tableau vide est une valeur vraie dans une condition. Cette règle évite d’afficher une liste prétendument remplie alors qu’aucune fiche ne correspond.

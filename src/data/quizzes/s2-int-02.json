@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Tailwind : composants, états et responsive",
+  "uid": "s2-int-02",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/integration/td/tailwind-composants",
+  "sourceSession": "S2-INT-02",
+  "targetCourse": "/semestre_2/integration/tp/transition",
+  "questions": [
+    {
+      "question": "Que représente une classe sans préfixe responsive ?",
+      "answers": [
+        "La règle de base applicable à toutes les largeurs",
+        "Une règle seulement pour téléphone",
+        "Une règle seulement au seuil md",
+        "Une règle réservée aux grands écrans"
+      ],
+      "explanation": "Une classe sans préfixe reste applicable tant qu’une règle ne la remplace.",
+      "sourceSection": "notion-1",
+      "evidence": "Les classes sans préfixe forment la base, valable aussi aux grandes largeurs si rien ne la remplace.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que signifie md: dans les variantes responsive de ce cours ?",
+      "answers": [
+        "Uniquement sous le seuil md",
+        "À partir du seuil md inclus",
+        "Uniquement à la largeur exacte du seuil",
+        "Seulement sur une marque de tablette"
+      ],
+      "explanation": "Le préfixe exprime une largeur minimale selon la configuration.",
+      "sourceSection": "notion-4",
+      "evidence": "md signifie à partir du seuil, pas uniquement dans une catégorie d'appareils.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Avec grid-cols-1 md:grid-cols-2 lg:grid-cols-3 et les seuils par défaut de Tailwind 3, combien de colonnes à 800px ?",
+      "answers": [
+        "Trois colonnes",
+        "Quatre colonnes",
+        "Deux colonnes",
+        "Une colonne"
+      ],
+      "explanation": "Avec grid-cols-1 md:grid-cols-2 lg:grid-cols-3, 800px atteint md mais pas lg.",
+      "sourceSection": "notion-6",
+      "evidence": "La grille du cours donne deux colonnes de 768 px jusqu'avant 1024 px.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel état active hover:bg-blue-800 ?",
+      "answers": [
+        "L’arrivée du focus uniquement",
+        "Une largeur minimale",
+        "Une préférence de couleur sombre",
+        "Le survol du pointeur"
+      ],
+      "explanation": "Le préfixe hover cible un état de survol.",
+      "sourceSection": "notion-8",
+      "evidence": "hover: applique une variante au survol.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quel préfixe du cours aide à matérialiser le focus ?",
+      "answers": [
+        "focus-visible:",
+        "hover:",
+        "md:",
+        "active:"
+      ],
+      "explanation": "focus-visible permet un indicateur de focus dans les situations correspondantes.",
+      "sourceSection": "notion-9",
+      "evidence": "focus-visible: permet de rendre le focus visible dans les situations concernées.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel élément convient pour déclencher une action locale ?",
+      "answers": [
+        "section",
+        "button",
+        "article",
+        "h2"
+      ],
+      "explanation": "Un bouton natif déclenche une action et fournit des comportements clavier.",
+      "sourceSection": "notion-11",
+      "evidence": "Une action locale utilise un bouton natif.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel élément convient pour aller à une autre page ?",
+      "answers": [
+        "div seulement coloré",
+        "p souligné",
+        "a avec href",
+        "button sans action"
+      ],
+      "explanation": "Une destination de navigation est représentée par un lien.",
+      "sourceSection": "notion-12",
+      "evidence": "Une navigation vers une destination utilise un lien.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Les seuils md et lg sont-ils identiques dans tous les projets ?",
+      "answers": [
+        "Oui, ils sont fixés par la marque de l’écran",
+        "Oui, ils sont toujours immuables",
+        "Non, ils changent selon le texte du titre",
+        "Non, les seuils dépendent de la configuration"
+      ],
+      "explanation": "Il faut consulter les seuils du projet plutôt que supposer ceux par défaut.",
+      "sourceSection": "notion-15",
+      "evidence": "Les seuils responsive sont configurables.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Où placer grid et les variantes de colonnes ?",
+      "answers": [
+        "Le parent des cartes",
+        "Chaque titre séparément",
+        "Chaque lien seulement",
+        "Chaque image seulement"
+      ],
+      "explanation": "Le conteneur organise ses enfants ; les colonnes sont définies sur ce parent.",
+      "sourceSection": "notion-16",
+      "evidence": "Les classes grid et de colonnes organisent les enfants depuis leur parent.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quel test vérifie la robustesse d'une carte ?",
+      "answers": [
+        "Une carte sans aucun contenu",
+        "Un titre long",
+        "Seulement un titre d’une lettre",
+        "Toujours le même contenu court"
+      ],
+      "explanation": "Une variante doit résister à un contenu réaliste plus long.",
+      "sourceSection": "notion-17",
+      "evidence": "Un composant doit rester lisible avec un titre long.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Qu'est-ce qui facilite la réutilisation des cartes ?",
+      "answers": [
+        "Un id partagé sur toutes les cartes",
+        "Un contenu intégral identique",
+        "Une structure et des règles communes",
+        "Un titre identique obligatoire"
+      ],
+      "explanation": "Les contenus varient ; la structure commune reste maintenable.",
+      "sourceSection": "notion-18",
+      "evidence": "Un composant commun conserve une structure cohérente malgré des contenus différents.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Qu'est-ce qui déclenche une variante responsive de largeur ?",
+      "answers": [
+        "La marque de l’ordinateur",
+        "La résolution du fichier image",
+        "Le système d’exploitation seul",
+        "La largeur de la fenêtre en pixels CSS"
+      ],
+      "explanation": "Les variantes de largeur suivent l’espace CSS disponible.",
+      "sourceSection": "notion-19",
+      "evidence": "Les variantes répondent à la largeur CSS disponible, pas au nom commercial de l'appareil.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

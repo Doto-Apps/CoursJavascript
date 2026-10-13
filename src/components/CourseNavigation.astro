@@ -1,0 +1,150 @@
+---
+import { getEntry } from "astro:content";
+
+interface Props {
+  title: string;
+  previousSession?: string;
+  nextSession?: string;
+  metadata?: string;
+  position: "top" | "bottom";
+}
+
+const { title, previousSession, nextSession, metadata, position } = Astro.props;
+
+async function resolveCourse(coursePath?: string) {
+  if (!coursePath) return undefined;
+  const id = coursePath.replace(/^\//, "").replace(/\/$/, "");
+  const entry = await getEntry("pages", id || "index")
+    ?? await getEntry("pages", `${id}/index`);
+  if (!entry) {
+    throw new Error(`Navigation des cours : Markdown introuvable pour ${coursePath}`);
+  }
+  return { href: coursePath, title: entry.data.title };
+}
+
+const [previous, next] = await Promise.all([
+  resolveCourse(previousSession),
+  resolveCourse(nextSession),
+]);
+---
+
+{(previous || next) && (
+  <nav
+    class:list={["course-navigation not-prose", (!previous || !next) && "course-navigation-single"]}
+    data-position={position}
+    aria-label={`Navigation des cours — ${position === "top" ? "début" : "fin"} de séance`}
+  >
+    <div class="course-navigation-current">
+      {position === "top" && metadata && <p class="course-navigation-meta">{metadata}</p>}
+      {position === "top"
+        ? <h1 class="course-navigation-title">{title}</h1>
+        : <span class="course-navigation-title">{title}</span>}
+    </div>
+
+    {previous ? (
+      <a class="course-navigation-link course-navigation-previous" href={previous.href} rel="prev">
+        <span class="course-navigation-arrow" aria-hidden="true">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+        </span>
+        <span class="course-navigation-text">
+          <span class="course-navigation-label">Cours précédent</span>
+          <span class="course-navigation-title">{previous.title}</span>
+        </span>
+      </a>
+    ) : null}
+
+    {next ? (
+      <a class="course-navigation-link course-navigation-next" href={next.href} rel="next">
+        <span class="course-navigation-text">
+          <span class="course-navigation-label">Cours suivant</span>
+          <span class="course-navigation-title">{next.title}</span>
+        </span>
+        <span class="course-navigation-arrow" aria-hidden="true">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 7 7-7 7M5 12h14" /></svg>
+        </span>
+      </a>
+    ) : null}
+  </nav>
+)}
+
+<style>
+  .course-navigation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    margin-block: 24px;
+    padding: 12px;
+    border: 1px solid var(--course-line);
+    border-radius: 12px;
+    background: var(--course-surface);
+    color: var(--course-ink);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .course-navigation-link, .course-navigation-current, .course-navigation-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .course-navigation-link {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--course-line);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--course-paper), var(--course-ink) 3%);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+  .course-navigation-link:hover {
+    border-color: color-mix(in srgb, var(--course-paper), var(--course-ink) 32%);
+    background: color-mix(in srgb, var(--course-paper), var(--course-ink) 10%);
+  }
+  .course-navigation-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  .course-navigation-arrow {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--course-paper), var(--course-ink) 9%);
+  }
+  .course-navigation-label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.7rem;
+    color: var(--course-muted);
+  }
+  .course-navigation-title { display: block; font-weight: 550; line-height: 1.35; }
+  h1.course-navigation-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.65rem); font-weight: 650; line-height: 1.25; text-wrap: balance; }
+  .course-navigation-current {
+    grid-column: 1 / -1;
+    padding-inline: 40px;
+    text-align: center;
+  }
+  .course-navigation-meta { margin: 0 0 5px; color: var(--course-muted); font-size: 0.7rem; letter-spacing: 0.04em; }
+  .course-navigation-next { grid-template-columns: minmax(0, 1fr) 32px; text-align: right; }
+  .course-navigation-next .course-navigation-arrow { background: color-mix(in srgb, var(--course-paper), var(--course-ink) 15%); }
+  .course-navigation-single .course-navigation-link { grid-column: 1 / -1; width: 100%; max-width: 640px; justify-self: center; }
+  .course-navigation[data-position="top"] {
+    margin: 0 calc(-1 * var(--course-gutter, 1.25rem)) 16px;
+    padding: 12px var(--course-gutter, 1.25rem);
+    border-width: 0 0 1px;
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--course-paper), var(--course-ink) 8%), var(--course-surface));
+    box-shadow: 0 5px 14px rgb(0 0 0 / 0.06);
+  }
+  @media (max-width: 560px) {
+    .course-navigation { grid-template-columns: minmax(0, 1fr); gap: 8px; font-size: 0.8rem; }
+    .course-navigation-current { padding-bottom: 2px; }
+    .course-navigation-link { padding: 9px 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .course-navigation-link { transition: none; }
+  }
+</style>

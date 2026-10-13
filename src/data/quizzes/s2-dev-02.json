@@ -1,0 +1,168 @@
+{
+  "name": "Révision — Fetch et PHP : parcourir la chaîne complète",
+  "uid": "s2-dev-02",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_2/developpement_Web/td/fetch-php",
+  "sourceSession": "S2-DEV-02",
+  "targetCourse": "/semestre_2/developpement_Web/tp/lecture",
+  "questions": [
+    {
+      "question": "Que renvoie fetch immédiatement ?",
+      "answers": [
+        "Une promesse",
+        "Le tableau de données directement",
+        "Une chaîne JSON déjà analysée",
+        "Un élément HTML"
+      ],
+      "explanation": "fetch représente une opération asynchrone ; sa résolution fournit une réponse.",
+      "sourceSection": "notion-1",
+      "evidence": "fetch renvoie une promesse.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que fait await devant fetch dans une fonction async ?",
+      "answers": [
+        "Relancer automatiquement toute requête échouée",
+        "Attendre la résolution avant de poursuivre cette fonction",
+        "Bloquer tous les traitements du navigateur",
+        "Transformer toujours la valeur en texte"
+      ],
+      "explanation": "await suspend la fonction asynchrone à cet endroit, pas toute l’application.",
+      "sourceSection": "notion-2",
+      "evidence": "await attend une promesse dans une fonction asynchrone.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que vérifie response.ok ?",
+      "answers": [
+        "Si la liste contient des éléments",
+        "Si PHP possède une connexion SQL",
+        "Si le statut HTTP est dans la plage de réussite",
+        "Si tous les champs JSON sont corrects"
+      ],
+      "explanation": "Le statut de réussite ne garantit pas la forme des données.",
+      "sourceSection": "notion-4",
+      "evidence": "response.ok est vrai pour les statuts HTTP de 200 à 299.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Que fait fetch lorsqu'une réponse HTTP 404 normale arrive ?",
+      "answers": [
+        "La promesse est forcément rejetée",
+        "Le navigateur transforme 404 en 200",
+        "fetch recommence automatiquement",
+        "La promesse peut se résoudre normalement"
+      ],
+      "explanation": "Une erreur HTTP doit être vérifiée explicitement dans la réponse.",
+      "sourceSection": "notion-5",
+      "evidence": "Un statut HTTP 404 ne rejette pas automatiquement fetch.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle méthode analyse le corps JSON reçu ?",
+      "answers": [
+        "response.json()",
+        "JSON.stringify(response)",
+        "response.ok",
+        "document.createElement"
+      ],
+      "explanation": "Le corps JSON doit être analysé ; cette lecture est elle-même asynchrone.",
+      "sourceSection": "notion-6",
+      "evidence": "response.json analyse le corps JSON de façon asynchrone.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Que peut provoquer une réponse HTML analysée comme JSON ?",
+      "answers": [
+        "Une nouvelle requête POST",
+        "Une erreur d’analyse JSON",
+        "Un tableau vide garanti",
+        "Une réponse automatiquement corrigée"
+      ],
+      "explanation": "Un corps HTML n’est pas un texte JSON valide.",
+      "sourceSection": "notion-7",
+      "evidence": "response.json peut échouer si le corps n'est pas du JSON valide.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Quel message distingue l'attente de la liste vide ?",
+      "answers": [
+        "Succès avant la réception",
+        "Erreur pendant toute requête",
+        "Chargement pendant l’attente",
+        "Aucun résultat avant toute réponse"
+      ],
+      "explanation": "L’attente, la liste vide et l’échec doivent avoir des états distincts.",
+      "sourceSection": "notion-9",
+      "evidence": "L'état Chargement est présenté pendant l'attente.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle donnée JSON représente une liste vide valide ?",
+      "answers": [
+        "Une erreur HTTP obligatoire",
+        "Une valeur null obligatoirement",
+        "Une page HTML vide",
+        "Un tableau vide"
+      ],
+      "explanation": "Une liste vide peut être une lecture réussie.",
+      "sourceSection": "notion-10",
+      "evidence": "Un tableau vide reçu avec succès est un état vide normal.",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Quelle propriété utiliser pour afficher le titre reçu sans l'interpréter comme HTML ?",
+      "answers": [
+        "textContent",
+        "innerHTML",
+        "outerHTML",
+        "insertAdjacentHTML"
+      ],
+      "explanation": "textContent affiche du texte sans l’interpréter comme du HTML.",
+      "sourceSection": "notion-11",
+      "evidence": "textContent affiche un titre comme texte.",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle fonction PHP produit le JSON ?",
+      "answers": [
+        "serialize",
+        "json_encode",
+        "json_decode",
+        "htmlspecialchars"
+      ],
+      "explanation": "Côté PHP, json_encode produit le texte JSON de sortie.",
+      "sourceSection": "notion-14",
+      "evidence": "json_encode transforme les données PHP en texte JSON.",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "localhost:4321 et localhost:8080 ont-ils la même origine HTTP ?",
+      "answers": [
+        "Oui, si le chemin est identique",
+        "Oui, si les deux utilisent GET",
+        "Non, les ports différents donnent des origines différentes",
+        "Oui, localhost suffit pour une origine identique"
+      ],
+      "explanation": "Une origine est définie par protocole, hôte et port.",
+      "sourceSection": "notion-18",
+      "evidence": "Une origine inclut notamment schéma, hôte et port.",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "no-cors permet-il de lire librement le JSON d’une origine refusée ?",
+      "answers": [
+        "Oui, cette option autorise toutes les lectures",
+        "Oui, si le statut vaut 200",
+        "Oui, si le corps contient un tableau",
+        "Non, la réponse opaque n’est pas lisible comme JSON"
+      ],
+      "explanation": "no-cors ne fournit pas une permission de lecture des données.",
+      "sourceSection": "notion-20",
+      "evidence": "no-cors ne fournit pas une réponse JSON lisible à ce code.",
+      "correctAnswerIndex": 3
+    }
+  ]
+}

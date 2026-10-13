@@ -4,99 +4,54 @@ title: "Array functions"
 type: "tp"
 ---
 
-# Les fonctions de tableau
+## map : transformer chaque élément
 
-## Fonction map()
+`map` appelle une fonction pour chaque élément et construit un nouveau tableau de même longueur. La fonction doit renvoyer la nouvelle valeur.
 
-La fonction <code>map()</code> permet de parcourir tous les éléments
-d'un tableau et de les transformer selon une fonction définie. L'exemple
-suivant utilise <code>map()</code> pour doubler chaque élément d'un
-tableau:
-
-```js
-let numbers = [1, 2, 3, 4];
-let doubledNumbers = numbers.map((x) => x * 2);
-console.log(doubledNumbers); // [2, 4, 6, 8]
+```js live title="Transformer, sélectionner et additionner"
+const prix = [12, 8, 15];
+console.log(prix.map(montant => montant * 2));
+console.log(prix.filter(montant => montant >= 12));
+console.log(prix.reduce((total, montant) => total + montant, 0));
+console.log(prix);
 ```
 
-## Fonction filter()
+Sorties : `[24, 16, 30]`, `[12, 15]`, `35`, puis `[12, 8, 15]`. Le tableau source garde ici ses valeurs.
 
-La fonction <code>filter()</code> permet de filtrer les éléments d'un
-tableau en fonction d'une condition donnée. L'exemple suivant utilise{" "}
-<code>filter()</code> pour extraire les nombres pairs d'un tableau:
+## filter : sélectionner des éléments
 
-```js
-let numbers = [1, 2, 3, 4];
-let evenNumbers = numbers.filter((x) => x % 2 === 0);
-console.log(evenNumbers); // [2, 4]
-```
+La fonction de rappel renvoie un résultat vrai pour les éléments conservés. Le nouveau tableau peut être vide ; son ordre reste celui de la source. Dans un portfolio, `projets.filter(projet => projet.publie)` sélectionne les fiches publiées. Filtrez toujours la source si l’utilisateur peut ensuite effacer ou modifier son filtre.
 
-## Fonction reduce()
+## reduce : calculer une valeur accumulée
 
-La fonction <code>reduce()</code> permet de réduire un tableau à une
-seule valeur en combinant les éléments du tableau en utilisant une
-fonction donnée. L'exemple suivant utilise <code>reduce()</code> pour
-calculer la somme de tous les éléments d'un tableau:
+Le premier paramètre de la fonction est l’accumulateur ; le second, l’élément courant. Dans le calcul précédent, 0 est la valeur initiale : les valeurs successives de l’accumulateur sont 12, 20 et 35. Avec un tableau vide, le résultat reste 0. Sans valeur initiale, `reduce` échoue sur un tableau vide.
+
+## find, some et every
 
 ```js
-let numbers = [1, 2, 3, 4];
-let sum = numbers.reduce(
-  (accumulator, currentValue) => accumulator + currentValue,
-);
-console.log(sum); // 10
+const projets = [{ id: 4, publie: true }, { id: 9, publie: false }];
+console.log(projets.find(p => p.id === 9)); // { id: 9, publie: false }
+console.log(projets.some(p => p.publie)); // true
+console.log(projets.every(p => p.publie)); // false
 ```
 
-## Fonction push()
+`find` renvoie le premier élément correspondant ou `undefined` ; `some` indique si au moins un élément convient ; `every` exige que tous conviennent. `filter` renvoie toujours un tableau, même pour un seul résultat.
 
-La fonction <code>push()</code> permet d'ajouter un ou plusieurs
-éléments à la fin d'un tableau. L'exemple suivant utilise{" "}
-<code>push()</code> pour ajouter un nombre à un tableau:
+## Les méthodes qui modifient le tableau
+
+| Méthode | Effet | Valeur renvoyée |
+|---|---|---|
+| `push(valeur)` | Ajoute à la fin | Nouvelle longueur |
+| `pop()` | Retire le dernier | Élément retiré |
+| `splice(index, nombre)` | Retire à partir d’un indice | Tableau des éléments retirés |
+| `sort(comparateur)` | Trie sur place | Même tableau |
+| `slice(debut, fin)` | Copie une portion, fin exclue | Nouveau tableau |
 
 ```js
-let numbers = [1, 2, 3];
-numbers.push(4);
-console.log(numbers); // [1, 2, 3, 4]
+const valeurs = [10, 2, 30];
+const triees = [...valeurs].sort((a, b) => a - b);
+console.log(triees); // [2, 10, 30]
+console.log(valeurs.slice(0, 2)); // [10, 2]
 ```
 
-## Fonction pop()
-
-La fonction <code>pop()</code> permet de supprimer le dernier élément
-d'un tableau et de renvoyer cet élément. L'exemple suivant utilise{" "}
-<code>pop()</code> pour supprimer le dernier élément d'un tableau:
-
-```js
-let numbers = [1, 2, 3];
-let lastNumber = numbers.pop();
-console.log(numbers); // [1, 2]
-console.log(lastNumber); // 3
-```
-
-## Fonction slice()
-
-La fonction <code>slice()</code> permet de créer un nouveau tableau en
-extraisant une portion d'un tableau existant. L'exemple suivant utilise{" "}
-<code>slice()</code> pour extraire les éléments du tableau entre les
-index 1 et 2:
-
-```js
-let numbers = [1, 2, 3, 4];
-let newNumbers = numbers.slice(1, 3);
-console.log(newNumbers); // [2, 3]
-```
-
-## Fonction splice()
-
-La fonction <code>splice()</code> permet de supprimer ou d'ajouter des
-éléments à un tableau existant. L'exemple suivant utilise{" "}
-<code>splice()</code> pour supprimer les éléments du tableau entre les
-index 1 et 2:
-
-```js
-let numbers = [1, 2, 3, 4];
-numbers.splice(1, 2);
-console.log(numbers); // [1, 4]
-```
-
-Il est important de noter que ces fonctions ne modifient pas le tableau
-d'origine, elles retournent un nouveau tableau avec les modifications
-effectuées.
+Sans comparateur, `sort` compare des représentations textuelles : `[10, 2, 30]` ne serait pas trié numériquement. Une nouvelle collection peut encore contenir les mêmes objets : ne modifiez pas leurs propriétés dans `map` si vous souhaitez conserver la source.

@@ -1,0 +1,168 @@
+{
+  "name": "Révision — TP PHP : parcourir des données et afficher des profils",
+  "uid": "s1-dev-04",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "sourceCourse": "/semestre_1/developpement_Web/phpVarTab",
+  "sourceSession": "DEV-04",
+  "targetCourse": "/semestre_1/developpement_Web/phpForm",
+  "questions": [
+    {
+      "question": "Avec $profils = [[\"nom\" => \"Léa\"], [\"nom\" => \"Sam\"], [\"nom\" => \"Noa\"]], que vaut $profils[1][\"nom\"] ?",
+      "answers": [
+        "Sam",
+        "Léa",
+        "Noa",
+        "Une clé nom absente"
+      ],
+      "explanation": "L’index 1 désigne le deuxième élément d’un tableau indexé à partir de zéro.",
+      "sourceSection": "comprendre",
+      "evidence": "Sam",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Quelle représentation possède chaque profil initial ?",
+      "answers": [
+        "Une instance de Profil obligatoirement",
+        "Un tableau associatif",
+        "Une chaîne simple",
+        "Un entier"
+      ],
+      "explanation": "Le profil initial regroupe des valeurs sous des clés nommées.",
+      "sourceSection": "comprendre",
+      "evidence": "associatif",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que fait foreach ?",
+      "answers": [
+        "Supprimer les éléments après lecture",
+        "Convertir les éléments en objets",
+        "Parcourir les éléments d’une collection",
+        "Trier automatiquement toute collection"
+      ],
+      "explanation": "foreach traite les éléments successivement sans les trier ni les supprimer.",
+      "sourceSection": "comprendre",
+      "evidence": "foreach",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quel rôle joue la variable de parcours ?",
+      "answers": [
+        "La collection entière",
+        "Toujours le premier élément",
+        "Le nombre total d’éléments",
+        "L’élément courant du parcours"
+      ],
+      "explanation": "La variable de parcours reçoit l’élément de chaque tour.",
+      "sourceSection": "boucle",
+      "evidence": "élément courant",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que signifie += dans l'accumulation ?",
+      "answers": [
+        "Ajouter à la valeur déjà accumulée",
+        "Remplacer toujours la somme par zéro",
+        "Comparer deux valeurs strictement",
+        "Créer une copie du tableau complet"
+      ],
+      "explanation": "L’addition avec affectation conserve le total précédent et lui ajoute la nouvelle valeur.",
+      "sourceSection": "comprendre",
+      "evidence": "ajoute",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Où initialiser un accumulateur ?",
+      "answers": [
+        "Uniquement dans le dernier tour",
+        "Avant la boucle",
+        "Au début de chaque tour",
+        "Après l’affichage final"
+      ],
+      "explanation": "Initialiser dans la boucle effacerait la somme à chaque passage.",
+      "sourceSection": "comprendre",
+      "evidence": "avant",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Combien de tours foreach effectue-t-il sur une collection vide ?",
+      "answers": [
+        "Trois tours",
+        "Un tour par clé attendue même absente",
+        "Aucun tour",
+        "Un tour avec une valeur vide"
+      ],
+      "explanation": "Une collection vide ne fournit aucun élément à foreach.",
+      "sourceSection": "comprendre",
+      "evidence": "vide",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Quelle précaution avant de calculer la moyenne ?",
+      "answers": [
+        "Diviser même si le nombre vaut zéro",
+        "Remplacer le total par le nombre d’éléments",
+        "Éliminer les valeurs nulles sans compter",
+        "Vérifier qu’il existe au moins un élément"
+      ],
+      "explanation": "Une moyenne ne peut pas diviser par un nombre d’éléments nul.",
+      "sourceSection": "boucle",
+      "evidence": "supérieur à zéro",
+      "correctAnswerIndex": 3
+    },
+    {
+      "question": "Que représente une classe ?",
+      "answers": [
+        "Un type décrivant les objets possibles",
+        "Une instance déjà créée",
+        "Le tableau de tous les objets du programme",
+        "Une variable d’un tour de boucle"
+      ],
+      "explanation": "La classe décrit ; l’instance est un objet créé à partir de cette description.",
+      "sourceSection": "comprendre",
+      "evidence": "classe",
+      "correctAnswerIndex": 0
+    },
+    {
+      "question": "Comment accéder à une propriété d'objet ?",
+      "answers": [
+        "$lea::nom dans cet exemple",
+        "$lea->nom",
+        "$lea['nom']",
+        "$lea.nom"
+      ],
+      "explanation": "La flèche accède à une propriété de l’objet ; les crochets servent ici aux tableaux.",
+      "sourceSection": "comprendre",
+      "evidence": "->",
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "Que désigne $this dans une méthode ?",
+      "answers": [
+        "Le dernier élément d’un tableau",
+        "Toutes les instances à la fois",
+        "L’instance courante",
+        "Le premier objet créé"
+      ],
+      "explanation": "Dans une méthode, this renvoie à l’objet sur lequel elle est appelée.",
+      "sourceSection": "objet",
+      "evidence": "instance courante",
+      "correctAnswerIndex": 2
+    },
+    {
+      "question": "Pourquoi utiliser htmlspecialchars pour un nom affiché dans le HTML ?",
+      "answers": [
+        "Chiffrer le transport réseau",
+        "Valider automatiquement une requête SQL",
+        "Supprimer tous les mots du nom",
+        "Échapper les caractères sensibles dans le texte HTML"
+      ],
+      "explanation": "L’échappement protège le contexte de sortie HTML ; ce n’est pas une validation de toutes les données.",
+      "sourceSection": "comprendre",
+      "evidence": "htmlspecialchars",
+      "correctAnswerIndex": 3
+    }
+  ]
+}
