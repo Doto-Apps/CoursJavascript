@@ -178,32 +178,6 @@
       "evidence": "` est le titre visible dans la page. `lang=\"fr\"` précise la langue ; `charset=\"utf-8\"` permet d’interpréter les caractères selon l’encodage du fichier. Il faut aussi enregistrer réellement le fichier en UTF-8."
     },
     {
-      "question": "Quel rôle joue le doctype HTML ?",
-      "answers": [
-        "Choisir la police de la page",
-        "Demander le mode standard du navigateur",
-        "Ajouter un titre visible",
-        "Créer une liste de liens"
-      ],
-      "correctAnswerIndex": 1,
-      "explanation": "La déclaration se place avant html pour demander le mode standard.",
-      "sourceSection": "document",
-      "evidence": "Le doctype demande le mode standard du navigateur. `head` contient les métadonnées ; `body` contient le contenu de la page. `title` nomme l'onglet. `charset=\"utf-8\"` indique l'encodage. `lang=\"fr\"` indique la langue, notamment aux technolog"
-    },
-    {
-      "question": "Que doit respecter l’id utilisé comme cible de #contact ?",
-      "answers": [
-        "Être le nom du fichier CSS",
-        "Changer à chaque clic",
-        "Être unique dans le document",
-        "Être répété dans toutes les sections"
-      ],
-      "correctAnswerIndex": 2,
-      "explanation": "Un identifiant unique permet au fragment de désigner une cible sans ambiguïté.",
-      "sourceSection": "comprendre",
-      "evidence": ">` | Image avec alternative selon son rôle. | `alt=\"\"` pour une image uniquement décorative. |"
-    },
-    {
       "question": "Une section thématique du contenu est généralement identifiée par quoi ?",
       "answers": [
         "Une couleur uniquement",
