@@ -2,7 +2,7 @@
 FROM node:lts AS base
 WORKDIR /app
 # Activer pnpm
-RUN corepack enable && corepack prepare pnpm@9.10.0 --activate
+RUN npm install -g pnpm@9.10.0
 
 # uniquement les manifests au début pour mieux cacher
 COPY package.json pnpm-lock.yaml ./
