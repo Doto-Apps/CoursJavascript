@@ -73,8 +73,8 @@ hidden: true
   <nav class="home-resources" aria-label="Références utiles">
     <h2>À garder sous la main</h2>
     <div>
-      <a href="/semestre_1/integration/balises">Balises HTML <span aria-hidden="true">→</span></a>
-      <a href="/semestre_1/integration/proprietes">Propriétés CSS <span aria-hidden="true">→</span></a>
+      <a href="/semestre_1/integration/htmltd">Structure HTML <span aria-hidden="true">→</span></a>
+      <a href="/semestre_1/integration/csstd">CSS et Flexbox <span aria-hidden="true">→</span></a>
       <a href="/extra/git">Git et hébergement <span aria-hidden="true">→</span></a>
     </div>
   </nav>

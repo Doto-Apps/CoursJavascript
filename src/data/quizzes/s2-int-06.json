@@ -22,12 +22,12 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quelle classe identifie le conteneur principal ?",
+      "question": "Quelle classe HTML identifie le conteneur principal du carrousel ?",
       "answers": [
-        ".swiper-pagination",
-        ".swiper",
-        ".swiper-slide",
-        ".swiper-wrapper"
+        "swiper-pagination",
+        "swiper",
+        "swiper-slide",
+        "swiper-wrapper"
       ],
       "explanation": "Le conteneur principal contient la structure attendue par la bibliothèque.",
       "sourceSection": "notion-3",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle classe porte le parent direct des diapositives ?",
+      "question": "Quelle classe porte l’élément qui contient directement les diapositives ?",
       "answers": [
         "swiper-pagination",
         "swiper-button-next",
@@ -48,7 +48,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel appel initialise le carrousel ?",
+      "question": "Quel code permet de démarrer le carrousel Swiper ?",
       "answers": [
         "Swiper comme attribut href",
         "Un import CSS sans initialisation",
@@ -139,20 +139,20 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel rôle joue onlyInViewport ?",
+      "question": "À quoi sert keyboard.onlyInViewport ?",
       "answers": [
         "Désactiver les images hors écran",
         "Changer le nombre total de diapositives",
         "Limiter la commande clavier au carrousel dans la zone visible",
         "Interdire tous les liens du document"
       ],
-      "explanation": "Un carrousel hors de la zone visible ne doit pas capter inutilement les touches.",
+      "explanation": "Cette option limite le contrôle au clavier au carrousel qui se trouve dans la zone visible.",
       "sourceSection": "notion-16",
       "evidence": "keyboard.onlyInViewport limite le contrôle clavier au carrousel dans la zone visible.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel choix fait le carrousel du cours pour l'autoplay ?",
+      "question": "Dans l’exemple du cours, les diapositives défilent-elles toutes seules ?",
       "answers": [
         "Défilement automatique imposé",
         "Défilement même pendant le focus",

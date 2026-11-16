@@ -18,11 +18,11 @@
       ],
       "explanation": "Une feuille CSS externe est chargée avec un élément link de type stylesheet.",
       "sourceSection": "base",
-      "evidence": "Créez `css/styles.css` et liez-le dans `head` avec `href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la m",
+      "evidence": "Créez `css/styles.css` et liez-le dans `head` avec `href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigateur.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Où diagnostiquer une feuille CSS renvoyant 404 ?",
+      "question": "Dans quel onglet du navigateur vérifier une feuille CSS qui renvoie une erreur 404 ?",
       "answers": [
         "Dans le panneau des favoris",
         "Dans l’onglet Réseau",
@@ -31,11 +31,11 @@
       ],
       "explanation": "Le statut de chargement permet de vérifier le chemin avant les règles CSS.",
       "sourceSection": "base",
-      "evidence": "href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigate",
+      "evidence": "Créez `css/styles.css` et liez-le dans `head` avec `href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigateur.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que comprend width avec box-sizing: border-box, hors marge ?",
+      "question": "Avec box-sizing: border-box, quels éléments sont compris dans width ?",
       "answers": [
         "Le contenu et la marge",
         "Les bordures et les marges seulement",
@@ -43,12 +43,12 @@
         "Le contenu seulement"
       ],
       "explanation": "La largeur déclarée inclut le padding et les bordures.",
-      "sourceSection": "comprendre",
-      "evidence": "box-sizing: border-box;",
+      "sourceSection": "base",
+      "evidence": "Créez `css/styles.css` et liez-le dans `head` avec `href=\"css/styles.css\"`. Une feuille absente est visible dans l'onglet Réseau. Utilisez `box-sizing: border-box` pour inclure padding et bordures dans les dimensions déclarées. Retirer la marge du `body` évite le décalage initial du navigateur.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle différence existe entre width fixe et max-width ?",
+      "question": "Quelle différence entre une largeur fixe et max-width ?",
       "answers": [
         "Les deux imposent toujours une largeur fixe",
         "width fixe réduit toujours la largeur sur mobile",
@@ -57,7 +57,7 @@
       ],
       "explanation": "Une largeur maximale permet au conteneur de rester plus étroit si l’espace manque.",
       "sourceSection": "comprendre",
-      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "evidence": "`width: 100%` demande toute la largeur disponible ; `max-width` fixe une limite supérieure. Les deux se complètent. Une largeur fixe de 1100 px ne devient pas automatiquement adaptée à un écran plus petit. `margin-inline: auto` distribue l’espace extérieur libre sur les deux côtés de l’axe en ligne.",
       "correctAnswerIndex": 3
     },
     {
@@ -69,8 +69,8 @@
         "width: auto seulement"
       ],
       "explanation": "Les marges horizontales automatiques partagent l’espace restant.",
-      "sourceSection": "comprendre",
-      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "sourceSection": "base",
+      "evidence": "`max-width` fixe une limite supérieure, contrairement à une largeur fixe qui peut déborder. `margin-inline: auto` répartit l'espace disponible de chaque côté. `line-height` règle la hauteur des lignes, pas la taille des lettres.",
       "correctAnswerIndex": 0
     },
     {
@@ -82,8 +82,8 @@
         "gap"
       ],
       "explanation": "La hauteur de ligne règle l’espace de lecture à l’intérieur d’un texte.",
-      "sourceSection": "comprendre",
-      "evidence": "| Base | `body { line-height: 1.5; }` | Une lecture régulière sur toute la page. |",
+      "sourceSection": "base",
+      "evidence": "`max-width` fixe une limite supérieure, contrairement à une largeur fixe qui peut déborder. `margin-inline: auto` répartit l'espace disponible de chaque côté. `line-height` règle la hauteur des lignes, pas la taille des lettres.",
       "correctAnswerIndex": 1
     },
     {
@@ -95,12 +95,12 @@
         "width: 100% et height: 100px pour toute image"
       ],
       "explanation": "La largeur est limitée et la hauteur conserve le rapport de l’image.",
-      "sourceSection": "base",
-      "evidence": "img { max-width: 100%; height: auto; }",
+      "sourceSection": "disposition",
+      "evidence": "La carte garde une largeur maximale ; l’image ne dépasse pas cette carte. Sa hauteur automatique préserve ses proportions. Une largeur maximale ne signifie pas que le bloc atteint toujours cette largeur.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle référence utilise une valeur en rem ?",
+      "question": "La taille écrite en rem dépend de quoi ?",
       "answers": [
         "La largeur du conteneur",
         "La taille du texte voisin",
@@ -108,12 +108,12 @@
         "La taille de police racine"
       ],
       "explanation": "Une échelle en rem dépend de la taille de police de la racine.",
-      "sourceSection": "comprendre",
-      "evidence": "| Conteneur | `.contenu { max-width: 70rem; margin-inline: auto; }` | Une largeur confortable, centrée. |",
+      "sourceSection": "identite",
+      "evidence": "Choisissez une couleur de fond, une couleur de texte et une couleur d'accent. Réutilisez une petite échelle d'espacements, par exemple 8, 16, 24 et 32 px. Les unités `rem` se réfèrent à la taille de police racine. Les variables CSS déclarées avec `--` et lues avec `var()` permettent de modifier une couleur partagée à un seul endroit.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Comment lire une propriété personnalisée --accent ?",
+      "question": "Comment utiliser la valeur de la variable CSS --accent ?",
       "answers": [
         "var(--accent)",
         "--accent()",
@@ -121,8 +121,8 @@
         "$accent"
       ],
       "explanation": "var récupère la valeur de la propriété personnalisée.",
-      "sourceSection": "comprendre",
-      "evidence": "**Lecture accompagnée :** `--accent` stocke une valeur commune ; `var(--accent)` la lit. `line-height` laisse respirer les lignes ; `border-radius` change la forme des coins. Aucune de ces règles ne crée les colonnes de la liste : cette res",
+      "sourceSection": "identite",
+      "evidence": "Choisissez une couleur de fond, une couleur de texte et une couleur d'accent. Réutilisez une petite échelle d'espacements, par exemple 8, 16, 24 et 32 px. Les unités `rem` se réfèrent à la taille de police racine. Les variables CSS déclarées avec `--` et lues avec `var()` permettent de modifier une couleur partagée à un seul endroit.",
       "correctAnswerIndex": 0
     },
     {
@@ -134,8 +134,8 @@
         "Sur chaque image seulement"
       ],
       "explanation": "La grille organise les enfants directs du conteneur.",
-      "sourceSection": "comprendre",
-      "evidence": "ne crée les colonnes de la liste : cette responsabilité appartient au parent.",
+      "sourceSection": "disposition",
+      "evidence": "La navigation peut être un conteneur Flexbox avec `gap`. Les profils peuvent former une grille à trois colonnes. Les propriétés de disposition s'appliquent au parent ; les règles de présentation des cartes s'appliquent à leurs classes. Le même `.carte` doit fonctionner dans les deux catégories.",
       "correctAnswerIndex": 1
     },
     {
@@ -147,8 +147,8 @@
         "Déformer l’image pour remplir le cadre"
       ],
       "explanation": "Le recadrage peut couper des bords ; il faut vérifier que le sujet reste visible.",
-      "sourceSection": "comprendre",
-      "evidence": "es, `aspect-ratio` réserve un rapport largeur/hauteur et `object-fit: cover` remplit un cadre en recadrant. Vérifiez que le recadrage ne supprime pas l’information utile.",
+      "sourceSection": "disposition",
+      "evidence": "`object-fit: cover` recadre une image pour remplir son cadre en conservant ses proportions. Vérifiez que ce recadrage ne coupe pas une information essentielle. `aspect-ratio` définit le rapport largeur/hauteur du cadre. La version mobile sera approfondie à la séance suivante.",
       "correctAnswerIndex": 2
     },
     {
@@ -160,8 +160,8 @@
         "Définir le rapport largeur/hauteur du cadre"
       ],
       "explanation": "Le cadre garde une relation entre ses dimensions ; l’image conserve son propre contenu.",
-      "sourceSection": "comprendre",
-      "evidence": "ez un espacement interne commun pour la régularité. Pour les images, `aspect-ratio` réserve un rapport largeur/hauteur et `object-fit: cover` remplit un cadre en recadrant. Vérifiez que le recadrage ne supprime pas l’information utile.",
+      "sourceSection": "disposition",
+      "evidence": "`object-fit: cover` recadre une image pour remplir son cadre en conservant ses proportions. Vérifiez que ce recadrage ne coupe pas une information essentielle. `aspect-ratio` définit le rapport largeur/hauteur du cadre. La version mobile sera approfondie à la séance suivante.",
       "correctAnswerIndex": 3
     }
   ]

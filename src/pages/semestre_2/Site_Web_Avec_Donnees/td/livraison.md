@@ -237,3 +237,9 @@ Expliquez dans le README le nom de base, l'import SQL, la configuration côté s
 ## Les scénarios de vérification de la livraison
 
 Rejouez un ajout et une édition en suivant navigateur → PHP → SQL → JSON → DOM. Identifiez les parties réutilisées du TP Todo List et celles adaptées aux projets. Distinguez prototype local en mémoire, application locale persistante et publication avec gestion authentifiée : notre livraison obligatoire couvre la deuxième.
+
+## Remise et validation finale
+
+Préparez une copie installable avec fichiers du front, API PHP, SQL, médias autorisés, crédits et README. Indiquez versions, extensions PHP, paramètres d’exemple, import SQL, commande de lancement et URL. Un binôme démarre cette copie sur son environnement de test et vérifie lecture, filtres, ajout, édition puis rechargement.
+
+La remise inclut les attendus et observés des cas normaux et refusés, les corrections rejouées et les limites connues. Présentez le parcours d’un projet du formulaire à la base puis à sa carte. La gestion reste locale dans le cadre du TP ; décrivez clairement ce que votre version exécute et conserve réellement.

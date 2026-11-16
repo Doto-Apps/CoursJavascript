@@ -26,7 +26,7 @@ const visibles = projets.filter((projet) =>
 | Opération | Donnée concernée | Résultat |
 |---|---|---|
 | Recherche. | Tableau complet reçu. | Sous-ensemble visible. |
-| Filtre de technologie. | Champ technology. | Projets de la catégorie ou tous. |
+| Filtre de technologie. | Champ `technologies`, découpé par virgules. | Projets contenant la technologie choisie ou tous. |
 | Réinitialisation. | Contrôles et vue. | Collection complète affichée à nouveau. |
 
 ## Le tableau source et la vue filtrée
@@ -242,3 +242,9 @@ Les données du petit portfolio tiennent en mémoire : il n'est pas nécessaire 
 | <a id="notion-18"></a>Compteur | Le compteur d'état indique le nombre de résultats sans déplacer le focus. |
 | <a id="notion-19"></a>Aucun résultat | Aucun résultat de filtre ne signifie pas nécessairement une base vide. |
 | <a id="notion-20"></a>Sans requête par frappe | Ce petit filtre local n'exige pas un appel PHP à chaque frappe. |
+
+## Travail à réaliser et jeu d’essai
+
+Ajoutez recherche par titre, choix d’une technologie et remise à zéro au rendu alimenté par l’API. Gardez la collection complète et combinez les deux critères par ET. Une sélection de technologie compare un nom complet après découpage par virgules : le choix CSS ne doit pas sélectionner SCSS par simple sous-chaîne.
+
+Avec « Festival étudiant » en HTML/CSS, « Galerie photo » en PHP/CSS et « Tournoi du campus » en HTML, vérifiez : recherche vide = trois projets ; technologie CSS = deux ; recherche « GALERIE » et PHP = un ; « Galerie » et HTML = aucun. La remise à zéro retrouve trois projets sans nouvelle écriture SQL. Remettez les fonctions de sélection/rendu et ce tableau attendu/observé.

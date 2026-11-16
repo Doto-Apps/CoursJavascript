@@ -9,6 +9,12 @@ const SCRIPT_URL =
 	"https://script.google.com/macros/s/AKfycbxsUnyUPjQhv1mjnRLPcIN8Z5W3vjzG1AWvVhcQOEmENHUkkB2mb77oL31pXSW8Q-6J/exec";
 const API_KEY = import.meta.env.API_KEY;
 
+// Ces QCM ont été retirés du parcours SAE : ne pas les recharger via le service distant.
+const removedQuizIds = new Set([
+	"s1-site-01", "s1-site-02", "s1-site-03", "s1-site-04",
+	"s1-site-05", "s1-site-06", "s1-site-07", "s1-produire-site",
+]);
+
 const localQuizModules = import.meta.glob("../data/quizzes/*.json", {
 	eager: true,
 	import: "default",
@@ -51,6 +57,7 @@ export function getLocalQuiz(quizId: string): APIResponse | undefined {
 export async function getQuiz(
 	quizId: string, sessions? : APIContext["session"]
 ): Promise<APIResponse | undefined> {
+	if (removedQuizIds.has(quizId)) return undefined;
 
 	const now = Date.now();
 	if ( quizId === "generated" && (await sessions?.has("generatedQuiz"))) 

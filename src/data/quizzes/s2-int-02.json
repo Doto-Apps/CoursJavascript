@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/integration/tp/transition",
   "questions": [
     {
-      "question": "Que représente une classe sans préfixe responsive ?",
+      "question": "Quand une classe Tailwind sans md: ni lg: peut-elle s’appliquer ?",
       "answers": [
         "La règle de base applicable à toutes les largeurs",
         "Une règle seulement pour téléphone",
@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que signifie md: dans les variantes responsive de ce cours ?",
+      "question": "Dans Tailwind, que signifie md: devant une classe ?",
       "answers": [
         "Uniquement sous le seuil md",
         "À partir du seuil md inclus",
@@ -35,17 +35,17 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Avec grid-cols-1 md:grid-cols-2 lg:grid-cols-3 et les seuils par défaut de Tailwind 3, combien de colonnes à 800px ?",
+      "question": "Quelles classes définissent une grille à une colonne, puis deux à partir de md ?",
       "answers": [
-        "Trois colonnes",
-        "Quatre colonnes",
-        "Deux colonnes",
-        "Une colonne"
+        "grid grid-cols-2 md:grid-cols-1",
+        "flex grid-cols-2",
+        "grid grid-cols-1 md:grid-cols-2",
+        "grid md:grid-cols-1"
       ],
-      "explanation": "Avec grid-cols-1 md:grid-cols-2 lg:grid-cols-3, 800px atteint md mais pas lg.",
-      "sourceSection": "notion-6",
-      "evidence": "La grille du cours donne deux colonnes de 768 px jusqu'avant 1024 px.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "Les classes sans préfixe donnent la base ; md:grid-cols-2 change les colonnes à partir du seuil md.",
+      "sourceSection": "apprentissage",
+      "evidence": "<section class=\"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3\">"
     },
     {
       "question": "Quel état active hover:bg-blue-800 ?",
@@ -61,7 +61,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel préfixe du cours aide à matérialiser le focus ?",
+      "question": "Quel préfixe Tailwind permet de rendre visible l’élément sélectionné au clavier ?",
       "answers": [
         "focus-visible:",
         "hover:",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Où placer grid et les variantes de colonnes ?",
+      "question": "Où placer grid et les classes qui définissent les colonnes ?",
       "answers": [
         "Le parent des cartes",
         "Chaque titre séparément",
@@ -126,17 +126,17 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel test vérifie la robustesse d'une carte ?",
+      "question": "Quelle classe Tailwind du cours ajoute un espace intérieur à une carte ?",
       "answers": [
-        "Une carte sans aucun contenu",
-        "Un titre long",
-        "Seulement un titre d’une lettre",
-        "Toujours le même contenu court"
+        "m-4",
+        "p-4",
+        "gap-4",
+        "text-xl"
       ],
-      "explanation": "Une variante doit résister à un contenu réaliste plus long.",
-      "sourceSection": "notion-17",
-      "evidence": "Un composant doit rester lisible avec un titre long.",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "p-4 règle le padding, c’est-à-dire l’espace intérieur.",
+      "sourceSection": "comprendre",
+      "evidence": "| Où placer les espaces ? | `p-*`, `m-*`, `gap-*` | Ne pas confondre intérieur et extérieur. |"
     },
     {
       "question": "Qu'est-ce qui facilite la réutilisation des cartes ?",
@@ -152,7 +152,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Qu'est-ce qui déclenche une variante responsive de largeur ?",
+      "question": "Qu’est-ce qui détermine si une classe comme md:grid-cols-2 s’applique ?",
       "answers": [
         "La marque de l’ordinateur",
         "La résolution du fichier image",

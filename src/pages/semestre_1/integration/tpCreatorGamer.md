@@ -167,3 +167,9 @@ Cette liste est une grille à une colonne tant que l’aperçu n’atteint pas 7
   }
 </style>
 ```
+
+## Travail de finalisation
+
+Terminez la page Gamer / Creator à partir de sa version HTML/CSS. Conservez une colonne sur petit écran, choisissez un seuil justifié pour plusieurs colonnes, laissez la navigation revenir à la ligne et ajoutez un focus visible. Corrigez les causes de débordement dans les éléments concernés.
+
+Préparez un fichier `tests.md` contenant largeur ou mode de navigation, action, attendu et observé. Vérifiez 320 px, juste avant et au seuil choisi, 1024 px, le zoom à 200 %, Tab/Maj+Tab et un titre long. Après chaque correction, rejouez le cas en échec. Remettez le site et ce relevé ; notez toute limite encore visible.

@@ -11,7 +11,7 @@ Ce mémento renvoie aux notions étudiées précédemment pour préparer une int
 |---|---|---|
 | Naviguer vers une page | `a` avec un `href` réel | [HTML](/semestre_1/integration/htmltd) |
 | Déclencher une action | `button` natif | [Événements](/semestre_4/js/begin/events) |
-| Nommer un champ | `label` associé par `for` et `id` | [Formulaires](/semestre_1/integration/formulairetd) |
+| Nommer un champ | `label` associé par `for` et `id` | [Formulaires](/semestre_1/developpement_Web/phpForm#formulaire) |
 | Espacer une boîte | `padding`, `margin`, `border-box` | [Modèle de boîte](/semestre_1/integration/csstd#boites) |
 | Aligner sur un axe | Parent flex | [Flexbox](/semestre_4/css/flex) |
 | Partager des colonnes | Parent grid | [Grid](/semestre_4/css/grid) |
@@ -37,4 +37,4 @@ La largeur est limitée, la hauteur reste automatique et le lien possède une de
 
 ## Mouvement et accessibilité
 
-Une transition accompagne un changement d’état ; une animation `@keyframes` définit une séquence. Elles ne doivent pas cacher une information essentielle. Respectez `prefers-reduced-motion` et conservez des états utilisables sans animation. Les [transitions](/semestre_1/produire_Un_Site_Web/animationTransition) et les [animations](/semestre_1/produire_Un_Site_Web/animationKeyframes) présentent des démonstrations distinctes.
+Une transition accompagne un changement d’état ; une animation `@keyframes` définit une séquence. Elles ne doivent pas cacher une information essentielle. Respectez `prefers-reduced-motion` et conservez des états utilisables sans animation. Le [cours de mouvement du S2](/semestre_2/integration/tp/transition) explique ces mécanismes et leur vérification.

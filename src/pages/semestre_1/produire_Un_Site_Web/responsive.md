@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : adapter le site aux écrans"
 type: "TD"
 order: 6
-quizId: "s1-site-05"
 previousSession: "/semestre_1/produire_Un_Site_Web/composants"
 nextSession: "/semestre_1/produire_Un_Site_Web/norme"
 ---
@@ -72,3 +71,9 @@ Un mot sans espace peut imposer une largeur minimale. `overflow-wrap: anywhere` 
 ## Vérifier les seuils et le zoom
 
 Vérifiez juste avant le seuil, au seuil et juste après, puis à une largeur intermédiaire. Dans cet exemple : 699, 700 et 701 px. Complétez par un zoom à 200 pour cent, un titre long et une navigation au clavier. Le résultat attendu conserve tous les contenus et les contrôles accessibles, même si le nombre de colonnes change. Dans un aperçu, les media queries utilisent la largeur de l’iframe.
+
+## Travail d’adaptation et relevé des seuils
+
+Reprenez votre site avec une base à une colonne et une navigation qui peut revenir à la ligne. Ajoutez les seuils au moment où le contenu gagne réellement à changer de disposition. Notez pour chaque seuil la difficulté observée et la modification choisie.
+
+Remettez une grille de contrôle à 320 px, juste sous/au-dessus de chaque seuil, à 1024 px et avec un zoom à 200 %. Ajoutez un titre long et un lien sans espaces. Chaque contrôle doit rester accessible et le focus visible ; expliquez la cause de tout débordement corrigé.

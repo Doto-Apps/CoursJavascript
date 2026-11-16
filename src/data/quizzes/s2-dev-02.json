@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que fait await devant fetch dans une fonction async ?",
+      "question": "Dans une fonction async, que permet await devant fetch ?",
       "answers": [
         "Relancer automatiquement toute requête échouée",
         "Attendre la résolution avant de poursuivre cette fonction",
@@ -48,20 +48,20 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Que fait fetch lorsqu'une réponse HTTP 404 normale arrive ?",
+      "question": "Si le serveur répond 404, fetch déclenche-t-il forcément une erreur à attraper avec catch ?",
       "answers": [
-        "La promesse est forcément rejetée",
-        "Le navigateur transforme 404 en 200",
-        "fetch recommence automatiquement",
-        "La promesse peut se résoudre normalement"
+        "Oui, toute réponse 404 déclenche automatiquement catch",
+        "Oui, fetch relance automatiquement la requête",
+        "Non, fetch transforme la réponse 404 en réponse 200",
+        "Non, il faut aussi vérifier response.ok"
       ],
-      "explanation": "Une erreur HTTP doit être vérifiée explicitement dans la réponse.",
+      "explanation": "Non. Il faut vérifier response.ok pour traiter les réponses HTTP d’erreur.",
       "sourceSection": "notion-5",
       "evidence": "Un statut HTTP 404 ne rejette pas automatiquement fetch.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle méthode analyse le corps JSON reçu ?",
+      "question": "Quelle méthode lit les données JSON de la réponse reçue ?",
       "answers": [
         "response.json()",
         "JSON.stringify(response)",
@@ -74,7 +74,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que peut provoquer une réponse HTML analysée comme JSON ?",
+      "question": "Que peut-il se passer si le serveur renvoie du HTML et que l’on appelle response.json() ?",
       "answers": [
         "Une nouvelle requête POST",
         "Une erreur d’analyse JSON",
@@ -87,17 +87,17 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel message distingue l'attente de la liste vide ?",
+      "question": "Quel bloc JavaScript traite une erreur lancée dans try ?",
       "answers": [
-        "Succès avant la réception",
-        "Erreur pendant toute requête",
-        "Chargement pendant l’attente",
-        "Aucun résultat avant toute réponse"
+        "finally uniquement",
+        "if automatiquement",
+        "catch",
+        "return"
       ],
-      "explanation": "L’attente, la liste vide et l’échec doivent avoir des états distincts.",
-      "sourceSection": "notion-9",
-      "evidence": "L'état Chargement est présenté pendant l'attente.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "catch reçoit les erreurs du bloc try.",
+      "sourceSection": "notion-8",
+      "evidence": "<a id=\"notion-8\"></a>Gestion d'erreur | catch traite les erreurs du bloc try. |"
     },
     {
       "question": "Quelle donnée JSON représente une liste vide valide ?",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle propriété utiliser pour afficher le titre reçu sans l'interpréter comme HTML ?",
+      "question": "Quelle propriété permet d’afficher un titre reçu comme du texte, sans créer de balises HTML ?",
       "answers": [
         "textContent",
         "innerHTML",
@@ -139,7 +139,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "localhost:4321 et localhost:8080 ont-ils la même origine HTTP ?",
+      "question": "Deux pages utilisent localhost, mais avec les ports 4321 et 8080. Ont-elles la même origine HTTP ?",
       "answers": [
         "Oui, si le chemin est identique",
         "Oui, si les deux utilisent GET",
@@ -152,14 +152,14 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "no-cors permet-il de lire librement le JSON d’une origine refusée ?",
+      "question": "Ajouter no-cors à fetch permet-il de lire le JSON d’un serveur qui n’autorise pas cette lecture ?",
       "answers": [
         "Oui, cette option autorise toutes les lectures",
         "Oui, si le statut vaut 200",
         "Oui, si le corps contient un tableau",
-        "Non, la réponse opaque n’est pas lisible comme JSON"
+        "Non, le JavaScript ne peut pas lire le JSON de cette réponse"
       ],
-      "explanation": "no-cors ne fournit pas une permission de lecture des données.",
+      "explanation": "Non : la réponse devient opaque, ce qui empêche le JavaScript de lire ses données.",
       "sourceSection": "notion-20",
       "evidence": "no-cors ne fournit pas une réponse JSON lisible à ce code.",
       "correctAnswerIndex": 3

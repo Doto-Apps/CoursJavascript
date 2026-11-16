@@ -17,8 +17,8 @@
         "Le navigateur"
       ],
       "explanation": "VS Code permet d’éditer les fichiers ; leur exécution appartient à d’autres outils.",
-      "sourceSection": "comprendre",
-      "evidence": "fichiers",
+      "sourceSection": "editeur",
+      "evidence": "VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.",
       "correctAnswerIndex": 0
     },
     {
@@ -31,46 +31,46 @@
       ],
       "explanation": "Ouvrir le dossier rend accessibles les fichiers liés et leur organisation.",
       "sourceSection": "editeur",
-      "evidence": "dossier complet",
+      "evidence": "VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel outil exécute une commande dans un répertoire courant ?",
+      "question": "Quel outil permet de lancer une commande dans le dossier du projet ?",
       "answers": [
         "L’onglet Réseau",
         "Le panneau des extensions",
         "Le terminal",
         "L’inspecteur de styles"
       ],
-      "explanation": "Le terminal exécute des commandes dans un répertoire courant.",
-      "sourceSection": "comprendre",
-      "evidence": "terminal",
+      "explanation": "Le terminal lance les commandes à partir du dossier dans lequel on se trouve.",
+      "sourceSection": "editeur",
+      "evidence": "VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "En PowerShell ou dans le terminal macOS du cours, quelle commande affiche le répertoire courant ?",
+      "question": "Dans le terminal PowerShell ou macOS, quelle commande affiche le dossier dans lequel on se trouve ?",
       "answers": [
         "ls",
         "cd",
         "php -l",
         "pwd"
       ],
-      "explanation": "pwd affiche le répertoire courant ; ls liste son contenu et cd en change.",
+      "explanation": "pwd affiche le dossier actuel. cd permet de changer de dossier.",
       "sourceSection": "editeur",
-      "evidence": "pwd",
+      "evidence": "VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel fichier le serveur peut-il lire après une modification ?",
+      "question": "Après avoir modifié un fichier, quelle version le serveur PHP utilise-t-il ?",
       "answers": [
-        "Le fichier enregistré sur le disque",
-        "Le tampon encore non enregistré dans l’éditeur",
-        "Le contenu de l’onglet actif du navigateur",
-        "Le texte proposé mais non appliqué par l’assistant"
+        "La version enregistrée sur le disque",
+        "Les changements non enregistrés dans l’éditeur",
+        "Le texte affiché dans l’onglet du navigateur",
+        "Le code proposé par l’assistant mais pas enregistré"
       ],
-      "explanation": "Le serveur lit le fichier enregistré ; il faut sauvegarder puis vérifier la page.",
-      "sourceSection": "comprendre",
-      "evidence": "enregistré",
+      "explanation": "Il faut enregistrer le fichier : le serveur ne lit pas les changements encore présents seulement dans l’éditeur.",
+      "sourceSection": "editeur",
+      "evidence": "VS Code modifie des fichiers. Ouvrez le dossier complet du projet, pas seulement un fichier isolé. L'explorateur montre son organisation ; le terminal exécute des commandes dans un répertoire courant. `pwd` dans PowerShell ou macOS affiche ce répertoire ; `cd` permet d'en changer. Un fichier non enregistré n'est pas encore celui que le serveur lit.",
       "correctAnswerIndex": 0
     },
     {
@@ -83,24 +83,24 @@
       ],
       "explanation": "localhost est relatif à la machine qui effectue la demande.",
       "sourceSection": "comprendre",
-      "evidence": "localhost",
+      "evidence": "Pour l’IA locale, une autre chaîne intervient : OpenCode envoie une demande au serveur de LM Studio, qui utilise le modèle chargé. Ce serveur n’est pas le serveur PHP. Les ports permettent de joindre ces deux services séparément. `localhost` désigne la machine sur laquelle l’adresse est utilisée ; ce n’est pas une adresse partagée par toute la salle.",
       "correctAnswerIndex": 1
     },
     {
       "question": "À quoi correspond 8000 dans localhost:8000 ?",
       "answers": [
         "Le nom de l’hôte",
-        "Le protocole de transport",
+        "Le nom du protocole, comme HTTP",
         "Le port du service",
         "Le chemin du fichier"
       ],
       "explanation": "Le port identifie le service à joindre sur la machine.",
-      "sourceSection": "comprendre",
-      "evidence": "8000",
+      "sourceSection": "serveur",
+      "evidence": "Ouvrez `http://localhost:8000`. `localhost` désigne la machine utilisée ; `8000` est le port du serveur PHP. Ouvrir un fichier par `file://` n'exécute pas PHP. Ctrl+C arrête le serveur lancé dans ce terminal. Si le port est occupé, choisissez par exemple 8001 et changez aussi l'URL. Le serveur intégré convient à l'exercice local, pas à une mise en production.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Pourquoi ne pas ouvrir le PHP simplement par file:// ?",
+      "question": "Comment ouvrir une page PHP pour que le script soit exécuté côté serveur ?",
       "answers": [
         "Ouvrir uniquement le fichier avec file://",
         "Changer l’extension PHP en HTML",
@@ -108,8 +108,8 @@
         "Utiliser une URL du serveur PHP"
       ],
       "explanation": "PHP doit être interprété par un serveur ; ouvrir le fichier brut ne l’exécute pas.",
-      "sourceSection": "comprendre",
-      "evidence": "file://",
+      "sourceSection": "serveur",
+      "evidence": "Ouvrez `http://localhost:8000`. `localhost` désigne la machine utilisée ; `8000` est le port du serveur PHP. Ouvrir un fichier par `file://` n'exécute pas PHP. Ctrl+C arrête le serveur lancé dans ce terminal. Si le port est occupé, choisissez par exemple 8001 et changez aussi l'URL. Le serveur intégré convient à l'exercice local, pas à une mise en production.",
       "correctAnswerIndex": 3
     },
     {
@@ -122,47 +122,47 @@
       ],
       "explanation": "L’adresse du client doit correspondre au port sur lequel le serveur écoute.",
       "sourceSection": "serveur",
-      "evidence": "occupé",
+      "evidence": "Ouvrez `http://localhost:8000`. `localhost` désigne la machine utilisée ; `8000` est le port du serveur PHP. Ouvrir un fichier par `file://` n'exécute pas PHP. Ctrl+C arrête le serveur lancé dans ce terminal. Si le port est occupé, choisissez par exemple 8001 et changez aussi l'URL. Le serveur intégré convient à l'exercice local, pas à une mise en production.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel rôle joue OpenCode dans la chaîne locale ?",
+      "question": "Dans l’atelier, à quoi sert OpenCode ?",
       "answers": [
         "Le serveur qui interprète PHP",
-        "L’assistant qui sollicite le modèle",
+        "L’assistant qui envoie les demandes au modèle",
         "L’éditeur des fichiers uniquement",
         "Le modèle chargé lui-même"
       ],
-      "explanation": "OpenCode coordonne la demande ; le modèle génère les réponses.",
+      "explanation": "OpenCode envoie les demandes au modèle et propose des modifications de fichiers.",
       "sourceSection": "comprendre",
-      "evidence": "OpenCode",
+      "evidence": "Pour l’IA locale, une autre chaîne intervient : OpenCode envoie une demande au serveur de LM Studio, qui utilise le modèle chargé. Ce serveur n’est pas le serveur PHP. Les ports permettent de joindre ces deux services séparément. `localhost` désigne la machine sur laquelle l’adresse est utilisée ; ce n’est pas une adresse partagée par toute la salle.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel outil expose l’API locale du modèle utilisée par OpenCode dans l’atelier ?",
+      "question": "Quel outil permet de démarrer le serveur du modèle d’IA sur son ordinateur ?",
       "answers": [
         "Le serveur PHP",
         "Le navigateur",
         "LM Studio",
         "VS Code"
       ],
-      "explanation": "LM Studio sert l’API locale du modèle dans cet atelier.",
-      "sourceSection": "comprendre",
-      "evidence": "LM Studio",
+      "explanation": "Dans cet atelier, LM Studio exécute le modèle et reçoit les demandes d’OpenCode.",
+      "sourceSection": "ia",
+      "evidence": "LM Studio expose une API compatible OpenAI, mais cela ne veut pas dire que le modèle est hébergé par OpenAI. Le serveur LM Studio et le serveur PHP sont deux services distincts. Le modèle local peut se tromper ; une réponse plausible n'est pas un test réussi. N'envoyez pas de secrets dans une consigne et contrôlez les changements avant de les conserver.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Une réponse plausible du modèle suffit-elle à valider une modification ?",
+      "question": "Quelle action permet de vérifier le résultat d’un fichier PHP modifié ?",
       "answers": [
-        "Accepter le changement dès qu’il semble plausible",
-        "Vérifier seulement la longueur de la réponse",
-        "Remplacer tous les tests par une seconde demande",
-        "Lire et tester le changement dans le navigateur"
+        "Ouvrir le fichier PHP avec file://",
+        "Changer uniquement le nom de l’onglet",
+        "Lire la réponse de l’IA sans ouvrir la page",
+        "Enregistrer le fichier puis recharger sa page sur le serveur PHP"
       ],
-      "explanation": "Le modèle peut produire un code incorrect ; le résultat doit être vérifié.",
-      "sourceSection": "ia",
-      "evidence": "tromper",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "Le navigateur affiche la réponse produite à partir du fichier enregistré.",
+      "sourceSection": "comprendre",
+      "evidence": "L’éditeur modifie des fichiers ; il ne publie pas automatiquement une page. Le navigateur affiche la version enregistrée et reçue du serveur. Le terminal exécute une commande dans un **dossier courant**. Si `php` ou `opencode` n’est pas reconnu, le système ne trouve pas l’exécutable : cela ne signifie pas que votre fichier HTML est incorrect."
     }
   ]
 }

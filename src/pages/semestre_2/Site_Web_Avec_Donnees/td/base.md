@@ -152,9 +152,9 @@ $projects = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     <script>
       const scenarios = {
         ok: [
-          "Navigateur : GET /api/todos.php",
+          "Navigateur : GET /api/projects.php",
           "PHP : connexion PDO",
-          "MySQL : SELECT id, title, done FROM todos",
+          "MySQL : SELECT id, title, start_date, end_date FROM projects",
           "PHP : réponse 200 application/json",
           "Navigateur : JSON analysé, puis DOM construit",
         ],
@@ -165,7 +165,7 @@ $projects = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
           "Navigateur : message d’erreur ; saisie conservée",
         ],
         server: [
-          "Navigateur : GET /api/todos.php",
+          "Navigateur : GET /api/projects.php",
           "PHP : connexion PDO impossible",
           "PHP : réponse 500 application/json",
           "Navigateur : message général et possibilité de réessayer",
@@ -191,7 +191,7 @@ $projects = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         if (index === etapes.length) {
           sortie.textContent =
             scenario === "ok"
-              ? '[{"id":1,"title":"Préparer les photos","done":false}]'
+              ? '[{"id":1,"title":"Festival étudiant","description":"Identité et site.","image_url":"","start_date":"2027-02-01","end_date":null,"technologies":"HTML, CSS","project_url":"","code_url":""}]'
               : '{"error":"Opération impossible"}';
         }
       });
@@ -222,3 +222,9 @@ $projects = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 | <a id="notion-18"></a>Paramètres | Une valeur saisie utilisée dans SQL doit être paramétrée. |
 | <a id="notion-19"></a>Noms cohérents | Les noms de propriétés doivent correspondre entre base, API et rendu. |
 | <a id="notion-20"></a>Configuration privée | Les identifiants de base restent côté serveur. |
+
+## Travail à réaliser : le contrat de lecture des projets
+
+Importez le schéma du squelette et insérez les trois projets du cadrage. Dans GET `/api/projects.php`, sélectionnez les colonnes prévues, triez par `start_date DESC, id DESC`, convertissez l’id en entier et conservez la fin absente comme `null`. Encodez le tableau avec un Content-Type JSON.
+
+Testez deux projets de même date pour vérifier le second critère de tri, un projet en cours, une table vide et une panne de connexion. Une réussite sans projet renvoie 200 et `[]` ; la panne renvoie 500 et un objet d’erreur. Remettez schéma, PHP et exemples réels de réponses avant de commencer le rendu.

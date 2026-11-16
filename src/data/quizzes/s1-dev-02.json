@@ -17,34 +17,34 @@
         "quantite$"
       ],
       "explanation": "En PHP, un nom de variable commence par le signe dollar.",
-      "sourceSection": "comprendre",
-      "evidence": "commence",
+      "sourceSection": "variables",
+      "evidence": "Une variable PHP commence par `$`. L'affectation `=` stocke une valeur ; elle ne compare pas. Les noms sont sensibles à la casse : `$prix` et `$Prix` sont distincts. Chaque instruction usuelle se termine par `;`. Les chaînes, les entiers, les nombres décimaux et les booléens sont des types différents.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel effet produit l’affectation PHP $quantite = 3 ?",
+      "question": "Que fait l’instruction PHP $quantite = 3 ?",
       "answers": [
         "Afficher automatiquement 3",
         "Stocker 3 dans la variable",
         "Comparer la variable à 3",
         "Ajouter 3 à sa valeur actuelle"
       ],
-      "explanation": "L’affectation enregistre une valeur ; elle n’est pas une comparaison.",
-      "sourceSection": "comprendre",
-      "evidence": "affectation",
+      "explanation": "Le signe = place une valeur dans la variable. Il ne sert pas à la comparer.",
+      "sourceSection": "variables",
+      "evidence": "Une variable PHP commence par `$`. L'affectation `=` stocke une valeur ; elle ne compare pas. Les noms sont sensibles à la casse : `$prix` et `$Prix` sont distincts. Chaque instruction usuelle se termine par `;`. Les chaînes, les entiers, les nombres décimaux et les booléens sont des types différents.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "En PHP, $prix et $Prix désignent-ils la même variable ?",
+      "question": "En PHP, $prix et $Prix sont-ils le même nom de variable ?",
       "answers": [
         "Oui, mais seulement pour les nombres",
         "Oui, après affichage par echo",
         "Non, les deux noms sont distincts",
         "Oui, la casse est toujours ignorée"
       ],
-      "explanation": "Les noms de variables PHP sont sensibles à la casse.",
+      "explanation": "PHP distingue les majuscules et les minuscules dans les noms de variables.",
       "sourceSection": "variables",
-      "evidence": "casse",
+      "evidence": "Une variable PHP commence par `$`. L'affectation `=` stocke une valeur ; elle ne compare pas. Les noms sont sensibles à la casse : `$prix` et `$Prix` sont distincts. Chaque instruction usuelle se termine par `;`. Les chaînes, les entiers, les nombres décimaux et les booléens sont des types différents.",
       "correctAnswerIndex": 2
     },
     {
@@ -56,112 +56,112 @@
         "Une chaîne de caractères"
       ],
       "explanation": "Un texte entre guillemets est une chaîne, même s’il contient des chiffres.",
-      "sourceSection": "comprendre",
-      "evidence": "chaîne",
+      "sourceSection": "variables",
+      "evidence": "Une variable PHP commence par `$`. L'affectation `=` stocke une valeur ; elle ne compare pas. Les noms sont sensibles à la casse : `$prix` et `$Prix` sont distincts. Chaque instruction usuelle se termine par `;`. Les chaînes, les entiers, les nombres décimaux et les booléens sont des types différents.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel opérateur concatène des chaînes PHP ?",
+      "question": "Quel opérateur PHP permet de mettre deux textes bout à bout ?",
       "answers": [
         "Le point .",
         "Le signe +",
         "Le signe *",
         "Le signe ==="
       ],
-      "explanation": "En PHP, le point concatène les chaînes.",
+      "explanation": "Le point . assemble des textes : cette opération s’appelle la concaténation.",
       "sourceSection": "variables",
-      "evidence": "concatène",
+      "evidence": "**Sortie attendue :** `Léa : 37.5`. Le point `.` concatène des chaînes ; `*` multiplie. `echo` produit une sortie. Une variable déclarée après son utilisation ne fournit pas magiquement une valeur à la ligne précédente.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "À quoi sert echo ?",
+      "question": "À quoi sert echo dans un programme PHP ?",
       "answers": [
-        "Déclarer une classe",
-        "Produire une sortie",
-        "Affecter une variable sans afficher",
-        "Comparer deux types"
+        "Tester une condition",
+        "Afficher une valeur",
+        "Modifier une variable sans rien afficher",
+        "Créer un tableau"
       ],
-      "explanation": "echo envoie une valeur dans la sortie du programme.",
-      "sourceSection": "comprendre",
-      "evidence": "echo",
+      "explanation": "echo affiche une valeur dans le résultat produit par PHP.",
+      "sourceSection": "variables",
+      "evidence": "**Sortie attendue :** `Léa : 37.5`. Le point `.` concatène des chaînes ; `*` multiplie. `echo` produit une sortie. Une variable déclarée après son utilisation ne fournit pas magiquement une valeur à la ligne précédente.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel total donne 3 multiplié par 12.5 ?",
+      "question": "Quel opérateur PHP permet de multiplier deux valeurs ?",
       "answers": [
-        "15.5",
-        "12.5",
-        "37.5",
-        "36"
+        ".",
+        "===",
+        "*",
+        "&&"
       ],
-      "explanation": "Trois fois 12,5 vaut 37,5 ; la quantité multiplie le prix unitaire.",
-      "sourceSection": "comprendre",
-      "evidence": "37.5",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "Le signe * sert à multiplier deux valeurs.",
+      "sourceSection": "operateurs",
+      "evidence": "`+`, `-`, `*`, `/` réalisent les calculs usuels ; `%` calcule le reste d'une division entière. Les parenthèses rendent l'ordre d'un calcul explicite. `===` compare la valeur et le type, tandis que `==` autorise des conversions de types. Pour des tests prévisibles, privilégiez une comparaison stricte après avoir obtenu des données du bon type."
     },
     {
-      "question": "À quoi sert l'opérateur % ?",
+      "question": "Que permet de trouver l’opérateur % en PHP ?",
       "answers": [
         "Une réduction automatique en pourcentage",
         "Le quotient de toute division",
         "Une concaténation de nombres",
-        "Le reste d’une division entière"
+        "Le reste d’une division entre entiers"
       ],
-      "explanation": "L’opérateur modulo donne le reste de la division entière.",
+      "explanation": "Il donne le reste d’une division entre entiers.",
       "sourceSection": "operateurs",
-      "evidence": "reste",
+      "evidence": "`+`, `-`, `*`, `/` réalisent les calculs usuels ; `%` calcule le reste d'une division entière. Les parenthèses rendent l'ordre d'un calcul explicite. `===` compare la valeur et le type, tandis que `==` autorise des conversions de types. Pour des tests prévisibles, privilégiez une comparaison stricte après avoir obtenu des données du bon type.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Que vaut l’expression PHP 5 === \"5\" ?",
+      "question": "Avec ===, le nombre 5 est-il identique au texte \"5\" ?",
       "answers": [
-        "false, car les types sont différents",
-        "true, car les valeurs ressemblent au même nombre",
-        "true, car le texte est converti avant toute comparaison stricte",
-        "Une erreur de syntaxe"
+        "Non : l’un est un nombre et l’autre un texte",
+        "Oui : les deux contiennent le chiffre 5",
+        "Oui : === transforme toujours le texte en nombre",
+        "La comparaison provoque une erreur de syntaxe"
       ],
-      "explanation": "Une comparaison stricte exige des valeurs et des types identiques.",
+      "explanation": "=== vérifie la valeur et le type. Un nombre et un texte ne sont donc pas identiques.",
       "sourceSection": "comprendre",
-      "evidence": "valeur et le type",
+      "evidence": "**Sortie attendue :** `32.5`. Le dernier `echo` affiche la valeur courante. Le signe `=` affecte ; `==` compare avec des conversions possibles, et `===` compare également les types. Un entier `5` et une chaîne `'5'` ne sont donc pas identiques au sens strict.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel opérateur exprime un ET logique ?",
+      "question": "Quel opérateur utilise-t-on pour demander que deux conditions soient vraies en même temps ?",
       "answers": [
         "Le signe ! seul",
         "&&",
         "Deux signes & utilisés séparément",
         "Deux signes ="
       ],
-      "explanation": "Le ET logique est vrai lorsque ses deux conditions sont vraies.",
-      "sourceSection": "comprendre",
-      "evidence": "&&",
+      "explanation": "&& signifie ET : les deux conditions doivent être vraies.",
+      "sourceSection": "operateurs",
+      "evidence": "`&&` signifie « et », `||` signifie « ou », `!` inverse un booléen. `>=` inclut l'égalité ; `>` ne l'inclut pas. Ne confondez pas `$age = 18` avec `$age === 18`.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Avec $age = 18, if ($age >= 18) affiche « Accès adulte », sinon « Accès junior ». Quel résultat ?",
+      "question": "Un programme affiche « Accès adulte » si $age >= 18, sinon « Accès junior ». Que se passe-t-il pour une personne de 18 ans ?",
       "answers": [
         "Les deux textes",
         "Aucun texte",
         "Accès adulte",
         "Accès junior"
       ],
-      "explanation": "Le seuil est inclus : 18 satisfait la condition supérieure ou égale à 18.",
-      "sourceSection": "comprendre",
-      "evidence": "18",
+      "explanation": ">= signifie supérieur ou égal. Une personne qui a exactement 18 ans satisfait donc la condition.",
+      "sourceSection": "conditions",
+      "evidence": "Une seule de ces deux branches est exécutée. Avec 18, la sortie est `Accès adulte`. `elseif` permet une condition intermédiaire ; la première branche vraie d'une chaîne if/elseif est retenue. Testez les limites, par exemple 17, 18 et 19, plutôt qu'une seule valeur éloignée du seuil.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment une chaîne if/elseif choisit-elle sa branche ?",
+      "question": "Dans un if suivi de elseif, quelle condition vraie choisit-on ?",
       "answers": [
         "La dernière condition vraie",
         "Toutes les conditions vraies",
         "La branche contenant le plus de code",
         "La première condition vraie"
       ],
-      "explanation": "Une chaîne if/elseif s’arrête à sa première branche vraie.",
+      "explanation": "Le programme choisit la première condition vraie, puis passe la suite de cette chaîne de conditions.",
       "sourceSection": "conditions",
-      "evidence": "première branche",
+      "evidence": "Une seule de ces deux branches est exécutée. Avec 18, la sortie est `Accès adulte`. `elseif` permet une condition intermédiaire ; la première branche vraie d'une chaîne if/elseif est retenue. Testez les limites, par exemple 17, 18 et 19, plutôt qu'une seule valeur éloignée du seuil.",
       "correctAnswerIndex": 3
     }
   ]

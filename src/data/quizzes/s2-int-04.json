@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/integration/tp/dropdown",
   "questions": [
     {
-      "question": "Quel rôle joue une media query ?",
+      "question": "À quoi sert une media query en CSS ?",
       "answers": [
         "Appliquer des règles si une condition est vraie",
         "Créer une nouvelle page HTML",
@@ -22,33 +22,33 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quand min-width: 700px est-elle vraie ?",
+      "question": "À partir de quelle largeur min-width: 700px s’applique-t-elle ?",
       "answers": [
         "Uniquement en portrait",
         "À 700px et au-dessus",
         "Seulement au-dessus de 700px sans égalité",
         "Seulement sous 700px"
       ],
-      "explanation": "La borne de min-width est inclusive.",
+      "explanation": "La condition s’applique à 700 px et à toutes les largeurs plus grandes.",
       "sourceSection": "notion-2",
       "evidence": "min-width: 700px signifie au moins 700 pixels CSS.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quand max-width: 700px est-elle vraie ?",
+      "question": "Jusqu’à quelle largeur max-width: 700px s’applique-t-elle ?",
       "answers": [
         "À 700px uniquement",
         "Seulement si le navigateur est mobile",
         "À 700px et au-dessous",
         "Seulement au-dessus de 700px"
       ],
-      "explanation": "La borne de max-width est également inclusive.",
+      "explanation": "La condition s’applique à 700 px et à toutes les largeurs plus petites.",
       "sourceSection": "notion-3",
       "evidence": "max-width: 700px signifie au plus 700 pixels CSS.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle largeur les seuils CSS considèrent-ils ?",
+      "question": "Pour les media queries du cours, comment mesure-t-on la largeur de la page ?",
       "answers": [
         "Le nombre de pixels du fichier image",
         "La taille en octets de la feuille CSS",
@@ -61,7 +61,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Que signifie la base mobile dans cette grille ?",
+      "question": "Que signifie commencer par la version mobile de la mise en page ?",
       "answers": [
         "Une disposition étroite de base puis des adaptations",
         "Un fichier HTML différent par appareil",
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle propriété espace les cellules ?",
+      "question": "Quelle propriété ajoute de l’espace entre les cases de la grille ?",
       "answers": [
         "line-height",
         "font-size",
@@ -100,14 +100,14 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Deux règles actives de même priorité définissent les colonnes : pourquoi leur ordre compte-t-il ?",
+      "question": "Deux règles simples du cours définissent les mêmes colonnes. Leurs sélecteurs sont identiques et les deux conditions sont vraies. Laquelle est utilisée ?",
       "answers": [
         "La première règle gagne toujours",
         "Le plus grand fichier gagne",
         "L’ordre des classes HTML décide",
         "À égalité des priorités, la dernière règle applicable gagne"
       ],
-      "explanation": "L’ordre intervient une fois les autres critères de cascade à égalité.",
+      "explanation": "Quand ces règles ont la même priorité, celle écrite en dernier est utilisée pour cette propriété.",
       "sourceSection": "notion-12",
       "evidence": "À spécificité et priorité égales, une règle applicable placée après l'autre peut la remplacer.",
       "correctAnswerIndex": 3
@@ -152,17 +152,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment choisir un seuil pertinent ?",
+      "question": "Quelle propriété permet à un texte très long de revenir à la ligne si nécessaire ?",
       "answers": [
-        "Selon la marque de téléphone",
-        "Selon le nom du fichier",
-        "Selon le nombre d’images uniquement",
-        "Selon les difficultés de lisibilité du contenu"
+        "white-space: nowrap",
+        "font-size: 0",
+        "display: none",
+        "overflow-wrap: anywhere"
       ],
-      "explanation": "Un seuil répond à un besoin concret de disposition et de lecture.",
-      "sourceSection": "notion-19",
-      "evidence": "Un breakpoint se choisit d'après les besoins du contenu.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "overflow-wrap permet de couper une longue chaîne pour conserver son affichage.",
+      "sourceSection": "notion-17",
+      "evidence": "<a id=\"notion-17\"></a>Contenu long | overflow-wrap: anywhere permet de couper un contenu textuel long si nécessaire. |"
     }
   ]
 }

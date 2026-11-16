@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/base",
   "questions": [
     {
-      "question": "Quelle fonction appartient au parcours visiteur ?",
+      "question": "Que peut faire un visiteur qui consulte le portfolio ?",
       "answers": [
         "Filtrer les projets",
         "Modifier les données enregistrées",
@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quelle action relève de la gestion ?",
+      "question": "Quelle action sert à gérer les projets enregistrés ?",
       "answers": [
         "Ouvrir un lien de projet",
         "Ajouter un projet par formulaire",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel document clarifie les champs avant SQL ?",
+      "question": "Quel document décrit les champs et leurs règles avant de créer la table SQL ?",
       "answers": [
         "Une liste de polices",
         "Le nom des navigateurs",
@@ -48,7 +48,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel champ garde une identité stable ?",
+      "question": "Quel champ permet de reconnaître le même projet même si son titre change ?",
       "answers": [
         "title",
         "description",
@@ -61,7 +61,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle règle s'applique à title ?",
+      "question": "Quelle règle doit respecter le titre d’un projet ?",
       "answers": [
         "Un texte obligatoire non vide",
         "Un nombre entier",
@@ -87,20 +87,20 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel format utilise start_date dans le contrat ?",
+      "question": "Sous quelle forme écrit-on la date de début dans start_date ?",
       "answers": [
         "Un numéro de jour seul",
         "La date d’enregistrement obligatoire",
         "Une date au format année-mois-jour",
         "Un nom de mois seul"
       ],
-      "explanation": "Le contrat utilise un format de date stable entre interface et serveur.",
+      "explanation": "Le navigateur et le serveur utilisent le même format de date : année, mois, jour.",
       "sourceSection": "notion-9",
       "evidence": "Les dates du contrat suivent année-mois-jour.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle règle relie début et fin ?",
+      "question": "Quelle règle doit respecter la date de fin par rapport à la date de début ?",
       "answers": [
         "La fin doit toujours être égale au début",
         "Les deux dates doivent être aujourd’hui",
@@ -133,7 +133,7 @@
         "Tous les protocoles",
         "JavaScript seulement"
       ],
-      "explanation": "Un lien externe reçu doit respecter les protocoles autorisés par le contrat.",
+      "explanation": "Dans ce projet, les adresses de liens externes commencent par http:// ou https://.",
       "sourceSection": "notion-15",
       "evidence": "Les liens externes acceptés sont HTTP ou HTTPS.",
       "correctAnswerIndex": 1
@@ -152,17 +152,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Que prioriser au cadrage ?",
+      "question": "Quel champ de notre portfolio contient la description textuelle du projet ?",
       "answers": [
-        "Toutes les extensions avant l’affichage",
-        "Une animation obligatoire par carte",
-        "Un compte utilisateur avant tout socle",
-        "Un parcours minimal fonctionnel"
+        "image_url",
+        "start_date",
+        "code_url",
+        "description"
       ],
-      "explanation": "Le socle permet de valider le trajet complet avant les options.",
-      "sourceSection": "notion-20",
-      "evidence": "Le minimum livrable est défini avant les détails décoratifs.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "description contient le texte qui présente le projet.",
+      "sourceSection": "notion-7",
+      "evidence": "<a id=\"notion-7\"></a>Description | description présente le projet sous forme textuelle. |"
     }
   ]
 }

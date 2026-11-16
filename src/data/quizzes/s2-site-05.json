@@ -9,20 +9,20 @@
   "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/qualite",
   "questions": [
     {
-      "question": "Sur quoi baser les contrôles de gestion ?",
+      "question": "Quelle instruction SQL ajoute un nouveau projet dans une table ?",
       "answers": [
-        "Le dictionnaire de données et le contrat",
-        "Uniquement les couleurs de la maquette",
-        "Les noms de fichiers CSS",
-        "Le nombre de cartes affichées"
+        "INSERT",
+        "UPDATE",
+        "SELECT",
+        "DELETE"
       ],
-      "explanation": "Les champs de gestion représentent les données et leurs règles.",
-      "sourceSection": "notion-1",
-      "evidence": "Le formulaire reprend les champs du dictionnaire de données.",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "INSERT crée une ligne ; UPDATE modifie une ligne existante.",
+      "sourceSection": "notion-10",
+      "evidence": "<a id=\"notion-10\"></a>SQL ajout | INSERT crée une ligne de projects. |"
     },
     {
-      "question": "Qu'est-ce qui donne un nom compréhensible au champ ?",
+      "question": "Comment donner un nom visible et compréhensible à un champ ?",
       "answers": [
         "Un id sans texte",
         "Un label associé",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Un id caché est-il fiable sans validation serveur ?",
+      "question": "Un champ caché contient l’id du projet. Faut-il vérifier cet id dans le PHP ?",
       "answers": [
         "Oui, si le formulaire a une bordure",
         "Oui, si JavaScript le remplit",
@@ -55,7 +55,7 @@
         "Le nombre zéro",
         "null"
       ],
-      "explanation": "Une absence prévue doit être transmise dans le type défini par le contrat.",
+      "explanation": "Si le projet n’a pas de date de fin, on envoie null, sans guillemets.",
       "sourceSection": "notion-6",
       "evidence": "Une fin absente est envoyée comme null dans le contrat.",
       "correctAnswerIndex": 3
@@ -74,10 +74,10 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel identifiant permet de cibler l'édition ?",
+      "question": "Pour modifier le bon projet, quel id faut-il utiliser ?",
       "answers": [
         "Le numéro de clic",
-        "L’id stable du projet",
+        "L’id du projet, qui ne change pas quand on trie la liste",
         "La position dans les résultats",
         "Le titre uniquement"
       ],
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel SQL correspond à une édition ciblée ?",
+      "question": "Quelle requête SQL permet de modifier seulement le projet choisi ?",
       "answers": [
         "INSERT d’une copie à chaque édition",
         "SELECT seulement",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment insérer description dans SQL ?",
+      "question": "Comment passer la description à une requête SQL sans l’ajouter directement au texte SQL ?",
       "answers": [
         "Concaténer directement la description dans SQL",
         "Utiliser textContent pour protéger SQL",
@@ -152,7 +152,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Le formulaire local suffit-il pour publier une gestion sécurisée ?",
+      "question": "Pour mettre la gestion du site en ligne, le formulaire local suffit-il à réserver les modifications aux bonnes personnes ?",
       "answers": [
         "Oui, un bouton caché protège toutes les écritures",
         "Oui, required protège la base",

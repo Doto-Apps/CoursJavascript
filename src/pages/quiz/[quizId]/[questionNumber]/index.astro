@@ -41,7 +41,7 @@ if (await Astro.session?.has(cookieKey)) {
   answers = answersCookie ? (JSON.parse(answersCookie) as Answers) : {};
 }
 
-// A local bank contains 40 questions, but an attempt stops after 10.
+// Une banque peut contenir plus de questions que le tirage d’une tentative.
 if (
   getLocalQuiz(quizId) &&
   Object.keys(answers).length >= totalQuestions &&
@@ -186,7 +186,7 @@ const nextQuestionIndex =
         <span class="text-white text-xl">
           Question {totalAnswers} sur {totalQuestions}
         </span>{" "}
-        du quizz {quizData.name}
+        du quiz {quizData.name}
       </div>
       <progress
         class="progress progress-primary w-full max-w-lg"

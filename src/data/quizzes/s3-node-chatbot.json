@@ -5,7 +5,7 @@
   "timeByQuestionInSeconds": 20,
   "questions": [
     {
-      "question": "Où Node exécute-t-il le code du serveur ?",
+      "question": "Quand on lance un serveur Node.js, où son JavaScript s’exécute-t-il ?",
       "answers": [
         "Dans un processus hors du navigateur",
         "Dans la feuille CSS",
@@ -14,11 +14,11 @@
       ],
       "explanation": "Node fournit un environnement JavaScript distinct de celui de la page.",
       "sourceSection": "execution",
-      "evidence": "gateur, JavaScript peut manipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interfac",
+      "evidence": "Dans le navigateur, JavaScript peut manipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interface : elle fixe les adresses, les données attendues et les réponses promises.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que combine une route de notre API ?",
+      "question": "Quelles informations permettent au serveur de reconnaître une route de l’API ?",
       "answers": [
         "Un nom de personnage et une image seulement",
         "Une méthode HTTP et un chemin",
@@ -40,20 +40,20 @@
       ],
       "explanation": "Le port distingue un service sur une machine donnée.",
       "sourceSection": "execution",
-      "evidence": "anipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interface : elle fixe les adresse",
+      "evidence": "| Port | Numéro permettant de joindre un service sur une machine. | Ici 3000 ; un autre processus ne peut pas déjà l’occuper. |",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle requête teste la santé du squelette ?",
+      "question": "Quelle requête permet de vérifier que le serveur du TP répond ?",
       "answers": [
         "POST /health",
         "GET /message",
         "DELETE /message",
         "GET /health"
       ],
-      "explanation": "Le contrat prévoit une route de santé accessible sans corps de message.",
-      "sourceSection": "execution",
-      "evidence": "| Route | Méthode HTTP et chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
+      "explanation": "GET /health permet de vérifier que le serveur répond, sans envoyer de message.",
+      "sourceSection": "contrat",
+      "evidence": "| GET /health | Aucun. | 200, objet avec ok et personnage. |",
       "correctAnswerIndex": 3
     },
     {
@@ -65,8 +65,8 @@
         "port"
       ],
       "explanation": "Le client envoie un texte dans message ; le serveur fournit la réplique.",
-      "sourceSection": "execution",
-      "evidence": "chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
+      "sourceSection": "contrat",
+      "evidence": "| POST /message | Objet JSON avec message, texte de 1 à 1000 caractères. | 200, objet avec personnage et reply. |",
       "correctAnswerIndex": 0
     },
     {
@@ -96,33 +96,33 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel rôle joue JSON.stringify dans envoyer ?",
+      "question": "À quoi sert JSON.stringify avant d’envoyer une réponse ?",
       "answers": [
         "Analyser une réponse reçue",
         "Modifier le DOM",
         "Valider automatiquement tous les champs",
         "Produire le texte JSON de la réponse"
       ],
-      "explanation": "Les données sont sérialisées avant leur envoi.",
+      "explanation": "JSON.stringify transforme les données en texte JSON avant leur envoi.",
       "sourceSection": "serveur",
       "evidence": "response.end(JSON.stringify(data));",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Pourquoi lire le corps par morceaux ?",
+      "question": "Comment le corps d’une requête peut-il arriver au serveur Node.js ?",
       "answers": [
-        "Le réseau ne garantit pas un seul morceau",
-        "JSON exige un fichier par lettre",
-        "Node ne peut recevoir que des nombres",
-        "Chaque morceau doit créer un service"
+        "En plusieurs morceaux à rassembler",
+        "Toujours comme un objet JavaScript déjà validé",
+        "Uniquement sous forme d’un fichier CSS",
+        "Toujours dans le cookie de session"
       ],
-      "explanation": "La réception peut être fragmentée ; la fonction reconstitue le corps.",
+      "correctAnswerIndex": 0,
+      "explanation": "Le serveur reçoit les morceaux puis reconstitue le texte à analyser.",
       "sourceSection": "serveur",
-      "evidence": "de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deu",
-      "correctAnswerIndex": 0
+      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deux limites n’ont pas la même unité."
     },
     {
-      "question": "Quelle valeur valide le contrat du message ?",
+      "question": "Quel message le serveur accepte-t-il selon les règles du TP ?",
       "answers": [
         "Un nombre seul",
         "Un texte non vide de longueur autorisée",
@@ -135,30 +135,30 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "À quoi sert le mode simulé ?",
+      "question": "Quel bloc permet au serveur Node.js d’intercepter une erreur lancée dans try ?",
       "answers": [
-        "Remplacer définitivement la validation",
-        "Garantir la qualité littéraire finale",
-        "Tester le contrat sans dépendre d’un modèle",
-        "Entraîner les poids du modèle"
+        "return uniquement",
+        "import",
+        "catch",
+        "const"
       ],
-      "explanation": "La simulation sépare les erreurs d’API des pannes de génération.",
+      "correctAnswerIndex": 2,
+      "explanation": "catch traite l’erreur produite dans le bloc try.",
       "sourceSection": "serveur",
-      "evidence": "return `Je suis ${personnage}. J’ai reçu : ${message}`;",
-      "correctAnswerIndex": 2
+      "evidence": "} catch {"
     },
     {
-      "question": "Pourquoi retourner après l’envoi d’une réponse ?",
+      "question": "Quel effet a return devant l’appel qui envoie la réponse depuis le gestionnaire ?",
       "answers": [
         "Relancer le serveur",
-        "Supprimer la requête du client",
-        "Changer le port",
-        "Éviter de poursuivre vers une deuxième réponse"
+        "Supprimer le client",
+        "Changer le numéro du port",
+        "Terminer l’exécution du gestionnaire après cet appel"
       ],
-      "explanation": "Chaque branche doit terminer son traitement après sa réponse.",
+      "correctAnswerIndex": 3,
+      "explanation": "return empêche de continuer vers les instructions suivantes du gestionnaire.",
       "sourceSection": "serveur",
-      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la lim",
-      "correctAnswerIndex": 3
+      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deux limites n’ont pas la même unité."
     }
   ],
   "sourceCourse": "/semestre_3/deploiement_Services/nodeS1",

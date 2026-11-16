@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Lire une maquette et préparer l’intégration"
 type: "CM"
 order: 2
-quizId: "s1-site-01"
 previousSession: "/semestre_1/produire_Un_Site_Web/projet"
 nextSession: "/semestre_1/produire_Un_Site_Web/integration"
 ---
@@ -54,3 +53,9 @@ Gardez le texte comme texte et exportez les médias utiles. Une capture globale 
 Si un état mobile, vide ou en erreur manque, notez la question et clarifiez le comportement au lieu d’inventer une fonction. Précisez aussi le focus clavier, le texte long et le recadrage des images. Les outils d’inspection disponibles dépendent des permissions et du compte Figma : le fichier doit être consultable, sans supposer un accès payant particulier.
 
 La [structure HTML](integration) décrit ensuite les rôles des zones ; leur apparence sera traitée avec les conteneurs et les composants CSS.
+
+## Relevé d’intégration à produire
+
+À partir de la maquette fournie ou de celle de votre projet, relevez le conteneur, les gouttières, l’espace intérieur d’une carte, la hiérarchie typographique et les couleurs partagées. Pour chaque valeur, notez l’élément concerné et une règle CSS possible. Identifiez au moins un composant répété et ses variantes.
+
+Préparez les médias avec leur source, leur licence, leur format et leur nom de fichier. Ajoutez une liste des états à préciser : petit écran, texte long, survol, focus et éventuelle absence de contenu. Remettez le relevé, les ressources utiles et le parcours simulé ; une capture générale seule ne décrit pas les règles à intégrer.

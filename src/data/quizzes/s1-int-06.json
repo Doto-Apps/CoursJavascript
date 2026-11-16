@@ -9,43 +9,43 @@
   "targetCourse": "/semestre_1/integration/csstp",
   "questions": [
     {
-      "question": "Quel objectif est prioritaire dans le TP de structure HTML Gamer/Creator ?",
+      "question": "Quelle écriture déclare la langue française du document HTML ?",
       "answers": [
-        "Une page compréhensible sans CSS",
-        "Une animation sur chaque profil",
-        "Une disposition au pixel près avant la structure",
-        "Un formulaire dynamique avant les titres"
+        "<html lang=\"fr\">",
+        "<html charset=\"fr\">",
+        "<html href=\"fr\">",
+        "<html lang=\"en\">"
       ],
-      "explanation": "La structure et le sens sont vérifiés avant la mise en forme du même site.",
-      "sourceSection": "contrat",
-      "evidence": "sans CSS",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "lang sur html indique la langue du document.",
+      "sourceSection": "structure",
+      "evidence": "Ce fragment est un point de départ, pas le document complet. Ajoutez le doctype, `html lang=\"fr\"`, `head`, l'encodage UTF-8, la métadonnée viewport et un titre de document pertinent. Les classes servent ensuite à cibler des composants CSS ; elles ne remplacent pas la sémantique."
     },
     {
-      "question": "Que faut-il contrôler pour une image récupérée ?",
+      "question": "Quel attribut contient le texte alternatif d’une image ?",
       "answers": [
-        "Seulement la couleur dominante",
-        "La licence et les droits de réutilisation",
-        "Seulement la résolution",
-        "Seulement le nom de fichier"
+        "src",
+        "alt",
+        "href",
+        "class"
       ],
-      "explanation": "Une image accessible en ligne n’est pas automatiquement librement réutilisable.",
-      "sourceSection": "contrat",
-      "evidence": "licence",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "alt fournit l’alternative de l’image ; src indique son fichier.",
+      "sourceSection": "contenus",
+      "evidence": "Pour une image informative, rédigez un `alt` qui apporte son information utile. Une image purement décorative reçoit `alt=\"\"`. Un lien navigue vers une ressource ; un bouton déclenche une action. Évitez « cliquez ici » : « Voir le portfolio de Léa » reste compréhensible hors contexte. Un `id` ne doit pas être réutilisé sur plusieurs cartes ; une classe peut l'être."
     },
     {
-      "question": "Comment présenter des informations de contact inventées ?",
+      "question": "Quelle balise représente le pied de page ?",
       "answers": [
-        "Les omettre seulement dans le CSS",
-        "Les annoncer comme coordonnées officielles",
-        "Les signaler comme données fictives",
-        "Les présenter comme vérifiées"
+        "header",
+        "nav",
+        "footer",
+        "main"
       ],
-      "explanation": "Un contenu de démonstration ne doit pas tromper sur la réalité des contacts.",
-      "sourceSection": "comprendre",
-      "evidence": "fictives",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "footer regroupe ici les informations de fin de page.",
+      "sourceSection": "contrat",
+      "evidence": "Le site présente une communauté de joueurs et de créateurs. Une page contient : un en-tête avec le nom de la communauté ; une navigation vers les sections ; une présentation avec un titre principal ; deux sections « Gamers » et « Creators » ; trois profils par section ; un pied de page avec un contact. Chaque profil comporte un nom, une image, un texte de présentation et un lien descriptif. Les six profils doivent avoir des contenus distincts."
     },
     {
       "question": "Quelle zone contient le contenu principal ?",
@@ -56,12 +56,12 @@
         "main"
       ],
       "explanation": "Le contenu principal appartient à main.",
-      "sourceSection": "comprendre",
-      "evidence": "main",
+      "sourceSection": "structure",
+      "evidence": "`main` contient le contenu principal de la page. Chaque section possède un titre ; chaque profil peut être un `article` car il constitue une unité de contenu. La navigation utilise des liens vers des identifiants uniques. Le titre principal est un `h1`, les catégories des `h2`, les noms des profils des `h3`.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel élément convient à une fiche de profil autonome ?",
+      "question": "Quelle balise convient pour une fiche de profil qui peut se comprendre toute seule ?",
       "answers": [
         "article",
         "nav",
@@ -69,12 +69,12 @@
         "link"
       ],
       "explanation": "Une fiche autonome peut être regroupée dans un article.",
-      "sourceSection": "comprendre",
-      "evidence": "article",
+      "sourceSection": "structure",
+      "evidence": "`main` contient le contenu principal de la page. Chaque section possède un titre ; chaque profil peut être un `article` car il constitue une unité de contenu. La navigation utilise des liens vers des identifiants uniques. Le titre principal est un `h1`, les catégories des `h2`, les noms des profils des `h3`.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel niveau pour un nom de profil dans une catégorie h2 ?",
+      "question": "Une catégorie est titrée avec h2. Quel titre utilise-t-on pour les noms de profils dans cette catégorie ?",
       "answers": [
         "h6",
         "h3",
@@ -82,12 +82,12 @@
         "h2"
       ],
       "explanation": "Dans cette structure, le nom du profil se situe sous le titre de catégorie h2.",
-      "sourceSection": "comprendre",
-      "evidence": "h3",
+      "sourceSection": "structure",
+      "evidence": "`main` contient le contenu principal de la page. Chaque section possède un titre ; chaque profil peut être un `article` car il constitue une unité de contenu. La navigation utilise des liens vers des identifiants uniques. Le titre principal est un `h1`, les catégories des `h2`, les noms des profils des `h3`.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Comment fonctionne la navigation vers les catégories ?",
+      "question": "Pour qu’un lien href=\"#gamers\" fonctionne, que faut-il sur la section visée ?",
       "answers": [
         "Un name gamers sur le fichier CSS",
         "Une classe gamers sans id cible",
@@ -96,7 +96,7 @@
       ],
       "explanation": "Un lien de fragment rejoint l’identifiant correspondant dans le document.",
       "sourceSection": "structure",
-      "evidence": "identifiants uniques",
+      "evidence": "`main` contient le contenu principal de la page. Chaque section possède un titre ; chaque profil peut être un `article` car il constitue une unité de contenu. La navigation utilise des liens vers des identifiants uniques. Le titre principal est un `h1`, les catégories des `h2`, les noms des profils des `h3`.",
       "correctAnswerIndex": 2
     },
     {
@@ -109,11 +109,11 @@
       ],
       "explanation": "Des fragments de contenu ne constituent pas à eux seuls le document complet demandé.",
       "sourceSection": "structure",
-      "evidence": "document complet",
+      "evidence": "Ce fragment est un point de départ, pas le document complet. Ajoutez le doctype, `html lang=\"fr\"`, `head`, l'encodage UTF-8, la métadonnée viewport et un titre de document pertinent. Les classes servent ensuite à cibler des composants CSS ; elles ne remplacent pas la sémantique.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel rôle les classes auront-elles dans la suite du TP ?",
+      "question": "À quoi serviront les classes HTML quand on ajoutera le CSS ?",
       "answers": [
         "Cibler des éléments en CSS sans changer leur sens",
         "Remplacer les niveaux de titres",
@@ -122,7 +122,7 @@
       ],
       "explanation": "Les classes facilitent la mise en forme ; la sémantique vient des éléments HTML.",
       "sourceSection": "structure",
-      "evidence": "classes",
+      "evidence": "Ce fragment est un point de départ, pas le document complet. Ajoutez le doctype, `html lang=\"fr\"`, `head`, l'encodage UTF-8, la métadonnée viewport et un titre de document pertinent. Les classes servent ensuite à cibler des composants CSS ; elles ne remplacent pas la sémantique.",
       "correctAnswerIndex": 0
     },
     {
@@ -135,7 +135,7 @@
       ],
       "explanation": "Une décoration sans information utile ne nécessite pas une description lue.",
       "sourceSection": "contenus",
-      "evidence": "décorative",
+      "evidence": "Pour une image informative, rédigez un `alt` qui apporte son information utile. Une image purement décorative reçoit `alt=\"\"`. Un lien navigue vers une ressource ; un bouton déclenche une action. Évitez « cliquez ici » : « Voir le portfolio de Léa » reste compréhensible hors contexte. Un `id` ne doit pas être réutilisé sur plusieurs cartes ; une classe peut l'être.",
       "correctAnswerIndex": 1
     },
     {
@@ -148,11 +148,11 @@
       ],
       "explanation": "Le libellé doit rendre la destination compréhensible.",
       "sourceSection": "contenus",
-      "evidence": "portfolio",
+      "evidence": "Pour une image informative, rédigez un `alt` qui apporte son information utile. Une image purement décorative reçoit `alt=\"\"`. Un lien navigue vers une ressource ; un bouton déclenche une action. Évitez « cliquez ici » : « Voir le portfolio de Léa » reste compréhensible hors contexte. Un `id` ne doit pas être réutilisé sur plusieurs cartes ; une classe peut l'être.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel contrôle convient pour rejoindre le portfolio d’une personne ?",
+      "question": "Quel élément utilise-t-on pour ouvrir le portfolio d’une personne ?",
       "answers": [
         "Un bouton sans action",
         "Un div seulement coloré",
@@ -161,7 +161,7 @@
       ],
       "explanation": "Le portfolio est une destination ; la navigation utilise un lien.",
       "sourceSection": "contenus",
-      "evidence": "bouton",
+      "evidence": "Pour une image informative, rédigez un `alt` qui apporte son information utile. Une image purement décorative reçoit `alt=\"\"`. Un lien navigue vers une ressource ; un bouton déclenche une action. Évitez « cliquez ici » : « Voir le portfolio de Léa » reste compréhensible hors contexte. Un `id` ne doit pas être réutilisé sur plusieurs cartes ; une classe peut l'être.",
       "correctAnswerIndex": 3
     }
   ]

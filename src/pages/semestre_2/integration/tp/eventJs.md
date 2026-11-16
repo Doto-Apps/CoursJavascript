@@ -198,3 +198,9 @@ L'origine change ; le gestionnaire reste enregistré sur le formulaire. Dans ce 
 Une liste contient un état : ses entrées et leur nombre. Une suppression change cet état, puis le compteur doit être recalculé. Le prototype recalcule le nombre à partir des éléments présents ; une version avec tableau peut utiliser `tableau.length`. Ne décrémentez pas un compteur plusieurs fois pour une seule action.
 
 Prédisez avant l'essai : zéro entrée au départ, deux après deux ajouts, une après suppression. Recommencez avec deux titres identiques : ils correspondent à deux entrées distinctes. Testez aussi un titre composé d'espaces, un titre long et la chaîne `<b>Film</b>`. L'interface doit expliquer le refus et afficher le dernier cas comme du texte.
+
+## Travail à réaliser : une liste d’idées
+
+Créez un formulaire avec un champ nommé, une liste et un compteur annoncé dans une zone d’état. Traitez `submit`, refusez les espaces seuls, construisez chaque entrée avec `textContent` et ajoutez un bouton de suppression nommé. Après une suppression, replacez le focus sur un contrôle encore présent.
+
+Testez deux ajouts dont les titres sont identiques, puis supprimez une seule des deux entrées. Le compteur doit évoluer de 0 à 2 puis 1. Saisissez `<b>Film</b>` et vérifiez l’affichage textuel. Comparez `target` et `currentTarget` en cliquant un enfant du contrôle. Remettez fichiers et trace des événements ; ce prototype reste en mémoire et ne prétend pas enregistrer une donnée serveur.

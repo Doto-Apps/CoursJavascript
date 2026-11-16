@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/integration/tp/pluginJs",
   "questions": [
     {
-      "question": "Quel élément commande l'ouverture ?",
+      "question": "Quel élément HTML utiliser pour le bouton qui ouvre la navigation ?",
       "answers": [
         "button",
         "div sans comportement clavier",
@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel attribut décrit l'état ouvert ?",
+      "question": "Quel attribut indique si la navigation est ouverte ou fermée ?",
       "answers": [
         "aria-current",
         "aria-expanded",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que contient aria-controls sur le bouton du menu ?",
+      "question": "À quoi doit correspondre la valeur de aria-controls sur le bouton ?",
       "answers": [
         "Le texte du bouton",
         "L’adresse d’une autre page",
@@ -48,12 +48,12 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment comparer correctement la valeur lue de aria-expanded ?",
+      "question": "getAttribute lit aria-expanded. Avec quelle valeur faut-il comparer le résultat ?",
       "answers": [
         "Comparer uniquement au booléen true",
         "Tester seulement si la chaîne existe",
         "Comparer au nombre 1",
-        "Comparer à la chaîne true"
+        "Comparer à la chaîne \"true\""
       ],
       "explanation": "La lecture d’un attribut donne une chaîne ; false comme texte n’est pas un booléen faux.",
       "sourceSection": "notion-4",
@@ -74,14 +74,14 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quelle méthode relie le clic au traitement ?",
+      "question": "Quelle méthode JavaScript permet de lancer une fonction quand on clique sur le bouton ?",
       "answers": [
         "JSON.stringify",
         "addEventListener",
         "querySelector",
         "classList.remove"
       ],
-      "explanation": "L’écouteur relie un événement à une fonction de traitement.",
+      "explanation": "addEventListener permet d’associer le clic du bouton à la fonction qui ouvre ou ferme la navigation.",
       "sourceSection": "notion-7",
       "evidence": "addEventListener associe une fonction à un événement.",
       "correctAnswerIndex": 1
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quels éléments doivent rester cohérents ?",
+      "question": "Quand on ouvre le menu, quelles informations faut-il mettre à jour ensemble ?",
       "answers": [
         "L’état affiché et l’état annoncé",
         "La couleur et le nom du fichier",
@@ -139,7 +139,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Où replacer le focus après Échap ?",
+      "question": "Dans le menu du cours, où replacer le focus après la fermeture par Échap ?",
       "answers": [
         "Le pied de page",
         "Un div non focalisable",
@@ -152,7 +152,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Faut-il ajouter role menu à toute navigation de site ?",
+      "question": "Faut-il ajouter role=\"menu\" à une navigation de site avec des liens ordinaires ?",
       "answers": [
         "Oui, tout nav exige role menu",
         "Oui, role menu remplace les liens",

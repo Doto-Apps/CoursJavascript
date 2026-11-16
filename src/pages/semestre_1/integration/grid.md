@@ -141,3 +141,11 @@ Chaque zone doit former un rectangle. Le nom d'une zone est un choix CSS, pas un
 ## Le placement des éléments dans la grille
 
 Activez la superposition Grid dans l'inspecteur : elle révèle les pistes et leurs limites. Ne déplacez pas visuellement les éléments au point de rendre l'ordre de lecture incohérent : le clavier et les technologies d'assistance suivent principalement l'ordre du document. Une carte débordante peut venir d'une image trop large, pas du nombre de colonnes. `minmax(0, 1fr)` permet à une piste de se réduire, et `max-width: 100%` empêche une image de dépasser son conteneur.
+
+## Exercice : un catalogue de six cartes
+
+Créez six articles dans un conteneur. Affichez trois colonnes avec une gouttière de 16 px, puis faites occuper deux colonnes au premier article. Dessinez les quatre lignes verticales et indiquez les lignes de départ et d’arrivée de cet article. Sans étendue particulière, six cartes sur trois colonnes forment deux rangées ; avec la première carte sur deux pistes, le placement automatique peut nécessiter une troisième rangée.
+
+Pour un conteneur de 632 px, trois colonnes égales et deux gouttières de 16 px, il reste 600 px : chaque piste mesure 200 px, si le contenu n’impose pas de minimum supérieur. Comparez `1fr` et `minmax(0, 1fr)` avec un mot très long ; ajoutez une règle de coupure du texte si nécessaire.
+
+Remettez HTML/CSS et un relevé de l’overlay Grid. Vérifiez qu’ajouter une septième carte ne demande aucune nouvelle coordonnée et que l’ordre des liens au clavier reste celui du document.

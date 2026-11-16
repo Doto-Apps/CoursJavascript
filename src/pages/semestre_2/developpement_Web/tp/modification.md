@@ -154,6 +154,7 @@ Sans `WHERE`, ces instructions toucheraient toutes les lignes. Vérifiez l'exist
         );
         const rows = visible.map((task) => {
           const li = document.createElement("li");
+          li.dataset.taskId = task.id;
           const label = document.createElement("label");
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
@@ -161,17 +162,40 @@ Sans `WHERE`, ces instructions toucheraient toutes les lignes. Vérifiez l'exist
           checkbox.addEventListener("change", () => {
             task.done = checkbox.checked;
             render();
+            const next = document.querySelector(`[data-task-id="${task.id}"] input[type="checkbox"]`);
+            (next ?? document.querySelector("#title")).focus();
           });
           label.append(
             checkbox,
             document.createTextNode(" " + task.title + " "),
           );
           const remove = document.createElement("button");
+          remove.type = "button";
+          let suppressionDemandee = false;
+          const annuler = document.createElement("button");
+          annuler.type = "button";
+          annuler.textContent = "Annuler la suppression";
+          annuler.hidden = true;
+          annuler.addEventListener("click", () => {
+            suppressionDemandee = false;
+            annuler.hidden = true;
+            remove.textContent = "Supprimer";
+            remove.setAttribute("aria-label", `Supprimer ${task.title}`);
+            remove.focus();
+          });
           remove.textContent = "Supprimer";
           remove.setAttribute("aria-label", `Supprimer ${task.title}`);
           remove.addEventListener("click", () => {
+            if (!suppressionDemandee) {
+              suppressionDemandee = true;
+              remove.textContent = "Confirmer la suppression";
+              remove.setAttribute("aria-label", `Confirmer la suppression de ${task.title}`);
+              annuler.hidden = false;
+              return;
+            }
             tasks = tasks.filter((t) => t.id !== task.id);
             render();
+            document.querySelector("#title").focus();
           });
           const titleInput = document.createElement("input");
           titleInput.value = task.title;
@@ -191,8 +215,9 @@ Sans `WHERE`, ces instructions toucheraient toutes les lignes. Vérifiez l'exist
             }
             task.title = title;
             render();
+            document.querySelector(`[data-task-id="${task.id}"] input:not([type="checkbox"])`)?.focus();
           });
-          li.append(label, titleInput, rename, remove);
+          li.append(label, titleInput, rename, remove, annuler);
           return li;
         });
         document.querySelector("#liste").replaceChildren(...rows);
@@ -240,3 +265,18 @@ Sans `WHERE`, ces instructions toucheraient toutes les lignes. Vérifiez l'exist
 | <a id="notion-18"></a>Confirmation suppression | Une suppression est précédée d'une confirmation explicite dans le travail attendu. |
 | <a id="notion-19"></a>Suppression répétée | Un second DELETE sur une tâche déjà supprimée reçoit 404 dans notre contrat. |
 | <a id="notion-20"></a>Vérification voisins | Un test vérifie que les tâches voisines restent intactes. |
+
+## Travail à réaliser : cibler et confirmer
+
+Ajoutez renommage, changement de `done` et suppression. Validez l’id positif côté serveur et vérifiez l’existence de la tâche. Pour PATCH, acceptez seulement les champs éditables et leur bon type. Pour DELETE, affichez une confirmation nommant la tâche ; une annulation n’émet aucune requête.
+
+| Essai | Attendu |
+|---|---|
+| Modifier après filtre ou tri | Même id, seule la cible change |
+| Réenvoyer un titre identique | Réussite si la tâche existe |
+| `done: "false"` au lieu du booléen | 422, aucune modification |
+| Id inexistant | 404 |
+| DELETE confirmé puis répété | 200 puis 404 selon notre contrat |
+| Panne pendant la modification | État confirmé conservé et réessai possible |
+
+Vérifiez les tâches voisines et la persistance après rechargement. Après une reconstruction du DOM, replacez le focus sur le contrôle correspondant ou, si la cible a disparu, sur un contrôle pertinent encore présent.

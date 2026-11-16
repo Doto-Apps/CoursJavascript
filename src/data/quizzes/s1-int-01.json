@@ -18,11 +18,11 @@
       ],
       "explanation": "Internet transporte plusieurs services, dont le Web et le courrier électronique.",
       "sourceSection": "comprendre",
-      "evidence": "eux machines : votre ordinateur peut exécuter les deux pendant un TP. Internet est le réseau qui transporte les échanges ; le Web est un service utilisant notamment HTTP sur ce réseau.",
+      "evidence": "Un **navigateur** est un logiciel client : il demande des ressources et les présente. Un **serveur** est un programme qui attend des demandes et produit des réponses. Ces rôles ne désignent pas nécessairement deux machines : votre ordinateur peut exécuter les deux pendant un TP. Internet est le réseau qui transporte les échanges ; le Web est un service utilisant notamment HTTP sur ce réseau.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Lors d’une consultation de page, quel logiciel est le client ?",
+      "question": "Quand on ouvre une page Web, quel logiciel envoie les demandes au serveur ?",
       "answers": [
         "Le moteur PHP du serveur",
         "Le navigateur",
@@ -30,8 +30,8 @@
         "Le résolveur DNS"
       ],
       "explanation": "Le navigateur envoie les demandes et présente les ressources reçues.",
-      "sourceSection": "comprendre",
-      "evidence": "Un **navigateur** est un logiciel client : il demande des ressources et les présente. Un **serveur** est un programme qui attend des demandes et produit des réponses. Ces rôles ne désignent pas nécessairement deux machines : votre ordinateu",
+      "sourceSection": "reseau",
+      "evidence": "Le navigateur est le logiciel client qui demande une ressource et affiche une page. Un serveur Web reçoit des requêtes et renvoie des réponses. Le même ordinateur peut jouer les deux rôles pendant le développement. `localhost` désigne votre propre machine : votre voisin possède son propre `localhost`.",
       "correctAnswerIndex": 1
     },
     {
@@ -44,7 +44,7 @@
       ],
       "explanation": "Chaque ordinateur possède son propre localhost.",
       "sourceSection": "reseau",
-      "evidence": "même ordinateur peut jouer les deux rôles pendant le développement. `localhost` désigne votre propre machine : votre voisin possède son propre `localhost`.",
+      "evidence": "Le navigateur est le logiciel client qui demande une ressource et affiche une page. Un serveur Web reçoit des requêtes et renvoie des réponses. Le même ordinateur peut jouer les deux rôles pendant le développement. `localhost` désigne votre propre machine : votre voisin possède son propre `localhost`.",
       "correctAnswerIndex": 2
     },
     {
@@ -53,24 +53,24 @@
         "La véracité de chaque texte publié",
         "L’absence de bugs dans la page",
         "La disponibilité permanente du serveur",
-        "La confidentialité des données en transit"
+        "Le secret des données pendant leur envoi"
       ],
       "explanation": "HTTPS chiffre le transport ; il ne certifie pas la vérité du contenu.",
-      "sourceSection": "comprendre",
-      "evidence": "| Protocole | `https` | Les règles de l’échange, avec chiffrement du transport. |",
+      "sourceSection": "url",
+      "evidence": "HTTPS chiffre les échanges entre le client et le serveur. Le nom d'hôte identifie la machine à contacter ; DNS permet de retrouver son adresse IP. Le chemin désigne la ressource demandée. Le port identifie un service sur une machine. Le fragment après `#` est utilisé par le navigateur pour atteindre une partie de la page et n'est pas envoyé dans la requête HTTP.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "À quoi sert DNS pour joindre un site nommé ?",
+      "question": "À quoi sert le DNS quand on utilise le nom d’un site ?",
       "answers": [
         "Trouver une adresse IP correspondant au nom",
         "Construire le contenu HTML",
         "Choisir les couleurs du site",
         "Exécuter les scripts de la page"
       ],
-      "explanation": "Le nom doit être résolu en adresse avant de joindre le service.",
-      "sourceSection": "comprendre",
-      "evidence": "`doto.ovh` | Le nom du serveur demandé, traduit en adresse IP par le DNS. |",
+      "explanation": "Le DNS permet de trouver une adresse IP à partir du nom du site.",
+      "sourceSection": "url",
+      "evidence": "HTTPS chiffre les échanges entre le client et le serveur. Le nom d'hôte identifie la machine à contacter ; DNS permet de retrouver son adresse IP. Le chemin désigne la ressource demandée. Le port identifie un service sur une machine. Le fragment après `#` est utilisé par le navigateur pour atteindre une partie de la page et n'est pas envoyé dans la requête HTTP.",
       "correctAnswerIndex": 0
     },
     {
@@ -82,8 +82,8 @@
         "Le protocole"
       ],
       "explanation": "Le chemin identifie une ressource sur l’hôte indiqué.",
-      "sourceSection": "comprendre",
-      "evidence": "| Chemin | `/semestre_1/integration/web` | La ressource demandée à ce serveur. |",
+      "sourceSection": "url",
+      "evidence": "HTTPS chiffre les échanges entre le client et le serveur. Le nom d'hôte identifie la machine à contacter ; DNS permet de retrouver son adresse IP. Le chemin désigne la ressource demandée. Le port identifie un service sur une machine. Le fragment après `#` est utilisé par le navigateur pour atteindre une partie de la page et n'est pas envoyé dans la requête HTTP.",
       "correctAnswerIndex": 1
     },
     {
@@ -95,8 +95,8 @@
         "Le numéro de page"
       ],
       "explanation": "Le port permet de joindre le service qui écoute sur ce numéro.",
-      "sourceSection": "comprendre",
-      "evidence": "peut exécuter les deux pendant un TP. Internet est le réseau qui transporte les échanges ; le Web est un service utilisant notamment HTTP sur ce réseau.",
+      "sourceSection": "url",
+      "evidence": "HTTPS chiffre les échanges entre le client et le serveur. Le nom d'hôte identifie la machine à contacter ; DNS permet de retrouver son adresse IP. Le chemin désigne la ressource demandée. Le port identifie un service sur une machine. Le fragment après `#` est utilisé par le navigateur pour atteindre une partie de la page et n'est pas envoyé dans la requête HTTP.",
       "correctAnswerIndex": 2
     },
     {
@@ -108,8 +108,8 @@
         "Cibler un repère dans le document côté navigateur"
       ],
       "explanation": "Le fragment est interprété par le navigateur ; il n’est pas envoyé au serveur dans la requête.",
-      "sourceSection": "comprendre",
-      "evidence": "| Fragment | `#programme` | Un repère traité par le navigateur, non envoyé dans la requête HTTP. |",
+      "sourceSection": "url",
+      "evidence": "HTTPS chiffre les échanges entre le client et le serveur. Le nom d'hôte identifie la machine à contacter ; DNS permet de retrouver son adresse IP. Le chemin désigne la ressource demandée. Le port identifie un service sur une machine. Le fragment après `#` est utilisé par le navigateur pour atteindre une partie de la page et n'est pas envoyé dans la requête HTTP.",
       "correctAnswerIndex": 3
     },
     {
@@ -122,24 +122,24 @@
       ],
       "explanation": "404 signifie que la ressource demandée n’a pas été trouvée.",
       "sourceSection": "comprendre",
-      "evidence": "Le **statut HTTP** décrit le résultat d’une requête. Un `404` pour `style.css` ne signifie pas que le document HTML est absent : celui-ci peut rester visible sans sa mise en forme. Un `500` indique une erreur du serveur ; ce n’est pas une e",
+      "evidence": "Le **statut HTTP** décrit le résultat d’une requête. Un `404` pour `style.css` ne signifie pas que le document HTML est absent : celui-ci peut rester visible sans sa mise en forme. Un `500` indique une erreur du serveur ; ce n’est pas une erreur de couleur ou de police. Un script PHP est exécuté côté serveur : le navigateur reçoit son résultat, pas son code source PHP.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Une page charge une feuille CSS et une image externes. Que peut-on observer ?",
+      "question": "Une page utilise une image et un fichier CSS. Que peut montrer l’onglet Réseau du navigateur ?",
       "answers": [
         "Une image affichée sans avoir été reçue",
         "Plusieurs requêtes pour ses ressources",
         "Une unique requête dans tous les cas",
         "Le CSS intégré obligatoirement au HTML"
       ],
-      "explanation": "Un document peut déclencher des demandes supplémentaires pour ses ressources.",
-      "sourceSection": "comprendre",
-      "evidence": "Un **navigateur** est un logiciel client : il demande des ressources et les présente. Un **serveur** est un programme qui attend des demandes et produit des réponses. Ces rôles ne désignent pas nécessairement deux machines : votre ordinateu",
+      "explanation": "Le navigateur peut envoyer plusieurs demandes pour charger le HTML, le CSS et les images.",
+      "sourceSection": "http",
+      "evidence": "HTTP organise l'échange sous forme de requête puis réponse. `GET` demande une ressource. Le statut `200` indique une requête réussie ; `404` indique que la ressource n'a pas été trouvée. Une réponse contient des informations d'en-tête et peut contenir un corps, par exemple le document HTML. Une page peut déclencher plusieurs requêtes pour ses images et sa feuille CSS. Le cache peut réutiliser une ressource déjà reçue et éviter certains transferts.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle couche modifier pour changer la couleur d’un titre ?",
+      "question": "Quel langage utilise-t-on pour changer la couleur d’un titre ?",
       "answers": [
         "DNS",
         "HTTP",
@@ -148,7 +148,7 @@
       ],
       "explanation": "CSS règle la présentation, tandis que HTML décrit la structure.",
       "sourceSection": "comprendre",
-      "evidence": "ande le document. Il lit ensuite le HTML. Une référence à une feuille CSS ou à une image peut provoquer une autre requête : un document HTML et ses ressources ne sont pas un fichier unique. Le cache peut éviter certains téléchargements ; l’",
+      "evidence": "| CSS | La présentation | Le titre devient bleu. |",
       "correctAnswerIndex": 2
     },
     {
@@ -161,7 +161,7 @@
       ],
       "explanation": "PHP s’exécute sur le serveur et envoie son résultat au client.",
       "sourceSection": "comprendre",
-      "evidence": "serveur ; ce n’est pas une erreur de couleur ou de police. Un script PHP est exécuté côté serveur : le navigateur reçoit son résultat, pas son code source PHP.",
+      "evidence": "Le **statut HTTP** décrit le résultat d’une requête. Un `404` pour `style.css` ne signifie pas que le document HTML est absent : celui-ci peut rester visible sans sa mise en forme. Un `500` indique une erreur du serveur ; ce n’est pas une erreur de couleur ou de police. Un script PHP est exécuté côté serveur : le navigateur reçoit son résultat, pas son code source PHP.",
       "correctAnswerIndex": 3
     },
     {
@@ -175,7 +175,7 @@
       "correctAnswerIndex": 0,
       "explanation": "Le point d’interrogation introduit la partie de requête ; le dièse introduit un fragment.",
       "sourceSection": "url",
-      "evidence": "│       │             │              └ paramètres de requête"
+      "evidence": "Les paramètres après `?` transmettent des valeurs dans l'URL. Une URL relative comme `images/avatar.svg` est résolue par rapport à l'adresse de la page courante. Une URL absolue fournit notamment le protocole et le nom d'hôte."
     },
     {
       "question": "Que signifie une réponse HTTP 200 ?",
@@ -187,19 +187,19 @@
       ],
       "correctAnswerIndex": 1,
       "explanation": "Un statut de réussite décrit l’échange, pas la vérité du contenu.",
-      "sourceSection": "comprendre",
-      "evidence": "Navigateur  ← HTML + statut 200 ← serveur"
+      "sourceSection": "http",
+      "evidence": "HTTP organise l'échange sous forme de requête puis réponse. `GET` demande une ressource. Le statut `200` indique une requête réussie ; `404` indique que la ressource n'a pas été trouvée. Une réponse contient des informations d'en-tête et peut contenir un corps, par exemple le document HTML. Une page peut déclencher plusieurs requêtes pour ses images et sa feuille CSS. Le cache peut réutiliser une ressource déjà reçue et éviter certains transferts."
     },
     {
-      "question": "De quoi dépend la résolution de images/photo.jpg dans un document ?",
+      "question": "Dans une page HTML, depuis quelle adresse le navigateur cherche-t-il images/photo.jpg ?",
       "answers": [
         "De la couleur du lien",
         "Du nom de l’utilisateur",
-        "De l’adresse de base du document",
+        "Depuis l’adresse de base de la page",
         "De la taille de l’image"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Une référence relative est résolue à partir d’une adresse de base.",
+      "explanation": "Le chemin est lu à partir de l’adresse de base de la page.",
       "sourceSection": "url",
       "evidence": "Les paramètres après `?` transmettent des valeurs dans l'URL. Une URL relative comme `images/avatar.svg` est résolue par rapport à l'adresse de la page courante. Une URL absolue fournit notamment le protocole et le nom d'hôte."
     },

@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "audit:content": "node scripts/audit-content.mjs",
+    "check:s1-php": "node scripts/check-s1-php.mjs",
     "dev": "astro dev --config astro.config.dev.mjs",
     "build": "astro build",
     "preview": "astro preview",

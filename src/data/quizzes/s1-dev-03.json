@@ -9,160 +9,160 @@
   "targetCourse": "/semestre_1/developpement_Web/phpVarTab",
   "questions": [
     {
-      "question": "Le TP autorise de 1 à 6 billets inclus. Comment classer une commande de 7 billets ?",
+      "question": "Quelle écriture est correcte pour un if en PHP ?",
       "answers": [
-        "Invalide : elle dépasse le maximum 6",
-        "Valide car toute quantité positive convient",
-        "Valide avec la remise seulement",
-        "Valide après remplacement automatique par 6"
+        "if ($quantite > 0) { echo \"OK\"; }",
+        "if [$quantite > 0] { echo \"OK\"; }",
+        "if ($quantite > 0) [ echo \"OK\"; ]",
+        "if {$quantite > 0} ( echo \"OK\"; )"
       ],
-      "explanation": "Les bornes doivent être vérifiées avant le calcul du tarif.",
-      "sourceSection": "regles",
-      "evidence": "1 à 6",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "Quelle réduction faut-il appliquer ?",
-      "answers": [
-        "Une remise égale au prix d’un billet",
-        "Une remise globale de 6 euros",
-        "Une remise de 6 euros par billet",
-        "Une remise de 6 pour cent"
-      ],
-      "explanation": "La règle du TP distingue une réduction fixe globale d’un pourcentage.",
-      "sourceSection": "regles",
-      "evidence": "fixe",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Quel comportement pour une quantité hors limites ?",
-      "answers": [
-        "Ramener silencieusement la quantité au maximum",
-        "Appliquer la remise malgré l’entrée invalide",
-        "Signaler une quantité invalide sans calculer le tarif",
-        "Facturer un total nul comme une réussite"
-      ],
-      "explanation": "Une entrée hors des bornes ne doit pas devenir une commande acceptée.",
+      "correctAnswerIndex": 0,
+      "explanation": "La condition se place entre parenthèses et les instructions entre accolades.",
       "sourceSection": "comprendre",
-      "evidence": "Quantité invalide",
-      "correctAnswerIndex": 2
+      "evidence": "if ($quantite < 1) {"
     },
     {
-      "question": "Que faire avant l'implémentation des règles ?",
+      "question": "Quelle écriture est correcte pour ajouter un else ?",
       "answers": [
-        "Commencer par les couleurs de l’interface",
-        "Copier un résultat sans décrire la règle",
-        "Écrire les tests après toute livraison uniquement",
-        "Écrire les étapes en pseudo-code"
+        "if ($ok) { echo \"Oui\"; } else [ echo \"Non\"; ]",
+        "if ($ok) { echo \"Oui\"; } else { echo \"Non\"; }",
+        "if ($ok) { echo \"Oui\"; } else { echo \"Non\"; ]",
+        "if ($ok) { echo \"Oui\"; } else ( echo \"Non\"; )"
       ],
-      "explanation": "Décrire entrées, conditions et sorties clarifie le traitement avant la syntaxe PHP.",
-      "sourceSection": "regles",
-      "evidence": "pseudo-code",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 1,
+      "explanation": "else est suivi du bloc à exécuter si la condition du if est fausse.",
+      "sourceSection": "comprendre",
+      "evidence": "} else {"
     },
     {
-      "question": "Pourquoi initialiser la réduction à zéro ?",
+      "question": "Quelle écriture est correcte pour tester une autre condition avec elseif ?",
       "answers": [
-        "Initialiser la réduction à zéro avant les branches",
-        "Ne la définir que dans la branche avec remise",
-        "L’initialiser systématiquement à 6",
-        "Réinitialiser le total à chaque affichage"
+        "if ($quantite < 1) { echo \"Petit\"; } elseif [$quantite > 6] { echo \"Grand\"; }",
+        "if ($quantite < 1) { echo \"Petit\"; } elseif ($quantite > 6) [ echo \"Grand\"; ]",
+        "if ($quantite < 1) { echo \"Petit\"; } elseif ($quantite > 6) { echo \"Grand\"; }",
+        "if ($quantite < 1) { echo \"Petit\"; } elseif {$quantite > 6} { echo \"Grand\"; }"
       ],
-      "explanation": "Une valeur initiale couvre aussi le cas sans remise et évite une variable non définie.",
+      "correctAnswerIndex": 2,
+      "explanation": "Comme if, elseif utilise des parenthèses pour sa condition et des accolades pour son bloc.",
+      "sourceSection": "comprendre",
+      "evidence": "} elseif ($quantite > 12) {"
+    },
+    {
+      "question": "Quel opérateur signifie « supérieur ou égal à » ?",
+      "answers": [
+        ">",
+        "===",
+        "<",
+        ">="
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": ">= signifie supérieur ou égal. > signifie strictement supérieur.",
       "sourceSection": "programme",
-      "evidence": "à 0",
-      "correctAnswerIndex": 0
+      "evidence": "Utilisez des noms comme `$totalInitial`, `$reduction` et `$totalFinal`. Initialiser la réduction à 0 évite de lire une variable non définie dans la branche sans réduction. La comparaison `$quantite >= 4` inclut quatre billets. La condition invalide peut utiliser « inférieur à 1 OU supérieur à 6 » ; la condition valide utilise « au moins 1 ET au plus 6 ». Les deux formulations décrivent des ensembles opposés."
     },
     {
-      "question": "Quelle condition inclut le seuil de quatre billets ?",
+      "question": "Quel opérateur PHP signifie OU entre deux conditions ?",
       "answers": [
-        "Quantité égale à zéro",
-        "Quantité supérieure ou égale à 4",
-        "Quantité strictement supérieure à 4",
-        "Quantité strictement inférieure à 4"
+        "||",
+        "&&",
+        "=",
+        "."
       ],
-      "explanation": "Une borne inclusive utilise une comparaison qui accepte l’égalité.",
+      "correctAnswerIndex": 0,
+      "explanation": "Avec ||, une seule des deux conditions vraies suffit.",
+      "sourceSection": "programme",
+      "evidence": "if (!is_int($quantite) || $quantite < 1 || $quantite > 6) {"
+    },
+    {
+      "question": "Quel opérateur PHP signifie ET entre deux conditions ?",
+      "answers": [
+        "||",
+        "&&",
+        "=",
+        "."
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Avec &&, les deux conditions doivent être vraies.",
+      "sourceSection": "programme",
+      "evidence": "Utilisez des noms comme `$totalInitial`, `$reduction` et `$totalFinal`. Initialiser la réduction à 0 évite de lire une variable non définie dans la branche sans réduction. La comparaison `$quantite >= 4` inclut quatre billets. La condition invalide peut utiliser « inférieur à 1 OU supérieur à 6 » ; la condition valide utilise « au moins 1 ET au plus 6 ». Les deux formulations décrivent des ensembles opposés."
+    },
+    {
+      "question": "Dans un if / elseif, quelle condition vraie est choisie ?",
+      "answers": [
+        "La dernière condition vraie dans tous les cas",
+        "Toutes les conditions vraies en même temps",
+        "La première condition vraie dans l’ordre du code",
+        "La condition qui contient le moins de caractères"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "PHP teste les conditions dans l’ordre et retient la première qui est vraie.",
       "sourceSection": "comprendre",
-      "evidence": ">= 4",
-      "correctAnswerIndex": 1
+      "evidence": "Une chaîne `if / elseif / else` s’arrête à la première condition vraie. Si une condition large précède une condition plus précise, cette dernière peut devenir inatteignable. Écrivez les cas sur papier et vérifiez leur ordre ; deux `if` indépendants ne garantissent pas l’exclusion des branches."
     },
     {
-      "question": "Pour refuser toute quantité hors de 1 à 6 inclus, quelle condition convient ?",
+      "question": "Quelle instruction donne la valeur de départ 0 à $reduction ?",
       "answers": [
-        "Quantité supérieure à 1 OU inférieure à 6",
-        "Quantité égale à 1 OU égale à 6",
-        "Quantité inférieure à 1 OU supérieure à 6",
-        "Quantité inférieure à 1 ET supérieure à 6"
+        "$reduction === 0;",
+        "echo $reduction;",
+        "$reduction > 0;",
+        "$reduction = 0;"
       ],
-      "explanation": "Un seul dépassement suffit pour être hors de l’intervalle.",
-      "sourceSection": "comprendre",
-      "evidence": "OU",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 3,
+      "explanation": "Le signe = donne une valeur à la variable. === sert à comparer.",
+      "sourceSection": "programme",
+      "evidence": "Utilisez des noms comme `$totalInitial`, `$reduction` et `$totalFinal`. Initialiser la réduction à 0 évite de lire une variable non définie dans la branche sans réduction. La comparaison `$quantite >= 4` inclut quatre billets. La condition invalide peut utiliser « inférieur à 1 OU supérieur à 6 » ; la condition valide utilise « au moins 1 ET au plus 6 ». Les deux formulations décrivent des ensembles opposés."
     },
     {
-      "question": "Quelle condition accepte exactement les quantités de 1 à 6 inclus ?",
+      "question": "Quelle fonction vérifie si une variable contient un entier ?",
       "answers": [
-        "Quantité au moins 1 OU au plus 6",
-        "Quantité strictement entre 1 et 6",
-        "Quantité égale seulement à 1 ou 6",
-        "Quantité au moins 1 ET au plus 6"
+        "is_int",
+        "echo",
+        "count",
+        "htmlspecialchars"
       ],
-      "explanation": "Une valeur valide doit satisfaire simultanément les deux bornes.",
-      "sourceSection": "comprendre",
-      "evidence": "ET",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 0,
+      "explanation": "is_int vérifie le type entier.",
+      "sourceSection": "programme",
+      "evidence": "if (!is_int($quantite) || $quantite < 1 || $quantite > 6) {"
     },
     {
-      "question": "Un billet coûte 12 euros et la remise globale est de 6 euros dès 4 billets. Quel total pour 4 billets ?",
+      "question": "Que signifie le signe ! devant is_int($quantite) ?",
       "answers": [
-        "42 euros",
-        "48 euros",
-        "24 euros",
-        "36 euros"
+        "Transformer la quantité en entier",
+        "Inverser le résultat du test",
+        "Afficher la quantité",
+        "Ajouter un élément au tableau"
       ],
-      "explanation": "Quatre billets coûtent 48 euros avant la remise globale de 6 euros.",
-      "sourceSection": "comprendre",
-      "evidence": "42",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 1,
+      "explanation": "!is_int teste que la quantité n’est pas un entier.",
+      "sourceSection": "programme",
+      "evidence": "if (!is_int($quantite) || $quantite < 1 || $quantite > 6) {"
     },
     {
-      "question": "Un billet coûte 12 €. Pour 3 billets, aucune remise. Quel total ?",
+      "question": "Que vérifie la commande php -l ?",
       "answers": [
-        "12 euros",
-        "36 euros",
-        "30 euros",
-        "42 euros"
+        "Le résultat de tous les calculs",
+        "Les couleurs de la page",
+        "La syntaxe du code PHP",
+        "Le nombre de visites du site"
       ],
-      "explanation": "Trois billets coûtent 36 euros ; le seuil de remise n’est pas atteint.",
-      "sourceSection": "comprendre",
-      "evidence": "36",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Comment établir le résultat attendu d’un test de calcul ?",
-      "answers": [
-        "Vérifier uniquement que le fichier s’ouvre",
-        "Changer la règle pour accepter chaque résultat",
-        "Calculer l’attendu indépendamment du programme",
-        "Copier la valeur observée comme attendu"
-      ],
-      "explanation": "Un attendu indépendant permet de détecter un calcul erroné.",
+      "correctAnswerIndex": 2,
+      "explanation": "Cette commande cherche les erreurs de syntaxe ; elle n’exécute pas les tests du programme.",
       "sourceSection": "tests",
-      "evidence": "indépendamment",
-      "correctAnswerIndex": 2
+      "evidence": "Pour tester sans navigateur, placez-vous dans le dossier puis lancez `php tarif.php`, ou utilisez le chemin complet de PHP. Pour vérifier uniquement la syntaxe : `php -l tarif.php`. Une syntaxe valide ne garantit pas le bon tarif."
     },
     {
-      "question": "Que vérifie php -l ?",
+      "question": "À quoi sert var_dump($valeur) ?",
       "answers": [
-        "Tous les tarifs et tous les seuils",
-        "La qualité du CSS",
-        "L’affichage identique dans chaque navigateur",
-        "La syntaxe PHP, pas les règles métier"
+        "Écrire la variable dans un fichier",
+        "Créer une session",
+        "Changer le type de la variable",
+        "Afficher le contenu de la variable et son type"
       ],
-      "explanation": "Le contrôle de syntaxe ne remplace pas les tests de comportement.",
-      "sourceSection": "tests",
-      "evidence": "syntaxe",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "var_dump permet de voir une valeur et de savoir, par exemple, si elle est un entier ou une chaîne.",
+      "sourceSection": "trace",
+      "evidence": "Lorsque le résultat diffère, relevez la quantité, la condition sélectionnée, le total initial, la réduction et le total final. `var_dump` sert à observer une valeur et son type ; retirez les affichages de diagnostic du livrable final. Ne changez pas simultanément trois conditions : corrigez une hypothèse et refaites les tests."
     }
   ]
 }

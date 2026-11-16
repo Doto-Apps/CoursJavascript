@@ -17,7 +17,7 @@ Le visiteur veut comprendre un projet, identifier votre contribution et accéder
 | `id` | Entier. | Identité persistante, générée par la base. |
 | `title` | Chaîne. | Titre explicite et non vide. |
 | `description` | Chaîne. | Explique le projet et votre rôle. |
-| `technology` | Chaîne. | Valeur cohérente pour les filtres. |
+| `technologies` | Chaîne. | Noms séparés par virgules, cohérents pour les filtres. |
 | `start_date` | Date. | Début du projet au format du contrat. |
 | `end_date` | Date ou null. | Absence possible pour un projet en cours. |
 
@@ -37,7 +37,7 @@ Le formulaire de gestion de ce parcours sert à une démonstration sur le résea
 
 ## Les champs d’une fiche projet
 
-Un portfolio dynamique est un catalogue de projets personnels. Le visiteur lit les projets ; une interface de gestion locale permet de les ajouter et les modifier. Le TP existant fournissait déjà titre, description, image, dates, technologies et liens : nous conservons ces informations en précisant leurs types, leur rôle et les validations.
+Un portfolio dynamique est un catalogue de projets personnels. Le visiteur lit les projets ; une interface de gestion locale permet de les ajouter et les modifier. Une fiche regroupe titre, description, image, dates, technologies et liens. Le contrat précise leurs types, leur rôle et les validations.
 
 La maquette n'est pas une table SQL. Une carte peut afficher cinq informations provenant d'une ligne ; une colonne ne devient pas nécessairement un élément visible. Décrivez d'abord le parcours : voir la liste, filtrer, consulter un lien ; côté gestion, remplir, valider et corriger un projet.
 
@@ -263,3 +263,22 @@ La maquette n'est pas une table SQL. Une carte peut afficher cinq informations p
 | <a id="notion-18"></a>Décoration | Une image purement décorative peut porter alt="". |
 | <a id="notion-19"></a>Maquette et base | Une maquette décrit l'interface ; le dictionnaire prépare les données. |
 | <a id="notion-20"></a>Priorité | Le minimum livrable est défini avant les détails décoratifs. |
+
+## Dictionnaire complet du contrat
+
+| Champ JSON | Règle de notre application |
+|---|---|
+| `id` | Entier positif généré par la base, conservé pendant une édition |
+| `title` | Texte non vide après trim, au plus 120 caractères |
+| `description` | Texte non vide, au plus 5000 caractères |
+| `technologies` | Chaîne de noms séparés par virgules, au plus 200 caractères |
+| `image_url` | Chaîne vide, URL HTTP(S) ou chemin local d’image autorisé, au plus 500 caractères |
+| `start_date` | Date réelle obligatoire, année-mois-jour |
+| `end_date` | `null` ou date réelle au moins égale au début |
+| `project_url`, `code_url` | Chaîne vide ou URL HTTP(S), au plus 500 caractères |
+
+Les longueurs textuelles serveur se mesurent avec `mb_strlen` en UTF-8. Un titre et un nom de technologie ne sont pas des identifiants de projet. Le texte alternatif d’une image doit être choisi selon son rôle dans la carte ; son adresse ne fournit pas automatiquement ce texte.
+
+## Travail de cadrage
+
+Téléchargez le [squelette portfolio](/exemples/s2/portfolio-squelette.zip) et vérifiez les prérequis de son README : PHP 8.1+, `pdo_mysql`, `mbstring` et MySQL/MariaDB. Préparez trois projets fictifs, dont un sans date de fin et un sans lien de code, avec leurs médias et crédits. Remettez dictionnaire, maquettes de liste et formulaire, puis les parcours visiteur et gestion locale avec leurs critères de réussite.

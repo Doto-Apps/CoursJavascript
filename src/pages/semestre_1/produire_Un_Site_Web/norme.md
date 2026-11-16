@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : vérifier l’accessibilité et la qualité HTML"
 type: "TD"
 order: 7
-quizId: "s1-site-06"
 previousSession: "/semestre_1/produire_Un_Site_Web/responsive"
 nextSession: "/semestre_1/produire_Un_Site_Web/finalisation"
 ---
@@ -62,3 +61,17 @@ Un validateur HTML contrôle la conformité de la structure. Un audit automatiqu
 | Contraste texte/fond | Mesure adaptée aux critères applicables, au-delà de l’impression visuelle |
 
 Corrigez une anomalie puis rejouez le même cas et un cas voisin. Les [tutoriels WAI](https://www.w3.org/WAI/tutorials/) approfondissent les contrôles par type de contenu.
+
+<a id="contrastes"></a>
+
+## Mesurer les contrastes
+
+Pour le niveau AA des WCAG 2.2, le texte courant demande un rapport d’au moins **4,5:1** avec son fond. Le grand texte demande **3:1** : au moins 18 points, ou 14 points en gras, soit environ 24 px ou 18,7 px CSS. Les composants et repères visuels nécessaires à leur identification relèvent aussi de critères de contraste ; les cas particuliers doivent être examinés selon leur usage. Mesurez les couleurs réellement affichées, y compris au survol et au focus. [Critère W3C sur le contraste du texte](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html).
+
+Ces critères donnent des contrôles techniques ; leur vérification seule ne constitue pas une déclaration de conformité de tout le site.
+
+## Audit à remettre
+
+Faites réaliser le parcours principal par un binôme uniquement au clavier. Relevez les contrôles sans label, les liens vagues, les titres incohérents et les focus invisibles. Mesurez au moins les contrastes du texte courant et d’un lien. Complétez par la validation HTML et des essais à 320 px et au zoom.
+
+Pour chaque anomalie, notez emplacement, étapes, attendu, observé, correction et résultat du nouveau test. Remettez le site corrigé et cette grille ; gardez les observations manuelles à côté des résultats automatiques.

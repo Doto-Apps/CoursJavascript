@@ -227,3 +227,17 @@ Le serveur vérifie le type du titre avant `trim`, sa longueur avec `mb_strlen`,
 | <a id="notion-18"></a>Annonce | role="status" identifie une zone de message d'état. |
 | <a id="notion-19"></a>Matrice de tests | Une matrice associe entrée, statut, message et effet en base. |
 | <a id="notion-20"></a>Réessai | Après une erreur, les contrôles doivent permettre de réessayer. |
+
+## Matrice d’erreurs à produire
+
+| Cas | Statut ou signal | Effet attendu |
+|---|---|---|
+| JSON mal formé | 400 | Aucune écriture |
+| Titre vide ou trop long | 422 | Saisie conservée |
+| Id inexistant | 404 | Voisins inchangés |
+| Méthode non prévue | 405 | Aucune opération |
+| Échec de connexion à la base | 500 | Message public général, détails dans le journal |
+| Serveur HTTP arrêté | Échec réseau, sans réponse HTTP exploitable | Contrôles réactivés et reprise possible |
+| Corps HTML inattendu | Échec d’analyse JSON | Diagnostic du corps reçu, aucun faux succès |
+
+Réalisez ces essais dans votre environnement de test et rétablissez le service entre les pannes. Notez entrée, statut, message public, effet en base et résultat du réessai. Corrigez une cause à la fois puis rejouez le scénario et un cas normal. Remettez le code et la matrice complétée avec vos observations réelles.

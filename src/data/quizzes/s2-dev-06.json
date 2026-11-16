@@ -9,20 +9,20 @@
   "targetCourse": "/semestre_2/developpement_Web/tp/integration",
   "questions": [
     {
-      "question": "Quelle approche localise une erreur ?",
+      "question": "Quelle clé contient le message d’erreur dans le JSON de notre API ?",
       "answers": [
-        "Vérifier les frontières de l’échange une à une",
-        "Modifier tous les fichiers simultanément",
-        "Cacher tous les messages",
-        "Recharger sans observer de données"
+        "error",
+        "id",
+        "title",
+        "done"
       ],
-      "explanation": "Séparer envoi, statut, corps et stockage aide à trouver la cause.",
-      "sourceSection": "notion-1",
-      "evidence": "Le diagnostic suit formulaire, requête, statut, corps et DOM.",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "Notre API utilise la clé error pour le texte expliquant l’échec.",
+      "sourceSection": "comprendre",
+      "evidence": "Le JSON d’erreur possède une forme stable, par exemple un champ `error`. Un nom constant évite au client de rechercher tour à tour `message`, `erreur` et `description`. Un serveur en erreur ne doit pas renvoyer un statut de réussite uniquement pour que Fetch se termine sans exception."
     },
     {
-      "question": "Où vérifier l'envoi effectif ?",
+      "question": "Où voir si le navigateur a bien envoyé une requête ?",
       "answers": [
         "Dans les favoris",
         "Dans l’onglet Réseau",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que vérifier si json échoue ?",
+      "question": "response.json() échoue. Que regarder pour comprendre pourquoi ?",
       "answers": [
         "La taille du titre",
         "Le nom du thème CSS",
@@ -48,14 +48,14 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel statut pour un corps JSON syntaxiquement invalide ?",
+      "question": "Quel statut HTTP renvoyer si le texte envoyé n’est pas un JSON valide ?",
       "answers": [
         "200",
         "201",
         "422",
         "400"
       ],
-      "explanation": "Un JSON cassé échoue à l’analyse avant les règles métier.",
+      "explanation": "Le serveur doit d’abord pouvoir lire le JSON, avant de vérifier les valeurs qu’il contient.",
       "sourceSection": "notion-5",
       "evidence": "Notre API répond 400 à un JSON mal formé.",
       "correctAnswerIndex": 3
@@ -68,26 +68,26 @@
         "201",
         "404"
       ],
-      "explanation": "Un JSON valide peut contenir une valeur refusée par les règles du contrat.",
+      "explanation": "Le JSON peut être bien écrit tout en contenant un titre trop long ou vide.",
       "sourceSection": "notion-6",
       "evidence": "Notre API répond 422 à une valeur refusée.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel statut pour une méthode non prise en charge ?",
+      "question": "Quel statut HTTP renvoyer si l’API n’accepte pas la méthode demandée ?",
       "answers": [
         "422",
         "405",
         "201",
         "404 dans tous les cas"
       ],
-      "explanation": "Le contrat distingue une méthode non prise en charge d’une valeur invalide.",
+      "explanation": "Si la méthode HTTP n’est pas acceptée par l’API, la réponse est 405.",
       "sourceSection": "notion-8",
       "evidence": "Notre API répond 405 à une méthode non prévue.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que montrer au client pour une erreur de base ?",
+      "question": "Que peut-on afficher à l’utilisateur si la connexion à la base échoue ?",
       "answers": [
         "La chaîne complète de connexion",
         "Tout le fichier de configuration",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Où réactiver le bouton dans ce schéma ?",
+      "question": "Dans quel bloc remettre le bouton en état de fonctionner après la requête ?",
       "answers": [
         "Seulement avant fetch",
         "Seulement dans la branche succès",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel bloc gère l'erreur attendue dans l'interface ?",
+      "question": "Quel bloc permet d’afficher un message quand l’opération échoue ?",
       "answers": [
         "catch",
         "La déclaration de la variable",
@@ -139,30 +139,30 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que documente la matrice du TP ?",
+      "question": "Quelle propriété permet de lire le statut HTTP d’une réponse Fetch ?",
       "answers": [
-        "Le nombre d’onglets",
-        "Une capture sans étapes",
-        "Les cas, attendus et résultats observés",
-        "La palette préférée"
+        "response.title",
+        "response.method",
+        "response.status",
+        "response.length"
       ],
-      "explanation": "Une matrice rend les vérifications reproductibles.",
-      "sourceSection": "notion-19",
-      "evidence": "Une matrice associe entrée, statut, message et effet en base.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "status contient le code HTTP de la réponse.",
+      "sourceSection": "apprentissage",
+      "evidence": "throw new Error(data.error ?? `Erreur HTTP ${response.status}`);"
     },
     {
-      "question": "Quelle propriété d'interface vérifier après échec ?",
+      "question": "Quelle propriété permet de réactiver un bouton désactivé ?",
       "answers": [
-        "La disparition de tous les boutons",
-        "L’effacement obligatoire des données",
-        "La suppression de l’erreur sans correction",
-        "La possibilité de réessayer"
+        "disabled = true",
+        "hidden = true",
+        "textContent = false",
+        "disabled = false"
       ],
-      "explanation": "L’interface doit redevenir utilisable après une panne.",
-      "sourceSection": "notion-20",
-      "evidence": "Après une erreur, les contrôles doivent permettre de réessayer.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "Passer disabled à false rend le bouton de nouveau utilisable.",
+      "sourceSection": "apprentissage",
+      "evidence": "button.disabled = false;"
     }
   ]
 }

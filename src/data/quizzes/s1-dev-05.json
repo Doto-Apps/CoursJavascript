@@ -1,5 +1,5 @@
 {
-  "name": "Révision — TP PHP : recevoir et valider un message",
+  "name": "Révision — TP PHP : formulaire de connexion et session",
   "uid": "s1-dev-05",
   "mode": "train",
   "questionsPerTest": 10,
@@ -9,160 +9,212 @@
   "targetCourse": "/semestre_1/developpement_Web/phpminichat2",
   "questions": [
     {
-      "question": "Quel attribut indique la destination du formulaire ?",
+      "question": "Quel formulaire envoie les données en POST vers connexion.php ?",
       "answers": [
-        "action",
-        "method",
+        "<form method=\"post\" action=\"connexion.php\">",
+        "<form method=\"get\" action=\"connexion.php\">",
+        "<form method=\"post\" action=\"accueil.php\">",
+        "<form method=\"get\" action=\"accueil.php\">"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "method choisit la méthode et action choisit la page qui reçoit les données.",
+      "sourceSection": "formulaire",
+      "evidence": "| `action` du formulaire | Adresse du script destinataire |"
+    },
+    {
+      "question": "Quel attribut donne le nom d’un champ reçu dans $_POST ?",
+      "answers": [
+        "id",
         "name",
-        "id"
-      ],
-      "explanation": "action indique l’adresse qui reçoit le formulaire.",
-      "sourceSection": "comprendre",
-      "evidence": "action",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "Quel attribut définit le mode d'envoi du formulaire ?",
-      "answers": [
-        "type",
-        "method",
-        "action",
-        "name"
-      ],
-      "explanation": "method indique notamment GET ou POST.",
-      "sourceSection": "comprendre",
-      "evidence": "method",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Quel attribut définit la clé transmise ?",
-      "answers": [
         "class",
-        "placeholder",
-        "name",
-        "id"
+        "placeholder"
       ],
-      "explanation": "La clé transmise vient de name ; id permet notamment d’associer un label.",
-      "sourceSection": "comprendre",
-      "evidence": "name",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 1,
+      "explanation": "PHP retrouve les champs du formulaire avec les noms donnés par name.",
+      "sourceSection": "formulaire",
+      "evidence": "| `name` d’un contrôle | Clé transmise au serveur |"
     },
     {
-      "question": "Où les paramètres GET sont-ils transmis ?",
+      "question": "Comment lire le champ identifiant envoyé par un formulaire POST ?",
       "answers": [
-        "Uniquement dans le corps de la requête",
-        "Dans le fragment après le dièse",
-        "Dans le nom d’hôte",
-        "Dans la partie paramètres de l’URL"
+        "$_GET[\"identifiant\"]",
+        "$_SESSION[\"identifiant\"]",
+        "$_POST[\"identifiant\"]",
+        "$_POST[\"pseudo\"]"
       ],
-      "explanation": "Les champs GET sont encodés dans la partie de requête de l’URL.",
-      "sourceSection": "comprendre",
-      "evidence": "URL",
-      "correctAnswerIndex": 3
-    },
-    {
-      "question": "Où les données POST sont-elles transmises ?",
-      "answers": [
-        "Dans le corps de la requête",
-        "Dans le fragment de l’URL",
-        "Dans le nom d’hôte",
-        "Dans le port du serveur"
-      ],
-      "explanation": "POST transmet ici les données dans le corps ; cela ne les chiffre pas.",
-      "sourceSection": "comprendre",
-      "evidence": "corps",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "POST chiffre-t-il les données à lui seul ?",
-      "answers": [
-        "Oui, si le formulaire utilise required",
-        "Non, le chiffrement relève de HTTPS",
-        "Oui, POST chiffre toujours le corps",
-        "Oui, si le champ est de type password"
-      ],
-      "explanation": "La méthode d’envoi et la protection du transport sont deux choix différents.",
-      "sourceSection": "comprendre",
-      "evidence": "chiffrement",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Quelle variable reçoit les données POST ?",
-      "answers": [
-        "$_SESSION",
-        "$_COOKIE",
-        "$_POST",
-        "$_GET"
-      ],
-      "explanation": "Les données du formulaire POST sont disponibles dans le tableau prévu pour cette méthode.",
-      "sourceSection": "comprendre",
-      "evidence": "$_POST",
-      "correctAnswerIndex": 2
-    },
-    {
-      "question": "La clé message est absente de $_POST. Que vaut $_POST[\"message\"] ?? \"\" ?",
-      "answers": [
-        "Le mot message",
-        "Le tableau POST complet",
-        "Le nombre zéro",
-        "La chaîne vide"
-      ],
-      "explanation": "L’opérateur de repli fournit la valeur indiquée lorsque la clé manque ou vaut null.",
+      "correctAnswerIndex": 2,
+      "explanation": "$_POST contient ici les champs envoyés avec la méthode POST.",
       "sourceSection": "reception",
-      "evidence": "repli",
-      "correctAnswerIndex": 3
+      "evidence": "Une visite de page utilise généralement GET ; le traitement d’un formulaire POST se place dans une branche vérifiant `$_SERVER['REQUEST_METHOD']`. `$_POST` contient ici les champs du formulaire, tandis que `$_GET` contient les paramètres de l’URL."
     },
     {
-      "question": "Que retire trim ?",
+      "question": "Que permet $_POST[\"sujet\"] ?? \"\" ?",
       "answers": [
-        "Les espaces aux extrémités",
-        "Tous les espaces entre les mots",
-        "Toutes les balises HTML",
-        "Tous les caractères accentués"
+        "Supprimer le champ sujet",
+        "Transformer le texte en entier",
+        "Créer un compte utilisateur",
+        "Utiliser une chaîne vide si le champ manque ou vaut null"
       ],
-      "explanation": "trim prépare le texte sans supprimer les espaces internes ni filtrer le HTML.",
-      "sourceSection": "comprendre",
-      "evidence": "extrémités",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "Pourquoi vérifier is_string avant trim ?",
-      "answers": [
-        "Transformer toute entrée en entier",
-        "Contrôler que la valeur reçue est un texte",
-        "Contrôler seulement sa couleur",
-        "Accepter automatiquement les tableaux"
-      ],
-      "explanation": "Une requête peut fournir un autre type que celui prévu ; il faut le vérifier avant le traitement.",
+      "correctAnswerIndex": 3,
+      "explanation": "?? fournit la valeur de remplacement indiquée quand la clé manque ou vaut null.",
       "sourceSection": "reception",
-      "evidence": "type",
-      "correctAnswerIndex": 1
+      "evidence": "`??` fournit une valeur de repli lorsque la clé manque ou vaut null. Vérifiez le type avant d’utiliser une fonction de chaîne : un client peut envoyer un tableau. `trim` retire les espaces aux extrémités, pas ceux au milieu. Pour un mot de passe, conservez la valeur exacte saisie : retirer silencieusement des espaces peut changer le secret."
     },
     {
-      "question": "Pourquoi la validation serveur reste-t-elle nécessaire ?",
+      "question": "Quelle fonction vérifie qu’une valeur reçue est du texte ?",
       "answers": [
-        "POST garantit les valeurs valides",
-        "Une page avec CSS ne reçoit pas de données invalides",
-        "Les contraintes du navigateur peuvent être contournées",
-        "required remplace toujours le contrôle serveur"
+        "is_string",
+        "is_int",
+        "count",
+        "session_start"
       ],
-      "explanation": "Le serveur doit appliquer les règles même si le navigateur les vérifie déjà.",
-      "sourceSection": "validation",
-      "evidence": "contournés",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 0,
+      "explanation": "is_string teste le type chaîne de caractères.",
+      "sourceSection": "reception",
+      "evidence": "if (!is_string($valeur)) {"
     },
     {
-      "question": "Dans quel contexte l'échappement montré protège-t-il le texte ?",
+      "question": "Quelle fonction enlève les espaces au début et à la fin d’un texte ?",
       "answers": [
-        "Toute requête SQL",
-        "Tout code JavaScript intégré",
-        "Le transport HTTP lui-même",
-        "La sortie dans le contexte texte HTML"
+        "count",
+        "trim",
+        "isset",
+        "htmlspecialchars"
       ],
-      "explanation": "La protection doit correspondre au contexte ; l’échappement HTML ne protège pas une requête SQL.",
-      "sourceSection": "sortie",
-      "evidence": "contexte HTML",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 1,
+      "explanation": "trim retire les espaces aux extrémités du texte.",
+      "sourceSection": "reception",
+      "evidence": "`??` fournit une valeur de repli lorsque la clé manque ou vaut null. Vérifiez le type avant d’utiliser une fonction de chaîne : un client peut envoyer un tableau. `trim` retire les espaces aux extrémités, pas ceux au milieu. Pour un mot de passe, conservez la valeur exacte saisie : retirer silencieusement des espaces peut changer le secret."
+    },
+    {
+      "question": "Quel test compare le mot de passe saisi à celui du compte, sans changer leur type ?",
+      "answers": [
+        "$motDePasse = $compte[\"mot_de_passe\"]",
+        "$motDePasse !== $compte[\"mot_de_passe\"]",
+        "$motDePasse === $compte[\"mot_de_passe\"]",
+        "$motDePasse === $compte[\"pseudo\"]"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "=== compare la valeur et le type. = serait une affectation.",
+      "sourceSection": "identite",
+      "evidence": "Les mots de passe de test sont conservés **en clair dans ce tableau**, pour travailler directement la comparaison stricte `===` déjà vue en séance 2. Le texte saisi doit correspondre exactement au mot de passe du compte sélectionné. Cet exercice réutilise les tableaux, les accès par clé et les conditions."
+    },
+    {
+      "question": "Quelle fonction démarre ou reprend une session PHP ?",
+      "answers": [
+        "session_regenerate_id()",
+        "htmlspecialchars()",
+        "count()",
+        "session_start()"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "session_start rend les données de la session disponibles à la page.",
+      "sourceSection": "session",
+      "evidence": "Une variable PHP ordinaire disparaît à la fin de la requête. `session_start()` crée ou reprend une session ; `$_SESSION` permet de retrouver ses données côté serveur lors d’une autre requête. Chaque page qui utilise la session doit la démarrer avant toute sortie HTML."
+    },
+    {
+      "question": "Où placer session_start() dans une page PHP ?",
+      "answers": [
+        "Avant d’envoyer le HTML",
+        "Après tout le HTML",
+        "Dans le fichier CSS",
+        "Seulement après un echo"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "La session doit être démarrée avant les sorties HTML.",
+      "sourceSection": "session",
+      "evidence": "Une variable PHP ordinaire disparaît à la fin de la requête. `session_start()` crée ou reprend une session ; `$_SESSION` permet de retrouver ses données côté serveur lors d’une autre requête. Chaque page qui utilise la session doit la démarrer avant toute sortie HTML."
+    },
+    {
+      "question": "Comment lire le pseudo dans l’entrée utilisateur de la session ?",
+      "answers": [
+        "$_POST[\"pseudo\"]",
+        "$_SESSION[\"utilisateur\"][\"pseudo\"]",
+        "$_SESSION[\"pseudo\"][\"utilisateur\"]",
+        "$_GET[\"utilisateur\"]"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le premier accès choisit l’identité en session et le second son champ pseudo.",
+      "sourceSection": "contrat-session",
+      "evidence": "| Champs conservés | `identifiant` et `pseudo`, deux chaînes issues du compte vérifié côté serveur |"
+    },
+    {
+      "question": "Quelle fonction vérifie qu’une entrée existe et n’est pas null ?",
+      "answers": [
+        "trim",
+        "echo",
+        "isset",
+        "is_int"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "isset sert à vérifier la présence d’une entrée non nulle.",
+      "sourceSection": "contrat-session",
+      "evidence": "| `isset` | Tester si une entrée existe et n’est pas null |"
+    },
+    {
+      "question": "Quelle fonction vérifie qu’une valeur est un tableau ?",
+      "answers": [
+        "is_string",
+        "is_int",
+        "htmlspecialchars",
+        "is_array"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "is_array permet de vérifier le type tableau avant de lire ses champs.",
+      "sourceSection": "contrat-session",
+      "evidence": "| `is_array` | Vérifier qu’une valeur est un tableau avant d’en lire les champs |"
+    },
+    {
+      "question": "Quel code envoie une redirection 303 vers accueil.php puis arrête le script ?",
+      "answers": [
+        "header(\"Location: accueil.php\", true, 303); exit;",
+        "echo \"Location: accueil.php\"; exit;",
+        "header(\"Location: accueil.php\", true, 303); echo \"suite\";",
+        "exit; header(\"Location: accueil.php\", true, 303);"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "header envoie la redirection et exit empêche les instructions suivantes de continuer.",
+      "sourceSection": "redirection",
+      "evidence": "header('Location: confirmation.php', true, 303);"
+    },
+    {
+      "question": "Quelle instruction enlève l’identité utilisateur de la session ?",
+      "answers": [
+        "unset($_POST[\"utilisateur\"]);",
+        "unset($_SESSION[\"utilisateur\"]);",
+        "$_SESSION[\"utilisateur\"] === null;",
+        "echo $_SESSION[\"utilisateur\"];"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "unset retire l’entrée indiquée du tableau.",
+      "sourceSection": "deconnexion",
+      "evidence": "`unset` retire une entrée de tableau. Pour déconnecter l’utilisateur selon notre contrat, retirez l’entrée d’identité de la session, puis redirigez vers la connexion. Cela retire l’identité utilisée par l’application, sans prétendre supprimer toutes les autres données possibles de la session. Déclenchez cette action par un formulaire POST."
+    },
+    {
+      "question": "Quelle fonction change l’identifiant de session après une connexion ?",
+      "answers": [
+        "session_start",
+        "is_string",
+        "session_regenerate_id",
+        "trim"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "session_regenerate_id renouvelle l’identifiant de la session.",
+      "sourceSection": "session",
+      "evidence": "Après la validation d’une connexion, `session_regenerate_id(true)` renouvelle l’identifiant de session. Il s’utilise après `session_start()` et avant la redirection. Une session ne vérifie pas elle-même les identifiants : elle conserve le résultat de la vérification effectuée par le programme. [Manuel PHP](https://www.php.net/manual/fr/function.session-regenerate-id.php)."
+    },
+    {
+      "question": "Quelle fonction utilise-t-on pour afficher le pseudo comme du texte dans le HTML ?",
+      "answers": [
+        "is_array",
+        "count",
+        "isset",
+        "htmlspecialchars"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le pseudo reste du texte, même s’il contient des caractères utilisés par HTML.",
+      "sourceSection": "deconnexion",
+      "evidence": "Tout texte réaffiché dans le HTML, y compris un pseudo provenant de la session, doit être échappé avec `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. La validation décide ce qu’on accepte ; l’échappement décide comment on affiche le texte dans ce contexte."
     }
   ]
 }

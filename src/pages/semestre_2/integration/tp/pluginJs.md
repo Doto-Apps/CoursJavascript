@@ -162,10 +162,10 @@ const carrousel = new Swiper('.swiper', {
       </div>
       <div class="swiper-pagination"></div>
     </div>
-    <button class="precedent" aria-label="Diapositive précédente">
+    <button class="precedent" type="button" hidden aria-label="Diapositive précédente">
       Précédent
     </button>
-    <button class="suivant" aria-label="Diapositive suivante">Suivant</button>
+    <button class="suivant" type="button" hidden aria-label="Diapositive suivante">Suivant</button>
     <p class="note">
       Bibliothèque Swiper 11.2.10 locale, licence MIT. Sans JS, les trois
       contenus restent visibles.
@@ -179,6 +179,7 @@ const carrousel = new Swiper('.swiper', {
           window.carrousel = new Swiper(".swiper", {
             slidesPerView: 1,
             spaceBetween: 16,
+            speed: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 300,
             navigation: { nextEl: ".suivant", prevEl: ".precedent" },
             pagination: { el: ".swiper-pagination", clickable: true },
             keyboard: { enabled: true, onlyInViewport: true },
@@ -188,6 +189,8 @@ const carrousel = new Swiper('.swiper', {
               nextSlideMessage: "Diapositive suivante",
             },
           });
+          document.querySelector(".precedent").hidden = false;
+          document.querySelector(".suivant").hidden = false;
         });
     </script>
 ```
@@ -216,3 +219,11 @@ const carrousel = new Swiper('.swiper', {
 | <a id="notion-18"></a>Sans lecture automatique | Le modèle ne configure pas de défilement automatique. |
 | <a id="notion-19"></a>Dégradation | Sans JavaScript, le contenu reste lisible dans le modèle. |
 | <a id="notion-20"></a>Licence | La version locale de Swiper est conservée avec sa licence MIT. |
+
+## Installer la même version dans votre projet
+
+Installez `swiper@11.2.10` avec npm ou récupérez ses fichiers de distribution et sa licence. Copiez le CSS et le JavaScript du bundle dans votre projet, puis liez ces fichiers avant l’initialisation. Le chemin `/vendor/swiper/` appartient au site de cours ; adaptez les chemins au dossier que vous remettrez. La [distribution officielle de Swiper 11.2.10](https://github.com/nolimits4web/swiper/tree/v11.2.10) permet d’identifier la version enseignée.
+
+## Travail à réaliser
+
+Créez un carrousel de trois projets avec leurs titres, boutons précédent/suivant et pagination. Activez clavier et accessibilité, sans lecture automatique. Sans initialisation, affichez les trois contenus dans le flux et cachez les commandes qui ne fonctionnent pas. Testez le début, la fin, le clavier, une largeur étroite, puis le chargement sans JavaScript. Remettez les fichiers de la bibliothèque, la licence, votre configuration et les observations ; expliquez le rôle de chaque option retenue.

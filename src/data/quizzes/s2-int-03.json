@@ -9,40 +9,40 @@
   "targetCourse": "/semestre_2/integration/tp/hover",
   "questions": [
     {
-      "question": "Que fait une transition CSS ?",
+      "question": "À quoi sert une transition CSS ?",
       "answers": [
-        "Interpoler une propriété entre deux états",
+        "Faire changer progressivement une propriété entre deux états",
         "Rejouer obligatoirement une suite infinie",
         "Modifier le HTML source",
         "Ajouter une piste Grid"
       ],
-      "explanation": "Une transition accompagne un changement d’état d’une propriété animable.",
+      "explanation": "Une transition fait passer progressivement une propriété de sa valeur de départ à sa valeur d’arrivée.",
       "sourceSection": "notion-1",
       "evidence": "Une transition interpole le changement d'une propriété entre deux états.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Combien de secondes représentent 200ms ?",
+      "question": "Que décrit la durée d’une transition CSS ?",
       "answers": [
-        "0,02 seconde",
-        "0,2 seconde",
-        "2 secondes",
-        "20 secondes"
+        "Le nombre de cartes HTML",
+        "Le temps du passage entre les états",
+        "La distance entre deux colonnes",
+        "Le nombre de requêtes PHP"
       ],
-      "explanation": "Une seconde contient mille millisecondes.",
-      "sourceSection": "notion-2",
-      "evidence": "200ms représente deux dixièmes de seconde.",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "Comprendre le rôle de la durée ne demande pas de convertir des unités dans le QCM.",
+      "sourceSection": "apprentissage",
+      "evidence": "**Lecture :** `200ms` est la durée, `ease` la progression et `transform` la propriété concernée. Le focus d’un lien dans la carte déclenche aussi l’état avec `:focus-within`. Le déplacement de 4 px n’exige pas une nouvelle hauteur pour les cartes voisines."
     },
     {
-      "question": "Que permet transform sur une carte ?",
+      "question": "Que fait transform sur la position d’une carte ?",
       "answers": [
         "Changer le texte HTML",
         "Envoyer une requête réseau",
-        "Modifier visuellement sans redisposer les voisins comme une marge",
+        "Déplacer la carte à l’écran sans réorganiser les éléments autour",
         "Modifier directement la place dans le flux comme margin"
       ],
-      "explanation": "Une transformation agit sur le rendu visuel ; elle ne redispose pas les voisins comme une marge.",
+      "explanation": "transform peut déplacer la carte à l’écran sans déplacer sa place de départ dans la page.",
       "sourceSection": "notion-4",
       "evidence": "transform change la représentation visuelle sans réorganiser comme une marge les éléments voisins.",
       "correctAnswerIndex": 2
@@ -61,7 +61,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle fonction transforme la taille visuelle ?",
+      "question": "Quelle fonction CSS permet d’agrandir ou de réduire un élément à l’écran ?",
       "answers": [
         "scale",
         "rotate",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle condition CSS consulte la préférence de mouvement réduit ?",
+      "question": "Quelle media query permet de respecter le choix de réduire les animations ?",
       "answers": [
         "prefers-color-scheme",
         "orientation",
@@ -113,20 +113,20 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Que surveille IntersectionObserver ?",
+      "question": "Que permet de repérer IntersectionObserver dans l’exemple du cours ?",
       "answers": [
-        "L’intersection d’un élément avec une zone de référence",
+        "L’entrée d’un élément dans la zone observée",
         "La validation d’un formulaire",
         "La réception d’une réponse JSON",
         "La modification d’un fichier CSS"
       ],
-      "explanation": "L’observateur peut déclencher un effet lorsque l’élément entre dans la zone visible.",
+      "explanation": "Il permet de repérer qu’un élément entre dans la zone observée, par exemple la zone visible.",
       "sourceSection": "notion-13",
       "evidence": "IntersectionObserver observe l'intersection avec une zone de référence.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quelle méthode ajoute la classe visible ?",
+      "question": "Quelle méthode ajoute une classe CSS à un élément en JavaScript ?",
       "answers": [
         "setAttribute('id', ...)",
         "classList.add",

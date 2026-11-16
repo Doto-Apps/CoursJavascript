@@ -9,46 +9,46 @@
   "targetCourse": "/semestre_1/integration/grid",
   "questions": [
     {
-      "question": "Que montre le DOM dans l’inspecteur ?",
+      "question": "Dans l’inspecteur du navigateur, que représente le DOM ?",
       "answers": [
         "La structure construite par le navigateur",
         "Seulement le fichier CSS original",
         "La liste des ports occupés",
         "Seulement les valeurs des couleurs"
       ],
-      "explanation": "Le navigateur construit le DOM à partir du document ; cette vue n’est pas simplement le fichier source.",
+      "explanation": "Le DOM est la structure de la page que le navigateur a construite à partir du HTML.",
       "sourceSection": "comprendre",
-      "evidence": "Le fichier enregistré est le texte que vous avez écrit. Le **DOM** est l’organisation d’éléments construite par le navigateur ; celui-ci peut corriger certains défauts d’imbrication. Le style calculé est la valeur effectivement utilisée apr",
+      "evidence": "Le fichier enregistré est le texte que vous avez écrit. Le **DOM** est l’organisation d’éléments construite par le navigateur ; celui-ci peut corriger certains défauts d’imbrication. Le style calculé est la valeur effectivement utilisée après la cascade. Ces trois vues répondent à des questions différentes : « qu’ai-je écrit ? », « quelle structure existe ? », « quelle règle s’applique ? ».",
       "correctAnswerIndex": 0
     },
     {
       "question": "Quelle différence existe entre title et h1 ?",
       "answers": [
         "Les deux sont seulement des tailles CSS",
-        "title nomme l’onglet et h1 le contenu principal visible",
+        "title nomme l’onglet et h1 le titre principal visible de la page",
         "Les deux appartiennent au head",
         "h1 nomme l’onglet et title une carte"
       ],
       "explanation": "Le titre du document et le titre de contenu ont des fonctions distinctes.",
-      "sourceSection": "comprendre",
-      "evidence": "```html live title=\"Observer les règles concurrentes\"",
+      "sourceSection": "organisation",
+      "evidence": "Dans `index.html`, `href=\"css/style.css\"` charge la feuille depuis le dossier `css`. Dans une feuille CSS, un chemin `url(...)` est résolu par rapport au fichier CSS. Les noms de fichiers et leur casse doivent correspondre à leur utilisation. `head` contient les métadonnées, tandis que `main` appartient au `body`. `title` nomme l'onglet ; `h1` nomme le contenu principal visible. Un fichier HTML bien structuré ne dépend pas des couleurs pour exprimer le rôle des sections.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Une classe sert à plusieurs cartes. Quelle contrainte concerne un id ?",
+      "question": "Peut-on utiliser le même id sur plusieurs cartes d’une page ?",
       "answers": [
-        "Être identique au nom de la balise",
-        "Commencer nécessairement par un chiffre",
-        "Être unique dans le document",
-        "Être répété sur chaque carte"
+        "Oui, si les cartes ont le même style",
+        "Oui, si elles ont des titres différents",
+        "Non, chaque id doit être unique dans la page",
+        "Oui, si elles se trouvent dans la même section"
       ],
-      "explanation": "Une classe peut être partagée ; un identifiant doit désigner une cible unique.",
+      "explanation": "Un id doit désigner un seul élément. Une classe peut être partagée par plusieurs cartes.",
       "sourceSection": "cascade",
-      "evidence": "e imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
+      "evidence": "Plusieurs éléments peuvent partager une classe, mais chaque `id` doit être unique dans le document. Il désigne notamment la cible d’un lien de fragment et peut aussi servir dans un sélecteur CSS.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel sélecteur vise les liens à l’intérieur de .carte, même plus profondément imbriqués ?",
+      "question": "Quel sélecteur choisit tous les liens placés dans .carte, même dans un autre élément à l’intérieur ?",
       "answers": [
         ".carte > a",
         ".carte + a",
@@ -57,50 +57,50 @@
       ],
       "explanation": "Le sélecteur descendant vise aussi les descendants qui ne sont pas des enfants directs.",
       "sourceSection": "cascade",
-      "evidence": "chez la règle concurrente dans l'inspecteur. Le sélecteur descendant `.carte a` cible les liens dans une carte, même imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
+      "evidence": "Certaines propriétés, comme `color` et `font-family`, peuvent être héritées du parent. `margin` n'est pas héritée. Évitez `!important` comme premier réflexe : cherchez la règle concurrente dans l'inspecteur. Le sélecteur descendant `.carte a` cible les liens dans une carte, même imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Une couleur de texte définie sur le parent peut arriver à l’enfant par quel mécanisme ?",
+      "question": "Comment s’appelle le fait qu’un enfant reprenne la couleur du texte de son parent ?",
       "answers": [
         "L’héritage",
         "Une redirection HTTP",
         "Le changement du DOM",
         "Le téléchargement d’un fichier"
       ],
-      "explanation": "Certaines propriétés, dont la couleur du texte, peuvent être héritées.",
-      "sourceSection": "comprendre",
-      "evidence": "`inherit` demande la valeur héritée ; une valeur définie directement sur l’enfant l’emporte sur une valeur simplement héritée. `!important` n’est pas une solution de diagnostic : il peut masquer une organisation incorrecte et rendre les mod",
+      "explanation": "Certaines propriétés, comme la couleur du texte, peuvent être reprises du parent : c’est l’héritage.",
+      "sourceSection": "cascade",
+      "evidence": "Certaines propriétés, comme `color` et `font-family`, peuvent être héritées du parent. `margin` n'est pas héritée. Évitez `!important` comme premier réflexe : cherchez la règle concurrente dans l'inspecteur. Le sélecteur descendant `.carte a` cible les liens dans une carte, même imbriqués plus profondément. Le sélecteur enfant `.carte > a` cible uniquement ses liens enfants directs.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "À importance et origine égales, deux règles ciblent un élément. Que comparer avant leur ordre ?",
+      "question": "Dans les règles CSS simples du cours, une classe et une balise donnent deux couleurs au même paragraphe. Quel sélecteur est le plus précis ?",
       "answers": [
-        "La couleur du navigateur",
-        "La spécificité des sélecteurs",
-        "Le nombre d’images de la page",
-        "La taille des fichiers"
+        "Le sélecteur de balise",
+        "Le sélecteur de classe",
+        "Celui dont le nom est le plus long",
+        "Aucun : les deux couleurs sont affichées en même temps"
       ],
-      "explanation": "L’ordre départage les règles encore à égalité après les critères de priorité.",
-      "sourceSection": "comprendre",
-      "evidence": "sélecteur de classe est plus spécifique qu’un sélecteur de balise. À spécificité égale, la déclaration située plus tard gagne pour la même propriété. Cette règle ne signifie pas « la dernière règle gagne toujours ».",
+      "explanation": "Dans les exemples du cours, sans !important ni règles de couches particulières, une classe est plus précise qu’un nom de balise.",
+      "sourceSection": "cascade",
+      "evidence": "Pour des règles normales de la même origine et du même niveau de couche, la spécificité participe au choix de la règle appliquée. Un sélecteur d'identifiant est plus spécifique qu'un sélecteur de classe ; une classe est plus spécifique qu'un sélecteur de balise. À spécificité égale, la dernière déclaration rencontrée gagne. L'ordre des classes dans l'attribut `class` ne détermine pas cet ordre : c'est l'ordre des règles qui compte.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Dans le panneau Styles, que signale généralement une déclaration barrée ?",
+      "question": "Dans l’inspecteur, que signifie une déclaration CSS barrée parce qu’une autre règle gagne ?",
       "answers": [
-        "Une balise supprimée du DOM",
-        "Un serveur PHP arrêté",
-        "Une déclaration supplantée par une autre règle",
-        "Un fichier toujours absent"
+        "Le fichier HTML a été supprimé",
+        "Le serveur PHP est arrêté",
+        "Cette déclaration n’est pas celle retenue pour la propriété",
+        "La balise a changé de nom"
       ],
-      "explanation": "Une déclaration barrée peut être valide mais perdre dans la cascade.",
+      "correctAnswerIndex": 2,
+      "explanation": "Une déclaration peut être valide mais perdre face à une autre règle.",
       "sourceSection": "comprendre",
-      "evidence": "| Une déclaration est barrée. | Règle gagnante dans Styles. | Une autre déclaration a été retenue. |",
-      "correctAnswerIndex": 2
+      "evidence": "| Une déclaration est barrée. | Règle gagnante dans Styles. | Une autre déclaration a été retenue. |"
     },
     {
-      "question": "Où observer la valeur finalement appliquée à une propriété ?",
+      "question": "Dans l’inspecteur, où voir la valeur CSS finalement utilisée pour un élément ?",
       "answers": [
         "Dans le nom de l’onglet",
         "Dans l’adresse DNS",
@@ -109,11 +109,11 @@
       ],
       "explanation": "Les styles calculés rendent visible le résultat de la cascade.",
       "sourceSection": "comprendre",
-      "evidence": "Le style calculé est la valeur effectivement utilisée",
+      "evidence": "Le fichier enregistré est le texte que vous avez écrit. Le **DOM** est l’organisation d’éléments construite par le navigateur ; celui-ci peut corriger certains défauts d’imbrication. Le style calculé est la valeur effectivement utilisée après la cascade. Ces trois vues répondent à des questions différentes : « qu’ai-je écrit ? », « quelle structure existe ? », « quelle règle s’applique ? ».",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Une feuille CSS n’est pas chargée. Quel contrôle est prioritaire ?",
+      "question": "La feuille CSS ne se charge pas. Que vérifier en premier ?",
       "answers": [
         "Son adresse et son statut dans Réseau",
         "Le choix entre h1 et h2",
@@ -121,8 +121,8 @@
         "La valeur de border-radius"
       ],
       "explanation": "Vérifier le chargement précède le diagnostic des règles elles-mêmes.",
-      "sourceSection": "comprendre",
-      "evidence": "| Aucun style ne semble chargé. | Onglet Réseau et chemin de `style.css`. | Une règle correcte ne sert pas si son fichier manque. |",
+      "sourceSection": "diagnostic",
+      "evidence": "Inspectez un élément pour voir le HTML courant, les règles appliquées et les styles calculés. Le panneau Réseau permet de vérifier le chargement de la feuille CSS et son statut HTTP. Une ressource CSS en `404` invite d'abord à vérifier son chemin. Une propriété CSS invalide est généralement ignorée ; elle ne bloque pas toute la page.",
       "correctAnswerIndex": 0
     },
     {
@@ -139,7 +139,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Depuis quelle adresse résoudre url(...) dans une feuille CSS externe ?",
+      "question": "Dans un fichier CSS, depuis quel fichier le navigateur lit-il un chemin url(...) ?",
       "answers": [
         "Toujours depuis les favoris",
         "Depuis le texte du titre",
@@ -148,21 +148,21 @@
       ],
       "explanation": "Une ressource référencée par CSS est résolue relativement à cette feuille.",
       "sourceSection": "organisation",
-      "evidence": "la feuille depuis le dossier `css`. Dans une feuille CSS, un chemin `url(...)` est résolu par rapport au fichier CSS. Les noms de fichiers et leur casse doivent correspondre à leur utilisation. `head` contient les métadonnées, tandis que `",
+      "evidence": "Dans `index.html`, `href=\"css/style.css\"` charge la feuille depuis le dossier `css`. Dans une feuille CSS, un chemin `url(...)` est résolu par rapport au fichier CSS. Les noms de fichiers et leur casse doivent correspondre à leur utilisation. `head` contient les métadonnées, tandis que `main` appartient au `body`. `title` nomme l'onglet ; `h1` nomme le contenu principal visible. Un fichier HTML bien structuré ne dépend pas des couleurs pour exprimer le rôle des sections.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle méthode facilite un diagnostic CSS ?",
+      "question": "Quelle propriété CSS change la couleur du texte ?",
       "answers": [
-        "Changer toutes les règles simultanément",
-        "Supprimer les styles calculés",
-        "Renommer toutes les balises",
-        "Changer une propriété puis observer"
+        "text-color",
+        "font-color",
+        "background-color",
+        "color"
       ],
-      "explanation": "Une modification isolée permet d’attribuer l’effet observé à une cause.",
-      "sourceSection": "comprendre",
-      "evidence": "n style ne semble chargé. | Onglet Réseau et chemin de `style.css`. | Une règle correcte ne sert pas si son fichier manque. |",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "color règle la couleur du texte. background-color règle le fond.",
+      "sourceSection": "diagnostic",
+      "evidence": ".message { color: blue; }"
     }
   ]
 }

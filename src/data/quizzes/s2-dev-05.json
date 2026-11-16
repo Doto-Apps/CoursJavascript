@@ -9,9 +9,9 @@
   "targetCourse": "/semestre_2/developpement_Web/tp/erreurs",
   "questions": [
     {
-      "question": "Quel identifiant utiliser pour modifier une tâche ?",
+      "question": "Que faut-il envoyer pour modifier la bonne tâche, même après un tri ?",
       "answers": [
-        "Son id stable",
+        "L’id de la tâche, qui ne change pas quand on trie la liste",
         "Sa position dans le tableau affiché",
         "Son titre uniquement",
         "Le numéro du clic"
@@ -22,14 +22,14 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel rôle joue PATCH dans notre API ?",
+      "question": "Dans notre API, à quoi sert la méthode PATCH ?",
       "answers": [
         "Supprimer toute la table",
         "Modifier partiellement une ressource",
         "Lire uniquement la liste",
         "Créer toujours un nouvel id"
       ],
-      "explanation": "Notre contrat emploie PATCH pour changer des champs d’une tâche existante.",
+      "explanation": "Notre API utilise PATCH pour changer certaines informations d’une tâche déjà enregistrée.",
       "sourceSection": "notion-2",
       "evidence": "PATCH change certains champs de la tâche existante.",
       "correctAnswerIndex": 1
@@ -55,13 +55,13 @@
         "Une couleur CSS",
         "Un booléen true ou false"
       ],
-      "explanation": "Le contrat attend un booléen, pas sa représentation entre guillemets.",
+      "explanation": "Il faut envoyer true ou false sans guillemets : avec des guillemets, ce serait du texte.",
       "sourceSection": "notion-5",
       "evidence": "Le champ done est un booléen JSON dans le contrat.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle clause cible une seule identité ?",
+      "question": "Quelle clause SQL permet de modifier seulement la tâche dont on connaît l’id ?",
       "answers": [
         "WHERE id = :id",
         "ORDER BY id seulement",
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Comment fournir l'id à SQL ?",
+      "question": "Comment passer à SQL l’id reçu après l’avoir vérifié ?",
       "answers": [
         "Un id obtenu uniquement de la position DOM",
         "Le titre utilisé comme code SQL",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel statut correspond à un id inexistant ?",
+      "question": "Dans notre API, que renvoie le serveur si l’id est correct mais que la tâche n’existe pas ?",
       "answers": [
         "201",
         "200 avec faux succès",
@@ -113,14 +113,14 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "rowCount égal à zéro signifie-t-il toujours un id absent ?",
+      "question": "Après UPDATE, rowCount() vaut zéro. Cela prouve-t-il que la tâche n’existe pas ?",
       "answers": [
         "Non, la valeur peut déjà être identique",
         "Oui, zéro prouve toujours l’absence",
         "Oui, si la table est triée",
         "Oui, si l’id est numérique"
       ],
-      "explanation": "Une ligne existante peut ne subir aucun changement effectif.",
+      "explanation": "Non. La tâche peut exister et déjà contenir la valeur demandée.",
       "sourceSection": "notion-13",
       "evidence": "Un UPDATE sans changement de valeur ne prouve pas que la ligne est absente.",
       "correctAnswerIndex": 0
@@ -139,30 +139,30 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel garde-fou d'interface prévoit le TP avant DELETE ?",
+      "question": "Quelle instruction SQL supprime une tâche dont l’id est connu ?",
       "answers": [
-        "Une suppression de toutes les cartes",
-        "Une modification silencieuse de l’id",
-        "Une confirmation explicite",
-        "Une suppression dès le survol"
+        "DELETE FROM todos;",
+        "SELECT * FROM todos WHERE id = :id;",
+        "DELETE FROM todos WHERE id = :id;",
+        "UPDATE todos SET done = 1 WHERE id = :id;"
       ],
-      "explanation": "La confirmation limite les suppressions accidentelles ; elle ne remplace pas les contrôles serveur.",
-      "sourceSection": "notion-18",
-      "evidence": "Une suppression est précédée d'une confirmation explicite dans le travail attendu.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "DELETE supprime ; WHERE limite la suppression à la tâche choisie.",
+      "sourceSection": "comprendre",
+      "evidence": "DELETE FROM todos WHERE id = :id;"
     },
     {
-      "question": "Quel test confirme le ciblage de la modification ?",
+      "question": "À quoi sert WHERE id = :id dans un UPDATE ?",
       "answers": [
-        "Vérifier uniquement la couleur du bouton",
-        "Comparer le nombre de fichiers",
-        "Changer l’ordre des cartes sans relire",
-        "Vérifier aussi que les autres tâches n’ont pas changé"
+        "Choisir la couleur de la tâche",
+        "Créer un nouvel id",
+        "Trier les tâches sans les modifier",
+        "Choisir la ligne à modifier"
       ],
-      "explanation": "Le test doit prouver le ciblage, pas seulement un changement visible.",
-      "sourceSection": "notion-20",
-      "evidence": "Un test vérifie que les tâches voisines restent intactes.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "WHERE limite les lignes concernées par UPDATE.",
+      "sourceSection": "comprendre",
+      "evidence": "`WHERE` limite les lignes concernées. Sans cette condition, une commande peut modifier ou supprimer toute la table. Les valeurs sont liées par une requête préparée. Un identifiant provenant du navigateur reste une entrée à valider côté serveur ; la présence d’un bouton correct n’est pas une garantie."
     }
   ]
 }

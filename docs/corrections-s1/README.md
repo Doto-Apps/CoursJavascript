@@ -12,7 +12,9 @@ INT-06 : comparer la remise au cahier des charges des six profils ; le HTML doit
 
 DEV-02 : panier quantité × prix puis réduction si total >= 30 ; trois traces indépendantes. DEV-03 : correction intégrale dans tarif.php ; sorties 0/invalide, 1/12, 3/36, 4/42, 6/66, 7/invalide. DEV-04 : correction dans profils.php ; total 35, moyenne 35/3 formatée, garde count > 0, affichage de noms échappés.
 
-DEV-05 : reprendre la réception/validation et l'affichage de mini-chat.php sans conservation ni redirection. DEV-06 : correction complète dans mini-chat.php ; session avant sortie, validation, ajout limité, redirection 303 et exit. Vérifier absence de doublon et séparation entre sessions. Cette application d'atelier n'est pas un service public sécurisé complet.
+DEV-04 : trois exercices autonomes de tournoi, boutique et sélection d’activités ; aucun objet PHP. Les notions évaluées sont parcours, accumulation, candidat maximal, sélection et rendu textuel. `profils.php` reste un exemple enseignant de parcours et d’échappement.
+
+DEV-05 : connexion avec comptes fictifs en clair, comparaison stricte, identité en session, accueil protégé et déconnexion. DEV-06 : réutiliser cette identité pour un mini-chat avec historique dans un fichier texte commun. La référence exécutable et ses instructions se trouvent dans [messagerie](messagerie/README.md). Vérifier absence de doublon au rechargement, auteur issu de la session, historique partagé et conservation des messages après déconnexion. Le TP final dure 90 minutes, sans remise différée. Les énoncés n’incluent aucun programme de départ.
 
 ## Projet de site
 

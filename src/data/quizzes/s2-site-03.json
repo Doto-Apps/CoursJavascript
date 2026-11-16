@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quelle méthode crée article ?",
+      "question": "Quelle méthode JavaScript permet de créer un élément article ?",
       "answers": [
         "JSON.stringify",
         "document.createElement",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle propriété utilise le titre de carte ?",
+      "question": "Quelle propriété utiliser pour écrire le titre reçu dans la carte ?",
       "answers": [
         "outerHTML",
         "insertAdjacentHTML",
@@ -74,30 +74,30 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Pourquoi utiliser replaceChildren pour un rendu complet ?",
+      "question": "Quelle méthode remplace tous les éléments déjà affichés dans le conteneur ?",
       "answers": [
-        "Modifier l’id de chaque projet",
-        "Éviter d’empiler les anciennes cartes à chaque rendu",
-        "Effacer les données dans MySQL",
-        "Créer une nouvelle requête HTTP"
+        "append",
+        "replaceChildren",
+        "createElement",
+        "map"
       ],
-      "explanation": "Remplacer les enfants reconstruit la liste au lieu de dupliquer l’ancien rendu.",
+      "correctAnswerIndex": 1,
+      "explanation": "replaceChildren remplace le contenu enfant du conteneur.",
       "sourceSection": "notion-6",
-      "evidence": "replaceChildren remplace les enfants existants du conteneur.",
-      "correctAnswerIndex": 1
+      "evidence": "<a id=\"notion-6\"></a>Remplacement | replaceChildren remplace les enfants existants du conteneur. |"
     },
     {
-      "question": "Quel principe guide les titres ?",
+      "question": "Une page porte un h1 et chaque carte est un contenu directement sous ce titre. Quel niveau convient au titre des cartes ?",
       "answers": [
-        "Le nombre d’images",
-        "L’ordre alphabétique des ids",
-        "Une hiérarchie cohérente avec la page",
-        "La taille graphique uniquement"
+        "h1 pour chaque carte",
+        "h6 seulement pour obtenir un petit texte",
+        "h2",
+        "Aucune balise de titre"
       ],
-      "explanation": "Les titres structurent le contenu ; CSS choisit la taille.",
+      "correctAnswerIndex": 2,
+      "explanation": "Le titre des cartes suit le titre principal dans le plan du document.",
       "sourceSection": "notion-8",
-      "evidence": "Les titres de cartes gardent une hiérarchie cohérente avec le h1.",
-      "correctAnswerIndex": 2
+      "evidence": "<a id=\"notion-8\"></a>Hiérarchie | Les titres de cartes gardent une hiérarchie cohérente avec le h1. |"
     },
     {
       "question": "Que fait object-fit: cover sur une image dans un cadre ?",
@@ -152,17 +152,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel contenu de test révèle un manque de robustesse ?",
+      "question": "Quelle méthode applique creerCarte à chaque projet pour obtenir un tableau de cartes ?",
       "answers": [
-        "Uniquement un titre d’une lettre",
-        "Toujours le même texte court",
-        "Aucune description à chaque test",
-        "Un titre très long"
+        "find",
+        "includes",
+        "join",
+        "map"
       ],
-      "explanation": "Un contenu représentatif révèle les débordements et les contraintes de la carte.",
-      "sourceSection": "notion-18",
-      "evidence": "Une carte doit rester lisible avec un titre long.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "map transforme chaque élément du tableau avec la fonction fournie.",
+      "sourceSection": "notion-5",
+      "evidence": "<a id=\"notion-5\"></a>Transformation tableau | map produit une carte pour chaque projet. |"
     }
   ]
 }

@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "À quoi sert HOST=0.0.0.0 côté serveur ?",
+      "question": "Sur le serveur du TP, à quoi sert HOST=0.0.0.0 ?",
       "answers": [
         "Télécharger le modèle",
         "Écouter sur les interfaces réseau du poste",
@@ -48,17 +48,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Pourquoi choisir des ports distincts pour API et modèle sur un même poste ?",
+      "question": "Sur un même poste, l’API et le serveur de modèle doivent écouter en même temps. Quelle configuration convient ?",
       "answers": [
-        "Le port détermine le langage de programmation",
-        "Chaque personnage doit avoir une IP publique",
-        "Les deux services deviennent alors la même application",
-        "Chaque service doit pouvoir écouter sans conflit"
+        "Le même port occupé par les deux services",
+        "Un port choisi selon le titre HTML",
+        "Le port zéro dans toutes les adresses données aux clients",
+        "Deux ports différents"
       ],
-      "explanation": "Un port occupé ne peut pas être réutilisé par un second écouteur identique.",
+      "correctAnswerIndex": 3,
+      "explanation": "Deux services distincts ne peuvent pas occuper la même adresse et le même port en même temps.",
       "sourceSection": "adresses",
-      "evidence": "Deux services sur la même machine ont besoin de ports distincts. Sur deux machines, le même numéro peut être utilisé. Le pare-feu et le réseau de la salle doivent autoriser les échanges : vérifiez avec l’enseignant, sans désactiver globalem",
-      "correctAnswerIndex": 3
+      "evidence": "Deux services sur la même machine ont besoin de ports distincts. Sur deux machines, le même numéro peut être utilisé. Le pare-feu et le réseau de la salle doivent autoriser les échanges : vérifiez avec l’enseignant, sans désactiver globalement le pare-feu."
     },
     {
       "question": "Où Node lit-il les variables d’environnement ?",
@@ -70,11 +70,11 @@
       ],
       "explanation": "La configuration de lancement est exposée par process.env.",
       "sourceSection": "configuration",
-      "evidence": "Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre",
+      "evidence": "Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Après modification de .env, que faire dans ce parcours ?",
+      "question": "Après avoir changé le fichier .env, que faut-il faire pour que Node utilise les nouvelles valeurs ?",
       "answers": [
         "Changer la couleur de l’éditeur",
         "Relancer le processus avec ce fichier",
@@ -83,7 +83,7 @@
       ],
       "explanation": "Un processus déjà lancé ne recharge pas spontanément sa configuration.",
       "sourceSection": "configuration",
-      "evidence": ". process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_B",
+      "evidence": "Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.",
       "correctAnswerIndex": 1
     },
     {
@@ -96,11 +96,11 @@
       ],
       "explanation": "L’API doit désigner un modèle disponible sur le serveur local.",
       "sourceSection": "configuration",
-      "evidence": "personnage.mjs. Les valeurs ci-dessous sont des exemples à adapter : LM_MODEL est l’identifiant du modèle réellement chargé, pas une famille approximative.",
+      "evidence": "Créez `.env` à côté de personnage.mjs. Les valeurs ci-dessous sont des exemples à adapter : LM_MODEL est l’identifiant du modèle réellement chargé, pas une famille approximative.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel rôle fournit les consignes de personnage dans messages ?",
+      "question": "Dans les messages envoyés au modèle, quel rôle porte les consignes du personnage ?",
       "answers": [
         "user",
         "assistant",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Donner le conte comme contexte entraîne-t-il le modèle ?",
+      "question": "Donner le texte du conte au modèle modifie-t-il son entraînement ?",
       "answers": [
         "Non, cela ne modifie pas ses poids",
         "Oui, chaque requête le réentraîne",
@@ -122,11 +122,11 @@
       ],
       "explanation": "Le contexte guide une génération ; ce n’est pas un entraînement.",
       "sourceSection": "modele",
-      "evidence": "s. Fournir un contexte n’entraîne pas le modèle et ne modifie pas ses poids. Les réponses peuvent varier : un test vérifie la structure et les limites, pas une phrase exacte.",
+      "evidence": "Ce code n’enregistre pas d’historique entre les requêtes. Fournir un contexte n’entraîne pas le modèle et ne modifie pas ses poids. Les réponses peuvent varier : un test vérifie la structure et les limites, pas une phrase exacte.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel contrôle précède l’analyse du corps du modèle ?",
+      "question": "Avant de lire la réponse du modèle, que faut-il vérifier avec response.ok ?",
       "answers": [
         "Réécrire automatiquement le JSON",
         "Vérifier le statut HTTP avec response.ok",
@@ -139,17 +139,17 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle est l’utilité d’une limite d’attente ?",
+      "question": "Dans l’appel au modèle, que permet une limite de temps d’attente ?",
       "answers": [
-        "Accélérer le processeur du modèle",
-        "Garantir que chaque appel réussit",
-        "Éviter une requête suspendue sans fin",
-        "Garantir une phrase exacte"
+        "Accélérer le processeur",
+        "Garantir une réponse correcte",
+        "Arrêter d’attendre après le délai prévu",
+        "Choisir automatiquement un autre modèle"
       ],
-      "explanation": "Un délai limite l’attente ; il ne rend pas le modèle plus rapide.",
+      "correctAnswerIndex": 2,
+      "explanation": "Le délai limite l’attente sans garantir la réussite de la génération.",
       "sourceSection": "modele",
-      "evidence": "e 502 ; le client n’a pas à connaître choices. La limite d’attente de 30 secondes évite une requête suspendue sans fin ; elle ne garantit pas une génération aussi rapide.",
-      "correctAnswerIndex": 2
+      "evidence": "**Résultat attendu :** POST /message conserve personnage et reply. Seule la fabrication de reply change. Le serveur personnage transforme les erreurs du modèle en réponse 502 ; le client n’a pas à connaître choices. La limite d’attente de 30 secondes évite une requête suspendue sans fin ; elle ne garantit pas une génération aussi rapide."
     },
     {
       "question": "health réussit, mais la génération échoue. Est-ce possible ?",
@@ -161,7 +161,7 @@
       ],
       "explanation": "Il faut diagnostiquer séparément l’API et sa dépendance.",
       "sourceSection": "diagnostic",
-      "evidence": "health ne contacte pas le modèle : une API saine peut avoir une dépendance en panne. Un échange Node → Node n’est pas soumis au CORS du navigateur. Si on ajoute une interface Web d’origine différente, il faut traiter cette frontière séparém",
+      "evidence": "health ne contacte pas le modèle : une API saine peut avoir une dépendance en panne. Un échange Node → Node n’est pas soumis au CORS du navigateur. Si on ajoute une interface Web d’origine différente, il faut traiter cette frontière séparément.",
       "correctAnswerIndex": 3
     }
   ]

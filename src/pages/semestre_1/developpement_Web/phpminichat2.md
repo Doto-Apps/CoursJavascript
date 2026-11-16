@@ -1,177 +1,161 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP PHP : un mini-chat persistant en session"
+title: "TP PHP : mini-chat, session et fichier texte"
 type: "TP"
 order: 6
 quizId: "s1-dev-05"
 previousSession: "/semestre_1/developpement_Web/phpForm"
 ---
 
-<a id="comprendre"></a>
+Cette dernière séance assemble les acquis : formulaires, contrôle d’accès, session, tableaux, boucles et affichage. Une nouvelle notion permet de conserver un historique commun : la lecture et l’écriture d’un fichier texte côté serveur.
 
-## Variables de requête et session PHP
+Utilisez PHP 8.0 ou plus pour les fonctions présentées, notamment `str_contains`. Reprenez l’environnement PHP local déjà utilisé ; les aperçus HTML du site de cours ne constituent pas un serveur PHP.
 
-Une variable locale PHP disparaît lorsque le script finit. Une **session** permet de retrouver des données côté serveur lors d’une autre requête associée à la même session. Le navigateur conserve habituellement un identifiant de session dans un cookie ; il ne contient pas directement tout l’historique du chat.
+| Temps | Activité |
+|---|---|
+| 10 min | QCM sur la connexion et les sessions vues en séance 5 |
+| 20 min | Fonctions de fichiers et format des données |
+| 90 min | Mini-chat autonome, tests compris, à terminer avant la fin de séance |
 
-`session_start()` initialise ou reprend la session et doit être exécuté avant une sortie qui empêcherait l’envoi des en-têtes. `$_SESSION['messages']` peut contenir un tableau de messages. Cette solution reste un exercice local : l’historique est celui de la session, pas un salon partagé garanti entre tous les étudiants.
+Le mini-chat doit fonctionner à la fin des 90 minutes. Ce travail se réalise pendant la séance ; aucune remise différée n’est demandée. Préparez la connexion de la séance précédente avant de commencer.
 
-## Le cycle POST, redirection, GET
+<a id="stockage"></a>
 
-| Étape | Responsabilité | Échec à éviter |
-|---|---|---|
-| POST | Recevoir le formulaire. | Ajouter un message sur une simple visite GET. |
-| Validation | Vérifier les champs. | Conserver une saisie vide ou de mauvais type. |
-| Ajout | Ajouter une seule entrée à l’historique. | Réécrire toutes les anciennes entrées. |
-| Redirection | Renvoyer vers une page GET. | Relancer l’ajout au rechargement. |
-| Affichage | Parcourir puis échapper les textes. | Interpréter une saisie comme du HTML. |
+## Session personnelle et historique partagé
 
-Le schéma **POST → redirection → GET** sépare modification et lecture. `header('Location: ...', true, 303)` demande une nouvelle visite de la page ; `exit` arrête ensuite le script. Sans cet arrêt, des instructions placées après la redirection pourraient continuer à s’exécuter.
+La session indique qui est connecté grâce à l’entrée `utilisateur` créée en séance 5. Le fichier texte contient les messages, indépendamment de la session qui les a envoyés. Une déconnexion retire l’identité de cette session ; elle n’efface pas l’historique commun.
 
-## La taille de l’historique en session
+Deux navigateurs qui accèdent à la même application peuvent lire le même historique tout en utilisant des identités distinctes. Deux copies de l’application sur deux ordinateurs ne partagent pas automatiquement leurs fichiers locaux. Après un rechargement, le programme doit relire le fichier : l’ancien tableau PHP en mémoire n’existe plus.
 
-Chaque message est un enregistrement, par exemple un pseudo et un texte. Le rendu utilise une boucle commune. Un état vide indique qu’aucun message n’a encore été envoyé : ce n’est pas une panne. Une limite de taille de message et une limite de nombre d’entrées évitent un historique incontrôlé dans cet exercice.
+<a id="chemins"></a>
 
-Testez une nouvelle session, l’ajout de deux messages, le rechargement après envoi et une saisie invalide. Une nouvelle session peut avoir un historique vide sans effacer celui d’une autre session. Pour un stockage partagé et durable, une base de données sera utilisée au semestre suivant : ce n’est pas une fonctionnalité cachée de `$_SESSION`.
+## Emplacement et accès aux fichiers
 
-## La persistance de $_SESSION
+Un chemin de fichier côté PHP désigne un emplacement sur le serveur, pas une URL. `__DIR__` désigne le dossier du script dans lequel il est écrit. Utiliser un chemin fixe calculé depuis ce dossier évite de dépendre du répertoire courant. Le visiteur ne choisit jamais le chemin du fichier de stockage.
 
-Une variable PHP ordinaire existe pendant l’exécution d’une requête. Recharger le script ne conserve pas automatiquement sa valeur. Une session permet de retrouver des données côté serveur grâce à un identifiant habituellement transmis par cookie. Le cookie n’a pas besoin de contenir l’historique complet.
+Organisez le projet avec un dossier public pour les pages et un dossier de stockage voisin. Lancez le serveur PHP avec le dossier public comme racine Web. Le stockage reste alors accessible au PHP, sans être une page téléchargeable par son URL. Le dossier de stockage doit exister et le processus PHP doit pouvoir y écrire.
 
 ```text
-GET : retrouver la session → afficher l’historique
-POST : retrouver la session → valider → ajouter le message
-       → rediriger vers GET → afficher l’historique
+atelier/
+  public/       Pages PHP accessibles par le navigateur
+  stockage/     Fichiers texte accessibles au PHP
 ```
 
-La redirection après POST sépare l’enregistrement de l’affichage. Recharger la page affichée répète alors le GET plutôt que d’envoyer de nouveau le formulaire. Cela ne remplace pas la validation ni une protection contre toutes les demandes répétées, mais évite le renvoi accidentel lors d’un rechargement ordinaire.
+Depuis le dossier `atelier`, lancez `php -S localhost:8080 -t public` puis ouvrez une page avec `http://localhost:8080`. Sous Windows avec XAMPP, remplacez `php` par `C:\xampp\php\php.exe` si nécessaire. L’option `-t` choisit la racine publique ; ouvrir un fichier avec `file://` n’exécute pas PHP. Vous pouvez réorganiser les pages de la séance 5 sans modifier le nom de la clé de session commune.
+
+| Fonction | Question à laquelle elle répond |
+|---|---|
+| `file_exists` | Le chemin existe-t-il ? |
+| `is_readable` | Le fichier est-il accessible en lecture ? |
+| `is_writable` | Le fichier ou le dossier est-il accessible en écriture ? |
+| `file_get_contents` | Quel est le contenu complet, sous forme d’une chaîne ? |
+| `file` | Quelles sont les lignes, sous forme d’un tableau ? |
+
+Un fichier absent au premier lancement peut représenter un historique encore vide. Un fichier existant mais illisible représente un échec à signaler. Ne présentez pas une panne de lecture comme une liste vide normale. Le résultat des fonctions de lecture se vérifie avant de le parcourir.
+
+<a id="lignes"></a>
+
+## Lire des lignes puis découper des champs
 
 ```php
-<?php
-session_start();
-$_SESSION['messages'] ??= [];
-```
-
-**Sortie attendue :** aucune sortie visible pour ces deux lignes ; elles préparent les données. `session_start()` et les en-têtes de redirection doivent intervenir avant l’envoi de HTML. Un espace ou un affichage placé trop tôt peut empêcher l’envoi d’un en-tête.
-
-<a id="session"></a>
-
-## session_start et $_SESSION
-
-Les variables ordinaires d'un script PHP sont recréées à chaque requête. `session_start()` récupère ou crée une session avant toute sortie HTML. `$_SESSION` permet de conserver des données côté serveur entre les requêtes d'une même session. Le navigateur utilise habituellement un cookie d'identification ; ce cookie ne contient pas toute la liste des messages.
-
-```php
-<?php
-session_start();
-$_SESSION['messages'] ??= [];
-```
-
-Deux navigateurs différents ont normalement deux sessions distinctes. La durée de conservation dépend de la configuration du serveur et du navigateur. Pour un historique partagé et durable, on choisira une base de données au semestre 2 ; ne confondez pas session et stockage permanent.
-
-<a id="ajout"></a>
-
-## Validation et ajout d’un message
-
-Réutilisez les validations de DEV-05. Enregistrez le texte original validé ; échappez-le lors de l'affichage, afin d'éviter un double échappement.
-
-```php
-if ($erreurs === []) {
-    $_SESSION['messages'][] = ['pseudo' => $pseudo, 'message' => $message];
-    $_SESSION['messages'] = array_slice($_SESSION['messages'], -20);
-    header('Location: mini-chat.php', true, 303);
-    exit;
+$chemin = __DIR__ . '/../stockage/couleurs.txt';
+$lignes = file($chemin, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+if ($lignes === false) {
+    echo 'Lecture impossible';
 }
 ```
 
-`[]` ajoute un élément en fin de tableau. `array_slice(..., -20)` conserve au plus les vingt derniers messages. Cette limite évite un historique qui grossit sans fin dans l'exercice. Une requête invalide n'ajoute rien et affiche ses erreurs.
+Cet exemple suppose un fichier de couleurs existant. `file` renvoie un tableau de lignes, ou `false` si la lecture échoue. `FILE_IGNORE_NEW_LINES` retire les fins de ligne ; `FILE_SKIP_EMPTY_LINES` ignore les lignes vides. `|` combine ici des options ; ce n’est pas le séparateur des données. [Documentation de file](https://www.php.net/manual/fr/function.file.php).
 
-<a id="redirection"></a>
+Une ligne peut contenir plusieurs champs avec un séparateur convenu. `explode` transforme une chaîne en tableau de morceaux. Le séparateur est une chaîne exacte ; son choix et l’ordre des champs font partie du format.
 
-## POST, redirection, GET
-
-```text
-Envoi du formulaire → POST → validation et ajout
-                           → réponse 303 avec Location
-Navigateur → GET de la page → historique affiché
+```php
+$ligne = 'bleu;#2457a7';
+$champs = explode(';', $ligne);
+echo $champs[0];
 ```
 
-Après un ajout réussi, la redirection conduit à un GET. Recharger cette page GET n'ajoute pas de nouveau message. `header` doit être appelé avant tout contenu envoyé au navigateur ; `exit` termine le script après la redirection. Ce schéma réduit les doublons de rechargement, mais ne rend pas une requête malveillante impossible. Un service public nécessiterait notamment protections CSRF, authentification et limites adaptées ; le TP reste sur serveur local.
+**Résultat :** le nom de la couleur. Le deuxième champ contient sa valeur hexadécimale. Vérifiez le nombre de morceaux avant d’accéder à une position. Une ligne mal formée ne doit pas provoquer de lecture d’indice absent. `implode` fait l’opération inverse : il réunit des éléments avec un séparateur. [Documentation de explode](https://www.php.net/manual/fr/function.explode.php).
 
-<a id="liste"></a>
+Un retour à la ligne sépare les enregistrements ; un caractère à l’intérieur d’une ligne sépare leurs champs. Si une saisie peut contenir ces caractères réservés, le format devient ambigu. Dans ce premier format, on refuse ces caractères dans les champs, avec une erreur compréhensible. `str_contains` teste la présence d’une chaîne ; valider avant `trim` évite de faire disparaître un retour à la ligne interdit placé à une extrémité.
 
-## Affichage de l’historique et échappement
+<a id="ecriture"></a>
 
-Parcourez `$_SESSION['messages']` avec `foreach`. Affichez pseudo et message avec `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. Si la liste est vide, affichez « Aucun message ». Gardez un label pour chaque champ et un focus visible pour le bouton.
+## Écrire, ajouter et contrôler le résultat
 
-Téléchargez le [squelette à compléter](/exemples/s1/php/mini-chat-squelette.php) et renommez-le `mini-chat.php`. Le squelette contient les étapes à remplir, pas la correction complète. Faites d'abord fonctionner un ajout, puis la liste, puis la redirection. N'ajoutez pas MySQL à ce TP : son installation détournerait le temps des notions étudiées.
-
-## La durée de vie des données PHP
-
-Cette maquette JavaScript n’utilise pas de cookie : elle illustre seulement les deux durées de vie. Le tableau « session » simulé reste en mémoire lors d’une nouvelle requête simulée, mais disparaît lorsque vous réexécutez l’aperçu. Dans le mini-chat PHP réel, session_start() et le cookie de session relient plusieurs requêtes.
-
-```html live title="Comparer mémoire de requête et session"
-<style>
-  body {
-    margin: 16px;
-    font-family: system-ui, sans-serif;
-    color: #18324c;
-  }
-  .cartes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  article,
-  output {
-    display: block;
-    padding: 16px;
-    border: 1px solid #9aaabe;
-  }
-  button,
-  input {
-    font: inherit;
-    padding: 8px;
-  }
-  label {
-    display: block;
-    margin-block: 12px 4px;
-  }
-  :focus-visible {
-    outline: 3px solid #2563eb;
-    outline-offset: 3px;
-  }
-</style>
-
-<h1>Messages et requêtes</h1>
-<button id="ajouter" type="button">Ajouter un message</button>
-<button id="requete" type="button">Simuler une nouvelle requête</button>
-<p id="etat" role="status"></p>
-<ol id="messages"></ol>
-<script>
-  const sessionSimulee = [];
-  let variableDeRequete = [];
-  function afficher() {
-    document.querySelector("#etat").textContent =
-      `Requête : ${variableDeRequete.length} ; session simulée : ${sessionSimulee.length}`;
-    document.querySelector("#messages").replaceChildren(
-      ...sessionSimulee.map((texte) => {
-        const li = document.createElement("li");
-        li.textContent = texte;
-        return li;
-      }),
-    );
-  }
-  document.querySelector("#ajouter").addEventListener("click", () => {
-    const texte = `Message ${sessionSimulee.length + 1}`;
-    variableDeRequete.push(texte);
-    sessionSimulee.push(texte);
-    afficher();
-  });
-  document.querySelector("#requete").addEventListener("click", () => {
-    variableDeRequete = [];
-    afficher();
-  });
-  afficher();
-</script>
+```php
+$chemin = __DIR__ . '/../stockage/visites.txt';
+$octets = file_put_contents($chemin, 'Une visite' . PHP_EOL, FILE_APPEND | LOCK_EX);
+if ($octets === false) {
+    echo 'Enregistrement impossible';
+}
 ```
 
-**Résultat à observer :** Après deux ajouts puis une nouvelle requête simulée : compteur de requête 0, compteur de session 2. Vérifiez ensuite la conservation réelle dans le projet PHP et un autre navigateur.
+`file_put_contents` écrit une chaîne et renvoie le nombre d’octets écrits, ou `false` en cas d’échec. Sans `FILE_APPEND`, le contenu existant est remplacé ; avec cette option, le texte est ajouté à la fin. Le fichier peut être créé, mais son dossier parent doit déjà exister. `PHP_EOL` ajoute un retour à la ligne adapté au serveur.
+
+`LOCK_EX` demande un verrou exclusif pendant l’écriture afin de coordonner les écritures qui utilisent ce verrou. Il ne verrouille pas automatiquement une lecture faite par `file`. Pour une lecture coordonnée avec les écritures, `fopen`, `flock` avec `LOCK_SH`, `fgets` puis `fclose` permettent d’encadrer le parcours. Ce parcours bas niveau est un approfondissement ; le TP utilise la lecture simple d’un petit fichier et vérifie ses lignes. [Documentation de file_put_contents](https://www.php.net/manual/fr/function.file-put-contents.php).
+
+Un échec d’enregistrement ne doit pas être annoncé comme un envoi réussi. Conservez la saisie et affichez une erreur. Les données validées sont écrites brutes ; l’échappement HTML intervient lors de leur affichage, pas lors de l’enregistrement.
+
+<a id="reutilisation"></a>
+
+## Réutiliser la connexion et les acquis
+
+La page de chat commence par reprendre la session et contrôler l’identité selon le contrat de la séance 5. Le pseudo de l’auteur vient du compte connecté côté serveur, jamais d’un champ de formulaire prétendant désigner l’auteur. Une requête sans identité valide n’ajoute aucun message, même si elle est envoyée directement.
+
+GET affiche l’état de la page ; POST représente une demande d’ajout à valider. Après une écriture réussie, le schéma POST, redirection 303 puis GET évite le renvoi accidentel du formulaire lors d’un rechargement. `header` et `exit` ont été expliqués en séance 5.
+
+Pour le rendu, chaque message lu devient un enregistrement à présenter avec une structure HTML commune. Réutilisez `foreach` et `htmlspecialchars` de la séance 4. Une saisie ressemblant à du HTML doit apparaître comme texte. La déconnexion ne doit pas supprimer les messages du fichier.
+
+<a id="tp-autonome"></a>
+
+## TP autonome — mini-chat en 1 h 30
+
+Vous disposez de votre projet de connexion et des supports de cours. Aucun programme de chat ni squelette à compléter n’est fourni. Organisez vous-même les fichiers, les traitements et les vérifications. L’objectif est un parcours fonctionnel à montrer avant la fin de séance, pas une maquette d’écran.
+
+### Fonctionnalités attendues
+
+Le visiteur se connecte avec un compte de test de la séance 5. Le chat affiche l’identité reconnue, l’historique et un formulaire d’envoi ; il propose aussi une déconnexion. Une visite non connectée renvoie vers la connexion et ne permet aucune écriture.
+
+Un utilisateur connecté peut envoyer un message non vide. Chaque message est ajouté à un fichier texte commun, sans remplacer les précédents. Les messages sont relus depuis ce fichier et affichés dans leur ordre d’enregistrement. L’auteur affiché est celui de la session au moment de l’envoi.
+
+### Format et règles à respecter
+
+| Élément | Règle du TP |
+|---|---|
+| Stockage | Un fichier texte côté serveur, hors du dossier public |
+| Enregistrement | Une ligne par message |
+| Champs d’une ligne | Pseudo, puis texte du message, séparés par le caractère barre verticale |
+| Message accepté | Chaîne non vide après suppression des espaces de bord, au plus 1120 octets |
+| Caractères réservés | Barre verticale, retour chariot et saut de ligne refusés dans le message brut |
+| Auteur | Pseudo issu de la session de connexion, pas d’une saisie supplémentaire |
+| Premier lancement | Historique vide compréhensible si le fichier n’existe pas encore |
+| Erreur de fichier | Message d’échec, aucune fausse confirmation |
+| Ligne mal formée | Ignorée sans erreur d’indice et sans effacer les autres messages |
+| Affichage | Texte échappé ; historique conservé après rechargement et déconnexion |
+
+Les pseudos des deux comptes de test respectent déjà le format. Le fichier est petit pour cet atelier. Vous n’avez à ajouter ni inscription, ni base SQL, ni JavaScript, ni suppression de messages pour terminer le socle.
+
+### Organisation suggérée des 90 minutes
+
+| Temps | Jalon observable |
+|---|---|
+| 0–15 min | Connexion précédente réutilisable et accès au chat contrôlé |
+| 15–40 min | Un message valide enregistré sans écraser l’historique |
+| 40–65 min | Historique relu, champs retrouvés et rendu correct |
+| 65–90 min | Validation, erreurs et parcours de vérification complet |
+
+### Tests à effectuer avant la fin
+
+| Situation | Résultat attendu |
+|---|---|
+| Visite ou POST sans connexion | Aucun accès au chat, aucune écriture |
+| Léa puis Sam, dans deux sessions | Chaque message garde son auteur ; même historique sur la même application |
+| Rechargement après un envoi réussi | Aucun message ajouté une seconde fois |
+| Déconnexion puis nouvelle connexion | Messages précédents toujours présents |
+| Message vide, trop long ou contenant un caractère réservé | Refus avec saisie conservée ; fichier inchangé |
+| Texte ressemblant à une balise | Texte visible, aucune interprétation HTML |
+| Faux pseudo ajouté à la requête | Auteur pris dans la session |
+| Fichier absent, vide, illisible ou ligne mal formée | Comportement conforme aux règles ci-dessus |
+
+Montrez le parcours complet et expliquez où l’identité et les messages sont conservés. La validation du TP se fait pendant la séance.

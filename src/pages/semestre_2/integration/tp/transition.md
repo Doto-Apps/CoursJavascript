@@ -55,7 +55,10 @@ Une transition interpole le changement d’une propriété entre deux états. El
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .carte { transition: none; transform: none; }
+  .carte, .carte:hover, .carte:focus-within {
+    transition: none;
+    transform: none;
+  }
 }
 ```
 
@@ -153,6 +156,9 @@ Une transition interpole le changement d’une propriété entre deux états. El
       }
       @media (prefers-reduced-motion: reduce) {
         .carte,
+        .carte:hover,
+        .carte:focus-visible,
+        .apparition.attente,
         .apparition {
           transition: none;
           transform: none;
@@ -246,3 +252,24 @@ La deuxième carte est décalée visuellement ; sa place dans le flux reste cell
   }
 </style>
 ```
+
+## Écrire une animation avec keyframes
+
+Une séquence nommée peut être déclenchée par une classe d’état. Dans cet exemple, le contenu reste visible en base ; la préférence de mouvement réduit empêche le déplacement.
+
+```css
+@keyframes entrer {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.annonce.visible { animation: entrer 300ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  .annonce.visible { animation: none; }
+}
+```
+
+## Travail à réaliser et vérifications
+
+Créez une carte avec un lien : le survol et le focus du lien déclenchent une transition. Ajoutez plus bas un contenu dont l’apparition est déclenchée une seule fois par `IntersectionObserver`. Gardez le contenu visible sans script. Un élément très haut pourrait ne jamais atteindre 20 % d’intersection : observez un repère plus petit ou adaptez le seuil en justifiant ce choix.
+
+Remettez HTML/CSS/JS et les résultats avec souris, clavier, JavaScript désactivé et mouvement réduit. Dans ce dernier cas, aucun déplacement non nécessaire ne doit subsister, même au survol ou au focus. Distinguez le déclenchement par visibilité d’une animation pilotée continuellement par le défilement.

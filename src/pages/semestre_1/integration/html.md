@@ -106,6 +106,8 @@ Dans `index.html`, `href="css/style.css"` charge la feuille depuis le dossier `c
 
 <a id="cascade"></a>
 
+Plusieurs éléments peuvent partager une classe, mais chaque `id` doit être unique dans le document. Il désigne notamment la cible d’un lien de fragment et peut aussi servir dans un sélecteur CSS.
+
 ## La priorité entre les règles CSS
 
 ```css
@@ -163,3 +165,15 @@ Ce paragraphe est rouge : dans ce même fichier, la classe est plus spécifique 
 - [Cascade, spécificité et héritage — MDN](https://developer.mozilla.org/fr/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts).
 - [Référence des pseudo-classes — MDN](https://developer.mozilla.org/fr/docs/Web/CSS/Reference/Selectors/Pseudo-classes).
 - [Liste des propriétés CSS — MDN](https://developer.mozilla.org/fr/docs/Web/CSS/Reference).
+
+## Atelier de diagnostic
+
+Reprenez une page avec sa feuille CSS. Prédisez la couleur d’un paragraphe portant une classe et un id, puis vérifiez la règle gagnante. Introduisez successivement un mauvais chemin de feuille, une classe mal orthographiée et une déclaration concurrente plus spécifique. Rétablissez chaque défaut avant de passer au suivant.
+
+| Défaut introduit | Preuve à relever | Correction attendue |
+|---|---|---|
+| Mauvais chemin CSS | Adresse et statut 404 dans Réseau | Adresse correspondant au fichier enregistré |
+| Classe différente | Aucun sélecteur attendu dans Styles | Même nom dans HTML et CSS |
+| Règles concurrentes | Déclaration barrée et valeur calculée | Règle expliquée selon la cascade |
+
+Remettez la page corrigée et trois diagnostics « symptôme, cause, test, correction ». Une modification faite uniquement dans l’inspecteur doit être reportée dans le fichier, puis vérifiée après rechargement.

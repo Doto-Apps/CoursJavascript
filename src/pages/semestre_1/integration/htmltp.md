@@ -154,3 +154,17 @@ Pour une image informative, rédigez un `alt` qui apporte son information utile.
 La validation du document et la lecture sans CSS vérifient des aspects complémentaires. Le validateur signale les imbrications incorrectes ; la lecture révèle les titres, les catégories et les destinations dans leur ordre réel.
 
 Pour aller plus loin : [liste des balises HTML](https://developer.mozilla.org/fr/docs/Web/HTML/Reference/Elements), [titres](https://developer.mozilla.org/fr/docs/Web/HTML/Element/Heading_Elements), [images accessibles](https://www.w3.org/WAI/tutorials/images/).
+
+## Travail à réaliser et remise
+
+Créez un dossier avec `index.html`, `images/` et `credits.md`. Écrivez le document complet, la navigation et les deux catégories avant de créer les six fiches. Chaque fiche contient un nom distinct, une présentation, un média et un lien dont la destination existe. Si une ressource est fictive, son caractère fictif doit être explicite.
+
+| Contrôle | Attendu |
+|---|---|
+| Lecture sans style | Un h1, deux catégories h2 et six noms h3 |
+| Liens de catégories | Chaque fragment rejoint une seule section |
+| Cartes | Trois profils distincts par catégorie |
+| Ressources | Chemins exacts, alternatives adaptées, crédits et licences notés |
+| Validation HTML | Erreurs de structure corrigées et nouveau contrôle effectué |
+
+Remettez le dossier et un court relevé des vérifications. Le CSS est ajouté à la séance suivante ; la structure doit déjà permettre de comprendre et parcourir la page.

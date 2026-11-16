@@ -236,3 +236,9 @@ La carte possède une unité de contenu et un niveau de titre. Le cadre réserve
   }
 </style>
 ```
+
+## Travail à réaliser : rendre tous les champs utiles
+
+Écrivez `creerCarte(project)` pour afficher titre, description, technologies, dates, image éventuelle et liens disponibles. Pour une date de fin `null`, indiquez « En cours ». Évitez de convertir une date de calendrier en un autre jour par une conversion de fuseau. Validez les protocoles HTTP(S) avant d’affecter les liens externes et traitez les exceptions d’analyse d’URL.
+
+Utilisez `textContent` pour les textes et une alternative adaptée pour une image informative. Si l’image est absente ou ne charge pas, gardez les autres informations et un repli lisible. Réactualisez deux fois la liste : le nombre de cartes reste égal au nombre de projets. Testez titre long, URL absente, image absente, liste vide et erreur API ; remettez code et observations à 320 px et au clavier.

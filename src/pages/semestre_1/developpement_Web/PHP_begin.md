@@ -179,3 +179,9 @@ Cette simulation JavaScript montre le résultat attendu de la règle métier. Vo
 ```
 
 **Résultat à observer :** 3 billets donnent 36 euros ; 4 donnent 42 euros ; 0 et 7 sont refusés. La validation du formulaire de votre futur projet doit aussi être effectuée côté serveur.
+
+## Travail autonome et tests à remettre
+
+Écrivez `tarif.php` avec les données d’entrée en tête de fichier. Avant de lancer PHP, calculez les attendus des quantités 0, 1, 3, 4, 6 et 7. Ajoutez les valeurs de mauvais type `'3'` et `3.5` : le programme présenté attend un entier, elles sont donc refusées.
+
+Comparez ensuite attendu et observé, puis introduisez volontairement `> 4` à la place de `>= 4`. Le test de quatre billets doit détecter l’erreur. Rétablissez la condition et rejouez tous les cas. Remettez le fichier, le tableau de tests et une courte explication du seuil inclus et de la remise globale.

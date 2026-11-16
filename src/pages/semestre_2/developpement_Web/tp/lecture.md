@@ -237,3 +237,15 @@ Ces identifiants illustrent une installation XAMPP locale neuve ; adaptez-les à
 | <a id="notion-18"></a>Toutes les lignes | fetchAll récupère l'ensemble des lignes restantes du résultat. |
 | <a id="notion-19"></a>Conversions | Le TP convertit id en entier et done en booléen pour le contrat JSON. |
 | <a id="notion-20"></a>Configuration | Les paramètres de connexion restent côté serveur. |
+
+## Travail à réaliser : passer des données fixes à MySQL
+
+Créez la base `mmi_s2` et importez le schéma du squelette. Implémentez GET avec PDO, la sélection explicite des colonnes et le tri `id DESC`. Convertissez `id` en entier et `done` en booléen avant d’encoder la réponse. Vérifiez d’abord l’API seule, puis branchez le rendu Fetch de la séance précédente.
+
+| Jeu d’essai | Réponse attendue |
+|---|---|
+| Trois tâches | 200, trois objets et ids décroissants |
+| Table de test sans ligne | 200, `[]` |
+| Base inaccessible | 500, objet d’erreur sans paramètres de connexion |
+
+Le compte et la base doivent exister avant la connexion. Remettez schéma, API de lecture et relevé des types JSON. Une carte ajoutée seulement dans le navigateur ne prouve pas la lecture de MySQL.

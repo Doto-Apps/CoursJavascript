@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_1/integration/htmltp",
   "questions": [
     {
-      "question": "Quelle différence résume Grid et Flexbox ?",
+      "question": "Quelle différence entre Grid et Flexbox aide à choisir lequel utiliser ?",
       "answers": [
         "Grid organise lignes et colonnes ; Flexbox suit un axe principal",
         "Grid sert seulement au texte ; Flexbox aux images",
@@ -17,8 +17,8 @@
         "Flexbox exige trois colonnes"
       ],
       "explanation": "Les deux outils répondent à des besoins de disposition différents et peuvent être combinés.",
-      "sourceSection": "comprendre",
-      "evidence": "| `display: grid` | Activer une grille. | Les enfants directs sont organisés par la grille. |",
+      "sourceSection": "grille",
+      "evidence": "Flexbox organise principalement un axe à la fois. Grid organise des lignes et des colonnes ensemble. Pour aligner plusieurs rangées de cartes, Grid est souvent plus direct ; pour aligner les liens d'une navigation, Flexbox suffit. Ces outils peuvent être imbriqués : la page utilise Grid, une carte utilise Flexbox.",
       "correctAnswerIndex": 0
     },
     {
@@ -30,21 +30,21 @@
         "Sur la feuille CSS comme balise"
       ],
       "explanation": "Un conteneur Grid organise ses enfants directs.",
-      "sourceSection": "comprendre",
-      "evidence": "| Déclaration sur le parent | Lecture | Effet |",
+      "sourceSection": "grille",
+      "evidence": "`display: grid` transforme les enfants directs en éléments de grille. `repeat(3, 1fr)` crée trois colonnes égales ; `fr` partage l'espace disponible après les espacements. `gap` crée des gouttières entre les éléments, sans ajouter de marge au bord extérieur. Avec six cartes, le placement automatique produit deux lignes. `grid-template-rows` définit les hauteurs des lignes ; sans cela, les lignes se dimensionnent selon leur contenu.",
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que crée grid-template-columns: 1fr 2fr ?",
+      "question": "À quoi sert l’unité fr dans grid-template-columns: 1fr 2fr ?",
       "answers": [
-        "Deux lignes de deux pixels",
-        "Une colonne fixe de 2px",
-        "Deux colonnes partageant l’espace disponible dans le rapport 1 à 2",
-        "Trois colonnes égales"
+        "Donner une taille en pixels aux lettres",
+        "Créer une page HTML par colonne",
+        "Partager l’espace disponible entre les colonnes",
+        "Changer l’ordre du code HTML"
       ],
-      "explanation": "fr partage l’espace disponible après les contraintes fixes et les espacements.",
+      "explanation": "fr sert à partager l’espace disponible entre les colonnes.",
       "sourceSection": "comprendre",
-      "evidence": "| `grid-template-columns: 1fr 1fr` | Deux parts de même taille. | Deux colonnes partagent l’espace disponible. |",
+      "evidence": "`fr` est une fraction de l’espace restant pour les pistes flexibles, après la prise en compte des autres tailles et des espaces. Une grille `1fr 2fr` partage cet espace selon un rapport un tiers / deux tiers ; elle ne signifie pas deux colonnes égales.",
       "correctAnswerIndex": 2
     },
     {
@@ -56,12 +56,12 @@
         "Espacer les pistes sans créer le padding de chaque carte"
       ],
       "explanation": "gap règle l’intervalle entre les lignes et colonnes.",
-      "sourceSection": "comprendre",
-      "evidence": "| `gap: 16px` | Espacement entre pistes. | Les cellules ne sont pas collées. |",
+      "sourceSection": "grille",
+      "evidence": "`display: grid` transforme les enfants directs en éléments de grille. `repeat(3, 1fr)` crée trois colonnes égales ; `fr` partage l'espace disponible après les espacements. `gap` crée des gouttières entre les éléments, sans ajouter de marge au bord extérieur. Avec six cartes, le placement automatique produit deux lignes. `grid-template-rows` définit les hauteurs des lignes ; sans cela, les lignes se dimensionnent selon leur contenu.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Comment écrire trois colonnes de même fraction ?",
+      "question": "Comment écrire trois colonnes qui partagent l’espace de la même façon ?",
       "answers": [
         "repeat(3, 1fr)",
         "repeat(1, 3fr)",
@@ -69,21 +69,21 @@
         "grid-row: 3"
       ],
       "explanation": "repeat évite de répéter trois fois la même définition de piste.",
-      "sourceSection": "comprendre",
-      "evidence": "| `repeat(3, 1fr)` | Répéter trois fois une part. | Trois colonnes, sans réécrire la valeur. |",
+      "sourceSection": "grille",
+      "evidence": "`display: grid` transforme les enfants directs en éléments de grille. `repeat(3, 1fr)` crée trois colonnes égales ; `fr` partage l'espace disponible après les espacements. `gap` crée des gouttières entre les éléments, sans ajouter de marge au bord extérieur. Avec six cartes, le placement automatique produit deux lignes. `grid-template-rows` définit les hauteurs des lignes ; sans cela, les lignes se dimensionnent selon leur contenu.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que désigne une piste Grid ?",
+      "question": "Dans Grid, qu’appelle-t-on une piste ?",
       "answers": [
         "Un identifiant de formulaire",
         "Une ligne ou une colonne de la grille",
         "Un fichier JavaScript",
         "Un élément situé hors de la grille"
       ],
-      "explanation": "Les pistes sont délimitées par les lignes de grille.",
+      "explanation": "Une piste correspond à une colonne ou à une rangée de la grille.",
       "sourceSection": "comprendre",
-      "evidence": "Une **piste** est une colonne ou une ligne. Une **cellule** est l’intersection d’une ligne et d’une colonne. Une **ligne de grille** est la limite entre deux pistes. Trois colonnes possèdent quatre lignes verticales : le numéro d’une ligne",
+      "evidence": "Une **piste** est une colonne ou une ligne. Une **cellule** est l’intersection d’une ligne et d’une colonne. Une **ligne de grille** est la limite entre deux pistes. Trois colonnes possèdent quatre lignes verticales : le numéro d’une ligne de grille n’est donc pas le numéro d’une carte.",
       "correctAnswerIndex": 1
     },
     {
@@ -96,37 +96,37 @@
       ],
       "explanation": "Les nombres désignent des lignes de grille, pas un nombre de copies.",
       "sourceSection": "comprendre",
-      "evidence": "Les propriétés `grid-column` et `grid-row` concernent un enfant, pas le parent. `grid-column: 1 / 3` signifie « commencer à la ligne 1 et finir à la ligne 3 » : cela occupe deux colonnes. `span 2` demande d’occuper deux pistes depuis un poi",
+      "evidence": "Les propriétés `grid-column` et `grid-row` concernent un enfant, pas le parent. `grid-column: 1 / 3` signifie « commencer à la ligne 1 et finir à la ligne 3 » : cela occupe deux colonnes. `span 2` demande d’occuper deux pistes depuis un point de départ déterminé par le placement.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Une grille possède trois colonnes. Combien de lignes verticales les délimitent ?",
+      "question": "Quelle propriété CSS place un élément dans une zone nommée de la grille ?",
       "answers": [
-        "Trois",
-        "Deux",
-        "Six",
-        "Quatre"
+        "grid-template-columns",
+        "gap",
+        "grid-template-rows",
+        "grid-area"
       ],
-      "explanation": "Il y a une limite de plus que le nombre de pistes.",
-      "sourceSection": "comprendre",
-      "evidence": "le** est la limite entre deux pistes. Trois colonnes possèdent quatre lignes verticales : le numéro d’une ligne de grille n’est donc pas le numéro d’une carte.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "grid-area associe cet élément au nom de zone choisi dans la grille.",
+      "sourceSection": "placement",
+      "evidence": "header { grid-area: entete; }"
     },
     {
-      "question": "Pourquoi minmax(0, 1fr) peut-il aider avec un contenu long ?",
+      "question": "Dans une grille, à quoi peut servir minmax(0, 1fr) quand le contenu est long ?",
       "answers": [
-        "La piste peut réduire son minimum à zéro",
+        "Permettre à la colonne de rétrécir",
         "Le texte est effacé",
         "Une largeur fixe de 1px est imposée",
         "La grille est convertie en Flexbox"
       ],
-      "explanation": "Cette définition permet à la piste de se réduire ; le contenu doit encore être rendu adaptable.",
-      "sourceSection": "comprendre",
-      "evidence": "grid-template-columns: repeat(3, minmax(0, 1fr));",
+      "explanation": "Cette écriture permet à la colonne de rétrécir. Il faut aussi vérifier que son contenu ne déborde pas.",
+      "sourceSection": "verification",
+      "evidence": "Activez la superposition Grid dans l'inspecteur : elle révèle les pistes et leurs limites. Ne déplacez pas visuellement les éléments au point de rendre l'ordre de lecture incohérent : le clavier et les technologies d'assistance suivent principalement l'ordre du document. Une carte débordante peut venir d'une image trop large, pas du nombre de colonnes. `minmax(0, 1fr)` permet à une piste de se réduire, et `max-width: 100%` empêche une image de dépasser son conteneur.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Un déplacement visuel Grid change-t-il l’ordre HTML ?",
+      "question": "Déplacer une carte avec Grid change-t-il aussi sa place dans le code HTML ?",
       "answers": [
         "Oui, les titres changent de niveau",
         "Non, l’ordre du document demeure",
@@ -135,7 +135,7 @@
       ],
       "explanation": "La lecture et la navigation suivent le document ; il faut préserver un ordre cohérent.",
       "sourceSection": "comprendre",
-      "evidence": "Le placement visuel ne réécrit pas l’ordre HTML.",
+      "evidence": "Le placement visuel ne réécrit pas l’ordre HTML. Si vous déplacez la dernière carte en haut, le parcours clavier et la lecture peuvent rester dans l’ordre du document. Composez donc d’abord un ordre de contenu logique. Pour une navigation sur une ligne, Flexbox reste souvent plus simple ; pour un catalogue dont les lignes doivent partager les mêmes colonnes, Grid donne des repères communs.",
       "correctAnswerIndex": 1
     },
     {
@@ -147,12 +147,12 @@
         "Un display simultané grid et flex sur le même élément"
       ],
       "explanation": "Des conteneurs différents peuvent utiliser des modes de disposition différents.",
-      "sourceSection": "comprendre",
-      "evidence": "abord un ordre de contenu logique. Pour une navigation sur une ligne, Flexbox reste souvent plus simple ; pour un catalogue dont les lignes doivent partager les mêmes colonnes, Grid donne des repères communs.",
+      "sourceSection": "grille",
+      "evidence": "Flexbox organise principalement un axe à la fois. Grid organise des lignes et des colonnes ensemble. Pour aligner plusieurs rangées de cartes, Grid est souvent plus direct ; pour aligner les liens d'une navigation, Flexbox suffit. Ces outils peuvent être imbriqués : la page utilise Grid, une carte utilise Flexbox.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle propriété définit les hauteurs des pistes horizontales ?",
+      "question": "Quelle propriété permet de définir la hauteur des rangées d’une grille ?",
       "answers": [
         "grid-template-columns",
         "grid-column",
@@ -161,7 +161,7 @@
       ],
       "explanation": "Les pistes horizontales sont les lignes ; les colonnes ont leur propre définition.",
       "sourceSection": "grille",
-      "evidence": "ieur. Avec six cartes, le placement automatique produit deux lignes. `grid-template-rows` définit les hauteurs des lignes ; sans cela, les lignes se dimensionnent selon leur contenu.",
+      "evidence": "`display: grid` transforme les enfants directs en éléments de grille. `repeat(3, 1fr)` crée trois colonnes égales ; `fr` partage l'espace disponible après les espacements. `gap` crée des gouttières entre les éléments, sans ajouter de marge au bord extérieur. Avec six cartes, le placement automatique produit deux lignes. `grid-template-rows` définit les hauteurs des lignes ; sans cela, les lignes se dimensionnent selon leur contenu.",
       "correctAnswerIndex": 3
     }
   ]

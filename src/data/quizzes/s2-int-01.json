@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/integration/td/tailwind-composants",
   "questions": [
     {
-      "question": "Quel rôle joue une classe utilitaire Tailwind ?",
+      "question": "À quoi sert une classe utilitaire Tailwind ?",
       "answers": [
         "Une règle CSS ciblée",
         "Une structure HTML complète",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle classe règle la marge extérieure ?",
+      "question": "Quelle classe Tailwind règle la marge extérieure sur les quatre côtés ?",
       "answers": [
         "gap-4",
         "mt-2",
@@ -74,7 +74,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel couple active la bordure et lui donne une couleur ?",
+      "question": "Quelles classes ajoutent une bordure et choisissent sa couleur ?",
       "answers": [
         "text-slate-300 shadow-md",
         "border border-slate-300",
@@ -115,7 +115,7 @@
     {
       "question": "Que décrit article dans cet exemple ?",
       "answers": [
-        "Une unité de contenu autonome",
+        "Un contenu qui peut se comprendre tout seul",
         "Un simple style sans rôle HTML",
         "Un champ de formulaire",
         "Une liste ordonnée"
@@ -126,20 +126,20 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel fichier le navigateur charge-t-il pour les styles compilés ?",
+      "question": "Dans Tailwind 3, quelle commande génère le fichier CSS du cours ?",
       "answers": [
-        "package.json chargé comme CSS",
-        "styles.css",
-        "input.css avec directives non compilées",
-        "tailwind.config.js chargé comme CSS"
+        "node styles.css",
+        "npx tailwindcss -i input.css -o styles.css --watch",
+        "php input.css",
+        "npx tailwindcss --html-only"
       ],
-      "explanation": "Le navigateur charge la feuille CSS produite par la compilation.",
-      "sourceSection": "notion-17",
-      "evidence": "Tailwind 3.4 génère une feuille CSS à partir des classes détectées.",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "Le paramètre -i choisit le fichier d’entrée et -o le CSS généré.",
+      "sourceSection": "apprentissage",
+      "evidence": "Dans un dossier neuf avec Node/npm disponibles : `npm init -y`, puis `npm install -D tailwindcss@3.4` et `npx tailwindcss init`. Le fichier de configuration doit scanner vos fichiers, par exemple `content: ['./*.html', './js/*.js']`. Dans `input.css`, ajoutez les trois directives `@tailwind base;`, `@tailwind components;`, `@tailwind utilities;`, puis lancez `npx tailwindcss -i input.css -o styles.css --watch`. Le HTML charge `styles.css` avec un `link rel=\"stylesheet\"`. Ces commandes concernent la version 3.4 ; ne mélangez pas les procédures des versions 3 et 4."
     },
     {
-      "question": "À quoi sert content dans la configuration Tailwind 3 ?",
+      "question": "À quoi sert content dans la configuration de Tailwind 3 ?",
       "answers": [
         "Les couleurs saisies par l’utilisateur",
         "Les versions des navigateurs",

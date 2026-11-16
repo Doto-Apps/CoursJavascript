@@ -137,7 +137,7 @@ Une bordure aide à délimiter une carte ; une ombre ne doit pas rendre le texte
 
 <a id="disposition"></a>
 
-## Le conteneur Flexbox des cartes
+## Flexbox pour la navigation et Grid pour les cartes
 
 La navigation peut être un conteneur Flexbox avec `gap`. Les profils peuvent former une grille à trois colonnes. Les propriétés de disposition s'appliquent au parent ; les règles de présentation des cartes s'appliquent à leurs classes. Le même `.carte` doit fonctionner dans les deux catégories.
 
@@ -172,3 +172,11 @@ La carte garde une largeur maximale ; l’image ne dépasse pas cette carte. Sa 
   }
 </style>
 ```
+
+## Travail à réaliser : une feuille commune
+
+Reprenez les six profils du TP HTML. Reliez `css/styles.css`, posez les règles de base, créez une navigation flex et une grille de profils. Déclarez une couleur d’accent et une courte échelle d’espacements. Appliquez la même classe de carte aux six profils, avec des contenus différents.
+
+Comparez une image entière avec `height: auto` et un cadre recadré avec `aspect-ratio` et `object-fit: cover`. Choisissez le rendu selon l’information à conserver. Testez un nom sur deux lignes et une description trois fois plus longue sans fixer la hauteur des cartes.
+
+À remettre : HTML, CSS, médias et trois observations expliquées — largeur du conteneur, rôle du parent Grid, effet du recadrage. Le panneau Réseau doit confirmer le chargement de la feuille et une modification de l’accent doit affecter tous les éléments qui utilisent cette valeur.

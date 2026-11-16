@@ -63,14 +63,23 @@ Dans la version complète, encadrez le traitement par `try/catch/finally`, bloqu
 
 ```php
 $data = json_decode(file_get_contents('php://input'), true, 512, JSON_THROW_ON_ERROR);
-$title = trim($data['title'] ?? '');
-// Après vérification : chaîne non vide, au plus 120 caractères.
+// L'extrait suppose un objet JSON décodé en tableau ; traiter les erreurs
+// d'analyse et les autres formes avant de poursuivre.
+if (!is_array($data) || !isset($data['title']) || !is_string($data['title'])) {
+    respond(['error' => 'Le titre doit être du texte.'], 422);
+}
+$title = trim($data['title']);
+if ($title === '' || mb_strlen($title, 'UTF-8') > 120) {
+    respond(['error' => 'Titre obligatoire, au plus 120 caractères.'], 422);
+}
 $stmt = $pdo->prepare('INSERT INTO todos (title) VALUES (:title)');
 $stmt->execute(['title' => $title]);
 $id = (int) $pdo->lastInsertId();
 ```
 
 Le paramètre `:title` sépare la valeur de la structure SQL. Une apostrophe dans « L'atelier photo » ne doit pas casser la requête. Le titre n'est ni un nom de table ni un morceau de SQL. La réponse de notre POST est l'objet créé avec son identifiant et le statut 201.
+
+`respond` est la fonction fournie dans `api/common.php` du squelette : elle fixe le statut, encode le JSON et termine le script. Le corps complet distingue aussi un JSON mal formé (400) d’un objet de mauvais type ou de contenu refusé (422).
 
 ```html live title="Observer l'ajout d'une tâche — simulation en mémoire"
 <style>
@@ -165,6 +174,7 @@ Le paramètre `:title` sépare la valeur de la structure SQL. Une apostrophe dan
         );
         const rows = visible.map((task) => {
           const li = document.createElement("li");
+          li.dataset.taskId = task.id;
           const label = document.createElement("label");
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
@@ -172,19 +182,42 @@ Le paramètre `:title` sépare la valeur de la structure SQL. Une apostrophe dan
           checkbox.addEventListener("change", () => {
             task.done = checkbox.checked;
             render();
+            const next = document.querySelector(`[data-task-id="${task.id}"] input[type="checkbox"]`);
+            (next ?? document.querySelector("#title")).focus();
           });
           label.append(
             checkbox,
             document.createTextNode(" " + task.title + " "),
           );
           const remove = document.createElement("button");
+          remove.type = "button";
+          let suppressionDemandee = false;
+          const annuler = document.createElement("button");
+          annuler.type = "button";
+          annuler.textContent = "Annuler la suppression";
+          annuler.hidden = true;
+          annuler.addEventListener("click", () => {
+            suppressionDemandee = false;
+            annuler.hidden = true;
+            remove.textContent = "Supprimer";
+            remove.setAttribute("aria-label", `Supprimer ${task.title}`);
+            remove.focus();
+          });
           remove.textContent = "Supprimer";
           remove.setAttribute("aria-label", `Supprimer ${task.title}`);
           remove.addEventListener("click", () => {
+            if (!suppressionDemandee) {
+              suppressionDemandee = true;
+              remove.textContent = "Confirmer la suppression";
+              remove.setAttribute("aria-label", `Confirmer la suppression de ${task.title}`);
+              annuler.hidden = false;
+              return;
+            }
             tasks = tasks.filter((t) => t.id !== task.id);
             render();
+            document.querySelector("#title").focus();
           });
-          li.append(label, remove);
+          li.append(label, remove, annuler);
           return li;
         });
         document.querySelector("#liste").replaceChildren(...rows);
@@ -232,3 +265,11 @@ Le paramètre `:title` sépare la valeur de la structure SQL. Une apostrophe dan
 | <a id="notion-18"></a>Confirmation | Le formulaire est réinitialisé seulement après succès confirmé. |
 | <a id="notion-19"></a>Double envoi | Désactiver le bouton pendant l'envoi limite les doubles soumissions de l'interface. |
 | <a id="notion-20"></a>Persistance vérifiée | Un ajout réussi reste présent après rechargement depuis MySQL. |
+
+## Travail à réaliser : une création persistante
+
+Complétez POST dans l’API et reliez-le à `submit`. Le serveur analyse le JSON, exige un objet, valide le type du titre avant `trim`, refuse le vide et contrôle au plus 120 caractères avec `mb_strlen($title, 'UTF-8')`. Il prépare INSERT, exécute les valeurs et renvoie l’objet créé en 201.
+
+Côté navigateur, un indicateur d’envoi en cours empêche de lancer une deuxième requête depuis ce formulaire ; désactiver le bouton seul ne protège pas toutes les façons de soumettre. Rétablissez cet indicateur et le bouton dans `finally`. Conservez la saisie en cas de refus. Une création confirmée suivie d’une panne de relecture doit être annoncée comme « enregistrée, liste à recharger », pour éviter de créer un doublon au réessai.
+
+Testez « L’atelier photo », les espaces seuls, 120 puis 121 caractères et une valeur tableau. Vérifiez qu’un double clic ne crée qu’une ligne, puis rechargez la page. Remettez front, PHP et tableau statut/effet en base.

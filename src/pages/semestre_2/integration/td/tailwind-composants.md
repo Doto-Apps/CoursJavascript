@@ -170,3 +170,15 @@ La base mobile est écrite sans préfixe. Avec la configuration Tailwind 3 par d
 | <a id="notion-18"></a>Réutilisation | Un composant commun conserve une structure cohérente malgré des contenus différents. |
 | <a id="notion-19"></a>Largeur réelle | Les variantes répondent à la largeur CSS disponible, pas au nom commercial de l'appareil. |
 | <a id="notion-20"></a>Contrôle du rendu | Le code et le résultat doivent être comparés à plusieurs largeurs. |
+
+## Travail à réaliser : une grille de composants
+
+Construisez trois cartes avec des contenus différents et les classes `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3` sur leur parent. Ajoutez un lien de navigation à chaque carte, avec des états de survol et de focus. Une variante peut mettre un projet en avant en conservant la structure commune.
+
+| Largeur CSS, configuration Tailwind 3 par défaut | Colonnes attendues |
+|---|---|
+| 767 px | 1 |
+| 768 et 1023 px | 2 |
+| 1024 px | 3 |
+
+Testez un titre long et le clavier. Le rendu du projet compilé doit correspondre à celui du laboratoire, sans dépendre du compilateur pédagogique du site. Remettez fichiers et relevé des quatre largeurs.

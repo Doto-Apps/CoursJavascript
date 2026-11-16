@@ -9,7 +9,7 @@
   "targetCourse": "/semestre_2/developpement_Web/tp/modification",
   "questions": [
     {
-      "question": "Quel événement traite l'envoi du formulaire ?",
+      "question": "Quel événement écoute-t-on pour traiter l’envoi d’un formulaire ?",
       "answers": [
         "submit",
         "input",
@@ -22,17 +22,17 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Pourquoi utiliser preventDefault sur submit ?",
+      "question": "Quelle instruction empêche l’envoi natif du formulaire dans son gestionnaire submit ?",
       "answers": [
-        "Garantir les données valides",
-        "Empêcher la navigation native pour gérer l’envoi en JavaScript",
-        "Annuler tous les clics futurs",
-        "Supprimer le formulaire"
+        "event.stopPropagation()",
+        "event.preventDefault()",
+        "form.reset()",
+        "JSON.stringify(form)"
       ],
-      "explanation": "preventDefault annule le comportement par défaut, pas les règles de validation serveur.",
+      "correctAnswerIndex": 1,
+      "explanation": "preventDefault annule l’action native de l’événement, ici l’envoi du formulaire.",
       "sourceSection": "notion-2",
-      "evidence": "preventDefault évite la navigation de soumission native dans ce traitement.",
-      "correctAnswerIndex": 1
+      "evidence": "<a id=\"notion-2\"></a>Comportement par défaut | preventDefault évite la navigation de soumission native dans ce traitement. |"
     },
     {
       "question": "Quel attribut donne la clé title à FormData ?",
@@ -68,13 +68,13 @@
         "response.json",
         "textContent"
       ],
-      "explanation": "Le corps à envoyer doit être sérialisé en texte JSON.",
+      "explanation": "JSON.stringify transforme l’objet JavaScript en texte JSON à envoyer.",
       "sourceSection": "notion-7",
       "evidence": "JSON.stringify transforme un objet JavaScript en texte JSON.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Où lire le corps JSON dans le script ?",
+      "question": "Dans PHP, comment lire le texte JSON envoyé dans le corps de la requête ?",
       "answers": [
         "La session précédente",
         "php://input",
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel statut indique un corps JSON cassé ?",
+      "question": "Dans notre API, quel statut HTTP renvoyer si le texte envoyé n’est pas un JSON valide ?",
       "answers": [
         "404",
         "422",
@@ -107,13 +107,13 @@
         "Oui, si le bouton est désactivé",
         "Non, les règles doivent aussi être vérifiées en PHP"
       ],
-      "explanation": "La requête peut contourner les contraintes du navigateur.",
+      "explanation": "Une requête peut être envoyée sans passer par les vérifications du formulaire.",
       "sourceSection": "notion-11",
       "evidence": "Le serveur vérifie le titre même si HTML possède required.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel mécanisme protège la construction SQL de l'INSERT du cours ?",
+      "question": "Comment envoyer le titre à INSERT sans le coller directement dans le texte de la requête SQL ?",
       "answers": [
         "Une requête préparée avec paramètres",
         "La concaténation directe du titre",
@@ -126,14 +126,14 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Que représente :title dans l'INSERT ?",
+      "question": "Dans INSERT, à quoi sert :title ?",
       "answers": [
         "Une requête HTTP",
         "Une place réservée pour la valeur title",
         "Un nom de table",
         "Une classe HTML"
       ],
-      "explanation": "Le paramètre reçoit une valeur lors de l’exécution, sans devenir du code SQL.",
+      "explanation": "C’est l’emplacement prévu pour la valeur du titre. execute fournit ensuite cette valeur.",
       "sourceSection": "notion-15",
       "evidence": ":title est un emplacement de paramètre SQL.",
       "correctAnswerIndex": 1
@@ -152,17 +152,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel test prouve la persistance de l'ajout ?",
+      "question": "Quelle méthode Fetch utiliser pour créer une tâche dans notre API ?",
       "answers": [
-        "Voir la carte ajoutée seulement en mémoire",
-        "Changer sa couleur",
-        "Ouvrir le fichier HTML sans serveur",
-        "Recharger puis relire les données"
+        "GET",
+        "PATCH",
+        "DELETE",
+        "POST"
       ],
-      "explanation": "Une relecture vérifie que l’ajout est réellement enregistré.",
-      "sourceSection": "notion-20",
-      "evidence": "Un ajout réussi reste présent après rechargement depuis MySQL.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "Notre API utilise POST pour créer une tâche.",
+      "sourceSection": "apprentissage",
+      "evidence": "method: 'POST',"
     }
   ]
 }

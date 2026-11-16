@@ -140,6 +140,7 @@ async function actualiser() {
         );
         const rows = visible.map((task) => {
           const li = document.createElement("li");
+          li.dataset.taskId = task.id;
           const label = document.createElement("label");
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
@@ -147,19 +148,62 @@ async function actualiser() {
           checkbox.addEventListener("change", () => {
             task.done = checkbox.checked;
             render();
+            const next = document.querySelector(`[data-task-id="${task.id}"] input[type="checkbox"]`);
+            (next ?? document.querySelector("#title")).focus();
           });
           label.append(
             checkbox,
             document.createTextNode(" " + task.title + " "),
           );
           const remove = document.createElement("button");
+          remove.type = "button";
+          let suppressionDemandee = false;
+          const annuler = document.createElement("button");
+          annuler.type = "button";
+          annuler.textContent = "Annuler la suppression";
+          annuler.hidden = true;
+          annuler.addEventListener("click", () => {
+            suppressionDemandee = false;
+            annuler.hidden = true;
+            remove.textContent = "Supprimer";
+            remove.setAttribute("aria-label", `Supprimer ${task.title}`);
+            remove.focus();
+          });
           remove.textContent = "Supprimer";
           remove.setAttribute("aria-label", `Supprimer ${task.title}`);
           remove.addEventListener("click", () => {
+            if (!suppressionDemandee) {
+              suppressionDemandee = true;
+              remove.textContent = "Confirmer la suppression";
+              remove.setAttribute("aria-label", `Confirmer la suppression de ${task.title}`);
+              annuler.hidden = false;
+              return;
+            }
             tasks = tasks.filter((t) => t.id !== task.id);
             render();
+            document.querySelector("#title").focus();
           });
-          li.append(label, remove);
+          const titleInput = document.createElement("input");
+          titleInput.value = task.title;
+          titleInput.maxLength = 120;
+          titleInput.setAttribute(
+            "aria-label",
+            `Nouveau titre de ${task.title}`,
+          );
+          const rename = document.createElement("button");
+          rename.textContent = "Renommer";
+          rename.addEventListener("click", () => {
+            const title = titleInput.value.trim();
+            if (!title) {
+              document.querySelector("#etat").textContent =
+                "Le titre est obligatoire.";
+              return;
+            }
+            task.title = title;
+            render();
+            document.querySelector(`[data-task-id="${task.id}"] input:not([type="checkbox"])`)?.focus();
+          });
+          li.append(label, titleInput, rename, remove, annuler);
           return li;
         });
         document.querySelector("#liste").replaceChildren(...rows);
@@ -182,3 +226,11 @@ async function actualiser() {
       render();
     </script>
 ```
+
+## Livraison de la Todo List
+
+Reprenez le [squelette du projet](/exemples/s2/todo-squelette.zip) complété au fil des séances. La version remise doit lire, créer, renommer, changer l’état et supprimer en PHP/MySQL. Les filtres « toutes », « à faire » et « terminées » changent la vue sans effacer les autres tâches ; le compteur doit indiquer clairement sa population.
+
+Faites un parcours complet sur une base de test : ajouter deux tâches, en renommer une, la terminer, filtrer, recharger puis supprimer la cible confirmée. Vérifiez la base après chaque écriture. Exécutez aussi un refus de validation et une panne suivie d’un réessai.
+
+Remettez HTML/CSS/JS, API PHP, schéma, données fictives, README et résultats des tests. Un autre groupe doit installer cette copie sans explication orale. La démonstration finale suit une donnée du formulaire à SQL, puis de la réponse JSON au DOM.

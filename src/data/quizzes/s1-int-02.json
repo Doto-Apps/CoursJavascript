@@ -17,8 +17,8 @@
         "Remplacer le texte entre deux balises"
       ],
       "explanation": "Un attribut renseigne par exemple une destination, une langue ou une identification.",
-      "sourceSection": "comprendre",
-      "evidence": "s.html\">Nos projets</a>`, `a` est le nom de la balise ; `href` est un attribut ; `projets.html` est sa valeur ; « Nos projets » est le contenu. La balise fermante reprend le nom avec `/`. Écrivez les attributs dans la balise ouvrante et ent",
+      "sourceSection": "document",
+      "evidence": "Un élément HTML associe une balise à un contenu et, éventuellement, des attributs. Un attribut ajoute une information dans la balise ouvrante. Les éléments doivent être correctement imbriqués : le dernier ouvert est le premier fermé. `img` et `meta` sont des éléments vides, sans balise de fermeture.",
       "correctAnswerIndex": 0
     },
     {
@@ -31,7 +31,7 @@
       ],
       "explanation": "On referme d’abord l’élément ouvert en dernier pour conserver l’imbrication.",
       "sourceSection": "document",
-      "evidence": "alise ouvrante. Les éléments doivent être correctement imbriqués : le dernier ouvert est le premier fermé. `img` et `meta` sont des éléments vides, sans balise de fermeture.",
+      "evidence": "Un élément HTML associe une balise à un contenu et, éventuellement, des attributs. Un attribut ajoute une information dans la balise ouvrante. Les éléments doivent être correctement imbriqués : le dernier ouvert est le premier fermé. `img` et `meta` sont des éléments vides, sans balise de fermeture.",
       "correctAnswerIndex": 1
     },
     {
@@ -43,8 +43,8 @@
         "lang=\"en\" sur html"
       ],
       "explanation": "La langue principale est indiquée par l’attribut lang de l’élément html.",
-      "sourceSection": "comprendre",
-      "evidence": "e` nomme l’onglet, alors que `h1` est le titre visible dans la page. `lang=\"fr\"` précise la langue ; `charset=\"utf-8\"` permet d’interpréter les caractères selon l’encodage du fichier. Il faut aussi enregistrer réellement le fichier en UTF-8",
+      "sourceSection": "document",
+      "evidence": "Le doctype demande le mode standard du navigateur. `head` contient les métadonnées ; `body` contient le contenu de la page. `title` nomme l'onglet. `charset=\"utf-8\"` indique l'encodage. `lang=\"fr\"` indique la langue, notamment aux technologies d'assistance. La balise viewport prépare un affichage adapté aux appareils mobiles.",
       "correctAnswerIndex": 2
     },
     {
@@ -57,21 +57,21 @@
       ],
       "explanation": "Le titre du document et le titre visible dans la page ont des rôles distincts.",
       "sourceSection": "comprendre",
-      "evidence": "```html preview title=\"Un titre, une idée et une liste\" height=210",
+      "evidence": "`head` contient les informations sur le document ; `body` contient le contenu affiché. `title` nomme l’onglet, alors que `h1` est le titre visible dans la page. `lang=\"fr\"` précise la langue ; `charset=\"utf-8\"` permet d’interpréter les caractères selon l’encodage du fichier. Il faut aussi enregistrer réellement le fichier en UTF-8.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Pourquoi img n’a-t-il pas de balise fermante en HTML ?",
+      "question": "Quelle balise HTML est un élément vide, sans balise fermante ?",
       "answers": [
-        "C’est un élément vide",
-        "Il se ferme uniquement avec body",
-        "Il contient son texte dans une balise p",
-        "Toute balise HTML est sans fermeture"
+        "img",
+        "p",
+        "strong",
+        "section"
       ],
-      "explanation": "Un élément vide ne contient pas d’enfants ; ses informations sont portées par ses attributs.",
+      "correctAnswerIndex": 0,
+      "explanation": "img est un élément vide : il n’a pas de contenu entre deux balises.",
       "sourceSection": "comprendre",
-      "evidence": "`img`, `meta`, `input` et `br` sont des éléments vides : ils ne contiennent pas de texte et n’ont pas de balise fermante en HTML. `br` produit un saut de ligne utile dans une adresse, mais ne remplace pas plusieurs paragraphes. Un nouveau s",
-      "correctAnswerIndex": 0
+      "evidence": "`img`, `meta`, `input` et `br` sont des éléments vides : ils ne contiennent pas de texte et n’ont pas de balise fermante en HTML. `br` produit un saut de ligne utile dans une adresse, mais ne remplace pas plusieurs paragraphes. Un nouveau sujet appelle un nouveau `p`, pas une succession de `br`."
     },
     {
       "question": "Quel élément convient au contenu principal de la page ?",
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Une fiche est compréhensible indépendamment du reste. Quel regroupement choisir ?",
+      "question": "Quelle balise convient pour une fiche de projet qui peut se comprendre toute seule ?",
       "answers": [
         "meta",
         "link",
@@ -100,17 +100,17 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment choisir h1, h2 et h3 ?",
+      "question": "Que représentent h1, h2 et h3 dans une page HTML ?",
       "answers": [
-        "Selon la couleur voulue",
-        "Selon la largeur de l’écran",
-        "Selon le nombre de mots du titre",
-        "Selon la hiérarchie du contenu"
+        "Des tailles de police imposées",
+        "Des numéros de pages",
+        "Des colonnes de tableau",
+        "Des niveaux de titres dans le plan du contenu"
       ],
-      "explanation": "Les niveaux de titres structurent le document ; CSS règle leur apparence.",
-      "sourceSection": "comprendre",
-      "evidence": "` uniquement parce que `h2` paraît trop grand. Le niveau dépend de la hiérarchie ; la taille se règle ensuite en CSS.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "Le niveau exprime la place du titre dans le contenu ; le CSS règle son apparence.",
+      "sourceSection": "structure",
+      "evidence": "Les titres `h1` à `h6` indiquent une hiérarchie. Utilisez `h1` pour le titre principal de ce document, puis `h2` pour ses sections. La taille visuelle se règle en CSS : choisir `h4` uniquement parce qu'il paraît plus petit dégrade la structure. Une liste non ordonnée utilise `ul` ; une liste ordonnée utilise `ol`. Dans les deux cas, chaque entrée est un `li`."
     },
     {
       "question": "Des étapes doivent être lues dans l’ordre. Quelle structure choisir ?",
@@ -121,8 +121,8 @@
         "div avec des numéros de classe"
       ],
       "explanation": "Une liste ordonnée représente explicitement une succession d’étapes.",
-      "sourceSection": "comprendre",
-      "evidence": "| `<ol><li>Enregistrer</li></ol>` | Suite d’étapes ordonnées. | Changer l’ordre change le sens. |",
+      "sourceSection": "structure",
+      "evidence": "Les titres `h1` à `h6` indiquent une hiérarchie. Utilisez `h1` pour le titre principal de ce document, puis `h2` pour ses sections. La taille visuelle se règle en CSS : choisir `h4` uniquement parce qu'il paraît plus petit dégrade la structure. Une liste non ordonnée utilise `ul` ; une liste ordonnée utilise `ol`. Dans les deux cas, chaque entrée est un `li`.",
       "correctAnswerIndex": 0
     },
     {
@@ -134,8 +134,8 @@
         "alt"
       ],
       "explanation": "href précise l’adresse ou le fragment à rejoindre.",
-      "sourceSection": "comprendre",
-      "evidence": "Dans `<a href=\"projets.html\">Nos projets</a>`, `a` est le nom de la balise ; `href` est un attribut ; `projets.html` est sa valeur ; « Nos projets » est le contenu. La balise fermante reprend le nom avec `/`. Écrivez les attributs dans la b",
+      "sourceSection": "liens-images",
+      "evidence": "Un lien `a` utilise `href` pour sa destination. Un lien vers `#equipe` cible l'élément dont l'attribut `id` vaut `equipe`. Un identifiant doit être unique dans le document. Le texte d'un lien doit annoncer sa destination : « Voir les profils » est plus clair que « Cliquez ici ».",
       "correctAnswerIndex": 1
     },
     {
@@ -147,12 +147,12 @@
         "Omettre toujours alt"
       ],
       "explanation": "Un texte alternatif vide permet d’ignorer une décoration sans information supplémentaire.",
-      "sourceSection": "comprendre",
-      "evidence": "avec alternative selon son rôle. | `alt=\"\"` pour une image uniquement décorative. |",
+      "sourceSection": "liens-images",
+      "evidence": "`src` indique le fichier de l'image. `alt` fournit une alternative textuelle utile dans le contexte. Une image purement décorative reçoit `alt=\"\"`. Un lien mène à une destination ; un bouton déclenche une action. `strong` marque une importance particulière et `em` une emphase, indépendamment de leur apparence par défaut. Les caractères réservés peuvent être écrits avec des entités : `&lt;` affiche le signe `<`.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel choix correspond à une navigation vers une autre page ?",
+      "question": "Quel élément utilise-t-on pour aller sur une autre page ?",
       "answers": [
         "Un bouton sans comportement",
         "Un div muni seulement d’une classe",
@@ -160,8 +160,8 @@
         "Un lien avec href"
       ],
       "explanation": "Un lien navigue ; un bouton déclenche une action.",
-      "sourceSection": "comprendre",
-      "evidence": "’interface. | Ne pas utiliser un lien sans destination pour imiter un bouton. |",
+      "sourceSection": "liens-images",
+      "evidence": "`src` indique le fichier de l'image. `alt` fournit une alternative textuelle utile dans le contexte. Une image purement décorative reçoit `alt=\"\"`. Un lien mène à une destination ; un bouton déclenche une action. `strong` marque une importance particulière et `em` une emphase, indépendamment de leur apparence par défaut. Les caractères réservés peuvent être écrits avec des entités : `&lt;` affiche le signe `<`.",
       "correctAnswerIndex": 3
     },
     {
@@ -174,21 +174,21 @@
       ],
       "correctAnswerIndex": 0,
       "explanation": "L’encodage relève de la métadonnée charset ; lang indique une langue.",
-      "sourceSection": "comprendre",
-      "evidence": "` est le titre visible dans la page. `lang=\"fr\"` précise la langue ; `charset=\"utf-8\"` permet d’interpréter les caractères selon l’encodage du fichier. Il faut aussi enregistrer réellement le fichier en UTF-8."
+      "sourceSection": "document",
+      "evidence": "Le doctype demande le mode standard du navigateur. `head` contient les métadonnées ; `body` contient le contenu de la page. `title` nomme l'onglet. `charset=\"utf-8\"` indique l'encodage. `lang=\"fr\"` indique la langue, notamment aux technologies d'assistance. La balise viewport prépare un affichage adapté aux appareils mobiles."
     },
     {
-      "question": "Une section thématique du contenu est généralement identifiée par quoi ?",
+      "question": "Comment indiquer le sujet d’une section HTML ?",
       "answers": [
         "Une couleur uniquement",
         "Un numéro de port",
         "Un nom de classe sans contenu",
-        "Un titre décrivant son thème"
+        "Avec un titre qui présente son sujet"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "Un titre rend le regroupement compréhensible dans la structure du document.",
+      "explanation": "Un titre aide à comprendre ce que contient la section.",
       "sourceSection": "comprendre",
-      "evidence": "| `<h2>Programme</h2>` | Titre d’une section du document. | Son niveau dépend du plan, non de la taille souhaitée. |"
+      "evidence": "| `section` | Ensemble thématique | Quel titre nomme ce thème ? |"
     }
   ]
 }

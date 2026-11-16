@@ -136,10 +136,10 @@ bouton.addEventListener('click', () => {
     </style>
 
 <h1>Le bouton pilote l’état de la navigation</h1>
-    <button id="ouvrir" aria-expanded="false" aria-controls="navigation">
+    <button id="ouvrir" type="button" hidden aria-expanded="false" aria-controls="navigation">
       Navigation
     </button>
-    <nav id="navigation" aria-label="Exemple" hidden>
+    <nav id="navigation" aria-label="Exemple">
       <ul>
         <li><a href="#projets">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -173,6 +173,8 @@ bouton.addEventListener('click', () => {
           bouton.focus();
         }
       });
+      definirOuverture(false);
+      bouton.hidden = false;
     </script>
 ```
 
@@ -200,3 +202,20 @@ bouton.addEventListener('click', () => {
 | <a id="notion-18"></a>Clavier | Un bouton natif s'active au clavier sans recréer manuellement son comportement de base. |
 | <a id="notion-19"></a>État initial | Le panneau fermé démarre avec hidden et aria-expanded="false". |
 | <a id="notion-20"></a>Nommage | Le nom du bouton explique son action. |
+
+## Navigation disponible sans JavaScript
+
+Pour votre page complète, affichez les liens en base et cachez le bouton. Après avoir trouvé les deux éléments et enregistré leurs écouteurs, JavaScript masque le panneau et révèle le bouton. Ainsi, si le script ne se charge pas, la navigation reste disponible. Le fragment fermé présenté plus haut isole seulement le mécanisme de bascule.
+
+## Travail à réaliser et états à contrôler
+
+Intégrez ce panneau à une page avec deux destinations réelles. Centralisez la mise à jour de `hidden` et `aria-expanded` dans une fonction. Échap ferme le panneau et rend le focus au bouton. Le clic sur un bouton natif couvre aussi son activation clavier.
+
+| Action | Panneau | État annoncé |
+|---|---|---|
+| Après initialisation | Caché | `false` |
+| Activation du bouton | Visible | `true` |
+| Nouvelle activation ou Échap | Caché | `false` |
+| Script absent | Liens visibles | Bouton de bascule absent |
+
+Vérifiez Tab, Entrée, Espace et Échap, puis remettez fichiers et résultats. [Exemple WAI de navigation repliable](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).

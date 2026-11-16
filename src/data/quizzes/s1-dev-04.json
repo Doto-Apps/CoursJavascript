@@ -1,5 +1,5 @@
 {
-  "name": "Révision — TP PHP : parcourir des données et afficher des profils",
+  "name": "Révision — TP PHP : algorithmie, tableaux et affichage",
   "uid": "s1-dev-04",
   "mode": "train",
   "questionsPerTest": 10,
@@ -9,160 +9,212 @@
   "targetCourse": "/semestre_1/developpement_Web/phpForm",
   "questions": [
     {
-      "question": "Avec $profils = [[\"nom\" => \"Léa\"], [\"nom\" => \"Sam\"], [\"nom\" => \"Noa\"]], que vaut $profils[1][\"nom\"] ?",
+      "question": "Quelle écriture crée un tableau associatif avec une clé nom ?",
       "answers": [
-        "Sam",
-        "Léa",
-        "Noa",
-        "Une clé nom absente"
+        "$profil = [\"nom\" => \"Léa\"];",
+        "$profil = [\"nom\" : \"Léa\"];",
+        "$profil = [\"nom\" -> \"Léa\"];",
+        "$profil = [\"nom\" = \"Léa\"];"
       ],
-      "explanation": "L’index 1 désigne le deuxième élément d’un tableau indexé à partir de zéro.",
-      "sourceSection": "comprendre",
-      "evidence": "Sam",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "Dans un tableau associatif PHP, => relie une clé à sa valeur.",
+      "sourceSection": "collection",
+      "evidence": "['titre' => 'Atlas des îles', 'pages' => 96, 'disponible' => true],"
     },
     {
-      "question": "Quelle représentation possède chaque profil initial ?",
+      "question": "Comment lire le champ titre du premier élément de $livres ?",
       "answers": [
-        "Une instance de Profil obligatoirement",
-        "Un tableau associatif",
-        "Une chaîne simple",
-        "Un entier"
+        "$livres[\"titre\"][0]",
+        "$livres[0][\"titre\"]",
+        "$livres[1][\"titre\"]",
+        "$livres[0][\"pages\"]"
       ],
-      "explanation": "Le profil initial regroupe des valeurs sous des clés nommées.",
-      "sourceSection": "comprendre",
-      "evidence": "associatif",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "On choisit le premier élément avec [0], puis son champ avec [\"titre\"].",
+      "sourceSection": "collection",
+      "evidence": "echo $livres[0]['titre'];"
     },
     {
-      "question": "Que fait foreach ?",
+      "question": "Quel appel donne le nombre d’éléments de $livres ?",
       "answers": [
-        "Supprimer les éléments après lecture",
-        "Convertir les éléments en objets",
-        "Parcourir les éléments d’une collection",
-        "Trier automatiquement toute collection"
+        "echo($livres)",
+        "is_int($livres)",
+        "count($livres)",
+        "htmlspecialchars($livres)"
       ],
-      "explanation": "foreach traite les éléments successivement sans les trier ni les supprimer.",
-      "sourceSection": "comprendre",
-      "evidence": "foreach",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "count renvoie le nombre d’éléments du tableau.",
+      "sourceSection": "collection",
+      "evidence": "echo count($livres);"
     },
     {
-      "question": "Quel rôle joue la variable de parcours ?",
+      "question": "Quelle instruction ajoute $livre à la fin de $selection ?",
       "answers": [
-        "La collection entière",
-        "Toujours le premier élément",
-        "Le nombre total d’éléments",
-        "L’élément courant du parcours"
+        "$selection = $livre;",
+        "$selection[0] = $livre;",
+        "$livre[] = $selection;",
+        "$selection[] = $livre;"
       ],
-      "explanation": "La variable de parcours reçoit l’élément de chaque tour.",
+      "correctAnswerIndex": 3,
+      "explanation": "Les crochets vides ajoutent une entrée à la fin du tableau.",
+      "sourceSection": "collection",
+      "evidence": "Pour ajouter une entrée à un tableau, on peut écrire `$selection[] = $livre;`. Les crochets vides ajoutent à la fin ; ils ne remplacent pas toute la collection. Une collection vide s’écrit `[]`."
+    },
+    {
+      "question": "Quelle écriture est correcte pour parcourir un tableau avec foreach ?",
+      "answers": [
+        "foreach ($livres as $livre) { echo $livre[\"titre\"]; }",
+        "foreach [$livres as $livre] { echo $livre[\"titre\"]; }",
+        "foreach ($livres as $livre) [ echo $livre[\"titre\"]; ]",
+        "foreach {$livres as $livre} { echo $livre[\"titre\"]; }"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "foreach utilise des parenthèses autour du parcours et des accolades autour du bloc.",
       "sourceSection": "boucle",
-      "evidence": "élément courant",
-      "correctAnswerIndex": 3
+      "evidence": "foreach ($livres as $livre) {"
     },
     {
-      "question": "Que signifie += dans l'accumulation ?",
+      "question": "Dans foreach ($livres as $livre), que contient $livre ?",
       "answers": [
-        "Ajouter à la valeur déjà accumulée",
-        "Remplacer toujours la somme par zéro",
-        "Comparer deux valeurs strictement",
-        "Créer une copie du tableau complet"
+        "La liste de tous les livres",
+        "Le livre traité pendant le tour actuel",
+        "Le nombre de livres",
+        "Le nom du fichier PHP"
       ],
-      "explanation": "L’addition avec affectation conserve le total précédent et lui ajoute la nouvelle valeur.",
-      "sourceSection": "comprendre",
-      "evidence": "ajoute",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 1,
+      "explanation": "La variable $livre reçoit successivement chaque élément du tableau.",
+      "sourceSection": "boucle",
+      "evidence": "`foreach` exécute son bloc une fois pour chaque élément. `$livres` reste la collection ; `$livre` contient l’élément courant. Les noms sont choisis par le développeur. Dans ce parcours par valeur, modifier la variable courante ne réécrit pas automatiquement l’entrée du tableau source."
     },
     {
-      "question": "Où initialiser un accumulateur ?",
+      "question": "Que fait foreach lorsque le tableau est vide ?",
       "answers": [
-        "Uniquement dans le dernier tour",
+        "Il exécute toujours un tour",
+        "Il crée automatiquement une entrée",
+        "Il n’exécute aucun tour",
+        "Il provoque toujours une erreur de syntaxe"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Un tableau vide ne contient aucun élément à parcourir.",
+      "sourceSection": "boucle",
+      "evidence": "Une collection vide n’effectue aucun tour. Après une boucle, ne comptez pas sur la variable de parcours pour représenter toute la liste. `PHP_EOL` produit un retour à la ligne dans une sortie texte ; dans une page HTML, utilisez la structure HTML adaptée pour séparer les éléments."
+    },
+    {
+      "question": "Quelle instruction ajoute $duree au total déjà présent dans $total ?",
+      "answers": [
+        "$total = $duree;",
+        "$total === $duree;",
+        "$total = 0;",
+        "$total += $duree;"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "+= ajoute à la valeur existante au lieu de la remplacer.",
+      "sourceSection": "accumulation",
+      "evidence": "$total += $duree;"
+    },
+    {
+      "question": "Pour additionner des valeurs dans une boucle, où écrit-on $total = 0 ?",
+      "answers": [
         "Avant la boucle",
         "Au début de chaque tour",
-        "Après l’affichage final"
+        "Après la boucle uniquement",
+        "Après avoir affiché la moyenne"
       ],
-      "explanation": "Initialiser dans la boucle effacerait la somme à chaque passage.",
-      "sourceSection": "comprendre",
-      "evidence": "avant",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 0,
+      "explanation": "Avant la boucle, cette instruction prépare le total une seule fois.",
+      "sourceSection": "accumulation",
+      "evidence": "Un accumulateur conserve un résultat entre les tours. Il s’initialise avant la boucle. `+=` ajoute une valeur au résultat existant ; une affectation simple le remplacerait."
     },
     {
-      "question": "Combien de tours foreach effectue-t-il sur une collection vide ?",
+      "question": "Quel test vérifie qu’un tableau contient au moins un élément ?",
       "answers": [
-        "Trois tours",
-        "Un tour par clé attendue même absente",
-        "Aucun tour",
-        "Un tour avec une valeur vide"
+        "count($livres) === 0",
+        "count($livres) > 0",
+        "count($livres) < 0",
+        "count($livres) === null"
       ],
-      "explanation": "Une collection vide ne fournit aucun élément à foreach.",
-      "sourceSection": "comprendre",
-      "evidence": "vide",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 1,
+      "explanation": "Un nombre d’éléments supérieur à zéro indique que le tableau n’est pas vide.",
+      "sourceSection": "accumulation",
+      "evidence": "Le total représente la somme ; la moyenne utilise aussi le nombre d’entrées. Vérifiez que ce nombre est supérieur à zéro avant de diviser. Réinitialiser le total dans la boucle effacerait le travail des tours précédents."
     },
     {
-      "question": "Quelle précaution avant de calculer la moyenne ?",
+      "question": "Quelle instruction prépare un tableau vide pour une sélection ?",
       "answers": [
-        "Diviser même si le nombre vaut zéro",
-        "Remplacer le total par le nombre d’éléments",
-        "Éliminer les valeurs nulles sans compter",
-        "Vérifier qu’il existe au moins un élément"
+        "$selection = 0;",
+        "$selection = \"\";",
+        "$selection = [];",
+        "$selection = false;"
       ],
-      "explanation": "Une moyenne ne peut pas diviser par un nombre d’éléments nul.",
-      "sourceSection": "boucle",
-      "evidence": "supérieur à zéro",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 2,
+      "explanation": "[] représente un tableau vide auquel on peut ensuite ajouter des entrées.",
+      "sourceSection": "selection",
+      "evidence": "$disponibles = [];"
     },
     {
-      "question": "Que représente une classe ?",
+      "question": "Quelle instruction conserve l’entrée courante dans un autre tableau ?",
       "answers": [
-        "Un type décrivant les objets possibles",
-        "Une instance déjà créée",
-        "Le tableau de tous les objets du programme",
-        "Une variable d’un tour de boucle"
+        "$disponibles = [];",
+        "$livre = $disponibles;",
+        "echo $livre[\"titre\"];",
+        "$disponibles[] = $livre;"
       ],
-      "explanation": "La classe décrit ; l’instance est un objet créé à partir de cette description.",
-      "sourceSection": "comprendre",
-      "evidence": "classe",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 3,
+      "explanation": "L’entrée est ajoutée au tableau de sélection sans supprimer la collection de départ.",
+      "sourceSection": "selection",
+      "evidence": "$disponibles[] = $livre;"
     },
     {
-      "question": "Comment accéder à une propriété d'objet ?",
+      "question": "Quelle valeur représente l’absence de maximum avant le parcours dans le cours ?",
       "answers": [
-        "$lea::nom dans cet exemple",
-        "$lea->nom",
-        "$lea['nom']",
-        "$lea.nom"
+        "null",
+        "0 obligatoirement",
+        "true",
+        "Le nom du fichier"
       ],
-      "explanation": "La flèche accède à une propriété de l’objet ; les crochets servent ici aux tableaux.",
-      "sourceSection": "comprendre",
-      "evidence": "->",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 0,
+      "explanation": "null permet d’indiquer qu’aucune valeur n’a encore été retenue.",
+      "sourceSection": "selection",
+      "evidence": "$maximum = null;"
     },
     {
-      "question": "Que désigne $this dans une méthode ?",
+      "question": "Quelle fonction permet d’afficher un texte contenant < sans créer une balise HTML ?",
       "answers": [
-        "Le dernier élément d’un tableau",
-        "Toutes les instances à la fois",
-        "L’instance courante",
-        "Le premier objet créé"
+        "count",
+        "htmlspecialchars",
+        "is_int",
+        "session_start"
       ],
-      "explanation": "Dans une méthode, this renvoie à l’objet sur lequel elle est appelée.",
-      "sourceSection": "objet",
-      "evidence": "instance courante",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 1,
+      "explanation": "htmlspecialchars transforme les caractères spéciaux pour les afficher comme du texte.",
+      "sourceSection": "affichage",
+      "evidence": "`<?= ... ?>` affiche une expression. `htmlspecialchars` permet d’afficher les caractères spéciaux d’un texte sans les interpréter comme des balises HTML. L’échappement intervient à l’affichage : les données conservées dans le tableau restent brutes."
     },
     {
-      "question": "Pourquoi utiliser htmlspecialchars pour un nom affiché dans le HTML ?",
+      "question": "Quelle notation PHP affiche directement une expression dans du HTML ?",
       "answers": [
-        "Chiffrer le transport réseau",
-        "Valider automatiquement une requête SQL",
-        "Supprimer tous les mots du nom",
-        "Échapper les caractères sensibles dans le texte HTML"
+        "<? $titre ?>",
+        "<?php $titre; ?>",
+        "<?= $titre ?>",
+        "<php echo $titre>"
       ],
-      "explanation": "L’échappement protège le contexte de sortie HTML ; ce n’est pas une validation de toutes les données.",
-      "sourceSection": "comprendre",
-      "evidence": "htmlspecialchars",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 2,
+      "explanation": "<?= est la forme courte de l’affichage d’une expression.",
+      "sourceSection": "affichage",
+      "evidence": "`<?= ... ?>` affiche une expression. `htmlspecialchars` permet d’afficher les caractères spéciaux d’un texte sans les interpréter comme des balises HTML. L’échappement intervient à l’affichage : les données conservées dans le tableau restent brutes."
+    },
+    {
+      "question": "Où s’exécute une boucle PHP qui crée une liste HTML ?",
+      "answers": [
+        "Dans la feuille CSS",
+        "Dans le cookie",
+        "Dans le navigateur comme du JavaScript",
+        "Sur le serveur"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le serveur exécute PHP et envoie le HTML produit au navigateur.",
+      "sourceSection": "affichage",
+      "evidence": "PHP parcourt les données sur le serveur et génère la réponse HTML. Le navigateur reçoit cette réponse : il ne reçoit pas le tableau PHP à parcourir. Une structure de présentation écrite une fois dans une boucle produit plusieurs éléments HTML."
     }
   ]
 }

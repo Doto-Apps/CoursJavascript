@@ -41,7 +41,7 @@ Le statut décrit le résultat de la requête ; les en-têtes précisent des inf
 
 Dans le TP du semestre, le navigateur affiche une liste de tâches. PHP décide quelles données lire et MySQL les conserve. Le navigateur ne connaît ni le mot de passe MySQL ni le code PHP exécuté : il échange des **requêtes et des réponses HTTP** avec le serveur. Une API constitue un contrat : une adresse, une méthode, un format et des statuts annoncés.
 
-Imaginez un restaurant : le client formule une demande ; le serveur la transmet ; la cuisine prépare le résultat. Ce schéma aide à distinguer les rôles, mais une requête HTTP reçoit une réponse, même quand la préparation échoue. La base de données n'est pas directement accessible depuis `fetch()`.
+Imaginez un restaurant : le client formule une demande ; le serveur la transmet ; la cuisine prépare le résultat. Ce schéma aide à distinguer les rôles. Si le serveur HTTP peut encore répondre, il signale un échec par une réponse d’erreur ; une panne réseau ou un serveur arrêté peut empêcher toute réponse. La base de données n'est pas directement accessible depuis `fetch()`.
 
 ```http
 GET /api/todos.php HTTP/1.1
@@ -221,3 +221,18 @@ Les méthodes choisies pour notre contrat seront GET pour lire, POST pour créer
 | <a id="notion-18"></a>Booléen | false sans guillemets est un booléen JSON. |
 | <a id="notion-19"></a>Chaîne | "false" avec guillemets est une chaîne, pas un booléen. |
 | <a id="notion-20"></a>Observation | L'onglet Réseau montre méthode, statut, en-têtes et corps des échanges. |
+
+## Environnement du projet Todo List
+
+Téléchargez le [squelette Todo List](/exemples/s2/todo-squelette.zip) et suivez son README. Le parcours utilise PHP 8.1 ou plus, les extensions `pdo_mysql` et `mbstring`, MySQL/MariaDB et un navigateur. Démarrez l’application et son API sur la même origine, par exemple `http://localhost:8080`. Astro sert les cours séparément.
+
+## Contrat à relever dans Réseau
+
+| Opération | Adresse et corps | Réponse de réussite |
+|---|---|---|
+| Lire | GET `/api/todos.php` | 200, tableau de tâches |
+| Ajouter | POST, objet `{ "title": "Préparer les photos" }` | 201, tâche créée avec id |
+| Modifier | PATCH `/api/todos.php?id=3`, champs `title` et/ou `done` | 200, tâche confirmée |
+| Supprimer | DELETE `/api/todos.php?id=3` | 200, `{ "deleted": 3 }` |
+
+Une tâche possède `id` entier positif, `title` texte non vide de 120 caractères maximum après nettoyage et `done` booléen. Relevez méthode, statut, Content-Type et corps d’une lecture réelle. Comparez ensuite `[]`, un objet et un JSON invalide. Remettez le contrat et un échange annoté. Les opérations encore incomplètes du squelette renvoient 501 jusqu’à leur réalisation.

@@ -14,7 +14,7 @@
       ],
       "explanation": "La table est une vue ; les données proviennent d’une requête.",
       "sourceSection": "roles",
-      "evidence": "Un composant Table n’est pas une base de données : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’act",
+      "evidence": "Un composant Table n’est pas une base de données : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’action attendue.",
       "correctAnswerIndex": 0
     },
     {
@@ -44,7 +44,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Qu’est-ce qui déclenche une action de bouton configurée ?",
+      "question": "Que faut-il relier au bouton pour qu’un clic lance une action ?",
       "answers": [
         "Le nom du bouton seulement",
         "La présence de la ressource seulement",
@@ -53,11 +53,11 @@
       ],
       "explanation": "Le contrôle doit être relié à une action dans son gestionnaire d’événement.",
       "sourceSection": "roles",
-      "evidence": "| Événement | Déclencher une action à un moment donné. | Soumission du formulaire → lancer la création. |",
+      "evidence": "Un composant Table n’est pas une base de données : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’action attendue.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle propriété alimente généralement la Table avec le résultat getProduits ?",
+      "question": "Quelle propriété contient les données renvoyées par getProduits ?",
       "answers": [
         "getProduits.data",
         "getProduits.name",
@@ -66,21 +66,21 @@
       ],
       "explanation": "La propriété data contient le résultat de la requête.",
       "sourceSection": "composants",
-      "evidence": "{{ getProduits.data ?? [] }}",
+      "evidence": "Le résultat d’une requête se lit avec `.data`. La Table actuelle expose la ligne choisie par `selectedRow` : ne recopiez pas `selectedRow.data` d’un ancien exemple sans vérifier la référence du composant. `?.` évite de lire une propriété sur une absence ; `??` fournit une valeur de repli lorsque la valeur est null ou undefined, sans remplacer le nombre zéro.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Pourquoi prévoir le cas sans ligne sélectionnée ?",
+      "question": "Dans l’expression tableProduits.selectedRow?.nom, à quoi sert ?. ?",
       "answers": [
-        "Transformer toutes les lignes en texte",
-        "Éviter de lire des propriétés d’une sélection absente",
-        "Effacer le catalogue",
-        "Ajouter un produit fictif"
+        "Créer un document Firebase",
+        "Éviter de lire nom lorsque la sélection est absente",
+        "Supprimer une ligne sélectionnée",
+        "Transformer le nom en nombre"
       ],
-      "explanation": "Le formulaire doit gérer une sélection absente avant toute lecture ou modification.",
+      "correctAnswerIndex": 1,
+      "explanation": "L’accès optionnel gère le cas où aucune ligne n’est sélectionnée.",
       "sourceSection": "composants",
-      "evidence": "{{ tableProduits.selectedRow?.nom ?? \"Sélectionnez un produit\" }}",
-      "correctAnswerIndex": 1
+      "evidence": "Le résultat d’une requête se lit avec `.data`. La Table actuelle expose la ligne choisie par `selectedRow` : ne recopiez pas `selectedRow.data` d’un ancien exemple sans vérifier la référence du composant. `?.` évite de lire une propriété sur une absence ; `??` fournit une valeur de repli lorsque la valeur est null ou undefined, sans remplacer le nombre zéro."
     },
     {
       "question": "Où conserver les identifiants Firebase de la ressource ?",
@@ -92,11 +92,11 @@
       ],
       "explanation": "Les identifiants de connexion ne doivent pas être exposés dans l’interface.",
       "sourceSection": "roles",
-      "evidence": "Retool → ressource Firebase → Firestore → résultat → composant**. Les identifiants de ressource sont conservés côté Retool ; ils ne doivent pas être copiés dans une expression d’interface ou une capture du rapport.",
+      "evidence": "Le trajet d’une lecture est **composant → requête Retool → ressource Firebase → Firestore → résultat → composant**. Les identifiants de ressource sont conservés côté Retool ; ils ne doivent pas être copiés dans une expression d’interface ou une capture du rapport.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel rôle joue l’id d’un document produit ?",
+      "question": "À quoi sert l’id d’un produit dans la base ?",
       "answers": [
         "Définir sa couleur",
         "Indiquer sa position après filtrage",
@@ -104,34 +104,34 @@
         "Identifier le produit de façon stable"
       ],
       "explanation": "L’identité ne doit pas dépendre de l’ordre affiché.",
-      "sourceSection": "roles",
-      "evidence": "Retool → ressource Firebase → Firestore → résultat → composant**. Les identifiants de ressource sont conservés côté Retool ; ils ne doivent pas être copiés dans une expression d’interface ou une capture du rapport.",
+      "sourceSection": "donnees",
+      "evidence": "Firestore conserve des **documents** réunis dans des **collections**. Un document possède un identifiant et des champs. Pour commencer, la collection `produits` contient nom, marque, prix et stock. Le prix est un nombre ; le stock est un entier positif ou nul ; un titre vide n’est pas un produit exploitable.",
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel composant convient à une quantité numérique ?",
+      "question": "Quel composant permet de saisir une quantité sous forme de nombre ?",
       "answers": [
         "Number Input",
         "Text de lecture seul",
         "Une image",
         "Une Table sans colonne"
       ],
-      "explanation": "Le composant recueille un nombre ; les règles métier restent à vérifier.",
+      "explanation": "Ce champ permet de saisir un nombre. Il faut encore vérifier que la quantité est autorisée.",
       "sourceSection": "composants",
       "evidence": "| Number Input | `inputPrix`, `inputStock` | Valeur numérique à contrôler. |",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Pour le stock, quelle valeur respecte la règle enseignée ?",
+      "question": "Pour la quantité en stock, quel type de valeur faut-il accepter ?",
       "answers": [
         "Une valeur fractionnaire",
-        "Un entier non négatif",
+        "Un entier égal à zéro ou positif",
         "Un nombre négatif",
         "Un texte libre"
       ],
-      "explanation": "Le stock représente une quantité entière qui ne peut pas être négative.",
+      "explanation": "Une quantité en stock doit être un entier égal à zéro ou positif.",
       "sourceSection": "donnees",
-      "evidence": "our commencer, la collection `produits` contient nom, marque, prix et stock. Le prix est un nombre ; le stock est un entier positif ou nul ; un titre vide n’est pas un produit exploitable.",
+      "evidence": "Firestore conserve des **documents** réunis dans des **collections**. Un document possède un identifiant et des champs. Pour commencer, la collection `produits` contient nom, marque, prix et stock. Le prix est un nombre ; le stock est un entier positif ou nul ; un titre vide n’est pas un produit exploitable.",
       "correctAnswerIndex": 1
     },
     {
@@ -144,21 +144,21 @@
       ],
       "explanation": "L’actualisation doit refléter une opération confirmée.",
       "sourceSection": "actions",
-      "evidence": "création, puis l’événement de réussite de la création à `getProduits.trigger()`. Le formulaire se réinitialise après confirmation, pas avant. Désactivez la soumission pendant l’exécution et affichez une erreur utile si la requête échoue. É",
+      "evidence": "Reliez Submit à la création, puis l’événement de réussite de la création à `getProduits.trigger()`. Le formulaire se réinitialise après confirmation, pas avant. Désactivez la soumission pendant l’exécution et affichez une erreur utile si la requête échoue. Évitez de lancer les requêtes d’écriture automatiquement à chaque changement de champ.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel test vérifie une vraie persistance ?",
+      "question": "Quel appel relance la requête de lecture getProduits dans Retool ?",
       "answers": [
-        "Voir un texte ajouté seulement à la Table",
-        "Changer la couleur du bouton",
-        "Renommer le formulaire",
-        "Relancer la lecture après l’écriture"
+        "getProduits.data()",
+        "getProduits.value()",
+        "getProduits.resetDatabase()",
+        "getProduits.trigger()"
       ],
-      "explanation": "L’affichage local ne suffit pas à prouver une modification enregistrée.",
-      "sourceSection": "roles",
-      "evidence": "nées : il présente des lignes reçues. Une ressource n’exécute pas une lecture toute seule : une requête décrit l’opération. Un bouton ne sauvegarde rien tant qu’un événement ne déclenche pas l’action attendue.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "trigger lance à nouveau la requête.",
+      "sourceSection": "actions",
+      "evidence": "Reliez Submit à la création, puis l’événement de réussite de la création à `getProduits.trigger()`. Le formulaire se réinitialise après confirmation, pas avant. Désactivez la soumission pendant l’exécution et affichez une erreur utile si la requête échoue. Évitez de lancer les requêtes d’écriture automatiquement à chaque changement de champ."
     }
   ],
   "sourceCourse": "/semestre_3/deploiement_Services/retool",

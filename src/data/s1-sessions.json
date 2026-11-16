@@ -379,23 +379,23 @@
     "type": "TP",
     "planningDate": "10/11/2026",
     "coursePath": "/semestre_1/developpement_Web/phpVarTab",
-    "title": "TP PHP : parcourir des données et afficher des profils",
+    "title": "TP PHP : algorithmie, tableaux et affichage",
     "skills": [
       {
         "id": "collection",
-        "label": "Distinguer collection et enregistrement"
+        "label": "Distinguer collection, enregistrement et champ"
       },
       {
-        "id": "boucle",
-        "label": "Parcourir une collection et accumuler un résultat"
-      },
-      {
-        "id": "objet",
-        "label": "Distinguer classe, instance et propriété"
+        "id": "algorithme",
+        "label": "Accumuler, compter, sélectionner et rechercher un maximum"
       },
       {
         "id": "affichage",
-        "label": "Produire du HTML en protégeant le texte reçu"
+        "label": "Générer du HTML depuis les données en échappant les textes"
+      },
+      {
+        "id": "tests",
+        "label": "Vérifier liste vide et cas limites"
       }
     ],
     "quizId": "s1-dev-03",
@@ -415,23 +415,23 @@
     "type": "TP",
     "planningDate": "17/11/2026",
     "coursePath": "/semestre_1/developpement_Web/phpForm",
-    "title": "TP PHP : recevoir et valider un message",
+    "title": "TP PHP : formulaire de connexion et session",
     "skills": [
       {
         "id": "formulaire",
-        "label": "Décrire la requête d’un formulaire"
+        "label": "Recevoir et valider un formulaire de connexion"
       },
       {
-        "id": "reception",
-        "label": "Lire les champs et prévoir les clés absentes"
+        "id": "identite",
+        "label": "Vérifier un compte fictif côté serveur"
       },
       {
-        "id": "validation",
-        "label": "Valider type, contenu et longueur côté serveur"
+        "id": "session",
+        "label": "Conserver et relire une identité en session"
       },
       {
-        "id": "sortie",
-        "label": "Échapper le texte dans le contexte HTML"
+        "id": "acces",
+        "label": "Contrôler accès, redirection et déconnexion"
       }
     ],
     "quizId": "s1-dev-04",
@@ -451,23 +451,23 @@
     "type": "TP",
     "planningDate": "26/11/2026",
     "coursePath": "/semestre_1/developpement_Web/phpminichat2",
-    "title": "TP PHP : un mini-chat persistant en session",
+    "title": "TP PHP : mini-chat, session et fichier texte",
     "skills": [
       {
+        "id": "fichier",
+        "label": "Ajouter et relire des messages dans un fichier texte"
+      },
+      {
+        "id": "decoupage",
+        "label": "Découper les lignes et les champs d’un format défini"
+      },
+      {
         "id": "session",
-        "label": "Expliquer la durée d’un historique en session"
+        "label": "Attribuer les messages à l’identité connectée"
       },
       {
-        "id": "ajout",
-        "label": "N’ajouter que des messages validés"
-      },
-      {
-        "id": "redirection",
-        "label": "Appliquer POST puis redirection puis GET"
-      },
-      {
-        "id": "liste",
-        "label": "Tester l’historique et ses limites"
+        "id": "tests",
+        "label": "Terminer et vérifier le mini-chat en 90 minutes"
       }
     ],
     "quizId": "s1-dev-05",
@@ -487,7 +487,7 @@
     "type": "CM",
     "planningDate": "13/11/2026",
     "coursePath": "/semestre_1/produire_Un_Site_Web/projet",
-    "title": "Cadrer le projet de site Web",
+    "title": "Présentation et évaluation de la SAE 105",
     "skills": [
       {
         "id": "besoin",
@@ -538,13 +538,10 @@
         "label": "Exporter les médias utiles et clarifier les états manquants"
       }
     ],
-    "quizId": "s1-site-01",
     "previousSession": "SITE-01",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-01",
-      "sourceSession": "SITE-01",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -574,13 +571,10 @@
         "label": "Contrôler sans CSS"
       }
     ],
-    "quizId": "s1-site-02",
     "previousSession": "SITE-02",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-02",
-      "sourceSession": "SITE-02",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -610,13 +604,10 @@
         "label": "Mesurer et diagnostiquer"
       }
     ],
-    "quizId": "s1-site-03",
     "previousSession": "SITE-03",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-03",
-      "sourceSession": "SITE-03",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -646,13 +637,10 @@
         "label": "Prévoir et tester les états du composant"
       }
     ],
-    "quizId": "s1-site-04",
     "previousSession": "SITE-04",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-04",
-      "sourceSession": "SITE-04",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -682,13 +670,10 @@
         "label": "Tester des dimensions et des cas de contenu"
       }
     ],
-    "quizId": "s1-site-05",
     "previousSession": "SITE-05",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-05",
-      "sourceSession": "SITE-05",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -718,13 +703,10 @@
         "label": "Croiser contrôles automatiques et manuels"
       }
     ],
-    "quizId": "s1-site-06",
     "previousSession": "SITE-06",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-06",
-      "sourceSession": "SITE-06",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   },
   {
@@ -754,13 +736,10 @@
         "label": "Expliquer avec une démonstration"
       }
     ],
-    "quizId": "s1-site-07",
     "previousSession": "SITE-07",
     "entryActivity": {
-      "type": "quiz",
-      "quizId": "s1-site-07",
-      "sourceSession": "SITE-07",
-      "points": 10
+      "type": "none",
+      "points": null
     }
   }
 ]

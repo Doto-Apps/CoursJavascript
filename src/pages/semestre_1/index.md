@@ -6,7 +6,7 @@ order: 1
 
 Le S1 introduit le trajet HTTP, la structure HTML, les règles CSS et les premiers traitements PHP. L’intégration progresse de la sémantique aux boîtes, puis à Flexbox, Grid et au responsive. Le projet réutilise ces notions pour intégrer une maquette et vérifier son accessibilité.
 
-Les QCM disponibles permettent de réviser les notions du support précédent : dix questions sont tirées, avec vingt secondes par question et la possibilité de recommencer.
+Les QCM d’Intégration et de Développement web permettent de réviser les notions du support précédent : dix questions sont tirées, avec vingt secondes par question et la possibilité de recommencer. Le parcours « Produire un site Web » accompagne la SAE 105 et ne comporte pas de QCM.
 
 ## Intégration
 
@@ -28,15 +28,15 @@ Les QCM disponibles permettent de réviser les notions du support précédent : 
 | 1 | [Outils web et atelier d’IA locale](/semestre_1/developpement_Web/util_dev_tool) | TD | 2 h |
 | 2 | [Algorithmique PHP : données, décisions et traces](/semestre_1/developpement_Web/PHP_inter) | TD | 2 h |
 | 3 | [TP PHP : calculer un tarif et tester les limites](/semestre_1/developpement_Web/PHP_begin) | TP | 2 h |
-| 4 | [TP PHP : parcourir des données et afficher des profils](/semestre_1/developpement_Web/phpVarTab) | TP | 2 h |
-| 5 | [TP PHP : recevoir et valider un message](/semestre_1/developpement_Web/phpForm) | TP | 2 h |
-| 6 | [TP PHP : un mini-chat persistant en session](/semestre_1/developpement_Web/phpminichat2) | TP | 2 h |
+| 4 | [TP PHP : algorithmie, tableaux et affichage](/semestre_1/developpement_Web/phpVarTab) | TP | 2 h |
+| 5 | [TP PHP : formulaire de connexion et session](/semestre_1/developpement_Web/phpForm) | TP | 2 h |
+| 6 | [TP PHP : mini-chat, session et fichier texte](/semestre_1/developpement_Web/phpminichat2) | TP | 2 h |
 
 ## Produire un site Web
 
 | Ordre | Séance | Format | Durée |
 |---|---|---|---|
-| 1 | [Cadrer le projet de site Web](/semestre_1/produire_Un_Site_Web/projet) | CM | 2 h |
+| 1 | [Présentation et évaluation de la SAE 105](/semestre_1/produire_Un_Site_Web/projet) | CM | 2 h |
 | 2 | [Lire une maquette et préparer l’intégration](/semestre_1/produire_Un_Site_Web/figma) | CM | 2 h |
 | 3 | [Projet : construire la structure sémantique](/semestre_1/produire_Un_Site_Web/integration) | TD | 2 h |
 | 4 | [Projet : disposer les blocs avec Flexbox et Grid](/semestre_1/produire_Un_Site_Web/disposition) | TD | 2 h |
@@ -51,9 +51,9 @@ Les blocs de code présentent leur résultat à proximité. Dans un exemple inte
 
 ## Mémentos et ressources
 
-- [Mémento CSS avec exemples](/semestre_1/integration/css)
-- [Liste des balises et attributs](/semestre_1/integration/balises)
-- [Liste des propriétés CSS](/semestre_1/integration/proprietes)
+- [Structure et sémantique HTML](/semestre_1/integration/htmltd)
+- [Sélecteurs, boîtes et Flexbox](/semestre_1/integration/csstd)
+- [Diagnostic de la cascade CSS](/semestre_1/integration/html)
 - [Toutes les balises HTML sur MDN](https://developer.mozilla.org/fr/docs/Web/HTML/Reference/Elements)
 - [Toutes les propriétés CSS sur MDN](https://developer.mozilla.org/fr/docs/Web/CSS/Reference)
 - [Manuel PHP](https://www.php.net/manual/fr/)

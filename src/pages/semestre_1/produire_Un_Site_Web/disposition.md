@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : disposer les blocs avec Flexbox et Grid"
 type: "TD"
 order: 4
-quizId: "s1-site-03"
 previousSession: "/semestre_1/produire_Un_Site_Web/integration"
 nextSession: "/semestre_1/produire_Un_Site_Web/composants"
 ---
@@ -60,3 +59,9 @@ Le parent commun porte `display: grid`. `minmax(0, 1fr)` autorise chaque piste �
 Une grille exprime des relations : trois colonnes de même fraction et une gouttière. Placer chaque carte avec des coordonnées absolues la retire du flux normal : les suivantes ne se déplacent plus correctement quand son texte grandit. Réservez le positionnement absolu à des éléments dont ce comportement est voulu, par exemple un badge dans une carte positionnée.
 
 Dans l’inspecteur, mesurez successivement le conteneur, les pistes et les cartes. Une carte supplémentaire ou un titre long permet de distinguer une disposition souple d’une reproduction de coordonnées. Les [composants](composants) définissent ensuite les styles partagés à l’intérieur de cette disposition.
+
+## Travail de disposition
+
+Appliquez un conteneur centré, une navigation flex avec retour à la ligne et un catalogue Grid. Commencez par trois colonnes sur une largeur suffisante, puis ajoutez des projets et allongez une description : la hauteur doit suivre le contenu. La version étroite sera ajustée au cours responsive.
+
+Relevez dans DevTools la largeur du conteneur, son padding, le gap et la largeur d’une piste. Avec six cartes sans étendue particulière, vérifiez les deux rangées de trois. Remettez le CSS et justifiez le choix de Flexbox pour la navigation et de Grid pour les colonnes communes.

@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : créer des composants cohérents"
 type: "TD"
 order: 5
-quizId: "s1-site-04"
 previousSession: "/semestre_1/produire_Un_Site_Web/disposition"
 nextSession: "/semestre_1/produire_Un_Site_Web/responsive"
 ---
@@ -75,3 +74,9 @@ Un contrôle interactif possède au moins un état normal, un survol et un focus
 ```
 
 Un lien stylisé comme un bouton reste un lien de navigation ; une action locale utilise un `button`. Dans cette démonstration, Tab fait apparaître le focus et Entrée rejoint la destination. La couleur ne doit pas être le seul signal d’un état important : un libellé ou un autre signe peut compléter l’information.
+
+## Travail sur les composants
+
+Définissez une carte commune et une variante « projet mis en avant ». Centralisez couleur d’accent et espacements avec des propriétés personnalisées. Testez trois contenus différents, un titre long et une image contenant une information à ne pas recadrer.
+
+Ajoutez une destination explicite au lien, un état de survol et un focus perceptible. Comparez `cover` et `contain`, puis documentez votre choix. La remise doit permettre de changer une valeur commune à un seul endroit sans retoucher chaque carte.

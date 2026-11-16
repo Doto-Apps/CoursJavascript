@@ -18,7 +18,7 @@
       ],
       "explanation": "Le sélecteur désigne les éléments HTML auxquels les déclarations CSS peuvent s’appliquer.",
       "sourceSection": "comprendre",
-      "evidence": "Une règle CSS associe un sélecteur à des déclarations.",
+      "evidence": "Une règle CSS associe un sélecteur à des déclarations. Dans `.carte { padding: 16px; color: #203047; }`, `.carte` choisit les éléments ayant la classe `carte`. Les accolades contiennent des couples `propriété: valeur`, séparés par des points-virgules. Une règle valide sans élément correspondant ne produit aucun changement visible.",
       "correctAnswerIndex": 1
     },
     {
@@ -31,7 +31,7 @@
       ],
       "explanation": "Un point introduit un sélecteur de classe ; le dièse introduit un sélecteur d’identifiant.",
       "sourceSection": "comprendre",
-      "evidence": "`.carte` choisit les éléments ayant la classe `carte`.",
+      "evidence": "Une règle CSS associe un sélecteur à des déclarations. Dans `.carte { padding: 16px; color: #203047; }`, `.carte` choisit les éléments ayant la classe `carte`. Les accolades contiennent des couples `propriété: valeur`, séparés par des points-virgules. Une règle valide sans élément correspondant ne produit aucun changement visible.",
       "correctAnswerIndex": 3
     },
     {
@@ -44,7 +44,7 @@
       ],
       "explanation": "`color` règle la couleur du texte ; `background-color` règle celle du fond.",
       "sourceSection": "selecteurs",
-      "evidence": "`color` règle la couleur du texte ; `background-color` règle celle du fond.",
+      "evidence": "`color` règle la couleur du texte ; `background-color` règle celle du fond. Ces deux propriétés ne ciblent donc pas la même partie de l’élément.",
       "correctAnswerIndex": 3
     },
     {
@@ -57,7 +57,7 @@
       ],
       "explanation": "Le `padding` correspond à l’espace intérieur de la boîte.",
       "sourceSection": "boites",
-      "evidence": "`padding` éloigne le contenu de sa bordure.",
+      "evidence": "`padding` éloigne le contenu de sa bordure. Augmenter le padding ne sépare pas directement deux bordures voisines : cela agrandit l’espace à l’intérieur de chacune.",
       "correctAnswerIndex": 1
     },
     {
@@ -70,34 +70,34 @@
       ],
       "explanation": "La marge est extérieure à la bordure ; le padding crée de l’espace intérieur.",
       "sourceSection": "boites",
-      "evidence": "`margin` éloigne la boîte de son environnement.",
+      "evidence": "`margin` éloigne la boîte de son environnement. Une marge ne reçoit pas la couleur du fond de l’élément. Les quatre côtés peuvent être réglés séparément ou avec un raccourci.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Avec box-sizing: border-box, que comprend width: 240px (hors marge) ?",
+      "question": "Avec box-sizing: border-box, la largeur width comprend quoi ?",
       "answers": [
         "Le contenu, le padding et les bordures",
         "La marge seulement",
         "Le contenu et la marge, mais pas la bordure",
         "Le contenu seulement"
       ],
-      "explanation": "Avec `border-box`, le padding et les bordures sont inclus dans la largeur déclarée.",
+      "explanation": "La largeur comprend le contenu, l’espace intérieur et les bordures. Les marges restent à l’extérieur.",
       "sourceSection": "boites",
-      "evidence": "Avec `border-box`, les 240 px incluent padding et bordures.",
+      "evidence": "`border: 2px solid #1d4ed8` combine épaisseur, style et couleur. `border-radius` arrondit les coins sans définir une nouvelle marge. Avec `content-box`, la largeur déclarée concerne le contenu : une largeur de 240 px, un padding de 16 px de chaque côté et une bordure de 2 px donnent **276 px hors marge** (`240 + 2 × 16 + 2 × 2`). Avec `border-box`, les 240 px incluent padding et bordures : le contenu dispose de 204 px.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "En content-box : width: 240px, padding: 16px et bordure de 2px de chaque côté. Quelle largeur totale, hors marge ?",
+      "question": "Avec box-sizing: content-box, que mesure width ?",
       "answers": [
-        "258 px",
-        "272 px",
-        "276 px",
-        "240 px"
+        "La largeur totale incluant toujours les marges",
+        "La hauteur du texte",
+        "La largeur du contenu, avant padding et bordures",
+        "Le nombre de colonnes"
       ],
-      "explanation": "La largeur totale est de 240 + (2 × 16) + (2 × 2) = 276 px.",
+      "correctAnswerIndex": 2,
+      "explanation": "Dans ce mode, le padding et les bordures s’ajoutent à la largeur du contenu.",
       "sourceSection": "boites",
-      "evidence": "**276 px hors marge** (`240 + 2 × 16 + 2 × 2`)",
-      "correctAnswerIndex": 2
+      "evidence": "`border: 2px solid #1d4ed8` combine épaisseur, style et couleur. `border-radius` arrondit les coins sans définir une nouvelle marge. Avec `content-box`, la largeur déclarée concerne le contenu : une largeur de 240 px, un padding de 16 px de chaque côté et une bordure de 2 px donnent **276 px hors marge** (`240 + 2 × 16 + 2 × 2`). Avec `border-box`, les 240 px incluent padding et bordures : le contenu dispose de 204 px."
     },
     {
       "question": "Sur quelle taille de police l’unité CSS rem est-elle basée ?",
@@ -109,7 +109,7 @@
       ],
       "explanation": "`rem` est calculé à partir de la taille de police de l’élément racine du document.",
       "sourceSection": "boites",
-      "evidence": "`rem` dépend de la taille de police de la racine.",
+      "evidence": "Une unité `px` est un pixel CSS ; `rem` dépend de la taille de police de la racine. Avec `border-box`, augmenter le padding réduit la largeur disponible pour le contenu tant que la largeur totale peut respecter les contraintes.",
       "correctAnswerIndex": 2
     },
     {
@@ -122,7 +122,7 @@
       ],
       "explanation": "L’élément demeure dans le HTML, mais il ne génère plus de boîte dans la mise en page.",
       "sourceSection": "display",
-      "evidence": "`none` | Élément retiré de la mise en page et de l’arbre d’accessibilité",
+      "evidence": "| `none` | Élément retiré de la mise en page et de l’arbre d’accessibilité |",
       "correctAnswerIndex": 0
     },
     {
@@ -135,7 +135,7 @@
       ],
       "explanation": "Le conteneur Flexbox est le parent ; il organise ses enfants directs.",
       "sourceSection": "flex",
-      "evidence": "`display: flex` s’applique au parent ; ses enfants directs deviennent les éléments flex.",
+      "evidence": "`display: flex` s’applique au parent ; ses enfants directs deviennent les éléments flex. `flex-direction: row` organise selon la direction de la ligne, `column` selon celle de la colonne. L’axe transversal est perpendiculaire à l’axe principal.",
       "correctAnswerIndex": 1
     },
     {
@@ -148,7 +148,7 @@
       ],
       "explanation": "L’axe principal dépend de `flex-direction` : il n’est pas toujours horizontal.",
       "sourceSection": "flex",
-      "evidence": "`justify-content` distribue l’espace libre sur l’axe principal",
+      "evidence": "`justify-content` distribue l’espace libre sur l’axe principal : `flex-start`, `center`, `flex-end`, `space-between`, `space-around` et `space-evenly` offrent des répartitions différentes. `align-items` agit sur l’axe transversal : `stretch`, `center`, `flex-start`, `flex-end`, `baseline`. `stretch` étire les éléments dont la taille transversale est automatique.",
       "correctAnswerIndex": 3
     },
     {
@@ -161,7 +161,7 @@
       ],
       "explanation": "`flex-wrap: wrap` permet aux éléments flex de passer sur plusieurs lignes lorsque la place manque.",
       "sourceSection": "flex",
-      "evidence": "`flex-wrap: wrap` autorise plusieurs lignes quand la place manque.",
+      "evidence": "`flex-wrap: wrap` autorise plusieurs lignes quand la place manque. `gap` réserve des gouttières entre les éléments ou les lignes d’un conteneur flex ou grid. Il ne crée pas d’espace au bord extérieur et n’est donc pas interchangeable avec `margin` ou le padding du parent.",
       "correctAnswerIndex": 2
     },
     {
@@ -174,11 +174,11 @@
       ],
       "explanation": "L’axe transversal est perpendiculaire à l’axe principal ; il dépend de `flex-direction`.",
       "sourceSection": "flex",
-      "evidence": "`align-items` agit sur l’axe transversal",
+      "evidence": "`justify-content` distribue l’espace libre sur l’axe principal : `flex-start`, `center`, `flex-end`, `space-between`, `space-around` et `space-evenly` offrent des répartitions différentes. `align-items` agit sur l’axe transversal : `stretch`, `center`, `flex-start`, `flex-end`, `baseline`. `stretch` étire les éléments dont la taille transversale est automatique.",
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle valeur de display conserve l’élément dans une ligne tout en permettant de régler width et height ?",
+      "question": "Quel display permet de garder un élément sur une ligne tout en réglant sa largeur et sa hauteur ?",
       "answers": [
         "none",
         "block",
@@ -187,7 +187,7 @@
       ],
       "explanation": "`inline-block` permet de définir une largeur et une hauteur tout en participant à une ligne.",
       "sourceSection": "display",
-      "evidence": "`inline-block` | Dans la ligne, avec largeur et hauteur réglables",
+      "evidence": "| `inline-block` | Dans la ligne, avec largeur et hauteur réglables |",
       "correctAnswerIndex": 2
     },
     {
@@ -200,7 +200,7 @@
       ],
       "explanation": "`border-radius` arrondit les coins, sans modifier directement les marges.",
       "sourceSection": "boites",
-      "evidence": "`border-radius` arrondit les coins sans définir une nouvelle marge.",
+      "evidence": "`border: 2px solid #1d4ed8` combine épaisseur, style et couleur. `border-radius` arrondit les coins sans définir une nouvelle marge. Avec `content-box`, la largeur déclarée concerne le contenu : une largeur de 240 px, un padding de 16 px de chaque côté et une bordure de 2 px donnent **276 px hors marge** (`240 + 2 × 16 + 2 × 2`). Avec `border-box`, les 240 px incluent padding et bordures : le contenu dispose de 204 px.",
       "correctAnswerIndex": 3
     },
     {
@@ -213,7 +213,7 @@
       ],
       "explanation": "La balise `link`, placée dans `head`, déclare la relation `stylesheet` et indique le fichier CSS.",
       "sourceSection": "selecteurs",
-      "evidence": "Le document charge ce fichier dans son `head` avec `<link rel=\"stylesheet\" href=\"style.css\">`.",
+      "evidence": "Dans une feuille `style.css`, n’écrivez pas de balises `<style>`. Le document charge ce fichier dans son `head` avec `<link rel=\"stylesheet\" href=\"style.css\">`. Les démonstrations regroupent HTML et CSS uniquement pour rendre chaque exemple autonome.",
       "correctAnswerIndex": 1
     },
     {
@@ -226,7 +226,7 @@
       ],
       "explanation": "Le caractère `#` précède un nom d’identifiant dans un sélecteur CSS.",
       "sourceSection": "selecteurs",
-      "evidence": "`#programme` cible l’élément ayant `id=\"programme\"`.",
+      "evidence": "`#programme` cible l’élément ayant `id=\"programme\"`. Un identifiant est unique dans le document ; pour un style réutilisé, choisissez une classe.",
       "correctAnswerIndex": 3
     },
     {
@@ -239,7 +239,7 @@
       ],
       "explanation": "Le combinateur `>` limite la sélection aux enfants directs.",
       "sourceSection": "selecteurs",
-      "evidence": "Le signe `>` dans `.carte > p` sélectionne seulement les enfants directs.",
+      "evidence": "L’espace dans `.carte p` sélectionne tous les paragraphes à l’intérieur d’une carte, même profondément imbriqués. Le signe `>` dans `.carte > p` sélectionne seulement les enfants directs.",
       "correctAnswerIndex": 0
     },
     {
@@ -252,7 +252,7 @@
       ],
       "explanation": "Avec `column`, l’axe principal suit la direction de la colonne.",
       "sourceSection": "flex",
-      "evidence": "`flex-direction: row` organise selon la direction de la ligne, `column` selon celle de la colonne.",
+      "evidence": "`display: flex` s’applique au parent ; ses enfants directs deviennent les éléments flex. `flex-direction: row` organise selon la direction de la ligne, `column` selon celle de la colonne. L’axe transversal est perpendiculaire à l’axe principal.",
       "correctAnswerIndex": 2
     }
   ]

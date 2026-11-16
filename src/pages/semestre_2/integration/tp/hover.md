@@ -201,3 +201,16 @@ La boîte est étroite et la chaîne peut se couper. Comparez overflow-wrap: any
   }
 </style>
 ```
+
+## Travail à réaliser : justifier les seuils
+
+Construisez une galerie à une colonne, deux dès 700 px et trois dès 1000 px. Ajoutez une navigation avec retour à la ligne, une image fluide et un texte sans espace. Déterminez quel élément déborde avant de choisir une correction.
+
+| Essai | Attendu |
+|---|---|
+| 699 / 700 / 701 px | Passage d’une à deux colonnes au seuil inclus |
+| 999 / 1000 / 1001 px | Passage de deux à trois colonnes |
+| 320 px et titre long | Texte lisible, aucune action coupée |
+| Zoom à 200 % et clavier | Contenus disponibles et focus visible |
+
+Remettez les fichiers et les résultats observés. Ajoutez une condition `orientation: landscape` à titre d’essai : elle décrit le rapport largeur/hauteur du viewport, sans identifier un modèle de téléphone.

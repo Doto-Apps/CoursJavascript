@@ -9,17 +9,17 @@
   "targetCourse": "/semestre_2/developpement_Web/tp/ajout",
   "questions": [
     {
-      "question": "Pourquoi conserver les tâches dans MySQL plutôt que dans une variable PHP locale ?",
+      "question": "Quelle instruction SQL permet de créer une table ?",
       "answers": [
-        "La base persiste entre les requêtes",
-        "La variable PHP locale conserve tout après la réponse",
-        "La table est uniquement une liste du DOM",
-        "La base n’a pas de types"
+        "CREATE TABLE",
+        "SELECT",
+        "DELETE FROM",
+        "UPDATE"
       ],
-      "explanation": "Le stockage durable et les variables d’un traitement ont des durées différentes.",
-      "sourceSection": "notion-1",
-      "evidence": "MySQL conserve les lignes entre les requêtes.",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "CREATE TABLE définit une nouvelle table et ses colonnes.",
+      "sourceSection": "apprentissage",
+      "evidence": "CREATE TABLE todos ("
     },
     {
       "question": "Comment décrire une table SQL ?",
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel champ représente l'identité stable de la tâche ?",
+      "question": "Quel champ permet de retrouver la même tâche même si on change le tri de la liste ?",
       "answers": [
         "done",
         "La position d’affichage",
@@ -48,7 +48,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quel réglage produit l'id automatiquement ?",
+      "question": "Quel mot-clé SQL permet à MySQL de créer automatiquement un id ?",
       "answers": [
         "NOT NULL seulement",
         "ORDER BY",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Quelle clause fixe l'ordre ?",
+      "question": "Quelle clause SQL permet de choisir l’ordre des résultats ?",
       "answers": [
         "WHERE seulement",
         "LIMIT seulement",
@@ -126,7 +126,7 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel mode fournit des clés comme title ?",
+      "question": "Avec PDO, quelle option permet de retrouver une valeur avec le nom de sa colonne, comme title ?",
       "answers": [
         "Le texte du titre uniquement",
         "PDO::FETCH_ASSOC",
@@ -139,20 +139,20 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Pourquoi convertir certains types après la lecture SQL ?",
+      "question": "Quelle écriture PHP convertit id en entier avant l’envoi du JSON ?",
       "answers": [
-        "Supprimer tous les nombres",
-        "Transformer chaque valeur en HTML",
-        "Respecter les types prévus par le contrat JSON",
-        "Modifier arbitrairement les noms de colonnes"
+        "(bool) $row[\"id\"]",
+        "(string) $row[\"id\"]",
+        "(int) $row[\"id\"]",
+        "htmlspecialchars($row[\"id\"])"
       ],
-      "explanation": "Les valeurs lues en base doivent être adaptées aux types attendus par le client.",
-      "sourceSection": "notion-19",
-      "evidence": "Le TP convertit id en entier et done en booléen pour le contrat JSON.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "(int) effectue une conversion vers le type entier.",
+      "sourceSection": "apprentissage",
+      "evidence": "'id' => (int) $row['id'],"
     },
     {
-      "question": "Où conserver la configuration de base ?",
+      "question": "Où faut-il garder le nom de la base, le compte MySQL et son mot de passe ?",
       "answers": [
         "Dans une variable publique JavaScript",
         "Dans le titre de l’onglet",

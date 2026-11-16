@@ -167,3 +167,9 @@ Dans un dossier neuf avec Node/npm disponibles : `npm init -y`, puis `npm instal
 | <a id="notion-18"></a>Sources analysées | La configuration content indique les fichiers où chercher les classes. |
 | <a id="notion-19"></a>Surveillance | --watch relance la compilation après les modifications surveillées. |
 | <a id="notion-20"></a>Version | Les commandes de ce support ciblent Tailwind 3.4. |
+
+## Mise en pratique : compiler une carte
+
+Créez un projet distinct du site de cours avec `index.html`, `input.css` et la configuration Tailwind 3.4.17. Compilez vers `styles.css`, liez ce fichier dans le HTML et construisez une carte avec titre, texte et lien. Remplacez `p-4` par `p-8` et comparez l’espace intérieur ; ajoutez `m-4` pour distinguer la marge.
+
+Vérifiez dans Réseau que `styles.css` charge, puis dans Styles que les utilitaires sont présents. Arrêtez la compilation : la feuille déjà produite reste utilisable. Relancez `--watch`, ajoutez une classe complète et observez sa génération. Remettez sources, configuration, feuille compilée et commande de compilation. [Installation officielle pour Tailwind 3](https://v3.tailwindcss.com/docs/installation).

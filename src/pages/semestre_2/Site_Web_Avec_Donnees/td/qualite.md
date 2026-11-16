@@ -262,3 +262,9 @@ Parcourez tous les contrôles au clavier, vérifiez labels, focus, messages et o
 | <a id="notion-18"></a>Absent | Un projet identifié mais inexistant reçoit 404. |
 | <a id="notion-19"></a>Reproduction | Un rapport de test donne étapes, attendu et observé. |
 | <a id="notion-20"></a>Rejeu | Après correction, le test concerné est rejoué. |
+
+## Tests croisés à remettre
+
+Échangez les projets avec un autre groupe. Suivez le README, puis réalisez consultation, recherche sans résultat, création et édition. Ajoutez titre long, apostrophe, texte ressemblant à une balise, fin vide, date impossible et URL interdite. Contrôlez les statuts et les données persistées, pas seulement les messages visuels.
+
+Effectuez ensuite le parcours au clavier, à 320 px et avec un zoom à 200 %. Mesurez les contrastes selon les [critères étudiés au S1](/semestre_1/produire_Un_Site_Web/norme#contrastes). Remettez anomalies reproductibles, corrections et résultats des nouveaux essais. Le bilan doit distinguer refus de données, panne serveur et liste vide.

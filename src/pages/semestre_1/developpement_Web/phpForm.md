@@ -1,6 +1,6 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP PHP : recevoir et valider un message"
+title: "TP PHP : formulaire de connexion et session"
 type: "TP"
 order: 5
 quizId: "s1-dev-04"
@@ -8,162 +8,153 @@ previousSession: "/semestre_1/developpement_Web/phpVarTab"
 nextSession: "/semestre_1/developpement_Web/phpminichat2"
 ---
 
-<a id="comprendre"></a>
+Une page de connexion reçoit une saisie, vérifie les identifiants puis conserve l’identité reconnue en session. Cette identité sera réutilisée par le mini-chat de la séance 6. Conservez votre travail fonctionnel à la fin de cette séance.
 
-## action, method et name
-
-| Élément | Syntaxe | Fonction |
-|---|---|---|
-| Destination | `<form action="message.php">` | Adresse du script recevant les données. |
-| Méthode | `method="post"` | Envoi des champs dans le corps de la requête. |
-| Nom de champ | `name="pseudo"` | Clé utilisée par PHP pour retrouver la valeur. |
-| Association | `<label for="pseudo">` et `id="pseudo"` | Relie un intitulé visible à son contrôle. |
-| Soumission | `<button type="submit">` | Déclenche l’envoi du formulaire. |
-
-Un `id` permet l’association du label et les sélections dans le document. Il ne remplace pas `name` pour l’envoi. Une méthode GET place les données dans l’URL ; POST les place dans le corps. POST ne chiffre pas le transport : le chiffrement relève de HTTPS.
-
-```html preview title="Nommer un champ avant de le transmettre" height=150
-<form>
-  <label for="pseudo">Votre pseudo</label>
-  <input id="pseudo" name="pseudo" required maxlength="30">
-  <button type="submit">Envoyer</button>
-</form>
-```
-
-Ce rendu fixe montre l’association et la syntaxe. Il n’envoie rien : le véritable formulaire du TP doit être ouvert sur votre serveur PHP. Les attributs `required` et `maxlength` aident l’utilisateur dans le navigateur, mais une requête fabriquée peut les contourner.
-
-## La validation des champs reçus en PHP
-
-L’absence de `$_POST['pseudo']` n’est pas équivalente à un pseudo vide. Récupérez d’abord une valeur si elle existe ; vérifiez qu’il s’agit d’une chaîne ; retirez les espaces de bord avec `trim` ; appliquez la règle de longueur. Un contrôle de type empêche de traiter un tableau reçu à la place du texte attendu.
-
-`trim('   ')` donne une chaîne vide. Une erreur doit nommer le champ et expliquer la correction possible. Gardez les autres valeurs pour éviter de faire tout ressaisir. Lors de leur réaffichage dans le HTML, échappez les valeurs avec `htmlspecialchars` : une saisie ne doit pas devenir une balise.
-
-**Méthode de test :** envoyer un message normal, un champ absent, un texte composé d’espaces, une valeur trop longue et des caractères comme `<` ou `&`. Le serveur doit refuser les données invalides et afficher les données valides comme du texte.
-
-## Du formulaire HTML à $_POST
-
-Un formulaire prépare une requête ; PHP doit ensuite comprendre et vérifier cette requête. Le texte visible du label, l’identifiant du champ et le nom envoyé ne sont pas la même chose. `for` et `id` associent le label au contrôle ; `name` fournit la clé reçue côté PHP.
-
-```html live title="Label, identifiant et nom transmis"
-<style>
-      body {
-        font-family: system-ui, sans-serif;
-        margin: 16px;
-        color: #203047;
-        background: #f3f6fa;
-      }
-      label {
-        display: block;
-        margin-top: 16px;
-      }
-      input,
-      button {
-        font: inherit;
-        padding: 8px;
-      }
-      output {
-        display: block;
-        margin-top: 16px;
-        white-space: pre-wrap;
-      }
-      input:focus-visible,
-      button:focus-visible {
-        outline: 3px solid #2457a7;
-        outline-offset: 3px;
-      }
-    </style>
-
-<h1>Une saisie, une clé</h1>
-    <p>Démonstration locale : aucun serveur ni stockage.</p>
-    <form>
-      <label for="pseudo">Votre pseudo</label>
-      <input id="pseudo" name="pseudo" required />
-      <label for="message">Votre message</label>
-      <input id="message" name="message" required />
-      <button type="submit">Voir les données préparées</button>
-    </form>
-    <output aria-live="polite"></output>
-    <script>
-      document.querySelector("form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        document.querySelector("output").textContent = JSON.stringify(
-          Object.fromEntries(data),
-          null,
-          2,
-        );
-      });
-    </script>
-```
-
-**Le laboratoire est une démonstration front-end :** il affiche les données qui seraient envoyées, sans requête PHP ni stockage. Pour le vrai TP, utilisez le serveur local et le code de réception décrit plus bas.
-
-```php
-<?php
-$valeur = $_POST['pseudo'] ?? '';
-$pseudo = is_string($valeur) ? trim($valeur) : '';
-```
-
-**Lecture accompagnée :** `??` fournit une valeur de secours si la clé manque. Le test de type empêche de traiter un tableau comme une chaîne. `trim` retire les espaces aux extrémités ; une saisie composée d’espaces devient vide. Ces étapes préparent la validation, mais n’acceptent pas automatiquement le message.
-
-**Résultat attendu :** pour une valeur reçue `'  Sam  '`, `$pseudo` contient `'Sam'`. Pour une clé absente ou une valeur de type tableau, il contient une chaîne vide. Ce fragment prépare une variable ; il n’affiche rien à lui seul.
-
-**Thèmes possibles :** avis sur un film, message à un club ou commentaire d’un projet. Gardez une entrée textuelle, une validation et un affichage explicite du résultat.
+| Temps indicatif | Activité |
+|---|---|
+| 10 min | QCM sur tableaux, boucles, sélection et affichage |
+| 40 min | Formulaires, validation, sessions et navigation entre pages |
+| 60 min | Réalisation autonome de la connexion |
+| 10 min | Tests et préparation de la réutilisation au prochain cours |
 
 <a id="formulaire"></a>
 
-## GET et POST dans un formulaire
+## action, method, name et label
 
-```html
-<form method="post" action="message.php">
-  <label for="pseudo">Pseudo</label>
-  <input id="pseudo" name="pseudo" required maxlength="30">
-  <label for="message">Message</label>
-  <textarea id="message" name="message" required maxlength="280"></textarea>
+| Élément | Rôle |
+|---|---|
+| `action` du formulaire | Adresse du script destinataire |
+| `method="post"` | Envoi des champs dans le corps de la requête |
+| `name` d’un contrôle | Clé transmise au serveur |
+| `id` et `for` du label | Association entre contrôle et étiquette visible |
+| Bouton de type submit | Soumission du formulaire |
+
+```html preview title="Un formulaire avec des champs nommés" height=210
+<form method="post" action="reception.php">
+  <label for="nom">Nom</label><input id="nom" name="nom" required>
+  <label for="sujet">Sujet</label><input id="sujet" name="sujet" required>
   <button type="submit">Envoyer</button>
 </form>
 ```
 
-`action` indique la destination ; `method` le mode d'envoi. `name` définit la clé transmise au serveur. `id` relie ici le champ à son label ; il ne remplace pas `name`. GET place les paramètres dans l'URL et convient notamment à une recherche ; POST transmet les données dans le corps de la requête. POST n'est pas un chiffrement : HTTPS protège le transport.
+Ce rendu fixe montre des contrôles ; le PHP s’exécute dans votre projet local. `id` ne remplace pas `name`. GET place les paramètres dans l’URL ; POST transmet les champs dans le corps. POST ne chiffre pas le transport : HTTPS remplit ce rôle. Un champ de type password masque visuellement la saisie ; cela ne chiffre pas la requête.
 
 <a id="reception"></a>
 
-## Les champs absents de $_POST
+## Lire et valider la requête
+
+Une visite de page utilise généralement GET ; le traitement d’un formulaire POST se place dans une branche vérifiant `$_SERVER['REQUEST_METHOD']`. `$_POST` contient ici les champs du formulaire, tandis que `$_GET` contient les paramètres de l’URL.
 
 ```php
-$pseudoBrut = $_POST['pseudo'] ?? '';
-$messageBrut = $_POST['message'] ?? '';
-$pseudo = is_string($pseudoBrut) ? trim($pseudoBrut) : '';
-$message = is_string($messageBrut) ? trim($messageBrut) : '';
-```
-
-`$_POST` contient les données POST ; `$_GET` les paramètres de l'URL. `??` fournit une valeur de repli si la clé est absente ou vaut null. `trim` retire les espaces aux extrémités, pas au milieu. Un client peut envoyer une valeur inattendue, même un tableau : vérifier le type évite de traiter aveuglément toutes les données comme une chaîne.
-
-<a id="validation"></a>
-
-## Les types et limites des valeurs reçues
-
-Les attributs `required` et `maxlength` aident dans le navigateur, mais peuvent être contournés. Le serveur doit vérifier à nouveau : pseudo non vide, message non vide, tailles autorisées. Pour cet atelier, `strlen` compte des octets ; une lettre accentuée peut en occuper plusieurs en UTF-8. Les limites serveur sont donc des limites d'octets clairement indiquées. Une évolution pourra utiliser `mb_strlen` si l'extension est disponible pour compter des caractères.
-
-```php
-$erreurs = [];
-if ($pseudo === '') { $erreurs[] = 'Le pseudo est obligatoire.'; }
-if ($message === '') { $erreurs[] = 'Le message est obligatoire.'; }
-if (strlen($pseudo) > 120) { $erreurs[] = 'Pseudo trop long.'; }
-if (strlen($message) > 1120) { $erreurs[] = 'Message trop long.'; }
-```
-
-Ces plafonds en octets sont distincts des limites de confort 30/280 caractères du formulaire. Affichez les erreurs et ne traitez pas un message invalide. Les validations décrivent les règles acceptées ; elles ne rendent pas automatiquement un texte sûr à insérer dans du HTML.
-
-<a id="sortie"></a>
-
-## L’échappement avec htmlspecialchars
-
-```php
-if ($erreurs === []) {
-    echo '<p>' . htmlspecialchars($pseudo, ENT_QUOTES, 'UTF-8') . ' : '
-        . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+$valeur = $_POST['sujet'] ?? '';
+if (!is_string($valeur)) {
+    $erreurs[] = 'Le sujet doit être du texte.';
+} else {
+    $sujet = trim($valeur);
 }
 ```
 
-Échapper la sortie protège le contexte HTML texte. Ce n'est ni une suppression des données originales ni une protection universelle pour SQL ou JavaScript. Un message `<script>alert(1)</script>` doit être visible comme texte et ne déclencher aucune alerte. N'affichez pas directement `$_POST['message']`.
+`??` fournit une valeur de repli lorsque la clé manque ou vaut null. Vérifiez le type avant d’utiliser une fonction de chaîne : un client peut envoyer un tableau. `trim` retire les espaces aux extrémités, pas ceux au milieu. Pour un mot de passe, conservez la valeur exacte saisie : retirer silencieusement des espaces peut changer le secret.
+
+`required` et les autres contraintes HTML aident la saisie, mais le serveur doit vérifier les données de nouveau. Une chaîne vide, un champ absent et une valeur de mauvais type doivent être traités explicitement. `strlen` compte des octets, pas des caractères Unicode ; annoncez les limites utilisées au lieu de confondre les deux unités.
+
+<a id="identite"></a>
+
+## Vérifier une identité avant de la mémoriser
+
+Une saisie n’est pas une identité vérifiée. Dans l’atelier, un tableau PHP côté serveur associe chaque identifiant à un pseudo et à un mot de passe fictif. On recherche l’entrée correspondante puis on compare le mot de passe reçu avec celui prévu. Une comparaison stricte vérifie valeur et type. Aucun compte n’est créé depuis le formulaire.
+
+Les mots de passe de test sont conservés **en clair dans ce tableau**, pour travailler directement la comparaison stricte `===` déjà vue en séance 2. Le texte saisi doit correspondre exactement au mot de passe du compte sélectionné. Cet exercice réutilise les tableaux, les accès par clé et les conditions.
+
+Un refus affiche un message général d’identifiants incorrects. Il ne crée aucune identité connectée. Ne conservez pas le mot de passe dans la session et ne le réaffichez pas dans le formulaire. Les comptes fixes de cet atelier local servent à comprendre le parcours ; une gestion de comptes réels et le stockage sécurisé des mots de passe seront étudiés séparément.
+
+<a id="session"></a>
+
+## Retrouver des données entre les requêtes
+
+Une variable PHP ordinaire disparaît à la fin de la requête. `session_start()` crée ou reprend une session ; `$_SESSION` permet de retrouver ses données côté serveur lors d’une autre requête. Chaque page qui utilise la session doit la démarrer avant toute sortie HTML.
+
+```php
+<?php
+session_start();
+$_SESSION['preferences'] = ['theme' => 'clair'];
+```
+
+Cet exemple conserve une préférence, pas une connexion. Sur une autre page qui reprend la même session, cette valeur peut être relue. Le navigateur transmet habituellement un identifiant de session dans un cookie ; ce cookie ne contient pas directement tout le tableau PHP. Deux navigateurs indépendants peuvent utiliser deux sessions différentes. La durée de conservation dépend de la configuration : une session n’est pas un stockage permanent garanti.
+
+Après la validation d’une connexion, `session_regenerate_id(true)` renouvelle l’identifiant de session. Il s’utilise après `session_start()` et avant la redirection. Une session ne vérifie pas elle-même les identifiants : elle conserve le résultat de la vérification effectuée par le programme. [Manuel PHP](https://www.php.net/manual/fr/function.session-regenerate-id.php).
+
+<a id="contrat-session"></a>
+
+## Le contrat à réutiliser en séance 6
+
+| Donnée | Convention commune aux pages |
+|---|---|
+| Identité connectée | Entrée `utilisateur` de `$_SESSION` |
+| Champs conservés | `identifiant` et `pseudo`, deux chaînes issues du compte vérifié côté serveur |
+| Visiteur non connecté | Absence de cette entrée |
+| Mot de passe | Jamais conservé dans cette entrée |
+
+Un même nom de clé doit être utilisé par la connexion, la page d’accueil, la déconnexion et le futur mini-chat. La page protégée vérifie l’existence et la forme de l’identité avant de présenter son contenu. Un champ caché ou un pseudo envoyé par le formulaire ne prouve pas la connexion.
+
+| Contrôle PHP | Utilité pour vérifier la forme des données |
+|---|---|
+| `isset` | Tester si une entrée existe et n’est pas null |
+| `is_array` | Vérifier qu’une valeur est un tableau avant d’en lire les champs |
+| `is_string` | Vérifier qu’un champ contient du texte |
+
+Il faut combiner les contrôles nécessaires : la présence d’une entrée seule ne prouve pas que ses champs ont la forme attendue.
+
+<a id="redirection"></a>
+
+## POST, redirection, GET
+
+Après une modification réussie, une réponse 303 indique au navigateur de charger une page en GET. Cela évite qu’un rechargement ordinaire renvoie le même formulaire. `header` doit être appelé avant toute sortie ; `exit` termine le script après l’envoi de la redirection.
+
+```php
+header('Location: confirmation.php', true, 303);
+exit;
+```
+
+Ce fragment illustre une redirection ; son adresse doit correspondre à une page réelle du projet. Après un échec, affichez les erreurs et conservez les valeurs utiles, sauf le mot de passe. Une redirection ne remplace ni la validation ni le contrôle d’accès sur la page de destination.
+
+<a id="deconnexion"></a>
+
+## Déconnexion et affichage
+
+`unset` retire une entrée de tableau. Pour déconnecter l’utilisateur selon notre contrat, retirez l’entrée d’identité de la session, puis redirigez vers la connexion. Cela retire l’identité utilisée par l’application, sans prétendre supprimer toutes les autres données possibles de la session. Déclenchez cette action par un formulaire POST.
+
+Tout texte réaffiché dans le HTML, y compris un pseudo provenant de la session, doit être échappé avec `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. La validation décide ce qu’on accepte ; l’échappement décide comment on affiche le texte dans ce contexte.
+
+<a id="exercices-autonomes"></a>
+
+## TP autonome — préparer l’accès au mini-chat
+
+Réalisez une page de connexion, une page d’accueil protégée et une déconnexion. Aucun programme de départ n’est fourni. Les exemples du cours illustrent les mécanismes séparément ; vous devez les assembler.
+
+### Comptes fictifs de l’atelier
+
+| Identifiant | Pseudo affiché | Mot de passe de test |
+|---|---|---|
+| lea | Léa | atelier |
+| sam | Sam | campus |
+
+Définissez ces comptes dans un tableau PHP côté serveur. La connexion demande identifiant et mot de passe. Une identité reconnue permet d’atteindre l’accueil ; celui-ci affiche le pseudo et propose une déconnexion. Les identifiants incorrects restent sur la connexion avec un message utile. Une visite directe de l’accueil sans connexion renvoie vers la page de connexion.
+
+Les mots de passe fictifs sont en clair : retrouvez celui du compte demandé et comparez-le à la saisie avec la comparaison stricte étudiée. Il faut vérifier aussi que le compte existe avant d’accéder à ses champs.
+
+Respectez le contrat de session défini plus haut. Le nom des fichiers et l’organisation du traitement vous appartiennent. Le programme ne doit dépendre ni de JavaScript ni d’une base de données.
+
+### Vérifications avant la fin de séance
+
+| Essai | Résultat attendu |
+|---|---|
+| Visite directe de l’accueil sans connexion | Retour à la connexion |
+| Compte connu et bon mot de passe | Accueil et pseudo correspondant au compte |
+| Mauvais mot de passe ou identifiant inconnu | Refus ; aucune identité créée |
+| Champ absent, espaces seuls ou tableau au lieu du texte | Refus contrôlé, pas d’erreur PHP |
+| Rechargement après connexion | Même identité, nouvelle visite GET |
+| Déconnexion puis visite directe de l’accueil | Accès refusé |
+| Autre navigateur | Session indépendante |
+
+Conservez votre projet : la séance 6 utilisera cette connexion. Vous devrez savoir expliquer la différence entre données reçues, compte reconnu et identité mémorisée en session.

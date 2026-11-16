@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : construire la structure sémantique"
 type: "TD"
 order: 3
-quizId: "s1-site-02"
 previousSession: "/semestre_1/produire_Un_Site_Web/figma"
 nextSession: "/semestre_1/produire_Un_Site_Web/disposition"
 ---
@@ -63,3 +62,9 @@ Le niveau de titre suit la hiérarchie, pas la taille souhaitée. Ne changez pas
 Retirer temporairement la feuille de style permet d’observer l’ordre réel, les titres et le sens des contrôles. Un validateur HTML complète cette lecture, puis des tests manuels vérifient les liens, les alternatives d’images et la navigation clavier. Ces contrôles répondent à des questions différentes : un HTML valide ne prouve pas à lui seul un parcours utile.
 
 La [disposition CSS](disposition) ajoute ensuite largeur, alignements et gouttières sans modifier les rôles HTML.
+
+## Construire la première version du site
+
+Créez les fichiers du projet et traduisez le parcours du brief en destinations réelles. Rédigez le document complet, les grandes zones et au moins trois articles de projet avec titres hiérarchisés et descriptions. Préparez les images et leurs alternatives, puis associez les liens à leurs cibles exactes.
+
+Contrôlez la lecture sans CSS, la validité HTML, chaque lien et chaque chemin de ressource. Remettez cette version structurée avec les médias et les crédits. Votre binôme doit pouvoir retrouver un projet et le contact sans s’aider des couleurs ou de la maquette.

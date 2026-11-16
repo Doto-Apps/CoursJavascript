@@ -9,14 +9,14 @@
   "targetCourse": "/semestre_2/Site_Web_Avec_Donnees/td/livraison",
   "questions": [
     {
-      "question": "Une requête préparée remplace-t-elle textContent ?",
+      "question": "Utiliser une requête SQL préparée permet-il de se passer de textContent pour afficher un texte ?",
       "answers": [
         "Non, SQL et rendu exigent des protections séparées",
         "Oui, prepare protège tout HTML",
         "Oui, textContent prépare la requête SQL",
         "Oui, le type JSON suffit"
       ],
-      "explanation": "Chaque frontière possède ses risques et ses protections.",
+      "explanation": "La requête préparée sert à passer les données à SQL. textContent sert à afficher le texte dans la page.",
       "sourceSection": "notion-1",
       "evidence": "Validation, paramètres SQL et rendu texte agissent à des frontières distinctes.",
       "correctAnswerIndex": 0
@@ -35,7 +35,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que valider en plus du texte d'un lien ?",
+      "question": "Avant de créer un lien, que faut-il vérifier dans son adresse ?",
       "answers": [
         "Seulement la longueur du label",
         "Seulement le nom du projet",
@@ -48,43 +48,43 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Pourquoi prévoir un traitement d'erreur autour de new URL ?",
+      "question": "Que peut faire new URL si l’adresse fournie est invalide ?",
       "answers": [
-        "Toute adresse devient automatiquement HTTPS",
-        "Le constructeur modifie MySQL",
-        "Les erreurs sont toujours converties en chaîne vide",
-        "Une adresse invalide peut provoquer une exception"
+        "Transformer toute adresse en HTTPS",
+        "Supprimer une ligne MySQL",
+        "Créer automatiquement un lien valide",
+        "Lancer une erreur à traiter avec try / catch"
       ],
-      "explanation": "Une analyse d’URL peut échouer et doit être prise en charge.",
+      "correctAnswerIndex": 3,
+      "explanation": "Une adresse impossible à analyser provoque une erreur.",
       "sourceSection": "notion-4",
-      "evidence": "new URL analyse une URL et peut lever une exception.",
-      "correctAnswerIndex": 3
+      "evidence": "<a id=\"notion-4\"></a>Analyse URL | new URL analyse une URL et peut lever une exception. |"
     },
     {
-      "question": "Quel risque présente outline: none seul ?",
+      "question": "Quel problème peut causer outline: none si on ne prévoit aucun autre style de focus ?",
       "answers": [
         "Le focus devient invisible sans remplacement",
         "Le lien est supprimé",
         "Le formulaire devient GET",
         "La page devient automatiquement responsive"
       ],
-      "explanation": "Un indicateur perceptible doit accompagner le focus clavier.",
+      "explanation": "Il faut pouvoir voir quel élément est sélectionné quand on utilise le clavier.",
       "sourceSection": "notion-7",
       "evidence": "Le focus visible ne doit pas être supprimé sans indication équivalente.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "Quel audit est demandé ?",
+      "question": "Quelle touche permet de passer au contrôle suivant dans une page ?",
       "answers": [
-        "L’ordre des noms de modèles",
-        "Navigation et actions au clavier",
-        "La couleur du terminal",
-        "Le tri des dossiers"
+        "Échap",
+        "Tab",
+        "F5",
+        "Ctrl+S"
       ],
-      "explanation": "L’audit vérifie les usages, pas seulement le rendu au pointeur.",
-      "sourceSection": "notion-8",
-      "evidence": "Tous les contrôles doivent être utilisables sans souris.",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "Tab permet de parcourir les contrôles accessibles au clavier.",
+      "sourceSection": "comprendre",
+      "evidence": "| Clavier. | Tab puis activation. | Contrôles atteignables et focus visible. |"
     },
     {
       "question": "Quelle règle peut aider un enfant Grid qui déborde ?",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quel résultat attendre pour L'atelier photo ?",
+      "question": "Un titre contient une apostrophe. Que doit-il devenir après enregistrement puis affichage ?",
       "answers": [
         "Conserver l’apostrophe correctement",
         "Supprimer tous les caractères spéciaux",
@@ -139,30 +139,30 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Que doit contenir un signalement utile ?",
+      "question": "Dans une API, quel statut HTTP correspond à un projet qui n’existe pas ?",
       "answers": [
-        "Le nom du navigateur uniquement",
-        "Une appréciation comme ça ne marche pas",
-        "Étapes, attendu et observé",
-        "Une capture sans contexte seulement"
+        "201",
+        "200",
+        "404",
+        "422"
       ],
-      "explanation": "Un signalement reproductible permet de comprendre et de retester le problème.",
-      "sourceSection": "notion-19",
-      "evidence": "Un rapport de test donne étapes, attendu et observé.",
-      "correctAnswerIndex": 2
+      "correctAnswerIndex": 2,
+      "explanation": "404 indique que la ressource demandée est introuvable.",
+      "sourceSection": "notion-18",
+      "evidence": "<a id=\"notion-18\"></a>Absent | Un projet identifié mais inexistant reçoit 404. |"
     },
     {
-      "question": "Comment confirmer une correction ?",
+      "question": "Quel statut HTTP correspond à une valeur refusée dans un JSON valide ?",
       "answers": [
-        "Cacher le message d’erreur",
-        "Supprimer le test en échec",
-        "Changer le résultat attendu pour l’accepter",
-        "Rejouer le cas qui échouait et contrôler les cas voisins"
+        "200",
+        "201",
+        "404",
+        "422"
       ],
-      "explanation": "La correction doit résoudre le cas sans créer une régression.",
-      "sourceSection": "notion-20",
-      "evidence": "Après correction, le test concerné est rejoué.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 3,
+      "explanation": "Notre API utilise 422 pour une valeur qui ne respecte pas les règles.",
+      "sourceSection": "notion-17",
+      "evidence": "<a id=\"notion-17\"></a>Erreur valeur | Une valeur non conforme reçoit 422. |"
     }
   ]
 }

@@ -3,7 +3,6 @@ layout: "layouts/Layout.astro"
 title: "Projet : finaliser, remettre et présenter le site"
 type: "TD"
 order: 8
-quizId: "s1-site-07"
 previousSession: "/semestre_1/produire_Un_Site_Web/norme"
 ---
 
@@ -52,3 +51,9 @@ Vérifiez le dossier réellement remis ou publié, pas seulement celui qui fonct
 Une explication technique relie un besoin, une règle et un résultat. Exemple : « Grid partage les colonnes de plusieurs rangées ; ajouter une carte conserve leurs alignements ». Montrez la déclaration concernée puis son effet. Pour Flexbox, nommez l’axe principal avant d’expliquer un alignement.
 
 Les limites connues font partie de la description : un formulaire sans serveur est une démonstration, une liste statique n’est pas une base de données et un test sur une largeur ne couvre pas tous les écrans. Une contribution d’outil ou d’assistant doit pouvoir être expliquée et vérifiée par les personnes qui maintiennent le code.
+
+## Remise et démonstration
+
+Préparez une copie propre du dossier et faites-la ouvrir par un autre groupe en suivant uniquement le README. Vérifiez accueil, trois projets, contact, ressources, petit écran et clavier dans cette copie. Écartez les anciennes versions et conservez les crédits des médias utilisés.
+
+Remettez les fichiers du site, la notice, la grille de tests finale et les limites connues. Préparez une démonstration courte du parcours, puis expliquez un choix de structure et un choix CSS à partir de leurs déclarations et de leur effet visible.

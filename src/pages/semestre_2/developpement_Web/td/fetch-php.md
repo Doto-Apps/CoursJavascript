@@ -209,3 +209,13 @@ Le site de cours Astro sur 4321 et le projet PHP sur 8080 sont deux origines dif
 | <a id="notion-18"></a>Origine | Une origine inclut notamment schéma, hôte et port. |
 | <a id="notion-19"></a>URL relative | L'URL /api/todos.php est résolue sur l'origine de la page ouverte. |
 | <a id="notion-20"></a>Réponse opaque | no-cors ne fournit pas une réponse JSON lisible à ce code. |
+
+## Contrôler la forme reçue avant le rendu
+
+Après `response.json()`, vérifiez que la réponse est un tableau et que chaque entrée possède un id entier positif, un titre chaîne et un état booléen. Un objet JSON valide peut ne pas respecter ce contrat. Ne produisez le nouveau DOM qu’après ces contrôles ; un échec garde un message de reprise compréhensible.
+
+## Travail à réaliser
+
+Faites répondre PHP avec un tableau fixe, puis appelez cette API avec Fetch depuis le même projet. Écrivez une fonction de rendu qui crée les titres avec `textContent`. Ajoutez chargement, état vide et erreur dans une zone d’état.
+
+Testez successivement deux tâches, `[]`, une réponse 404, un corps HTML et un objet à la place de la liste. Remettez HTML/JS/PHP et les résultats. Ouvrir la réponse de l’API seule aide à distinguer une erreur de PHP d’une erreur de rendu.

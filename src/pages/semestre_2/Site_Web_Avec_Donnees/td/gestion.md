@@ -168,7 +168,7 @@ $stmt->execute($validated);
         id="description"
         name="description"
         required
-        maxlength="2000"
+        maxlength="5000"
       ></textarea>
       <label for="image">Image (URL HTTP(S) facultative dans cet essai)</label>
       <input id="image" name="image_url" type="url" maxlength="500" />
@@ -180,7 +180,7 @@ $stmt->execute($validated);
       <input
         id="technos"
         name="technologies"
-        maxlength="255"
+        maxlength="200"
         placeholder="HTML, CSS"
       />
       <label for="projet">Lien du projet (facultatif)</label>
@@ -314,6 +314,11 @@ $stmt->execute($validated);
           return;
         }
         const existing = projects.find((project) => project.id === id);
+        if (data.get("id") && !existing) {
+          document.querySelector("#etat").textContent =
+            "Projet introuvable : l’édition ne crée pas une nouvelle entrée.";
+          return;
+        }
         if (existing) Object.assign(existing, payload);
         else
           projects.push({
@@ -362,3 +367,22 @@ Vérifiez titre non vide, description non vide, longueurs, dates valides et ordr
 | <a id="notion-18"></a>Ordre dates | La fin ne doit pas précéder le début. |
 | <a id="notion-19"></a>URLs | Les liens externes du contrat n'acceptent que HTTP(S). |
 | <a id="notion-20"></a>Gestion locale | Le projet de gestion livré est local ; une publication demande une authentification serveur. |
+
+## Valider une vraie date côté PHP
+
+Le format seul ne suffit pas : certaines fonctions de date normalisent une date impossible. Comparez la date reconstruite au texte reçu.
+
+```php
+function dateReelle(string $valeur): bool {
+    $date = DateTimeImmutable::createFromFormat('!Y-m-d', $valeur);
+    return $date !== false && $date->format('Y-m-d') === $valeur;
+}
+```
+
+`2027-02-28` est valide ; `2027-02-30` est refusée. Vérifiez le type avant d’appeler cette fonction. Une fin absente reste `null`. [Manuel PHP de createFromFormat](https://www.php.net/manual/fr/datetimeimmutable.createfromformat.php).
+
+## Travail à réaliser : ajouter puis éditer en base
+
+Complétez le formulaire du squelette avec les limites du dictionnaire : titre 120, description 5000, technologies 200 et URL 500 caractères. Implémentez POST puis PATCH `?id=N`, avec validations et paramètres SQL. Une édition conserve l’id ; un id inexistant reçoit 404 et ne crée pas un nouveau projet.
+
+Testez ajout, édition sans changement, fin vide, date impossible, fin antérieure au début, URL `javascript:` et texte contenant une apostrophe. En cas de refus, conservez les champs et annoncez l’erreur ; en cas de succès, rechargez les objets confirmés et vérifiez leur persistance. Remettez front, API et résultats.

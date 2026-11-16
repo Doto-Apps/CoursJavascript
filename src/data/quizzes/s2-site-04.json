@@ -22,17 +22,17 @@
       "correctAnswerIndex": 0
     },
     {
-      "question": "Pourquoi garder projects complet ?",
+      "question": "Quelle méthode JavaScript crée un tableau avec seulement les éléments qui satisfont une condition ?",
       "answers": [
-        "Pour changer les ids à chaque recherche",
-        "Pour pouvoir recalculer les résultats et réinitialiser",
-        "Pour supprimer définitivement les projets masqués",
-        "Pour éviter tout traitement du filtre"
+        "find",
+        "filter",
+        "includes",
+        "join"
       ],
-      "explanation": "La source intacte permet de revenir à tous les projets.",
-      "sourceSection": "notion-2",
-      "evidence": "Le tableau complet est conservé pour réinitialiser le filtre.",
-      "correctAnswerIndex": 1
+      "correctAnswerIndex": 1,
+      "explanation": "filter renvoie un nouveau tableau avec les éléments sélectionnés.",
+      "sourceSection": "notion-3",
+      "evidence": "<a id=\"notion-3\"></a>Filter | Array.filter produit le sous-ensemble des éléments qui satisfont une condition. |"
     },
     {
       "question": "Quelle méthode sélectionne les projets visibles ?",
@@ -48,33 +48,33 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Pourquoi appliquer trim à la recherche ?",
+      "question": "Que retire trim() d’une recherche saisie ?",
       "answers": [
-        "Supprimer tous les accents",
-        "Modifier les données en base",
-        "Mettre tous les textes en majuscules",
-        "Retirer les espaces aux extrémités de la saisie"
+        "Tous les espaces entre les mots",
+        "Tous les accents",
+        "Toutes les lettres majuscules",
+        "Les espaces au début et à la fin"
       ],
-      "explanation": "La recherche ne doit pas changer de sens à cause d’espaces de bord.",
+      "correctAnswerIndex": 3,
+      "explanation": "trim ne modifie pas les espaces à l’intérieur du texte.",
       "sourceSection": "notion-4",
-      "evidence": "trim enlève les espaces de bord de la recherche.",
-      "correctAnswerIndex": 3
+      "evidence": "<a id=\"notion-4\"></a>Normalisation | trim enlève les espaces de bord de la recherche. |"
     },
     {
-      "question": "Quelle normalisation traite la casse ?",
+      "question": "Quelle méthode permet de comparer les titres sans tenir compte des majuscules et minuscules ?",
       "answers": [
         "toLocaleLowerCase('fr')",
         "trim seulement",
         "split(',') seulement",
         "JSON.stringify"
       ],
-      "explanation": "Normaliser la casse permet de comparer indépendamment des majuscules.",
+      "explanation": "Mettre les deux textes en minuscules permet de les comparer sans être gêné par les majuscules.",
       "sourceSection": "notion-5",
       "evidence": "toLocaleLowerCase('fr') sert à comparer les titres sans tenir compte de la casse.",
       "correctAnswerIndex": 0
     },
     {
-      "question": "La normalisation du cours retire-t-elle les accents ?",
+      "question": "Le code du cours rend-il aussi les lettres accentuées identiques aux lettres sans accent ?",
       "answers": [
         "Oui, includes retire les accents",
         "Non, les accents restent significatifs",
@@ -87,7 +87,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quelle méthode teste la présence du texte ?",
+      "question": "Quelle méthode vérifie qu’un titre contient le texte recherché ?",
       "answers": [
         "createElement",
         "JSON.parse",
@@ -100,7 +100,7 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Que donne la recherche textuelle vide ?",
+      "question": "Si le champ de recherche est vide, quels titres correspondent à la recherche ?",
       "answers": [
         "Aucun projet n’est autorisé",
         "Le premier projet seulement",
@@ -113,7 +113,7 @@
       "correctAnswerIndex": 3
     },
     {
-      "question": "Quelle méthode réalise le découpage ?",
+      "question": "Quelle méthode sépare les noms de technologies écrits dans une chaîne avec des virgules ?",
       "answers": [
         "split(',')",
         "trim seulement",
@@ -139,7 +139,7 @@
       "correctAnswerIndex": 1
     },
     {
-      "question": "Quel événement écoute la recherche ?",
+      "question": "Quel événement utiliser pour relancer la recherche pendant que l’utilisateur écrit ?",
       "answers": [
         "mouseover",
         "load",
@@ -152,14 +152,14 @@
       "correctAnswerIndex": 2
     },
     {
-      "question": "Comment comprendre zéro résultat après filtrage ?",
+      "question": "Le filtre ne trouve aucun projet. Quel message convient ?",
       "answers": [
         "Une panne de base garantie",
         "Aucun projet enregistré forcément",
         "Une suppression réussie",
         "Aucun résultat pour ces filtres"
       ],
-      "explanation": "Zéro résultat filtré ne signifie pas que la collection source est vide.",
+      "explanation": "Zéro résultat filtré ne signifie pas que le tableau de départ est vide.",
       "sourceSection": "notion-19",
       "evidence": "Aucun résultat de filtre ne signifie pas nécessairement une base vide.",
       "correctAnswerIndex": 3
