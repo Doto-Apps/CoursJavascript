@@ -1,0 +1,142 @@
+{
+  "uid": "s3-alter-ego",
+  "name": "Révision — Appeler une API de LLM et créer un Alter Ego",
+  "sourceCourse": "/semestre_3/deploiement_Services/nodeS4",
+  "sourceSession": "S3-DEP-04",
+  "targetCourse": "/semestre_3/deploiement_Services/nodeS5",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "questions": [
+    {
+      "question": "À quoi sert un prompt envoyé à un LLM ?",
+      "answers": [
+        "À installer le SDK",
+        "À orienter le texte que le modèle va produire",
+        "À ouvrir un port",
+        "À régler le style CSS du chat"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le modèle s’appuie sur le texte du prompt pour construire sa réponse.",
+      "sourceSection": "llm-prompt",
+      "evidence": "Un LLM est un modèle de langage capable de produire du texte à partir de ce qu’on lui fournit. Son API reçoit une requête et renvoie un résultat. Un prompt est un texte donné au modèle pour orienter sa réponse."
+    },
+    {
+      "question": "Dans l’Alter Ego, qu’est-ce qui décrit ce que l’utilisateur veut maintenant ?",
+      "answers": [
+        "La clé API",
+        "Les instructions de personnalité",
+        "Le nom du modèle",
+        "Le message utilisateur"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le message utilisateur contient la demande du moment.",
+      "sourceSection": "llm-prompt",
+      "evidence": "Les instructions définissent la personnalité et la manière de répondre. Le message utilisateur contient la demande du moment. Par exemple, « Tu es Nila, une bibliothécaire de science-fiction. Réponds en deux phrases et pose une question » peut servir d’instruction. « Tu me conseilles quoi pour ce soir ? » est un message utilisateur. Inventez un personnage et essayez de formuler deux demandes différentes qui lui seraient adressées."
+    },
+    {
+      "question": "Quel programme appelle l’API OpenAI dans le projet ?",
+      "answers": [
+        "Le serveur Express",
+        "Le JavaScript du navigateur",
+        "L’éditeur de code",
+        "La feuille CSS"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Le navigateur parle au serveur. Le serveur contrôle la saisie puis appelle le fournisseur.",
+      "sourceSection": "trajet",
+      "evidence": "Dans le navigateur, le clic ou la validation du formulaire déclenche un POST avec `{ message }`. Express valide la saisie, appelle l’API et retourne un objet `{ reply }`. Le navigateur lit `reply` et ajoute la réplique à la conversation. Testez ce trajet avec une réplique fixe côté serveur avant d’activer l’appel réel."
+    },
+    {
+      "question": "Où placer la valeur de OPENAI_API_KEY ?",
+      "answers": [
+        "Dans le HTML",
+        "Dans le JavaScript du navigateur",
+        "Dans l’environnement du serveur",
+        "Dans le README remis"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La clé authentifie les requêtes du serveur et doit rester privée.",
+      "sourceSection": "cle-api",
+      "evidence": "Une clé API authentifie les appels auprès du fournisseur. La clé `OPENAI_API_KEY` appartient à l’environnement du serveur. Elle doit rester hors du HTML, du JavaScript chargé par le navigateur, du dépôt, du rendu et des journaux."
+    },
+    {
+      "question": "À quoi sert la clé API OpenAI ?",
+      "answers": [
+        "Choisir le ton du personnage",
+        "Authentifier les appels auprès du fournisseur",
+        "Fixer le port Express",
+        "Sérialiser le message en JSON"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le fournisseur utilise la clé pour authentifier l’appel.",
+      "sourceSection": "cle-api",
+      "evidence": "Une clé API authentifie les appels auprès du fournisseur. La clé `OPENAI_API_KEY` appartient à l’environnement du serveur. Elle doit rester hors du HTML, du JavaScript chargé par le navigateur, du dépôt, du rendu et des journaux."
+    },
+    {
+      "question": "Quel champ de la requête OpenAI porte la personnalité dans l’exemple ?",
+      "answers": [
+        "instructions",
+        "input",
+        "model",
+        "max_output_tokens"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "instructions décrit le comportement du personnage alors que input contient la demande de l’utilisateur.",
+      "sourceSection": "appel-modele",
+      "evidence": "  instructions: personnalite,"
+    },
+    {
+      "question": "Quelle propriété du résultat SDK fournit le texte de la réplique ?",
+      "answers": [
+        "instructions",
+        "req.body",
+        "status",
+        "output_text"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le serveur lit output_text puis envoie la réplique au navigateur sous la propriété reply.",
+      "sourceSection": "appel-modele",
+      "evidence": "Dans la requête à OpenAI, `instructions` porte la personnalité et `input` porte le message de l’utilisateur. Pour une génération de texte réussie, le SDK expose la réplique dans `resultat.output_text`. Vérifiez que la génération est terminée et que le texte est présent avant d’envoyer `reply`. Commencez par modifier le ton dans vos instructions et observez l’effet sur une même demande lorsque le mode réel est activé."
+    },
+    {
+      "question": "Que contrôle max_output_tokens ?",
+      "answers": [
+        "Le nombre de clics autorisés",
+        "Le nombre de routes Express",
+        "Le budget maximal de sortie du modèle pour un appel",
+        "La longueur maximale autorisée dans le formulaire"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Ce paramètre borne les tokens de sortie du modèle.",
+      "sourceSection": "couts-limites",
+      "evidence": "Un token est une petite unité de texte. Le fournisseur facture les tokens d’entrée et de sortie selon le tarif du modèle. `max_output_tokens` fixe le budget maximal de sortie pour un appel. Demandez deux phrases et commencez sans historique conversationnel. Si vous ajoutez un historique, limitez le nombre de messages envoyés."
+    },
+    {
+      "question": "Comment éviter deux envois dus à un double clic ?",
+      "answers": [
+        "Désactiver le bouton pendant la requête",
+        "Effacer la clé côté serveur",
+        "Relancer le serveur après chaque clic",
+        "Remplacer tout POST par un GET"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Bloquer le bouton pendant l’envoi évite une seconde soumission depuis ce formulaire.",
+      "sourceSection": "couts-limites",
+      "evidence": "- **Envoi.** Désactivez le bouton pendant la requête et réactivez-le dans `finally`. Lancez l’appel lors de la soumission du formulaire."
+    },
+    {
+      "question": "Que renvoie le serveur en mode simulation ?",
+      "answers": [
+        "Une réponse réelle facturée",
+        "La clé API dans le corps",
+        "Une réplique fixe au même format que le mode réel",
+        "Une page sans réponse JSON"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La simulation teste le dialogue client-serveur avec des données fixes.",
+      "sourceSection": "couts-limites",
+      "evidence": "- **Simulation.** Avec `MODE_LLM=simulation`, renvoyez une réplique fixe en gardant le même format `{ reply }`. Ce mode permet de tester le chat sans appel facturé ni clé."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Configurer les services et connecter un modèle local"
+title: "Récupérer des données avec fetch et créer des cartes"
 type: "TD"
 order: 2
 quizId: "s3-node-chatbot"
@@ -8,103 +8,89 @@ previousSession: "/semestre_3/deploiement_Services/nodeS1"
 nextSession: "/semestre_3/deploiement_Services/tpRPG"
 ---
 
-<a id="adresses"></a>
+Repartez du serveur Express de la séance 1. Le navigateur va récupérer un catalogue, puis construire une carte HTML par élément.
 
-## 127.0.0.1, adresse réseau et 0.0.0.0
+<a id="catalogue"></a>
 
-| Valeur | Usage | Erreur à éviter |
-|---|---|---|
-| 127.0.0.1 ou localhost | Joindre sa propre machine. | Donner localhost à un camarade : il joindrait son propre PC. |
-| 0.0.0.0 dans HOST | Écouter sur les interfaces réseau du serveur. | L’utiliser comme adresse à distribuer aux clients. |
-| Adresse IP du poste dans la salle | Joindre le poste depuis une autre machine autorisée. | Confondre cette IP avec celle d’un autre réseau. |
-| Port 3000 | API du personnage. | Appeler le port du modèle à la place. |
-| Port 1234 | Serveur LM Studio par défaut. | Penser qu’installer LM Studio suffit à lancer ce serveur. |
+## Renvoyer une collection depuis Express
 
-Deux services sur la même machine ont besoin de ports distincts. Sur deux machines, le même numéro peut être utilisé. Le pare-feu et le réseau de la salle doivent autoriser les échanges : vérifiez avec l’enseignant, sans désactiver globalement le pare-feu.
+Téléchargez le [catalogue de six jeux et films fictifs](/exemples/s3/catalogue.json) dans votre projet. Chaque entrée contient un identifiant, un titre, une année, une description, une catégorie, une note sur 10 et une référence vers une illustration générique. Le premier objet est « Le phare immobile ».
 
-<a id="configuration"></a>
+Dans un projet CommonJS, `require("./catalogue.json")` charge le fichier en tableau JavaScript. Déclarez une route `GET /catalogue` qui envoie ce tableau avec `res.json(catalogue)`. Cette méthode sérialise les données et les envoie dans une réponse HTTP au format JSON. Ouvrez la route dans le navigateur et vérifiez que la réponse contient six objets. Si le client tourne sur une autre origine, reprenez le réglage CORS de la séance 1.
 
-## process.env et le fichier .env
+<a id="fetch"></a>
 
-Créez `.env` à côté de personnage.mjs. Les valeurs ci-dessous sont des exemples à adapter : LM_MODEL est l’identifiant du modèle réellement chargé, pas une famille approximative.
+## Lire la réponse HTTP
 
-```ini
-PORT=3000
-HOST=127.0.0.1
-PERSONNAGE=A Fata
-MODE=simulation
-LM_BASE_URL=http://127.0.0.1:1234/v1
-LM_MODEL=identifiant-du-modele-charge
-```
+`fetch(url)` envoie une requête HTTP à l’URL indiquée. Par défaut, la méthode utilisée est GET. L’appel retourne une promesse qui fournit un objet de réponse HTTP quand les en-têtes sont arrivés.
 
-Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.
-
-N’ajoutez pas un véritable secret au dépôt ou au rapport. Une configuration ne remplace pas un contrôle d’accès ; cette API pédagogique vise le réseau de la salle, pas une exposition publique.
-
-<a id="modele"></a>
-
-## L’appel HTTP au modèle local
-
-Dans LM Studio, chargez le modèle, ouvrez l’espace Developer et démarrez le serveur. Vérifiez l’adresse et la liste des modèles. Remplacez **uniquement repondre** du squelette par cette fonction :
+`await` attend le résultat d’une promesse avant de poursuivre dans la fonction en cours. À l’intérieur d’une fonction, cette fonction doit être déclarée avec `async`. `response.json()` lit le corps et analyse le texte JSON pour produire une valeur JavaScript. Cette lecture renvoie aussi une promesse.
 
 ```js
-async function repondre(message) {
-  if (process.env.MODE !== "modele") {
-    return `Je suis ${personnage}. J’ai reçu : ${message}`;
-  }
-  const base = (process.env.LM_BASE_URL || "http://127.0.0.1:1234/v1").replace(/\/$/, "");
-  const response = await fetch(`${base}/chat/completions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    signal: AbortSignal.timeout(30000),
-    body: JSON.stringify({
-      model: process.env.LM_MODEL,
-      messages: [
-        {
-          role: "system",
-          content: `Tu incarnes ${personnage}, dans un conte corse. Réponds en français en deux phrases.`,
-        },
-        { role: "user", content: message },
-      ],
-      temperature: 0.7,
-      max_tokens: 120,
-    }),
-  });
-  if (!response.ok) throw new Error(`Modèle : HTTP ${response.status}`);
-  const data = await response.json();
-  const texte = data.choices?.[0]?.message?.content;
-  if (typeof texte !== "string" || !texte.trim()) {
-    throw new Error("Réponse du modèle sans texte");
-  }
-  return texte.trim();
+async function lireCatalogue() {
+  const response = await fetch("http://localhost:3000/catalogue");
+  if (!response.ok) throw new Error("Catalogue indisponible");
+  const catalogue = await response.json();
+  console.log(catalogue);
 }
 ```
 
-**Résultat attendu :** POST /message conserve personnage et reply. Seule la fabrication de reply change. Le serveur personnage transforme les erreurs du modèle en réponse 502 ; le client n’a pas à connaître choices. La limite d’attente de 30 secondes évite une requête suspendue sans fin ; elle ne garantit pas une génération aussi rapide.
+Appelez la fonction dans le JavaScript de votre page et ouvrez la console. Si votre serveur écoute ailleurs, adaptez l’URL. Vous devez voir un tableau de six objets. `response.ok` indique un statut HTTP de réussite. Essayez un chemin inexistant puis rétablissez la bonne URL.
 
-| Message envoyé au modèle | Rôle |
-|---|---|
-| system | Contexte et consignes de personnage. |
-| user | Réplique reçue dans cet échange. |
-| assistant | Réponse du modèle ; utile dans un historique si on l’ajoute. |
+Le JSON transmis est du texte. Après lecture, vous manipulez des valeurs JavaScript, par exemple un tableau contenant des objets.
 
-Ce code n’enregistre pas d’historique entre les requêtes. Fournir un contexte n’entraîne pas le modèle et ne modifie pas ses poids. Les réponses peuvent varier : un test vérifie la structure et les limites, pas une phrase exacte.
+<a id="tableaux-objets"></a>
 
-<a id="diagnostic"></a>
+## Lire un tableau et les propriétés d’un objet
 
-## Les erreurs entre client, API et modèle
+Un tableau contient plusieurs valeurs ordonnées. Son premier élément est à l’indice `0` et sa propriété `length` donne le nombre d’éléments. Dans un objet, la notation `objet.propriete` lit la valeur de la propriété indiquée.
 
-| Test | Conclusion si réussite | Prochain contrôle si échec |
-|---|---|---|
-| health sur son poste | L’API écoute localement. | Processus, port, erreur terminal. |
-| health depuis le binôme | Le trajet réseau vers l’API fonctionne. | IP, HOST, réseau, pare-feu autorisé. |
-| message en simulation | Lecture, validation et contrat fonctionnent. | Corps JSON et route. |
-| message en mode modèle | L’API atteint le modèle et lit son texte. | Serveur LM, adresse, modèle chargé, statut et délai. |
+```js
+console.log(catalogue[0].titre);
+console.log(catalogue.length);
+```
 
-health ne contacte pas le modèle : une API saine peut avoir une dépendance en panne. Un échange Node → Node n’est pas soumis au CORS du navigateur. Si on ajoute une interface Web d’origine différente, il faut traiter cette frontière séparément.
+Après la lecture du catalogue, ces lignes affichent « Le phare immobile » et `6`. Affichez ensuite la catégorie du deuxième élément.
 
-## Pour approfondir
+<a id="boucles"></a>
 
-- [Variables d’environnement de Node](https://nodejs.org/docs/latest-v22.x/api/cli.html#--env-filefile).
-- [API Chat Completions de LM Studio](https://lmstudio.ai/docs/developer/openai-compat/chat-completions).
-- [AbortSignal et limite d’attente](https://nodejs.org/docs/latest-v22.x/api/globals.html#static-method-abortsignaltimeoutdelay).
+## Parcourir la collection
+
+Une boucle `for...of` donne successivement les valeurs du tableau. `forEach()` appelle la fonction fournie une fois par élément.
+
+```js
+catalogue.forEach((fiche) => {
+  console.log(fiche.titre);
+});
+```
+
+Vous obtenez six lignes dans la console. Affichez maintenant le titre et l’année sur la même ligne.
+
+<a id="dom"></a>
+
+## Créer et insérer un élément HTML
+
+Un *template literal* s’écrit entre accents graves. Il permet d’insérer la valeur d’une expression avec `${expression}`. `document.createElement()` crée un élément du DOM. `append()` ajoute cet élément à un conteneur déjà présent dans la page.
+
+```html live title="Un titre créé à partir d’un objet"
+<div id="apercu"></div>
+<script>
+  const fiche = { titre: "Le phare immobile", annee: 2024 };
+  const titre = document.createElement("h3");
+  titre.textContent = `${fiche.titre} (${fiche.annee})`;
+  document.querySelector("#apercu").append(titre);
+</script>
+```
+
+L’aperçu affiche « Le phare immobile (2024) ». Changez l’année dans l’objet et relancez. Pour insérer du texte provenant d’une réponse, utilisez `textContent`.
+
+<a id="cartes"></a>
+
+## Construire une grille de cartes
+
+1. Créez un conteneur vide dans `index.html`. Affichez d’abord une seule carte avec le premier objet du catalogue.
+2. Affichez l’image, le titre, la catégorie, la description et l’année ou la note. Placez [l’illustration générique](/images/learning/landscape.svg) dans le dossier servi par votre client sous `images/learning/landscape.svg` ou adaptez le chemin dans le catalogue.
+3. Construisez les cartes dans une boucle. Avec le fichier fourni, vous devez obtenir six cartes. Ajoutez un objet au tableau et vérifiez qu’une septième carte apparaît sans ajouter de carte à la main dans le HTML.
+4. Mettez en page le conteneur en CSS. Vérifiez que les cartes restent lisibles avec une fenêtre étroite.
+
+**Pour aller plus loin.** Triez par note, filtrez par catégorie et affichez le nombre de cartes visibles. En bonus, ajoutez une recherche par titre et affichez un message quand la recherche ne donne aucun résultat ou si le serveur est indisponible.

@@ -1,164 +1,138 @@
 {
-  "name": "Révision — Node.js : créer une API de personnage",
+  "name": "Révision — Introduction à Node.js et Express",
   "mode": "train",
   "questionsPerTest": 10,
   "timeByQuestionInSeconds": 20,
   "questions": [
     {
-      "question": "Quand on lance un serveur Node.js, où son JavaScript s’exécute-t-il ?",
+      "question": "Qu’est-ce que Node.js ?",
       "answers": [
-        "Dans un processus hors du navigateur",
-        "Dans la feuille CSS",
-        "Dans chaque titre HTML",
-        "Dans le résolveur DNS"
+        "Un navigateur Web",
+        "Un outil pour faire tourner un serveur en JavaScript",
+        "Une bibliothèque CSS",
+        "Une base de données"
       ],
-      "explanation": "Node fournit un environnement JavaScript distinct de celui de la page.",
+      "correctAnswerIndex": 1,
+      "explanation": "Node.js exécute du JavaScript hors du navigateur. On peut l’utiliser pour faire tourner un serveur.",
       "sourceSection": "execution",
-      "evidence": "Dans le navigateur, JavaScript peut manipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interface : elle fixe les adresses, les données attendues et les réponses promises.",
-      "correctAnswerIndex": 0
+      "evidence": "Node.js est un environnement qui exécute JavaScript hors du navigateur, notamment côté serveur. Comme pour un script PHP exécuté côté serveur, le programme tourne sur la machine qui héberge le service. Un programme Node.js peut aussi simplement afficher du texte dans le terminal."
     },
     {
-      "question": "Quelles informations permettent au serveur de reconnaître une route de l’API ?",
+      "question": "Que fait cd dans un terminal ?",
       "answers": [
-        "Un nom de personnage et une image seulement",
-        "Une méthode HTTP et un chemin",
-        "Une couleur et une police",
-        "Un fichier et sa taille seulement"
-      ],
-      "explanation": "GET /health et POST /message ont des usages distincts.",
-      "sourceSection": "execution",
-      "evidence": "| Route | Méthode HTTP et chemin reconnus par le serveur. | GET /health est différent de POST /message. |",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "À quoi sert le port 3000 ?",
-      "answers": [
-        "Limiter le texte à trois caractères",
-        "Fixer le statut HTTP",
-        "Joindre le service qui écoute sur la machine",
-        "Identifier la troisième page"
-      ],
-      "explanation": "Le port distingue un service sur une machine donnée.",
-      "sourceSection": "execution",
-      "evidence": "| Port | Numéro permettant de joindre un service sur une machine. | Ici 3000 ; un autre processus ne peut pas déjà l’occuper. |",
-      "correctAnswerIndex": 2
-    },
-    {
-      "question": "Quelle requête permet de vérifier que le serveur du TP répond ?",
-      "answers": [
-        "POST /health",
-        "GET /message",
-        "DELETE /message",
-        "GET /health"
-      ],
-      "explanation": "GET /health permet de vérifier que le serveur répond, sans envoyer de message.",
-      "sourceSection": "contrat",
-      "evidence": "| GET /health | Aucun. | 200, objet avec ok et personnage. |",
-      "correctAnswerIndex": 3
-    },
-    {
-      "question": "Quel champ est attendu dans le corps de POST /message ?",
-      "answers": [
-        "message",
-        "personnage uniquement",
-        "reply uniquement",
-        "port"
-      ],
-      "explanation": "Le client envoie un texte dans message ; le serveur fournit la réplique.",
-      "sourceSection": "contrat",
-      "evidence": "| POST /message | Objet JSON avec message, texte de 1 à 1000 caractères. | 200, objet avec personnage et reply. |",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "Quel statut renvoie le squelette pour un message vide ?",
-      "answers": [
-        "404",
-        "400",
-        "200",
-        "201"
-      ],
-      "explanation": "Le serveur refuse le texte vide après contrôle et nettoyage.",
-      "sourceSection": "contrat",
-      "evidence": "| POST /message invalide | JSON mal formé ou message invalide. | 400, objet avec error. |",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Comment traiter une route inconnue ?",
-      "answers": [
-        "Inventer une réplique",
-        "Ne jamais terminer la réponse",
-        "Répondre 404 avec une erreur",
-        "Annoncer un succès 200"
-      ],
-      "explanation": "Une adresse non reconnue doit avoir une réponse explicite.",
-      "sourceSection": "contrat",
-      "evidence": "| Autre route | — | 404, objet avec error. |",
-      "correctAnswerIndex": 2
-    },
-    {
-      "question": "À quoi sert JSON.stringify avant d’envoyer une réponse ?",
-      "answers": [
-        "Analyser une réponse reçue",
-        "Modifier le DOM",
-        "Valider automatiquement tous les champs",
-        "Produire le texte JSON de la réponse"
-      ],
-      "explanation": "JSON.stringify transforme les données en texte JSON avant leur envoi.",
-      "sourceSection": "serveur",
-      "evidence": "response.end(JSON.stringify(data));",
-      "correctAnswerIndex": 3
-    },
-    {
-      "question": "Comment le corps d’une requête peut-il arriver au serveur Node.js ?",
-      "answers": [
-        "En plusieurs morceaux à rassembler",
-        "Toujours comme un objet JavaScript déjà validé",
-        "Uniquement sous forme d’un fichier CSS",
-        "Toujours dans le cookie de session"
-      ],
-      "correctAnswerIndex": 0,
-      "explanation": "Le serveur reçoit les morceaux puis reconstitue le texte à analyser.",
-      "sourceSection": "serveur",
-      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deux limites n’ont pas la même unité."
-    },
-    {
-      "question": "Quel message le serveur accepte-t-il selon les règles du TP ?",
-      "answers": [
-        "Un nombre seul",
-        "Un texte non vide de longueur autorisée",
-        "Un tableau de nombres",
-        "Un objet sans message"
-      ],
-      "explanation": "Le serveur vérifie le type et les limites, pas seulement la présence d’un corps.",
-      "sourceSection": "contrat",
-      "evidence": "| POST /message | Objet JSON avec message, texte de 1 à 1000 caractères. | 200, objet avec personnage et reply. |",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Quel bloc permet au serveur Node.js d’intercepter une erreur lancée dans try ?",
-      "answers": [
-        "return uniquement",
-        "import",
-        "catch",
-        "const"
-      ],
-      "correctAnswerIndex": 2,
-      "explanation": "catch traite l’erreur produite dans le bloc try.",
-      "sourceSection": "serveur",
-      "evidence": "} catch {"
-    },
-    {
-      "question": "Quel effet a return devant l’appel qui envoie la réponse depuis le gestionnaire ?",
-      "answers": [
-        "Relancer le serveur",
-        "Supprimer le client",
-        "Changer le numéro du port",
-        "Terminer l’exécution du gestionnaire après cet appel"
+        "Crée un dossier",
+        "Efface un dossier",
+        "Lance un serveur",
+        "Change de dossier"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "return empêche de continuer vers les instructions suivantes du gestionnaire.",
-      "sourceSection": "serveur",
-      "evidence": "La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deux limites n’ont pas la même unité."
+      "explanation": "cd signifie Change Directory. La commande change le dossier courant du terminal.",
+      "sourceSection": "terminal",
+      "evidence": "- `cd` signifie *Change Directory*. Cette commande change le répertoire courant du terminal."
+    },
+    {
+      "question": "À quoi sert mkdir dans un terminal ?",
+      "answers": [
+        "À créer un dossier",
+        "À entrer dans un dossier",
+        "À supprimer un dossier",
+        "À démarrer le serveur"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "mkdir crée un dossier dans le répertoire courant quand on lui donne un nom simple, comme dans mkdir projet.",
+      "sourceSection": "terminal",
+      "evidence": "- `mkdir` signifie *Make Directory*. Cette commande crée un répertoire."
+    },
+    {
+      "question": "Que fait node nana.js si nana.js contient le code d’un serveur ?",
+      "answers": [
+        "Ouvre nana.js dans l’éditeur",
+        "Installe Express",
+        "Exécute nana.js et démarre le serveur",
+        "Crée un fichier nana.js"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "node exécute le fichier indiqué. Ici, le code de ce fichier démarre le serveur.",
+      "sourceSection": "execution",
+      "evidence": "Si le fichier exécuté contient le code de démarrage d’un serveur, cette commande lance ce serveur."
+    },
+    {
+      "question": "À quoi sert la commande npm run suivie d’un nom de script ?",
+      "answers": [
+        "À lancer le script défini dans package.json",
+        "À installer un paquet",
+        "À créer un dossier",
+        "À ouvrir une page Web"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "npm run lance la commande associée au nom du script dans package.json.",
+      "sourceSection": "scripts-npm",
+      "evidence": "Ajoutez l’entrée `serveur` dans la section `scripts` du fichier existant. Pour exécuter un script défini dans `package.json`, utilisez `npm run nom-du-script`. Ici, `npm run serveur` lance `node app.js`. Si vous utilisez encore le premier exemple, le même message s’affiche dans le terminal."
+    },
+    {
+      "question": "Qu’est-ce qu’Express ?",
+      "answers": [
+        "Un langage de programmation",
+        "Un navigateur Web",
+        "Un éditeur de code",
+        "Une bibliothèque JavaScript pour créer des serveurs et des API"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Express fournit des fonctions pour créer des routes et répondre aux requêtes HTTP.",
+      "sourceSection": "express",
+      "evidence": "Node.js exécute le code JavaScript. Express est une bibliothèque JavaScript qui facilite la création de serveurs HTTP et d’API."
+    },
+    {
+      "question": "Qu’est-ce qu’une bibliothèque JavaScript ?",
+      "answers": [
+        "Un dossier d’images",
+        "Un ensemble de fonctions qu’on peut réutiliser",
+        "Un fichier qui contient uniquement du HTML",
+        "Un outil pour changer de dossier"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Une bibliothèque fournit du code déjà écrit pour faciliter le travail sur un projet.",
+      "sourceSection": "dependances",
+      "evidence": "Une bibliothèque JavaScript rassemble des fonctions écrites pour être réutilisées dans d’autres projets. Vous écrivez la logique de votre application en JavaScript et vous pouvez utiliser des bibliothèques pour des tâches courantes, comme gérer des requêtes HTTP. npm sert notamment à déclarer et installer ces bibliothèques dans un projet."
+    },
+    {
+      "question": "À quoi sert fetch() ?",
+      "answers": [
+        "À créer un dossier sur le serveur",
+        "À démarrer Express",
+        "À envoyer une requête, par exemple pour récupérer des données",
+        "À créer une carte HTML"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "fetch() permet à la page d’envoyer une requête HTTP et de récupérer la réponse du serveur.",
+      "sourceSection": "client-serveur",
+      "evidence": "Dans la page `index.html` de la séance, `fetch()` sert à envoyer une requête HTTP depuis le JavaScript du navigateur. Le navigateur peut ainsi récupérer le message du serveur pour l’afficher dans la page. La séance suivante consacrée à `fetch()` détaillera la lecture de la réponse."
+    },
+    {
+      "question": "À quoi sert app.get() dans Express ?",
+      "answers": [
+        "À lancer le serveur",
+        "À installer Express",
+        "À envoyer une requête au serveur",
+        "À définir une route qui répond aux requêtes GET"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "app.get() indique quel traitement exécuter quand le serveur reçoit une requête GET sur le chemin de la route.",
+      "sourceSection": "routes",
+      "evidence": "`app.get()` déclare une route pour la méthode HTTP GET. Express propose aussi `app.put()` pour déclarer une route qui répond à une requête PUT."
+    },
+    {
+      "question": "En plus de app.get(), quelle autre méthode existe dans Express ?",
+      "answers": [
+        "app.put()",
+        "app.send()",
+        "app.routePut()",
+        "app.fetch()"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Express utilise app.get() pour GET et app.put() pour PUT.",
+      "sourceSection": "routes",
+      "evidence": "`app.get()` déclare une route pour la méthode HTTP GET. Express propose aussi `app.put()` pour déclarer une route qui répond à une requête PUT."
     }
   ],
   "sourceCourse": "/semestre_3/deploiement_Services/nodeS1",

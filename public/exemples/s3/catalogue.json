@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "titre": "Le phare immobile",
+    "annee": 2024,
+    "description": "Une gardienne découvre que la lumière du phare réapparaît chaque nuit.",
+    "categorie": "Film",
+    "note": 8.5,
+    "image": "/images/learning/landscape.svg"
+  },
+  {
+    "id": 2,
+    "titre": "Orbites de papier",
+    "annee": 2023,
+    "description": "Des pilotes cartographient des planètes à bord de vaisseaux en origami.",
+    "categorie": "Jeu vidéo",
+    "note": 8.2,
+    "image": "/images/learning/landscape.svg"
+  },
+  {
+    "id": 3,
+    "titre": "La dernière navette",
+    "annee": 2022,
+    "description": "Deux amis traversent leur ville dans un bus qui cesse de suivre son itinéraire.",
+    "categorie": "Film",
+    "note": 7.8,
+    "image": "/images/learning/landscape.svg"
+  },
+  {
+    "id": 4,
+    "titre": "Les jardins de Minuit",
+    "annee": 2025,
+    "description": "La nuit, un jardin se transforme en un labyrinthe végétal à explorer.",
+    "categorie": "Jeu vidéo",
+    "note": 9.0,
+    "image": "/images/learning/landscape.svg"
+  },
+  {
+    "id": 5,
+    "titre": "Radio Sable",
+    "annee": 2021,
+    "description": "Une animatrice de radio reçoit des messages venus des dunes.",
+    "categorie": "Film",
+    "note": 8.1,
+    "image": "/images/learning/landscape.svg"
+  },
+  {
+    "id": 6,
+    "titre": "Marées inverses",
+    "annee": 2024,
+    "description": "Trouvez votre chemin sur des îles dont les passages changent selon les marées.",
+    "categorie": "Jeu vidéo",
+    "note": 7.5,
+    "image": "/images/learning/landscape.svg"
+  }
+]

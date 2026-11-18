@@ -1,93 +1,74 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP : un conte corse raconté par nos services"
-type: "TP"
+title: "Filtrer un catalogue et envoyer des données avec POST"
+type: "TD"
 order: 3
 quizId: "s3-node-services"
 previousSession: "/semestre_3/deploiement_Services/nodeS2"
+nextSession: "/semestre_3/deploiement_Services/nodeS4"
 ---
 
-<a id="contexte"></a>
+<a id="filtre"></a>
 
-## Le contexte source du récit généré
+## Filtrer puis actualiser les cartes
 
-**Contexte fourni, adaptation pédagogique :** un berger choisit la promesse de devenir roi plutôt que son engagement auprès d’une fée. Les merveilles qu’il croyait posséder disparaissent ; la reine le repousse. La magie fait alors payer les conséquences de ce choix. Notre suite peut introduire un médiateur et proposer une issue différente : chaque personnage doit réagir au dernier événement plutôt que recommencer l’histoire.
-
-Source : J.-B. Frédéric Ortoli, *Les Contes populaires de l’île de Corse*, 1883, [extrait p. 290](https://fr.wikisource.org/wiki/Page:Ortoli_-_Les_Contes_populaires_de_l%E2%80%99%C3%AEle_de_Corse,_1883.djvu/310). Le recueil attribue ce passage à un récit communiqué par Antoine-Joseph Ortoli, d’Olmiccia, en 1882. Le résumé ci-dessus est reformulé ; vos répliques constituent une nouvelle adaptation, pas une citation du conte.
-
-Le contexte est envoyé au modèle pendant une requête. Il ne sert pas à entraîner ses paramètres. En simulation, le texte sert uniquement à vérifier le trajet : une réplique répétitive est acceptable pour le test technique, pas pour la présentation finale.
-
-<a id="orchestration"></a>
-
-## L’orchestrateur des services de personnages
-
-| Élément | Responsabilité | Limite explicite |
-|---|---|---|
-| Personnage | Répondre à POST /message avec personnage et reply. | Réplique courte, contrat constant. |
-| Orchestrateur | Appeler les personnages dans l’ordre et assembler leurs réponses. | Deux tours de liste. |
-| Historique | Garder les répliques pour la restitution. | Le dernier message seulement circule dans ce squelette. |
-| Arrêt | Terminer ou signaler la première panne. | Pas de relance infinie ni d’appel récursif entre personnages. |
-
-Pour N personnages et deux tours, il y a 2 × N appels, exécutés l’un après l’autre. Le personnage suivant reçoit la dernière réplique et le contexte initial. Ce n’est pas une mémoire intégrale : le choix conserve la taille du message sous la limite de l’API. Le programme conserve cependant toutes les réponses pour l’export final.
-
-<a id="programme"></a>
-
-## La boucle asynchrone de l’orchestrateur
-
-Remplacez les adresses d’exemple par les IP et ports réellement testés. Tous les appels passent par l’API de personnage, jamais directement par LM Studio.
+Le tableau reçu du serveur contient les données. Les cartes sont la représentation de ces données dans le DOM. `filter()` produit un nouveau tableau contenant les éléments qui vérifient la condition. Le tableau source reste disponible pour les recherches suivantes.
 
 ```js
-import { writeFile } from "node:fs/promises";
+const films = catalogue.filter((fiche) => fiche.categorie === "Film");
+console.log(films.length);
+```
 
-const services = [
-  "http://127.0.0.1:3000",
-  "http://127.0.0.1:3001",
-];
-const contexte = "Un berger a trahi une fée pour devenir roi. La magie disparaît. Trouvons une issue.";
-const source = "Adaptation : Ortoli, Les Contes populaires de l’île de Corse, 1883, p. 290.";
-const tours = 2;
-const recit = [source, contexte];
-let derniere = "Le berger demande comment réparer son choix.";
+Le catalogue de la séance 2 contient trois films. Essayez ensuite la catégorie « Jeu vidéo ».
 
-try {
-  for (let tour = 1; tour <= tours; tour++) {
-    for (const service of services) {
-      const message = `${contexte}\nDernière réplique : ${derniere.slice(0, 600)}\nFais avancer le récit en deux phrases.`;
-      const response = await fetch(`${service}/message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: AbortSignal.timeout(45000),
-        body: JSON.stringify({ message }),
-      });
-      if (!response.ok) throw new Error(`${service} : HTTP ${response.status}`);
-      const data = await response.json();
-      if (typeof data.personnage !== "string" || typeof data.reply !== "string" || !data.reply.trim()) {
-        throw new Error(`${service} : réponse hors contrat`);
-      }
-      derniere = data.reply.trim();
-      const ligne = `Tour ${tour} — ${data.personnage} : ${derniere}`;
-      recit.push(ligne);
-      console.log(ligne);
-    }
-  }
-  await writeFile("conte.txt", recit.join("\n\n"), "utf8");
-  console.log("Récit enregistré dans conte.txt");
-} catch (error) {
-  console.error("Récit interrompu :", error.message);
-  process.exitCode = 1;
+1. Ajoutez un bouton qui affiche uniquement les films. À chaque rafraîchissement de la grille, videz le conteneur avec `replaceChildren()` avant d’ajouter les cartes visibles.
+2. Ajoutez un champ de recherche. L’événement `input` signale une modification du champ. Comparez le titre et la recherche après les avoir passés en minuscules. La méthode `includes()` permet de vérifier si le titre contient le texte.
+3. Affichez la longueur du tableau filtré dans un compteur. Testez une recherche vide et une recherche sans résultat. Les cartes et le compteur se mettent à jour sans recharger la page.
+
+<a id="methodes-http"></a>
+
+## Choisir entre GET et POST
+
+GET sert à récupérer des données. POST permet d’envoyer des données dans le corps de la requête pour que le serveur les traite. Ici, le serveur recevra un texte et renverra une réponse construite à partir de ce texte.
+
+Navigateur → requête HTTP → serveur Express → traitement → réponse JSON → navigateur.
+
+<a id="envoyer-json"></a>
+
+## Envoyer un objet au serveur
+
+Dans les options de `fetch()`, `method: "POST"` choisit la méthode HTTP. L’en-tête `Content-Type: application/json` annonce le format du corps. `JSON.stringify()` convertit l’objet JavaScript en texte JSON à envoyer dans `body`.
+
+```js
+const options = {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ texte: "Bonjour" }),
+};
+```
+
+Appelez `fetch(url, options)` quand votre formulaire est soumis. L’onglet Réseau du navigateur doit afficher une requête POST avec un corps JSON contenant la propriété `texte`.
+
+<a id="recevoir-json"></a>
+
+## Lire et vérifier le texte dans Express
+
+Placez `app.use(express.json())` avant la route. `express.json()` analyse le corps JSON. La route peut ensuite accéder à l’objet reçu via `req.body`. Pour lire sa propriété `texte`, utilisez `req.body?.texte`.
+
+```js
+const texte = req.body?.texte;
+if (typeof texte !== "string" || !texte.trim()) {
+  return res.status(400).json({ error: "Texte requis" });
 }
 ```
 
-**Résultat attendu avec deux services :** quatre répliques puis conte.txt. Une panne interrompt explicitement le récit ; aucun succès final n’est annoncé. Le délai de l’orchestrateur dépasse celui du personnage pour laisser celui-ci renvoyer son erreur. Le fichier n’est écrit qu’après les tours réussis.
+Ce fragment appartient à la fonction de traitement du POST. Avec un texte absent ou vide, le serveur répond 400. `return` termine cette branche après l’envoi de la réponse. Essayez un corps vide et vérifiez le statut dans l’onglet Réseau.
 
-## Le contrat partagé entre les personnages
+<a id="aller-retour"></a>
 
-Attribuez un nom, un rôle et un objectif : la fée protège l’engagement, le berger cherche une réparation, la reine veut une preuve, un guide propose une étape. Dans la consigne system de la séance précédente, ajoutez ces informations et demandez de réagir au message reçu. Ne changez pas les champs JSON pour chaque rôle.
+## Faire un aller-retour complet
 
-Gardez une trace de ce qui vient du texte source et de ce qui a été généré ou réécrit. Une réponse incohérente peut être éditée pour la restitution, mais documentez cette intervention. La qualité du récit ne démontre pas que le modèle « comprend » l’histoire comme une personne.
-
-## Pour approfondir
-
-- [fetch dans Node](https://nodejs.org/docs/latest-v22.x/api/globals.html#fetch).
-- [Écrire un fichier avec fs/promises](https://nodejs.org/docs/latest-v22.x/api/fs.html#fspromiseswritefilefile-data-options).
-- [Le recueil d’Ortoli](https://fr.wikisource.org/wiki/Livre:Ortoli_-_Les_Contes_populaires_de_l%E2%80%99%C3%AEle_de_Corse,_1883.djvu).
+1. Créez une route `POST /echo` avec `app.post()`. Appliquez la vérification du texte dans le traitement de la route.
+2. Pour un texte valide, envoyez en JSON un objet doté d’une propriété `reponse`. Sa valeur doit commencer par « Reçu » et reprendre le texte saisi.
+3. Côté navigateur, vérifiez `response.ok`, lisez la réponse avec `response.json()` et affichez `reponse`. Si la requête échoue ou si le statut indique une erreur, affichez un message lisible.
+4. Testez « Bonjour » et une saisie vide. Dans le premier cas, la page affiche le texte renvoyé. Dans le second cas, elle affiche une erreur.

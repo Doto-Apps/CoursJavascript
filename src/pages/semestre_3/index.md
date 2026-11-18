@@ -4,7 +4,7 @@ title: "Semestre 3 : parcours et travaux"
 order: 3
 ---
 
-Le S3 s’appuie sur les objets JavaScript, les échanges HTTP/JSON et la persistance du S2. Retool relie composants, requêtes et documents Firebase ; Node.js expose un service puis appelle un modèle local. L’orchestrateur fait coopérer plusieurs services en conservant un contrat commun.
+Le S3 s’appuie sur les objets JavaScript, les échanges HTTP/JSON et la persistance du S2. Retool relie composants, requêtes et documents Firebase. En Déploiement de services, vous créez une API avec Express, affichez ses données dans le navigateur et réalisez deux projets qui utilisent une API de modèle de langage.
 
 Les QCM disponibles permettent de réviser les notions du support précédent : dix questions sont tirées, avec vingt secondes par question et la possibilité de recommencer.
 
@@ -20,8 +20,11 @@ Les QCM disponibles permettent de réviser les notions du support précédent : 
 
 | Ordre | Séance | Format | Durée |
 |---|---|---|---|
-| 1 | [Node.js : créer une API de personnage](/semestre_3/deploiement_Services/nodeS1) | TD | 4 h |
-| 2 | [Configurer les services et connecter un modèle local](/semestre_3/deploiement_Services/nodeS2) | TD | 2 h |
-| 3 | [TP : un conte corse raconté par nos services](/semestre_3/deploiement_Services/tpRPG) | TP | 2 h |
+| 1 | [Introduction à Node.js et Express](/semestre_3/deploiement_Services/nodeS1) | TD | 4 h |
+| 2 | [Récupérer des données avec fetch et créer des cartes](/semestre_3/deploiement_Services/nodeS2) | TD | 1 h 30 |
+| 3 | [Filtrer un catalogue et envoyer des données avec POST](/semestre_3/deploiement_Services/tpRPG) | TD | 1 h 15 |
+| 4 | [Appeler une API de LLM et créer un Alter Ego](/semestre_3/deploiement_Services/nodeS4) | TD | 1 h 15 |
+| 5 | [Évaluer et corriger le projet Alter Ego](/semestre_3/deploiement_Services/nodeS5) | TP | 2 h |
+| 6 | [Créer un assistant de recommandations culturelles](/semestre_3/deploiement_Services/nodeS6) | TP | 2 h |
 
 La date Retool « 09/08/2026 » du planning reste à confirmer auprès de l’enseignant.

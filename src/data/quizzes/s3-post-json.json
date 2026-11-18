@@ -1,0 +1,142 @@
+{
+  "uid": "s3-post-json",
+  "name": "Révision — Filtrer un catalogue et envoyer des données avec POST",
+  "sourceCourse": "/semestre_3/deploiement_Services/tpRPG",
+  "sourceSession": "S3-DEP-03",
+  "targetCourse": "/semestre_3/deploiement_Services/nodeS4",
+  "mode": "train",
+  "questionsPerTest": 10,
+  "timeByQuestionInSeconds": 20,
+  "questions": [
+    {
+      "question": "Que retourne catalogue.filter(condition) si condition est une fonction ?",
+      "answers": [
+        "Le nombre d’éléments trouvés",
+        "Un tableau des éléments qui vérifient la condition",
+        "Une carte HTML par élément",
+        "Le tableau des éléments qui échouent à la condition"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "filter conserve les éléments pour lesquels la fonction indique que la condition est vraie.",
+      "sourceSection": "filtre",
+      "evidence": "Le tableau reçu du serveur contient les données. Les cartes sont la représentation de ces données dans le DOM. `filter()` produit un nouveau tableau contenant les éléments qui vérifient la condition. Le tableau source reste disponible pour les recherches suivantes."
+    },
+    {
+      "question": "Quelle méthode vide la grille avant le nouvel affichage ?",
+      "answers": [
+        "conteneur.append()",
+        "conteneur.querySelector()",
+        "conteneur.toLowerCase()",
+        "conteneur.replaceChildren()"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "replaceChildren appelée sans argument retire les enfants du conteneur.",
+      "sourceSection": "filtre",
+      "evidence": "1. Ajoutez un bouton qui affiche uniquement les films. À chaque rafraîchissement de la grille, videz le conteneur avec `replaceChildren()` avant d’ajouter les cartes visibles."
+    },
+    {
+      "question": "Quelle méthode choisir pour récupérer le catalogue ?",
+      "answers": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "GET sert ici à lire des données disponibles sur le serveur.",
+      "sourceSection": "methodes-http",
+      "evidence": "GET sert à récupérer des données. POST permet d’envoyer des données dans le corps de la requête pour que le serveur les traite. Ici, le serveur recevra un texte et renverra une réponse construite à partir de ce texte."
+    },
+    {
+      "question": "Pour envoyer un message au serveur afin qu’il le traite, quelle méthode utilise l’exercice ?",
+      "answers": [
+        "GET",
+        "HEAD",
+        "POST",
+        "OPTIONS"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "L’exercice transmet la saisie dans le corps d’une requête POST.",
+      "sourceSection": "methodes-http",
+      "evidence": "GET sert à récupérer des données. POST permet d’envoyer des données dans le corps de la requête pour que le serveur les traite. Ici, le serveur recevra un texte et renverra une réponse construite à partir de ce texte."
+    },
+    {
+      "question": "Quelle option de fetch choisit la méthode POST ?",
+      "answers": [
+        "body: \"POST\"",
+        "method: \"POST\"",
+        "type: \"POST\"",
+        "headers: \"POST\""
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La propriété method des options définit la méthode HTTP.",
+      "sourceSection": "envoyer-json",
+      "evidence": "Dans les options de `fetch()`, `method: \"POST\"` choisit la méthode HTTP. L’en-tête `Content-Type: application/json` annonce le format du corps. `JSON.stringify()` convertit l’objet JavaScript en texte JSON à envoyer dans `body`."
+    },
+    {
+      "question": "Quel en-tête indique que le corps envoyé est du JSON ?",
+      "answers": [
+        "Content-Type: application/json",
+        "Content-Type: text/html",
+        "Accept: text/css",
+        "Accept: application/json"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Content-Type décrit le corps envoyé. Accept indique les formats que le client accepte en réponse.",
+      "sourceSection": "envoyer-json",
+      "evidence": "Dans les options de `fetch()`, `method: \"POST\"` choisit la méthode HTTP. L’en-tête `Content-Type: application/json` annonce le format du corps. `JSON.stringify()` convertit l’objet JavaScript en texte JSON à envoyer dans `body`."
+    },
+    {
+      "question": "Que fait JSON.stringify({ texte: \"Bonjour\" }) ?",
+      "answers": [
+        "Lit une réponse HTTP",
+        "Ajoute un champ au formulaire",
+        "Exécute la route appelée",
+        "Produit le texte JSON à envoyer"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "JSON.stringify sérialise la valeur JavaScript sous forme de texte JSON.",
+      "sourceSection": "envoyer-json",
+      "evidence": "Dans les options de `fetch()`, `method: \"POST\"` choisit la méthode HTTP. L’en-tête `Content-Type: application/json` annonce le format du corps. `JSON.stringify()` convertit l’objet JavaScript en texte JSON à envoyer dans `body`."
+    },
+    {
+      "question": "Quel est le rôle de express.json() ?",
+      "answers": [
+        "Démarrer l’écoute du serveur",
+        "Transformer la route en URL",
+        "Analyser le corps JSON d’une requête entrante",
+        "Envoyer directement la réponse au client"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Ce middleware prépare la valeur que la route retrouve dans req.body.",
+      "sourceSection": "recevoir-json",
+      "evidence": "Placez `app.use(express.json())` avant la route. `express.json()` analyse le corps JSON. La route peut ensuite accéder à l’objet reçu via `req.body`. Pour lire sa propriété `texte`, utilisez `req.body?.texte`."
+    },
+    {
+      "question": "Dans Express, quelle expression lit le champ texte envoyé en JSON ?",
+      "answers": [
+        "req.body?.texte",
+        "res.body?.texte",
+        "req.params?.texte",
+        "JSON.stringify(req)"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Après le parseur JSON, les données du corps sont disponibles dans req.body.",
+      "sourceSection": "recevoir-json",
+      "evidence": "Placez `app.use(express.json())` avant la route. `express.json()` analyse le corps JSON. La route peut ensuite accéder à l’objet reçu via `req.body`. Pour lire sa propriété `texte`, utilisez `req.body?.texte`."
+    },
+    {
+      "question": "Dans l’exercice, quel statut renvoie un texte absent ou vide ?",
+      "answers": [
+        "200",
+        "201",
+        "400",
+        "404"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La route utilise 400 quand le corps de la requête ne contient pas un texte valide.",
+      "sourceSection": "recevoir-json",
+      "evidence": "Ce fragment appartient à la fonction de traitement du POST. Avec un texte absent ou vide, le serveur répond 400. `return` termine cette branche après l’envoi de la réponse. Essayez un corps vide et vérifiez le statut dans l’onglet Réseau."
+    }
+  ]
+}

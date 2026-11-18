@@ -1,138 +1,135 @@
 ---
 layout: "layouts/Layout.astro"
-title: "Node.js : créer une API de personnage"
+title: "Introduction à Node.js et Express"
 type: "TD"
 order: 1
 nextSession: "/semestre_3/deploiement_Services/nodeS2"
 ---
 
-<a id="execution"></a>
+Ce support reprend la séance du matin du 18 novembre 2026. Retrouvez les commandes du terminal et le premier exemple de serveur Express qui renvoie la valeur d’une constante.
 
-## JavaScript dans Node et dans le navigateur
+<a id="terminal"></a>
 
-Les exemples utilisent Node.js 22 ou plus récent. Vérifiez l’installation avec `node --version` dans le terminal, puis utilisez des fichiers `.mjs` pour les modules. Ce parcours réutilise les fonctions et objets JavaScript ainsi que les échanges HTTP/JSON du S2.
+## Se déplacer dans le terminal
 
-Dans le navigateur, JavaScript peut manipuler document et les éléments HTML. Dans Node, il peut écouter un port et travailler avec des fichiers. Le langage reste JavaScript ; les fonctions fournies par l’environnement changent. Une API est une interface : elle fixe les adresses, les données attendues et les réponses promises.
+- `cd` signifie *Change Directory*. Cette commande change le répertoire courant du terminal.
+- `mkdir` signifie *Make Directory*. Cette commande crée un répertoire.
 
-| Terme | Sens dans notre projet | Vérification |
-|---|---|---|
-| Processus | Programme Node en cours d’exécution. | Le terminal reste occupé jusqu’à Ctrl+C. |
-| Module | Fichier qui importe ou exporte des fonctions. | L’extension `.mjs` active les imports ECMAScript. |
-| Port | Numéro permettant de joindre un service sur une machine. | Ici 3000 ; un autre processus ne peut pas déjà l’occuper. |
-| Route | Méthode HTTP et chemin reconnus par le serveur. | GET /health est différent de POST /message. |
-
-Créez `bonjour.mjs`, puis lancez `node bonjour.mjs` dans son dossier :
-
-```js
-const personnage = { nom: "A Fata", role: "gardienne du passage" };
-console.log(`${personnage.nom} : ${personnage.role}`);
+```sh
+mkdir premier-serveur
+cd premier-serveur
 ```
 
-**Sortie terminal attendue :** A Fata : gardienne du passage. Aucun navigateur ne s’ouvre automatiquement. Modifiez le rôle et relancez : un fichier modifié ne remplace pas spontanément un processus déjà lancé.
+La première commande crée le dossier `premier-serveur` et la seconde vous place à l’intérieur. Vous pouvez alors créer les fichiers du projet dans ce dossier. Pour revenir au dossier parent, utilisez `cd ..`.
 
-<a id="contrat"></a>
+<a id="execution"></a>
 
-## Les routes et le contrat HTTP/JSON
+## Exécuter JavaScript avec Node.js
 
-| Requête | Corps | Réponse attendue |
-|---|---|---|
-| GET /health | Aucun. | 200, objet avec ok et personnage. |
-| POST /message | Objet JSON avec message, texte de 1 à 1000 caractères. | 200, objet avec personnage et reply. |
-| POST /message invalide | JSON mal formé ou message invalide. | 400, objet avec error. |
-| Autre route | — | 404, objet avec error. |
+Node.js est un environnement qui exécute JavaScript hors du navigateur, notamment côté serveur. Comme pour un script PHP exécuté côté serveur, le programme tourne sur la machine qui héberge le service. Un programme Node.js peut aussi simplement afficher du texte dans le terminal.
 
-Le corps et le statut sont deux informations différentes. Un objet avec error envoyé en 200 reste une réussite HTTP : le client ne peut pas utiliser correctement response.ok. Le Content-Type indique ici que le corps est du JSON.
-
-<a id="serveur"></a>
-
-## Le serveur HTTP avec node:http
-
-Copiez ce bloc dans `personnage.mjs`. Il utilise le module HTTP fourni avec Node. Les étapes suivantes remplacent seulement la fonction repondre ; elles conservent le même contrat.
+Enregistrez ce fragment dans un fichier `app.js`.
 
 ```js
-import { createServer } from "node:http";
+const message = "Bonjour depuis Node.js";
+console.log(message);
+```
 
-const port = Number(process.env.PORT || 3000);
-const host = process.env.HOST || "127.0.0.1";
-const personnage = process.env.PERSONNAGE || "A Fata";
+Depuis le répertoire du fichier, exécutez `node app.js` pour lancer `app.js` avec Node.js. La commande suit la forme `node fichier.js`, où `fichier.js` est le nom du fichier à exécuter. Le message s’affiche dans le terminal. Changez sa valeur et relancez la commande pour voir le résultat.
 
-function envoyer(response, status, data) {
-  response.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
-  response.end(JSON.stringify(data));
+Si le fichier exécuté contient le code de démarrage d’un serveur, cette commande lance ce serveur.
+
+<a id="dependances"></a>
+
+## Initialiser le projet et installer une bibliothèque
+
+Une bibliothèque JavaScript rassemble des fonctions écrites pour être réutilisées dans d’autres projets. Vous écrivez la logique de votre application en JavaScript et vous pouvez utiliser des bibliothèques pour des tâches courantes, comme gérer des requêtes HTTP. npm sert notamment à déclarer et installer ces bibliothèques dans un projet.
+
+- `npm init` initialise un projet Node.js et crée le fichier `package.json` après les questions de configuration.
+- `npm install nom-du-paquet` installe une dépendance. Pour installer Express, utilisez `npm install express`.
+- `package.json` contient les informations du projet, ses dépendances et ses scripts npm.
+
+```sh
+npm init
+npm install express
+```
+
+Exécutez les commandes dans le dossier du projet. Après l’installation, ouvrez `package.json` et repérez `express` dans `dependencies`.
+
+<a id="scripts-npm"></a>
+
+## Lancer une commande avec un script npm
+
+Un script npm associe un nom à une commande. Voici un exemple de section `scripts` dans `package.json`.
+
+```json
+{
+  "scripts": {
+    "serveur": "node app.js"
+  }
 }
+```
 
-async function lireJSON(request) {
-  const morceaux = [];
-  let taille = 0;
-  for await (const morceau of request) {
-    taille += morceau.length;
-    if (taille > 65536) throw new Error("Corps trop volumineux");
-    morceaux.push(morceau);
-  }
-  return JSON.parse(Buffer.concat(morceaux).toString("utf8"));
-}
+Ajoutez l’entrée `serveur` dans la section `scripts` du fichier existant. Pour exécuter un script défini dans `package.json`, utilisez `npm run nom-du-script`. Ici, `npm run serveur` lance `node app.js`. Si vous utilisez encore le premier exemple, le même message s’affiche dans le terminal.
 
-async function repondre(message) {
-  return `Je suis ${personnage}. J’ai reçu : ${message}`;
-}
+<a id="express"></a>
 
-createServer(async (request, response) => {
-  const chemin = new URL(request.url, "http://local").pathname;
-  if (request.method === "GET" && chemin === "/health") {
-    return envoyer(response, 200, { ok: true, personnage });
-  }
-  if (request.method !== "POST" || chemin !== "/message") {
-    return envoyer(response, 404, { error: "Route inconnue" });
-  }
+## Créer une application avec Express
 
-  let data;
-  try {
-    data = await lireJSON(request);
-  } catch {
-    return envoyer(response, 400, { error: "Corps JSON illisible ou trop grand" });
-  }
-  if (!data || typeof data.message !== "string" ||
-      !data.message.trim() || data.message.length > 1000) {
-    return envoyer(response, 400, { error: "Message requis : 1 à 1000 caractères" });
-  }
-  try {
-    const reply = await repondre(data.message.trim());
-    return envoyer(response, 200, { personnage, reply });
-  } catch (error) {
-    console.error(error.message);
-    return envoyer(response, 502, { error: "Service de génération indisponible" });
-  }
-}).listen(port, host, () => {
-  console.log(`API : http://${host}:${port}`);
+Node.js exécute le code JavaScript. Express est une bibliothèque JavaScript qui facilite la création de serveurs HTTP et d’API.
+
+```js
+const express = require("express");
+const app = express();
+```
+
+Dans cet exemple, `require("express")` charge la dépendance installée, puis `express()` crée l’application. La variable `app` permet de déclarer des routes et de démarrer l’écoute du serveur. Cet extrait utilise le format CommonJS dans `app.js`. Si le projet est déclaré avec `"type": "module"` dans `package.json`, utilisez `import express from "express"` à la place de la ligne avec `require`.
+
+<a id="routes"></a>
+
+## Renvoyer une constante sur une route
+
+Une route Express associe une méthode HTTP et un chemin d’URL à une fonction de traitement. Le navigateur joue le rôle du client. Il envoie une requête et le serveur lui renvoie une réponse.
+
+Dans l’exemple suivant, la méthode est `GET` et le chemin est `/message`. Quand une requête correspond, Express appelle la fonction. `res.send(message)` envoie la valeur de la constante au client.
+
+```js
+const message = "Bonjour depuis Express";
+app.get("/message", (req, res) => {
+  res.send(message);
 });
 ```
 
-La fonction envoyer termine chaque réponse. Le return évite de poursuivre et d’envoyer une deuxième réponse. lireJSON attend les morceaux du corps : un réseau ne garantit pas un seul morceau. La taille est limitée avant le décodage ; la limite de 1000 caractères concerne ensuite le message. Ces deux limites n’ont pas la même unité.
+`app.get()` déclare une route pour la méthode HTTP GET. Express propose aussi `app.put()` pour déclarer une route qui répond à une requête PUT.
 
-async permet d’utiliser await ; await suspend cette fonction pendant une opération asynchrone. Cela ne transforme pas toutes les opérations en traitements parallèles. Le try/catch de lecture produit une erreur du client ; celui de génération signale une dépendance indisponible.
+<a id="ecoute"></a>
 
-<a id="tests"></a>
+## Démarrer et relancer le serveur
 
-## Tester GET et POST dans le terminal
+`app.listen(port)` démarre l’écoute du serveur sur le port indiqué afin qu’il puisse recevoir des requêtes HTTP. Le port sert à joindre le bon service sur la machine.
 
-Lancez `node personnage.mjs`, puis ouvrez `http://127.0.0.1:3000/health`. **Résultat attendu :** un objet JSON avec ok à true. Le navigateur effectue un GET ; il ne teste pas ainsi notre POST. Dans un deuxième terminal :
-
-```sh
-curl -i http://127.0.0.1:3000/health
-curl -i -X POST http://127.0.0.1:3000/message -H 'Content-Type: application/json' -d '{"message":"Bonjour"}'
+```js
+const port = 3000;
+app.listen(port);
 ```
 
-Sous Windows PowerShell, utilisez ce test POST pour éviter les différences de guillemets et l’alias curl :
+Placez les extraits Express, route et écoute dans cet ordre dans `app.js`. Lancez le fichier avec `node app.js` ou avec le script npm. Ouvrez `http://localhost:3000/message`. Le navigateur affiche `Bonjour depuis Express`. Essayez une autre valeur pour la constante. Avec le lancement simple, arrêtez le serveur avec `Ctrl+C`, relancez-le puis actualisez la page.
 
-```powershell
-$body = @{ message = "Bonjour" } | ConvertTo-Json
-Invoke-RestMethod -Uri http://127.0.0.1:3000/message -Method Post -ContentType application/json -Body $body
+Le rechargement automatique surveille les fichiers du projet et redémarre le processus Node.js lorsqu’un fichier change. Actualiser l’onglet renvoie une requête au serveur.
+
+<a id="client-serveur"></a>
+
+## Récupérer la réponse depuis une page HTML
+
+Dans la page `index.html` de la séance, `fetch()` sert à envoyer une requête HTTP depuis le JavaScript du navigateur. Le navigateur peut ainsi récupérer le message du serveur pour l’afficher dans la page. La séance suivante consacrée à `fetch()` détaillera la lecture de la réponse.
+
+L’origine d’une URL combine le protocole, le nom d’hôte et le port. Par exemple, une page servie sur `http://localhost:5500` et l’API sur `http://localhost:3000` ont des origines différentes. Les règles CORS déterminent si le navigateur laisse le JavaScript de la page accéder à la réponse de l’API.
+
+Le paquet `cors` s’installe avec `npm install cors`. Dans cet exemple, le serveur autorise l’origine de la page. Placez ce réglage après la création de `app` et avant les routes, puis adaptez l’origine à l’adresse depuis laquelle votre page est servie.
+
+```js
+const cors = require("cors");
+app.use(cors({ origin: "http://localhost:5500" }));
 ```
 
-**Sortie attendue :** personnage vaut A Fata et reply contient Bonjour. Pour lire les en-têtes sous Windows, `curl.exe -i http://127.0.0.1:3000/health` utilise le véritable programme curl.
-
-## Pour approfondir
-
-- [Modules ECMAScript dans Node](https://nodejs.org/docs/latest-v22.x/api/esm.html).
-- [Serveur HTTP et réponse](https://nodejs.org/docs/latest-v22.x/api/http.html).
-- [Guide MDN des méthodes HTTP](https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Methods).
+Dans un projet en modules ECMAScript, chargez le paquet avec `import cors from "cors"`. Depuis la page servie à l’origine autorisée, le navigateur peut lire le texte renvoyé par `/message`.

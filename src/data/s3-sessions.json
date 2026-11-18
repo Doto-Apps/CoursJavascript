@@ -70,17 +70,17 @@
   {
     "id": "S3-DEP-01",
     "coursePath": "/semestre_3/deploiement_Services/nodeS1",
-    "title": "Node.js : créer une API de personnage",
+    "title": "Introduction à Node.js et Express",
     "subject": "Déploiement de services",
     "order": 1,
     "type": "TD",
     "durationMinutes": 240,
-    "planningDate": "22/10/2026 14 h",
+    "planningDate": "18/11/2026 — matin",
     "skills": [
-      "Exécuter JavaScript avec Node et expliquer le rôle du serveur",
-      "Lire une requête HTTP et produire une réponse JSON",
-      "Valider un message et distinguer réussite et erreur",
-      "Tester une API de personnage sans dépendre d’un modèle"
+      "Créer un répertoire et s’y déplacer depuis le terminal",
+      "Exécuter un fichier JavaScript avec Node.js",
+      "Initialiser un projet npm, installer une dépendance et lancer un script",
+      "Démarrer un serveur Express et renvoyer une constante sur une route GET"
     ],
     "entryActivity": {
       "type": "diagnostic",
@@ -90,17 +90,16 @@
   {
     "id": "S3-DEP-02",
     "coursePath": "/semestre_3/deploiement_Services/nodeS2",
-    "title": "Configurer les services et connecter un modèle local",
+    "title": "Récupérer des données avec fetch et créer des cartes",
     "subject": "Déploiement de services",
     "order": 2,
     "type": "TD",
-    "durationMinutes": 120,
-    "planningDate": "18/11/2026 14 h",
+    "durationMinutes": 90,
+    "planningDate": "18/11/2026 — après-midi",
     "skills": [
-      "Distinguer adresse locale, adresse réseau et adresse d’écoute",
-      "Configurer un service avec des variables d’environnement",
-      "Appeler un modèle local en conservant le contrat de l’API",
-      "Diagnostiquer une panne entre deux services"
+      "Récupérer un catalogue JSON avec fetch",
+      "Parcourir un tableau d’objets",
+      "Créer une carte par objet et l’ajouter au DOM"
     ],
     "previousSession": "S3-DEP-01",
     "quizId": "s3-node-chatbot",
@@ -114,17 +113,16 @@
   {
     "id": "S3-DEP-03",
     "coursePath": "/semestre_3/deploiement_Services/tpRPG",
-    "title": "TP : un conte corse raconté par nos services",
+    "title": "Filtrer un catalogue et envoyer des données avec POST",
     "subject": "Déploiement de services",
     "order": 3,
-    "type": "TP",
-    "durationMinutes": 120,
-    "planningDate": "18/11/2026 16 h",
+    "type": "TD",
+    "durationMinutes": 75,
+    "planningDate": "18/11/2026 — après-midi",
     "skills": [
-      "Personnaliser un personnage en conservant une API commune",
-      "Faire circuler un contexte entre des services du réseau",
-      "Limiter les tours et gérer l’arrêt sur erreur",
-      "Présenter un récit et attribuer son contexte source"
+      "Filtrer les données et actualiser les cartes",
+      "Envoyer un corps JSON avec POST",
+      "Valider req.body et renvoyer une réponse"
     ],
     "previousSession": "S3-DEP-02",
     "quizId": "s3-node-services",
@@ -132,6 +130,75 @@
       "type": "quiz",
       "quizId": "s3-node-services",
       "sourceSession": "S3-DEP-02",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-DEP-04",
+    "coursePath": "/semestre_3/deploiement_Services/nodeS4",
+    "title": "Appeler une API de LLM et créer un Alter Ego",
+    "subject": "Déploiement de services",
+    "order": 4,
+    "type": "TD",
+    "durationMinutes": 75,
+    "planningDate": "18/11/2026 — après-midi",
+    "skills": [
+      "Distinguer instructions et message utilisateur",
+      "Appeler un LLM depuis Express",
+      "Protéger la clé et limiter les coûts"
+    ],
+    "previousSession": "S3-DEP-03",
+    "quizId": "s3-post-json",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-post-json",
+      "sourceSession": "S3-DEP-03",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-DEP-05",
+    "coursePath": "/semestre_3/deploiement_Services/nodeS5",
+    "title": "Évaluer et corriger le projet Alter Ego",
+    "subject": "Déploiement de services",
+    "order": 5,
+    "type": "TP",
+    "durationMinutes": 120,
+    "planningDate": "Prochaine rencontre — date à préciser",
+    "skills": [
+      "Présenter le projet et expliquer le trajet HTTP",
+      "Diagnostiquer un échec HTTP ou JSON",
+      "Valider les propriétés d’une réponse structurée"
+    ],
+    "previousSession": "S3-DEP-04",
+    "quizId": "s3-alter-ego",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-alter-ego",
+      "sourceSession": "S3-DEP-04",
+      "points": 10
+    }
+  },
+  {
+    "id": "S3-DEP-06",
+    "coursePath": "/semestre_3/deploiement_Services/nodeS6",
+    "title": "Créer un assistant de recommandations culturelles",
+    "subject": "Déploiement de services",
+    "order": 6,
+    "type": "TP",
+    "durationMinutes": 120,
+    "planningDate": "Prochaine rencontre — date à préciser",
+    "skills": [
+      "Envoyer les préférences issues d’un formulaire",
+      "Demander une sortie structurée au modèle",
+      "Afficher une recommandation et gérer l’échec"
+    ],
+    "previousSession": "S3-DEP-05",
+    "quizId": "s3-correction-alter-ego",
+    "entryActivity": {
+      "type": "quiz",
+      "quizId": "s3-correction-alter-ego",
+      "sourceSession": "S3-DEP-05",
       "points": 10
     }
   }

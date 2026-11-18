@@ -1,6 +1,6 @@
 {
   "uid": "s3-node-services",
-  "name": "Révision — Configurer les services et connecter un modèle local",
+  "name": "Révision — Récupérer des données avec fetch et créer des cartes",
   "sourceCourse": "/semestre_3/deploiement_Services/nodeS2",
   "sourceSession": "S3-DEP-02",
   "targetCourse": "/semestre_3/deploiement_Services/tpRPG",
@@ -9,160 +9,134 @@
   "timeByQuestionInSeconds": 20,
   "questions": [
     {
-      "question": "Un camarade appelle localhost sur son PC. Quelle machine vise-t-il ?",
+      "question": "À quoi sert fetch(url) ?",
       "answers": [
-        "Son propre PC",
-        "Votre PC automatiquement",
-        "Le serveur LM de la salle automatiquement",
-        "La passerelle réseau"
+        "Démarrer Express",
+        "Envoyer une requête HTTP à l’URL indiquée",
+        "Créer une carte HTML",
+        "Ouvrir un fichier JavaScript dans l’éditeur"
       ],
-      "explanation": "localhost est relatif au client qui effectue l’appel.",
-      "sourceSection": "adresses",
-      "evidence": "| 127.0.0.1 ou localhost | Joindre sa propre machine. | Donner localhost à un camarade : il joindrait son propre PC. |",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 1,
+      "explanation": "Le navigateur utilise fetch pour demander une ressource ou transmettre des données à une URL.",
+      "sourceSection": "fetch",
+      "evidence": "`fetch(url)` envoie une requête HTTP à l’URL indiquée. Par défaut, la méthode utilisée est GET. L’appel retourne une promesse qui fournit un objet de réponse HTTP quand les en-têtes sont arrivés."
     },
     {
-      "question": "Sur le serveur du TP, à quoi sert HOST=0.0.0.0 ?",
+      "question": "Que retourne immédiatement fetch(url) ?",
       "answers": [
-        "Télécharger le modèle",
-        "Écouter sur les interfaces réseau du poste",
-        "Définir l’URL à donner telle quelle à tous les clients",
-        "Changer le port en zéro"
-      ],
-      "explanation": "L’adresse d’écoute n’est pas l’adresse réseau à distribuer aux clients.",
-      "sourceSection": "adresses",
-      "evidence": "| 0.0.0.0 dans HOST | Écouter sur les interfaces réseau du serveur. | L’utiliser comme adresse à distribuer aux clients. |",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Quelle adresse donner au binôme pour joindre votre API ?",
-      "answers": [
-        "Le nom du modèle seul",
-        "Le chemin du fichier sur votre disque",
-        "L’IP réelle du poste et son port",
-        "Son propre localhost"
-      ],
-      "explanation": "Le client doit joindre la machine qui héberge le service.",
-      "sourceSection": "adresses",
-      "evidence": "| Adresse IP du poste dans la salle | Joindre le poste depuis une autre machine autorisée. | Confondre cette IP avec celle d’un autre réseau. |",
-      "correctAnswerIndex": 2
-    },
-    {
-      "question": "Sur un même poste, l’API et le serveur de modèle doivent écouter en même temps. Quelle configuration convient ?",
-      "answers": [
-        "Le même port occupé par les deux services",
-        "Un port choisi selon le titre HTML",
-        "Le port zéro dans toutes les adresses données aux clients",
-        "Deux ports différents"
+        "Le tableau déjà lu",
+        "Le statut HTTP sous forme de nombre",
+        "Le corps JSON sous forme de texte",
+        "Une promesse"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "Deux services distincts ne peuvent pas occuper la même adresse et le même port en même temps.",
-      "sourceSection": "adresses",
-      "evidence": "Deux services sur la même machine ont besoin de ports distincts. Sur deux machines, le même numéro peut être utilisé. Le pare-feu et le réseau de la salle doivent autoriser les échanges : vérifiez avec l’enseignant, sans désactiver globalement le pare-feu."
+      "explanation": "La promesse se résout avec l’objet de réponse HTTP.",
+      "sourceSection": "fetch",
+      "evidence": "`fetch(url)` envoie une requête HTTP à l’URL indiquée. Par défaut, la méthode utilisée est GET. L’appel retourne une promesse qui fournit un objet de réponse HTTP quand les en-têtes sont arrivés."
     },
     {
-      "question": "Où Node lit-il les variables d’environnement ?",
+      "question": "Quel est l’effet de await devant fetch(url) dans une fonction async ?",
       "answers": [
-        "process.env",
-        "document.body",
-        "response.ok",
-        "JSON.parse uniquement"
+        "Attendre l’objet de réponse HTTP avant de poursuivre dans cette fonction",
+        "Attendre que les cartes soient affichées",
+        "Transformer l’URL en objet",
+        "Convertir automatiquement le corps en tableau"
       ],
-      "explanation": "La configuration de lancement est exposée par process.env.",
-      "sourceSection": "configuration",
-      "evidence": "Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.",
-      "correctAnswerIndex": 0
+      "correctAnswerIndex": 0,
+      "explanation": "await attend le résultat de la promesse de fetch.",
+      "sourceSection": "fetch",
+      "evidence": "`await` attend le résultat d’une promesse avant de poursuivre dans la fonction en cours. À l’intérieur d’une fonction, cette fonction doit être déclarée avec `async`. `response.json()` lit le corps et analyse le texte JSON pour produire une valeur JavaScript. Cette lecture renvoie aussi une promesse."
     },
     {
-      "question": "Après avoir changé le fichier .env, que faut-il faire pour que Node utilise les nouvelles valeurs ?",
+      "question": "Que récupère-t-on avec await response.json() ?",
       "answers": [
-        "Changer la couleur de l’éditeur",
-        "Relancer le processus avec ce fichier",
-        "Recharger seulement l’onglet du navigateur",
-        "Modifier le titre HTML"
-      ],
-      "explanation": "Un processus déjà lancé ne recharge pas spontanément sa configuration.",
-      "sourceSection": "configuration",
-      "evidence": "Lancez `node --env-file=.env personnage.mjs` avec Node 22+. process.env contient des textes : le port est converti avec Number. Relancez le processus après modification. Pour un essai réseau, HOST devient 0.0.0.0 et le binôme appelle votre IP réelle. Pour un modèle hébergé sur un autre poste, LM_BASE_URL doit aussi employer son IP.",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Que doit contenir LM_MODEL ?",
-      "answers": [
-        "Le nom du fichier CSS",
-        "L’IP du navigateur",
-        "L’identifiant du modèle réellement chargé",
-        "Un nom inventé sans correspondance"
-      ],
-      "explanation": "L’API doit désigner un modèle disponible sur le serveur local.",
-      "sourceSection": "configuration",
-      "evidence": "Créez `.env` à côté de personnage.mjs. Les valeurs ci-dessous sont des exemples à adapter : LM_MODEL est l’identifiant du modèle réellement chargé, pas une famille approximative.",
-      "correctAnswerIndex": 2
-    },
-    {
-      "question": "Dans les messages envoyés au modèle, quel rôle porte les consignes du personnage ?",
-      "answers": [
-        "user",
-        "assistant",
-        "Le statut HTTP",
-        "system"
-      ],
-      "explanation": "Les rôles distinguent contexte, demande reçue et réponse.",
-      "sourceSection": "modele",
-      "evidence": "| system | Contexte et consignes de personnage. |",
-      "correctAnswerIndex": 3
-    },
-    {
-      "question": "Donner le texte du conte au modèle modifie-t-il son entraînement ?",
-      "answers": [
-        "Non, cela ne modifie pas ses poids",
-        "Oui, chaque requête le réentraîne",
-        "Oui, si le texte est en français",
-        "Oui, si le serveur est local"
-      ],
-      "explanation": "Le contexte guide une génération ; ce n’est pas un entraînement.",
-      "sourceSection": "modele",
-      "evidence": "Ce code n’enregistre pas d’historique entre les requêtes. Fournir un contexte n’entraîne pas le modèle et ne modifie pas ses poids. Les réponses peuvent varier : un test vérifie la structure et les limites, pas une phrase exacte.",
-      "correctAnswerIndex": 0
-    },
-    {
-      "question": "Avant de lire la réponse du modèle, que faut-il vérifier avec response.ok ?",
-      "answers": [
-        "Réécrire automatiquement le JSON",
-        "Vérifier le statut HTTP avec response.ok",
-        "Vérifier seulement le nom du personnage",
-        "Ignorer tous les statuts"
-      ],
-      "explanation": "Une réponse HTTP d’erreur n’est pas une génération réussie.",
-      "sourceSection": "modele",
-      "evidence": "if (!response.ok) throw new Error(`Modèle : HTTP ${response.status}`);",
-      "correctAnswerIndex": 1
-    },
-    {
-      "question": "Dans l’appel au modèle, que permet une limite de temps d’attente ?",
-      "answers": [
-        "Accélérer le processeur",
-        "Garantir une réponse correcte",
-        "Arrêter d’attendre après le délai prévu",
-        "Choisir automatiquement un autre modèle"
+        "L’URL appelée",
+        "Un fragment HTML prêt à afficher",
+        "La valeur JavaScript obtenue en lisant le corps JSON",
+        "Le statut HTTP seul"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Le délai limite l’attente sans garantir la réussite de la génération.",
-      "sourceSection": "modele",
-      "evidence": "**Résultat attendu :** POST /message conserve personnage et reply. Seule la fabrication de reply change. Le serveur personnage transforme les erreurs du modèle en réponse 502 ; le client n’a pas à connaître choices. La limite d’attente de 30 secondes évite une requête suspendue sans fin ; elle ne garantit pas une génération aussi rapide."
+      "explanation": "response.json() lit le texte du corps et l’analyse pour produire une valeur JavaScript.",
+      "sourceSection": "fetch",
+      "evidence": "`await` attend le résultat d’une promesse avant de poursuivre dans la fonction en cours. À l’intérieur d’une fonction, cette fonction doit être déclarée avec `async`. `response.json()` lit le corps et analyse le texte JSON pour produire une valeur JavaScript. Cette lecture renvoie aussi une promesse."
     },
     {
-      "question": "health réussit, mais la génération échoue. Est-ce possible ?",
+      "question": "Comment lire le premier élément d’un tableau nommé catalogue ?",
       "answers": [
-        "Non, health vérifie toujours tous les modèles",
-        "Non, une API locale ne peut pas avoir de panne",
-        "Non, le port garantit la génération",
-        "Oui, health ne contacte pas le modèle"
+        "catalogue[1]",
+        "catalogue[0]",
+        "catalogue.length",
+        "catalogue.0"
       ],
-      "explanation": "Il faut diagnostiquer séparément l’API et sa dépendance.",
-      "sourceSection": "diagnostic",
-      "evidence": "health ne contacte pas le modèle : une API saine peut avoir une dépendance en panne. Un échange Node → Node n’est pas soumis au CORS du navigateur. Si on ajoute une interface Web d’origine différente, il faut traiter cette frontière séparément.",
-      "correctAnswerIndex": 3
+      "correctAnswerIndex": 1,
+      "explanation": "Les indices d’un tableau JavaScript commencent à zéro.",
+      "sourceSection": "tableaux-objets",
+      "evidence": "Un tableau contient plusieurs valeurs ordonnées. Son premier élément est à l’indice `0` et sa propriété `length` donne le nombre d’éléments. Dans un objet, la notation `objet.propriete` lit la valeur de la propriété indiquée."
+    },
+    {
+      "question": "fiche est un objet qui possède la propriété titre. Quelle expression lit ce titre ?",
+      "answers": [
+        "fiche.titre",
+        "fiche(titre)",
+        "fiche.length",
+        "fiche[titre()]"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Le point permet d’accéder à une propriété dont on connaît le nom.",
+      "sourceSection": "tableaux-objets",
+      "evidence": "Un tableau contient plusieurs valeurs ordonnées. Son premier élément est à l’indice `0` et sa propriété `length` donne le nombre d’éléments. Dans un objet, la notation `objet.propriete` lit la valeur de la propriété indiquée."
+    },
+    {
+      "question": "Combien de fois forEach() appelle-t-elle la fonction fournie ?",
+      "answers": [
+        "Une seule fois pour le tableau entier",
+        "Deux fois par élément",
+        "Une fois pour le premier élément seulement",
+        "Une fois par élément du tableau"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "forEach transmet successivement les éléments à la fonction fournie.",
+      "sourceSection": "boucles",
+      "evidence": "Une boucle `for...of` donne successivement les valeurs du tableau. `forEach()` appelle la fonction fournie une fois par élément."
+    },
+    {
+      "question": "Quelle syntaxe insère la valeur de titre dans un template literal ?",
+      "answers": [
+        "{titre}",
+        "[titre]",
+        "${titre}",
+        "(titre)"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Entre accents graves, ${titre} est remplacé par la valeur de l’expression titre.",
+      "sourceSection": "dom",
+      "evidence": "Un *template literal* s’écrit entre accents graves. Il permet d’insérer la valeur d’une expression avec `${expression}`. `document.createElement()` crée un élément du DOM. `append()` ajoute cet élément à un conteneur déjà présent dans la page."
+    },
+    {
+      "question": "Quelle instruction crée un nouvel élément h3 ?",
+      "answers": [
+        "document.createElement(\"h3\")",
+        "document.querySelector(\"h3\")",
+        "document.append(\"h3\")",
+        "document.getElementById(\"h3\")"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "createElement crée l’élément. Il peut ensuite être inséré dans la page.",
+      "sourceSection": "dom",
+      "evidence": "Un *template literal* s’écrit entre accents graves. Il permet d’insérer la valeur d’une expression avec `${expression}`. `document.createElement()` crée un élément du DOM. `append()` ajoute cet élément à un conteneur déjà présent dans la page."
+    },
+    {
+      "question": "titre est un élément créé. Comment l’ajouter dans conteneur ?",
+      "answers": [
+        "titre.append(conteneur)",
+        "conteneur.querySelector(titre)",
+        "conteneur.append(titre)",
+        "conteneur.createElement(titre)"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "append ajoute l’élément donné au conteneur qui appelle la méthode.",
+      "sourceSection": "dom",
+      "evidence": "Un *template literal* s’écrit entre accents graves. Il permet d’insérer la valeur d’une expression avec `${expression}`. `document.createElement()` crée un élément du DOM. `append()` ajoute cet élément à un conteneur déjà présent dans la page."
     }
   ]
 }
