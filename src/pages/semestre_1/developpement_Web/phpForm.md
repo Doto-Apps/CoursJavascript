@@ -1,160 +1,419 @@
 ---
 layout: "layouts/Layout.astro"
-title: "TP PHP : formulaire de connexion et session"
-type: "TP"
+title: "PHP : formulaires, sessions et fichiers texte"
+type: "TD"
 order: 5
 quizId: "s1-dev-04"
 previousSession: "/semestre_1/developpement_Web/phpVarTab"
 nextSession: "/semestre_1/developpement_Web/phpminichat2"
 ---
 
-Une page de connexion reçoit une saisie, vérifie les identifiants puis conserve l’identité reconnue en session. Cette identité sera réutilisée par le mini-chat de la séance 6. Conservez votre travail fonctionnel à la fin de cette séance.
+Aujourd’hui, nous allons apprendre **trois choses** :
 
-| Temps indicatif | Activité |
-|---|---|
-| 10 min | QCM sur tableaux, boucles, sélection et affichage |
-| 40 min | Formulaires, validation, sessions et navigation entre pages |
-| 60 min | Réalisation autonome de la connexion |
-| 10 min | Tests et préparation de la réutilisation au prochain cours |
+1. Recevoir un formulaire et comprendre les tableaux `$_POST` et `$_SERVER`.
+2. Conserver des préférences entre deux pages avec `$_SESSION`.
+3. Ajouter et relire des données dans un fichier texte.
+
+Nous travaillerons sur **trois sujets différents**. Chaque exemple ci-dessous est complet : copiez-le dans le fichier indiqué, testez-le, puis modifiez-le pour comprendre ce qui change.
+
+**Pour les essais :** placez un dossier `ateliers-php` dans le dossier **`htdocs` de XAMPP**. Vous pouvez y créer les quatre fichiers au fil du cours, ou <a href="/exemples/s1/ateliers-php.zip" download>télécharger les exemples prêts à essayer</a>. Les fichiers PHP s’exécutent dans XAMPP ; les blocs du site affichent leur code.
 
 <a id="formulaire"></a>
 
-## action, method, name et label
+## 1. Formulaires et tableaux PHP — une inscription à un atelier
 
-| Élément | Rôle |
+Un formulaire rassemble des champs et les envoie au serveur. Ici, on indique un prénom et on choisit un atelier photo ou dessin.
+
+| Élément HTML | Rôle |
 |---|---|
 | `action` du formulaire | Adresse du script destinataire |
 | `method="post"` | Envoi des champs dans le corps de la requête |
 | `name` d’un contrôle | Clé transmise au serveur |
-| `id` et `for` du label | Association entre contrôle et étiquette visible |
-| Bouton de type submit | Soumission du formulaire |
+| `id` et `for` du label | Association entre le champ et son étiquette |
+| Bouton `type="submit"` | Déclenche la soumission |
 
-```html preview title="Un formulaire avec des champs nommés" height=210
-<form method="post" action="reception.php">
-  <label for="nom">Nom</label><input id="nom" name="nom" required>
-  <label for="sujet">Sujet</label><input id="sujet" name="sujet" required>
-  <button type="submit">Envoyer</button>
-</form>
-```
+Le `label` permet de nommer un champ. Son `for="prenom"` correspond à l’`id="prenom"` du champ ; cliquer sur le libellé permet de sélectionner ce champ. Le `name` a une autre fonction : il détermine le nom reçu par PHP.
 
-Ce rendu fixe montre des contrôles ; le PHP s’exécute dans votre projet local. `id` ne remplace pas `name`. GET place les paramètres dans l’URL ; POST transmet les champs dans le corps. POST ne chiffre pas le transport : HTTPS remplit ce rôle. Un champ de type password masque visuellement la saisie ; cela ne chiffre pas la requête.
-
-<a id="reception"></a>
-
-## Lire et valider la requête
-
-Une visite de page utilise généralement GET ; le traitement d’un formulaire POST se place dans une branche vérifiant `$_SERVER['REQUEST_METHOD']`. `$_POST` contient ici les champs du formulaire, tandis que `$_GET` contient les paramètres de l’URL.
-
-```php
-$valeur = $_POST['sujet'] ?? '';
-if (!is_string($valeur)) {
-    $erreurs[] = 'Le sujet doit être du texte.';
-} else {
-    $sujet = trim($valeur);
-}
-```
-
-`??` fournit une valeur de repli lorsque la clé manque ou vaut null. Vérifiez le type avant d’utiliser une fonction de chaîne : un client peut envoyer un tableau. `trim` retire les espaces aux extrémités, pas ceux au milieu. Pour un mot de passe, conservez la valeur exacte saisie : retirer silencieusement des espaces peut changer le secret.
-
-`required` et les autres contraintes HTML aident la saisie, mais le serveur doit vérifier les données de nouveau. Une chaîne vide, un champ absent et une valeur de mauvais type doivent être traités explicitement. `strlen` compte des octets, pas des caractères Unicode ; annoncez les limites utilisées au lieu de confondre les deux unités.
-
-<a id="identite"></a>
-
-## Vérifier une identité avant de la mémoriser
-
-Une saisie n’est pas une identité vérifiée. Dans l’atelier, un tableau PHP côté serveur associe chaque identifiant à un pseudo et à un mot de passe fictif. On recherche l’entrée correspondante puis on compare le mot de passe reçu avec celui prévu. Une comparaison stricte vérifie valeur et type. Aucun compte n’est créé depuis le formulaire.
-
-Les mots de passe de test sont conservés **en clair dans ce tableau**, pour travailler directement la comparaison stricte `===` déjà vue en séance 2. Le texte saisi doit correspondre exactement au mot de passe du compte sélectionné. Cet exercice réutilise les tableaux, les accès par clé et les conditions.
-
-Un refus affiche un message général d’identifiants incorrects. Il ne crée aucune identité connectée. Ne conservez pas le mot de passe dans la session et ne le réaffichez pas dans le formulaire. Les comptes fixes de cet atelier local servent à comprendre le parcours ; une gestion de comptes réels et le stockage sécurisé des mots de passe seront étudiés séparément.
-
-<a id="session"></a>
-
-## Retrouver des données entre les requêtes
-
-Une variable PHP ordinaire disparaît à la fin de la requête. `session_start()` crée ou reprend une session ; `$_SESSION` permet de retrouver ses données côté serveur lors d’une autre requête. Chaque page qui utilise la session doit la démarrer avant toute sortie HTML.
+### À copier dans `inscription.php`
 
 ```php
 <?php
-session_start();
-$_SESSION['preferences'] = ['theme' => 'clair'];
+$erreur = '';
+$confirmation = '';
+$prenom = '';
+$ateliers = ['photo' => 'Photo', 'dessin' => 'Dessin'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Ne traite que les envois du formulaire.
+    $valeur = $_POST['prenom'] ?? ''; // La clé correspond au name du champ.
+    $choix = $_POST['atelier'] ?? '';
+    if (!is_string($valeur) || !is_string($choix)) { // Vérifie les types avant de les utiliser.
+        $erreur = 'Les champs doivent contenir du texte.';
+    } else {
+        $prenom = trim($valeur); // Retire les espaces aux extrémités.
+        $atelier = $ateliers[$choix] ?? null; // Cherche la clé choisie dans le tableau.
+        if ($prenom === '' || $atelier === null) {
+            $erreur = 'Indiquez un prénom et un atelier proposé.';
+        } else {
+            $confirmation = $prenom . ' est inscrit à l’atelier ' . $atelier . '.';
+        }
+    }
+}
+$informations = [ // Quelques données de $_SERVER à observer.
+    'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
+    'SCRIPT_NAME' => $_SERVER['SCRIPT_NAME'],
+];
+?>
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Inscription à un atelier</title></head>
+<body>
+<h1>Inscription à un atelier</h1>
+<form method="post" action="inscription.php">
+    <label for="prenom">Prénom</label>
+    <input id="prenom" name="prenom" required value="<?= htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8') ?>">
+    <label for="atelier">Atelier</label>
+    <select id="atelier" name="atelier">
+        <option value="photo">Photo</option>
+        <option value="dessin">Dessin</option>
+    </select>
+    <button type="submit">M’inscrire</button>
+</form>
+<p role="alert"><?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?></p>
+<p><?= htmlspecialchars($confirmation, ENT_QUOTES, 'UTF-8') ?></p>
+<h2>Contenu de $_POST</h2>
+<pre><?= htmlspecialchars(print_r($_POST, true), ENT_QUOTES, 'UTF-8') ?></pre>
+<h2>Quelques entrées de $_SERVER</h2>
+<pre><?= htmlspecialchars(print_r($informations, true), ENT_QUOTES, 'UTF-8') ?></pre>
+</body>
+</html>
 ```
 
-Cet exemple conserve une préférence, pas une connexion. Sur une autre page qui reprend la même session, cette valeur peut être relue. Le navigateur transmet habituellement un identifiant de session dans un cookie ; ce cookie ne contient pas directement tout le tableau PHP. Deux navigateurs indépendants peuvent utiliser deux sessions différentes. La durée de conservation dépend de la configuration : une session n’est pas un stockage permanent garanti.
+<a id="reception"></a>
 
-Après la validation d’une connexion, `session_regenerate_id(true)` renouvelle l’identifiant de session. Il s’utilise après `session_start()` et avant la redirection. Une session ne vérifie pas elle-même les identifiants : elle conserve le résultat de la vérification effectuée par le programme. [Manuel PHP](https://www.php.net/manual/fr/function.session-regenerate-id.php).
+### Qu’y a-t-il dans ces tableaux ?
+
+Un **tableau associatif** retrouve ses valeurs avec des clés nommées. Au lieu de lire la case `0`, on peut lire une case appelée `prenom`. La forme `'prenom' => 'Nora'` associe la clé `prenom` à la valeur `Nora`.
+
+PHP prépare automatiquement plusieurs tableaux, disponibles dans vos scripts :
+
+| Tableau | Contenu dans cet exemple |
+|---|---|
+| `$_POST` | Les champs envoyés par le formulaire POST |
+| `$_SERVER` | Des informations sur la requête et le script exécuté |
+| `$ateliers` | Notre propre tableau, qui associe un code d’atelier à son intitulé |
+
+**Lors de la première visite**, le navigateur demande la page en GET : `$_POST` est vide. **Après l’envoi**, il contient par exemple :
+
+```text
+Array
+(
+    [prenom] => Nora
+    [atelier] => photo
+)
+```
+
+`$_POST['prenom']` lit la valeur envoyée par le champ `name="prenom"`. `$_SERVER['REQUEST_METHOD']` contient la méthode de la requête, par exemple `GET` ou `POST`. `$_SERVER['SCRIPT_NAME']` indique le chemin du script demandé.
+
+`print_r` montre les clés et les valeurs d’un tableau. Avec `true` en deuxième argument, il renvoie une chaîne qu’on peut afficher. La balise `<pre>` conserve les retours à la ligne de cet affichage. Nous montrons seulement deux entrées de `$_SERVER` pour garder l’observation lisible. [Manuel de $_POST](https://www.php.net/manual/fr/reserved.variables.post.php) · [Manuel de $_SERVER](https://www.php.net/manual/fr/reserved.variables.server.php).
+
+### Comprendre les vérifications
+
+- `$_POST['prenom'] ?? ''` fournit une chaîne vide si la clé manque ou vaut null.
+- `is_string` vérifie qu’une valeur est du texte avant de la manipuler.
+- `trim` retire les espaces au début et à la fin, pas ceux au milieu.
+- `$ateliers[$choix] ?? null` recherche une clé dans notre tableau ; une clé inconnue donne ici `null`.
+- `===` compare la valeur et le type ; `=` affecte une valeur à une variable.
+- `htmlspecialchars` permet d’afficher le texte sans interpréter ses caractères comme des balises HTML. `<?= ... ?>` affiche le résultat de l’expression.
+
+Le navigateur utilise `required` pour aider la saisie. La validation PHP reste nécessaire : une requête peut être envoyée sans passer par le formulaire. Dans cet exemple, GET affiche la page et POST déclenche le traitement. POST ne chiffre pas les données ; HTTPS assure le chiffrement du transport.
+
+### À essayer ensemble
+
+1. Ouvrez la page, puis envoyez votre prénom. Comparez la méthode et le contenu de `$_POST` avant et après.
+2. Changez le `name` du champ en `participant`, en gardant son `id`. Regardez le tableau reçu, puis adaptez la clé lue dans le PHP.
+3. Ajoutez un champ « Ville ». Retrouvez sa nouvelle entrée dans `$_POST`, puis utilisez-la dans la confirmation.
+4. Essayez un prénom composé uniquement d’espaces et un texte ressemblant à une balise : observez la différence entre validation et affichage.
+
+<a id="session"></a>
+
+## 2. Les sessions — retrouver ses préférences de lecture
+
+Une variable PHP ordinaire disparaît à la fin de la requête. `session_start()` crée ou reprend une session ; `$_SESSION` permet de retrouver ses données côté serveur lors d’une autre requête. Chaque page qui utilise la session doit la démarrer avant toute sortie HTML.
+
+Nous allons choisir un prénom et une ambiance sur une page, puis les retrouver sur une autre. Ce sont **deux fichiers différents à copier dans le même dossier**.
+
+### À copier dans `preferences.php`
+
+```php
+<?php
+session_start(); // Toujours avant d’envoyer du HTML.
+$erreur = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $prenom = $_POST['prenom'] ?? '';
+    $theme = $_POST['theme'] ?? '';
+    if (!is_string($prenom) || !is_string($theme)) {
+        $erreur = 'Valeurs incorrectes.';
+    } else {
+        $prenom = trim($prenom);
+        if ($prenom === '' || ($theme !== 'clair' && $theme !== 'sombre')) {
+            $erreur = 'Indiquez un prénom et un thème proposé.';
+        } else {
+            $_SESSION['preferences'] = [ // Choisit les informations à conserver.
+                'prenom' => $prenom,
+                'theme' => $theme,
+            ];
+            header('Location: lecture.php', true, 303); // Ouvre la seconde page en GET.
+            exit; // Arrête le traitement après la redirection.
+        }
+    }
+}
+?>
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Mes préférences de lecture</title></head>
+<body>
+<h1>Préparer mon espace de lecture</h1>
+<form method="post" action="preferences.php">
+    <label for="prenom">Prénom</label>
+    <input id="prenom" name="prenom" required>
+    <label for="theme">Ambiance</label>
+    <select id="theme" name="theme">
+        <option value="clair">Claire</option>
+        <option value="sombre">Sombre</option>
+    </select>
+    <button type="submit">Conserver mes choix</button>
+</form>
+<p role="alert"><?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?></p>
+<a href="lecture.php">Voir l’espace de lecture</a>
+</body>
+</html>
+```
+
+### À copier dans `lecture.php`
+
+```php
+<?php
+session_start(); // Retrouve la session commencée sur preferences.php.
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    unset($_SESSION['preferences']); // Retire seulement cette entrée de la session.
+    header('Location: preferences.php', true, 303);
+    exit;
+}
+$preferences = $_SESSION['preferences'] ?? []; // Une absence donne un tableau vide.
+$valide = is_array($preferences)
+    && isset($preferences['prenom'], $preferences['theme'])
+    && is_string($preferences['prenom']) && is_string($preferences['theme']);
+$theme = 'clair';
+if ($valide) {
+    $theme = $preferences['theme'];
+}
+?>
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"><title>Mon espace de lecture</title>
+    <style>
+        body { font-family: sans-serif; padding: 24px; }
+        .sombre { background: #172235; color: #f4f7ff; }
+        .sombre a { color: #bfdbfe; }
+    </style>
+</head>
+<body class="<?= htmlspecialchars($theme, ENT_QUOTES, 'UTF-8') ?>">
+<h1>Mon espace de lecture</h1>
+<?php if ($valide): ?>
+    <p>Bienvenue <?= htmlspecialchars($preferences['prenom'], ENT_QUOTES, 'UTF-8') ?>.</p>
+    <p>Votre thème est <?= htmlspecialchars($theme, ENT_QUOTES, 'UTF-8') ?>.</p>
+<?php else: ?>
+    <p>Aucune préférence enregistrée.</p>
+<?php endif; ?>
+<h2>Contenu de $_SESSION</h2>
+<pre><?= htmlspecialchars(print_r($_SESSION, true), ENT_QUOTES, 'UTF-8') ?></pre>
+<a href="preferences.php">Modifier mes choix</a>
+<form method="post" action="lecture.php">
+    <button type="submit">Oublier mes préférences</button>
+</form>
+</body>
+</html>
+```
 
 <a id="contrat-session"></a>
 
-## Le contrat à réutiliser en séance 6
+### Qu’a-t-on conservé ?
 
-| Donnée | Convention commune aux pages |
-|---|---|
-| Identité connectée | Entrée `utilisateur` de `$_SESSION` |
-| Champs conservés | `identifiant` et `pseudo`, deux chaînes issues du compte vérifié côté serveur |
-| Visiteur non connecté | Absence de cette entrée |
-| Mot de passe | Jamais conservé dans cette entrée |
+`$_SESSION` est un tableau associatif. Dans notre exemple, sa clé `preferences` contient elle-même un tableau avec les clés `prenom` et `theme`.
 
-Un même nom de clé doit être utilisé par la connexion, la page d’accueil, la déconnexion et le futur mini-chat. La page protégée vérifie l’existence et la forme de l’identité avant de présenter son contenu. Un champ caché ou un pseudo envoyé par le formulaire ne prouve pas la connexion.
+```text
+Array
+(
+    [preferences] => Array
+        (
+            [prenom] => Nora
+            [theme] => sombre
+        )
+)
+```
 
-| Contrôle PHP | Utilité pour vérifier la forme des données |
+`$_SESSION['preferences']['theme']` lit le thème enregistré dans ce tableau. La première paire de crochets choisit les préférences ; la seconde choisit le thème.
+
+| Vérification | Rôle |
 |---|---|
 | `isset` | Tester si une entrée existe et n’est pas null |
-| `is_array` | Vérifier qu’une valeur est un tableau avant d’en lire les champs |
+| `is_array` | Vérifier qu’une valeur est un tableau avant de lire ses champs |
 | `is_string` | Vérifier qu’un champ contient du texte |
 
-Il faut combiner les contrôles nécessaires : la présence d’une entrée seule ne prouve pas que ses champs ont la forme attendue.
+Les données reçues dans `$_POST` ne sont pas automatiquement copiées dans `$_SESSION`. C’est notre programme qui choisit quoi conserver **après validation**.
+
+Le navigateur transmet habituellement un identifiant de session dans un cookie ; les données restent côté serveur. Deux onglets du même navigateur partagent généralement la session. Une fenêtre privée ou un autre navigateur permet de tester une session distincte. La session n’est pas un stockage permanent garanti. [Manuel de $_SESSION](https://www.php.net/manual/fr/reserved.variables.session.php).
 
 <a id="redirection"></a>
 
-## POST, redirection, GET
+### Pourquoi une redirection ?
 
-Après une modification réussie, une réponse 303 indique au navigateur de charger une page en GET. Cela évite qu’un rechargement ordinaire renvoie le même formulaire. `header` doit être appelé avant toute sortie ; `exit` termine le script après l’envoi de la redirection.
+`header('Location: lecture.php', true, 303)` demande au navigateur de visiter `lecture.php` en GET après l’envoi POST. `exit` arrête le script après la redirection. Ces instructions doivent précéder le HTML.
 
-```php
-header('Location: confirmation.php', true, 303);
-exit;
-```
-
-Ce fragment illustre une redirection ; son adresse doit correspondre à une page réelle du projet. Après un échec, affichez les erreurs et conservez les valeurs utiles, sauf le mot de passe. Une redirection ne remplace ni la validation ni le contrôle d’accès sur la page de destination.
+Le trajet est donc : **POST vers les préférences → mémorisation → redirection → GET vers la lecture**. Actualiser la page de lecture ne renvoie pas le formulaire.
 
 <a id="deconnexion"></a>
 
-## Déconnexion et affichage
+### Retirer une donnée de la session
 
-`unset` retire une entrée de tableau. Pour déconnecter l’utilisateur selon notre contrat, retirez l’entrée d’identité de la session, puis redirigez vers la connexion. Cela retire l’identité utilisée par l’application, sans prétendre supprimer toutes les autres données possibles de la session. Déclenchez cette action par un formulaire POST.
+`unset($_SESSION['preferences'])` retire cette entrée du tableau. Le bouton « Oublier mes préférences » envoie un POST à `lecture.php`, qui effectue ce retrait puis redirige.
 
-Tout texte réaffiché dans le HTML, y compris un pseudo provenant de la session, doit être échappé avec `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. La validation décide ce qu’on accepte ; l’échappement décide comment on affiche le texte dans ce contexte.
+Tout texte réaffiché dans le HTML doit être échappé avec `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. La même règle s’applique aux données reçues, aux données de session et aux données relues d’un fichier.
 
-<a id="exercices-autonomes"></a>
+### À essayer ensemble
 
-## TP autonome — préparer l’accès au mini-chat
+1. Choisissez une ambiance sombre, puis actualisez `lecture.php` : le choix reste présent sans nouvel envoi du formulaire.
+2. Ouvrez `lecture.php` dans un autre onglet, puis dans une fenêtre privée : comparez le contenu de `$_SESSION`.
+3. Ajoutez une préférence « taille de texte ». Adaptez le formulaire, l’enregistrement en session et la lecture sur la seconde page.
+4. Utilisez « Oublier mes préférences », puis retournez à la page de lecture : l’entrée a disparu.
 
-Réalisez une page de connexion, une page d’accueil protégée et une déconnexion. Aucun programme de départ n’est fourni. Les exemples du cours illustrent les mécanismes séparément ; vous devez les assembler.
+<a id="stockage"></a>
 
-### Comptes fictifs de l’atelier
+## 3. Les fichiers — un carnet d’idées de sorties
 
-| Identifiant | Pseudo affiché | Mot de passe de test |
-|---|---|---|
-| lea | Léa | atelier |
-| sam | Sam | campus |
+Une session conserve des données liées à un visiteur. Un **fichier texte** permet de conserver des informations communes, indépendamment de la session.
 
-Définissez ces comptes dans un tableau PHP côté serveur. La connexion demande identifiant et mot de passe. Une identité reconnue permet d’atteindre l’accueil ; celui-ci affiche le pseudo et propose une déconnexion. Les identifiants incorrects restent sur la connexion avec un message utile. Une visite directe de l’accueil sans connexion renvoie vers la page de connexion.
+Ici, nous allons noter des idées de sorties. Le programme ajoute une ligne au fichier `idees.txt`, puis relit ce fichier pour afficher le carnet.
 
-Les mots de passe fictifs sont en clair : retrouvez celui du compte demandé et comparez-le à la saisie avec la comparaison stricte étudiée. Il faut vérifier aussi que le compte existe avant d’accéder à ses champs.
+### À copier dans `carnet.php`
 
-Respectez le contrat de session défini plus haut. Le nom des fichiers et l’organisation du traitement vous appartiennent. Le programme ne doit dépendre ni de JavaScript ni d’une base de données.
+```php
+<?php
+$chemin = __DIR__ . '/idees.txt'; // Le fichier est placé à côté de ce script.
+$erreur = '';
+$idee = '';
 
-### Vérifications avant la fin de séance
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $valeur = $_POST['idee'] ?? '';
+    if (!is_string($valeur)) {
+        $erreur = 'L’idée doit être du texte.';
+    } else {
+        $idee = trim($valeur);
+        if ($idee === '' || strlen($idee) > 300) {
+            $erreur = 'Écrivez une idée non vide, de 300 octets maximum.';
+        } elseif (str_contains($valeur, ';') || str_contains($valeur, "\n") || str_contains($valeur, "\r")) {
+            $erreur = 'Écrivez sur une ligne, sans point-virgule.';
+        } else {
+            $ligne = date('Y-m-d') . ';' . $idee . PHP_EOL; // Une ligne : date ; idée.
+            $octets = file_put_contents($chemin, $ligne, FILE_APPEND | LOCK_EX);
+            if ($octets === false || $octets !== strlen($ligne)) {
+                $erreur = 'Enregistrement impossible.';
+            } else {
+                header('Location: carnet.php', true, 303);
+                exit;
+            }
+        }
+    }
+}
+$lignes = []; // Le premier affichage est vide si le fichier n’existe pas encore.
+if (file_exists($chemin)) {
+    $lecture = file($chemin, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if ($lecture === false) {
+        $erreur = 'Lecture impossible.';
+    } else {
+        $lignes = $lecture;
+    }
+}
+?>
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Idées de sorties</title></head>
+<body>
+<h1>Mon carnet d’idées de sorties</h1>
+<form method="post" action="carnet.php">
+    <label for="idee">Une idée, sur une seule ligne</label>
+    <input id="idee" name="idee" required value="<?= htmlspecialchars($idee, ENT_QUOTES, 'UTF-8') ?>">
+    <button type="submit">Ajouter au carnet</button>
+</form>
+<p role="alert"><?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?></p>
+<?php if ($lignes === [] && $erreur === ''): ?><p>Aucune idée pour le moment.</p><?php endif; ?>
+<ul>
+<?php foreach ($lignes as $ligne): ?>
+    <?php
+    $champs = explode(';', $ligne); // Sépare la date de l’idée.
+    if (count($champs) !== 2 || $champs[0] === '' || trim($champs[1]) === '') {
+        continue; // Ignore une ligne abîmée sans arrêter les suivantes.
+    }
+    ?>
+    <li>
+        <?= htmlspecialchars($champs[0], ENT_QUOTES, 'UTF-8') ?> :
+        <?= htmlspecialchars($champs[1], ENT_QUOTES, 'UTF-8') ?>
+    </li>
+<?php endforeach; ?>
+</ul>
+</body>
+</html>
+```
 
-| Essai | Résultat attendu |
+<a id="chemins"></a>
+
+### Où se trouve le fichier ?
+
+`__DIR__` est le dossier du script. Le point `.` assemble des chaînes. Ainsi, `__DIR__ . '/idees.txt'` désigne le fichier `idees.txt` à côté de `carnet.php`, quel que soit le dossier courant.
+
+Le chemin désigne un emplacement sur le serveur ; ce n’est pas une URL. Il est fixé dans le code, pas choisi par le formulaire.
+
+<a id="ecriture"></a>
+
+### Ajouter une ligne
+
+`file_put_contents` écrit une chaîne et renvoie le nombre d’octets écrits, ou `false` en cas d’échec.
+
+| Élément du code | Rôle |
 |---|---|
-| Visite directe de l’accueil sans connexion | Retour à la connexion |
-| Compte connu et bon mot de passe | Accueil et pseudo correspondant au compte |
-| Mauvais mot de passe ou identifiant inconnu | Refus ; aucune identité créée |
-| Champ absent, espaces seuls ou tableau au lieu du texte | Refus contrôlé, pas d’erreur PHP |
-| Rechargement après connexion | Même identité, nouvelle visite GET |
-| Déconnexion puis visite directe de l’accueil | Accès refusé |
-| Autre navigateur | Session indépendante |
+| `FILE_APPEND` | Ajouter à la fin au lieu de remplacer le contenu existant |
+| `PHP_EOL` | Ajouter un retour à la ligne |
+| `LOCK_EX` | Demander un verrou pendant l’écriture pour coordonner les écritures qui l’utilisent |
+| `FILE_APPEND \| LOCK_EX` | Combiner les deux options |
+| `strlen` | Compter des octets, ce qui peut différer du nombre de caractères visibles |
 
-Conservez votre projet : la séance 6 utilisera cette connexion. Vous devrez savoir expliquer la différence entre données reçues, compte reconnu et identité mémorisée en session.
+Le fichier est créé au premier ajout si PHP peut écrire dans ce dossier. Après une écriture réussie, le programme redirige vers le carnet : actualiser ne réenregistre pas la même idée. Un échec reste une erreur, sans fausse confirmation. [Manuel de file_put_contents](https://www.php.net/manual/fr/function.file-put-contents.php).
+
+<a id="lignes"></a>
+
+### Relire et découper
+
+Chaque ligne contient une date et une idée, séparées par un point-virgule. Par exemple : `2026-11-26;Visiter une exposition photo`. `date('Y-m-d')` construit la date au format année-mois-jour.
+
+- `file_exists` indique si le fichier existe. Une absence au premier lancement donne ici un carnet vide.
+- `file` renvoie un tableau de lignes ou `false` si la lecture échoue.
+- `FILE_IGNORE_NEW_LINES` retire les fins de ligne ; `FILE_SKIP_EMPTY_LINES` ignore les lignes vides.
+- `explode` découpe une chaîne selon un séparateur ; `count` compte les éléments du tableau.
+- `foreach` parcourt les lignes ; `continue` passe à la suivante si la ligne actuelle est mal formée.
+
+`str_contains` teste si une chaîne apparaît dans un texte. On refuse ici le point-virgule et les retours à la ligne dans la saisie, car ils servent à séparer les données du fichier. `"\n"` désigne un saut de ligne et `"\r"` un retour chariot. Le contrôle porte sur le texte brut avant `trim`.
+
+La validation précède l’enregistrement ; `htmlspecialchars` intervient lors de l’affichage. [Manuel de file](https://www.php.net/manual/fr/function.file.php) · [Manuel de explode](https://www.php.net/manual/fr/function.explode.php).
+
+### À essayer ensemble
+
+1. Ajoutez deux idées puis ouvrez `idees.txt` dans l’éditeur : retrouvez les deux lignes.
+2. Actualisez la page et vérifiez que le fichier n’a pas changé.
+3. Faites l’essai sans `FILE_APPEND` sur ce carnet de test : observez le remplacement du contenu, puis remettez l’option.
+4. Ajoutez à la main une ligne incomplète dans le fichier. Elle doit être ignorée sans casser l’affichage des autres.
+5. Changez le séparateur du carnet : adaptez l’écriture, `explode` et le contrôle des caractères réservés.
+
+**En fin de cours :** nous lirons le [sujet de la séance 6](/semestre_1/developpement_Web/phpminichat2). Ce sera un nouveau projet à réaliser chez vous, en adaptant les notions vues sur ces trois exemples.

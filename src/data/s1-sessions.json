@@ -412,26 +412,26 @@
     "subject": "Développement web",
     "order": 5,
     "durationMinutes": 120,
-    "type": "TP",
-    "planningDate": "17/11/2026",
+    "type": "TD",
+    "planningDate": "26/11/2026",
     "coursePath": "/semestre_1/developpement_Web/phpForm",
-    "title": "TP PHP : formulaire de connexion et session",
+    "title": "PHP : formulaires, sessions et fichiers texte",
     "skills": [
       {
         "id": "formulaire",
-        "label": "Recevoir et valider un formulaire de connexion"
+        "label": "Recevoir un formulaire et inspecter les tableaux $_POST et $_SERVER"
       },
       {
-        "id": "identite",
-        "label": "Vérifier un compte fictif côté serveur"
+        "id": "tableaux",
+        "label": "Lire des clés nommées et valider les valeurs reçues"
       },
       {
         "id": "session",
-        "label": "Conserver et relire une identité en session"
+        "label": "Conserver, relire et retirer des préférences avec $_SESSION"
       },
       {
-        "id": "acces",
-        "label": "Contrôler accès, redirection et déconnexion"
+        "id": "fichier",
+        "label": "Ajouter et relire les lignes d’un carnet en fichier texte"
       }
     ],
     "quizId": "s1-dev-04",
@@ -449,7 +449,7 @@
     "order": 6,
     "durationMinutes": 120,
     "type": "TP",
-    "planningDate": "26/11/2026",
+    "planningDate": "Dernière séance — date à préciser",
     "coursePath": "/semestre_1/developpement_Web/phpminichat2",
     "title": "TP PHP : mini-chat, session et fichier texte",
     "skills": [
@@ -467,7 +467,7 @@
       },
       {
         "id": "tests",
-        "label": "Terminer et vérifier le mini-chat en 90 minutes"
+        "label": "Présenter le mini-chat préparé à la maison, expliquer et corriger son code"
       }
     ],
     "quizId": "s1-dev-05",

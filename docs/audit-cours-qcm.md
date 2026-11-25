@@ -1,5 +1,13 @@
 # Relecture des cours et QCM — 20 octobre 2026
 
+## Préparation du mini-chat S1 — 25 novembre 2026
+
+Dev 05 du 26 novembre comporte trois parties indépendantes du projet final : inscription à un atelier pour observer `$_POST` et `$_SERVER`, préférences de lecture pour `$_SESSION`, carnet de sorties pour les fichiers texte. Les quatre fichiers complets sont copiables, modifiables et téléchargeables. Les 90 premières minutes servent au cours et aux essais ; les 30 dernières à la lecture du guide Dev 06, sans réaliser le projet avec le groupe.
+
+Dev 06 est un mini-chat à réaliser entièrement seul à la maison, guidé par étapes avec des fragments à adapter. Les fonctionnalités complètes et l’interface ne sont pas fournies. Le barème réserve 12 points au PHP, 5 à la beauté et à l’usage de l’interface, 3 aux améliorations choisies. La note sur 20 est multipliée par le nombre de réponses comprises aux trois questions, divisé par trois.
+
+Le QCM d’entrée Dev 06 comporte 24 questions sur les tableaux PHP, les formulaires, les sessions et les fonctions de fichiers de Dev 05. Le registre, l’index, le README, le contrôle des exemples et la grille enseignant suivent cette séparation entre cours et projet.
+
 ## Questions centrées sur les acquis — 16 novembre 2026
 
 Après une nouvelle précision de l’enseignant, les trois QCM PHP des séances restantes sont reconstruits autour des acquis : syntaxe de if/elseif/else et opérateurs ; tableaux, foreach et affichage ; formulaires, comparaison stricte et session. La question de justification du tarif est supprimée, ainsi que les questions sur le choix d’un scénario ou la méthode de travail. Les acquis de syntaxe sont évalués avec quatre fragments de code, pas avec une justification du TP.
@@ -16,11 +24,11 @@ Les anciens identifiants sont synchronisés. Les passages justificatifs des cour
 
 ## Nouvelle progression PHP S1 — 16 novembre 2026
 
-Les séances 1 à 3 restent inchangées pendant cette révision. La séance 4 traite l’algorithmie sur tableaux et le rendu HTML, sans classes ni objets PHP ; trois exercices autonomes terminent le support. La séance 5 réalise une connexion avec des comptes fictifs, mots de passe en clair et comparaison stricte, puis conserve uniquement identifiant et pseudo en session. La séance 6 réutilise cette connexion et ajoute un historique commun en fichier texte : une ligne par message, pseudo et message séparés par une barre verticale. Le TP final dure 90 minutes et doit être terminé en séance, sans remise différée.
+Les séances 1 à 3 restent inchangées pendant cette révision. La séance 4 traite l’algorithmie sur tableaux et le rendu HTML, sans classes ni objets PHP ; trois exercices autonomes terminent le support. La séance 5 réalise une connexion avec des comptes fictifs, mots de passe en clair et comparaison stricte, puis conserve uniquement identifiant et pseudo en session. Le mini-chat réutilise cette connexion et ajoute un historique commun en fichier texte : une ligne par message, pseudo et message séparés par une barre verticale. L’organisation du cours et de la remise a été remplacée par celle du 25 novembre décrite plus haut.
 
-Les exercices ne contiennent aucun code de départ. Les exemples de cours enseignent les mécanismes séparément. L’ancien squelette public du mini-chat en session a été supprimé ; une correction enseignant séparée et exécutable est disponible dans `docs/corrections-s1/messagerie`.
+La consigne sur les exemples a été précisée le 25 novembre : les exercices Dev 04 restent sans code de départ, Dev 05 fournit des exemples complets sur d’autres sujets, et Dev 06 propose des fragments pour guider l’assemblage. L’ancien squelette public du mini-chat en session a été supprimé ; une correction complète enseignant reste dans `docs/corrections-s1/messagerie`.
 
-Les 39 banques ont été repassées en revue. Les trois banques d’entrée des séances 4, 5 et 6 sont réécrites : notions de la séance 3, tableaux/algorithmie de la séance 4, puis formulaire/connexion/session de la séance 5. Elles ne demandent pas encore les fonctions de fichier enseignées en séance 6. Les calculs de tarifs, de boîtes CSS, de durée ou de valeur de stock repérés dans les autres banques ont été remplacés par les notions correspondantes. Les anciens identifiants de banques sont synchronisés. Le total actuel est de 502 entrées dans 39 banques.
+Les 39 banques ont été repassées en revue lors de cette révision. Les trois banques d’entrée des séances 4, 5 et 6 sont réécrites : notions de la séance 3, tableaux/algorithmie de la séance 4, puis formulaire/connexion/session de la séance 5. La banque Dev 06 a ensuite été enrichie le 25 novembre avec les fonctions de fichiers déplacées en Dev 05. Les calculs de tarifs, de boîtes CSS, de durée ou de valeur de stock repérés dans les autres banques ont été remplacés par les notions correspondantes. Les anciens identifiants de banques sont synchronisés. Le total de cette révision du 16 novembre était de 502 entrées dans 39 banques.
 
 Validation : audit de contenu, compilation Astro et test fonctionnel `pnpm check:s1-php`. Ce test lance PHP sur un port local temporaire et utilise un historique jetable : accès refusé sans connexion, mauvais mot de passe, renouvellement de session, sessions distinctes, auteur issu du compte, écritures successives, caractères réservés et mauvais types refusés, affichage échappé, ligne mal formée ignorée, échec d’écriture et déconnexion sans perte d’historique. Il vérifie aussi l’absence de blocs de code dans les énoncés autonomes. La référence a été exécutée avec PHP 8.0.30, sans base SQL.
 
@@ -82,8 +90,8 @@ La colonne QCM indique la banque proposée **à l’entrée** de la séance ; so
 | S1 DEV-02 | Algorithmique PHP | s1-dev-01 | Cours préservé ; questions de révision contrôlées |
 | S1 DEV-03 | Tarif | s1-dev-02 | Travail autonome, bornes et mauvais types |
 | S1 DEV-04 | Profils | s1-dev-03 | Parcours indexé, moyenne et collection vide |
-| S1 DEV-05 | Formulaire | s1-dev-04 | Réception GET/POST, types, sorties et tests |
-| S1 DEV-06 | Mini-chat | s1-dev-05 | Assemblage du cycle POST/303/GET et historique |
+| S1 DEV-05 | Formulaires, sessions et fichiers | s1-dev-04 | Tableaux, algorithmie et affichage de Dev 04 |
+| S1 DEV-06 | Présentation et correction du mini-chat | s1-dev-05 | Formulaires, sessions et fonctions de fichiers de Dev 05 |
 | S1 SITE-01 | Cadrage | — | Brief, parcours, priorités et jalons à produire |
 | S1 SITE-02 | Maquette | s1-site-01 | Relevé d’intégration, ressources et états |
 | S1 SITE-03 | Structure | s1-site-02 | Première version et contrôles sans CSS |

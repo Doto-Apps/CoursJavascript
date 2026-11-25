@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>Le trajet d’un message — Alter Ego</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 18px; font: 15px/1.5 system-ui, sans-serif; color: #172b45; background: #f4f7fc; }
+      main { max-width: 900px; margin: auto; }
+      h1 { margin: 0; font-size: 19px; }
+      .intro { margin: 3px 0 16px; color: #43536c; font-size: 13px; }
+      .map { display: grid; grid-template-columns: 1fr 24px 1fr 24px 1fr; align-items: center; gap: 6px; }
+      .node { min-width: 0; padding: 12px; border: 2px solid #c3cede; border-radius: 12px; background: #fff; }
+      .node[data-active] { border-color: #2858cf; background: #eaf0ff; }
+      .node h2 { margin: 0; font-size: 15px; }
+      .node p { margin: 4px 0 0; font-size: 13px; overflow-wrap: anywhere; }
+      .key { color: #305d38; font-weight: 650; }
+      .arrow { text-align: center; font-size: 21px; color: #536780; }
+      code { font: 0.9em/1.5 ui-monospace, Consolas, monospace; }
+      .step { min-height: 148px; margin-top: 16px; padding: 14px; border-radius: 12px; background: #fff; border: 1px solid #c3cede; }
+      .counter { color: #3859a4; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+      .step h2 { margin: 4px 0; font-size: 17px; }
+      .step p { margin: 0 0 6px; }
+      .payload { display: block; color: #324a68; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; }
+      button { min-height: 42px; padding: 8px 14px; border: 1px solid #2858cf; border-radius: 8px; font: inherit; cursor: pointer; background: #2858cf; color: #fff; }
+      button:disabled { border-color: #c3cede; color: #536780; background: #e2e8f2; cursor: default; }
+      button:focus-visible { outline: 3px solid #172b45; outline-offset: 3px; }
+      @media (max-width: 560px) {
+        body { padding: 12px; font-size: 14px; }
+        .intro { margin-bottom: 10px; }
+        .map { grid-template-columns: 1fr; gap: 3px; }
+        .node { padding: 7px 10px; }
+        .node p { margin-top: 1px; }
+        .arrow { font-size: 16px; line-height: 18px; }
+        .arrow span { display: inline-block; transform: rotate(90deg); }
+        .step { min-height: 156px; margin-top: 10px; padding: 10px; }
+        .controls { margin-top: 10px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Du message à la réponse</h1>
+      <p class="intro">Suivez un exemple en six étapes. Simulation locale, sans clé ni appel réseau.</p>
+      <div class="map" role="group" aria-label="Les trois parties de l’application">
+        <section class="node" id="browser" data-active>
+          <h2>Navigateur · frontend</h2>
+          <p><code>index.html</code> et <code>chat.js</code></p>
+        </section>
+        <div class="arrow" aria-hidden="true"><span>↔</span></div>
+        <section class="node" id="server">
+          <h2>Express · backend</h2>
+          <p><code>app.js</code> · <span class="key">clé API ici</span></p>
+        </section>
+        <div class="arrow" aria-hidden="true"><span>↔</span></div>
+        <section class="node" id="api">
+          <h2>OpenAI · API externe</h2>
+          <p>Le modèle génère le texte.</p>
+        </section>
+      </div>
+      <div class="step" aria-live="polite" aria-atomic="true">
+        <span class="counter" id="counter">Étape 1 / 6</span>
+        <h2 id="title">Vous écrivez une question</h2>
+        <p id="description">Dans le formulaire de index.html, vous saisissez votre message puis cliquez sur Envoyer.</p>
+        <code class="payload" id="payload">Quels sont tes projets ?</code>
+      </div>
+      <nav class="controls" aria-label="Parcourir le trajet">
+        <button type="button" id="previous" disabled>← Précédent</button>
+        <button type="button" id="next">Suivant →</button>
+      </nav>
+      <noscript>Activez JavaScript pour parcourir les étapes. Le navigateur envoie le message à Express, qui appelle OpenAI, puis renvoie le texte au navigateur.</noscript>
+    </main>
+    <script>
+      const steps = [
+        {
+          node: "browser",
+          title: "Vous écrivez une question",
+          description: "Dans le formulaire de index.html, vous saisissez votre message puis cliquez sur Envoyer.",
+          payload: "Quels sont tes projets ?",
+        },
+        {
+          node: "browser",
+          title: "chat.js envoie la saisie à Express",
+          description: "Le JavaScript du navigateur déclenche un POST vers /chat. Il envoie seulement le message.",
+          payload: 'POST /chat → {"message":"Quels sont tes projets ?"}',
+        },
+        {
+          node: "server",
+          title: "app.js reçoit et vérifie le message",
+          description: "La route Express lit req.body.message et refuse une saisie invalide avant d’appeler l’IA.",
+          payload: 'req.body.message → "Quels sont tes projets ?"',
+        },
+        {
+          node: "api",
+          title: "Express demande une réponse à OpenAI",
+          description: "app.js envoie votre portrait, vos consignes et la question. La clé sert à authentifier cet appel.",
+          payload: "instructions : votre portrait · input : la question",
+        },
+        {
+          node: "server",
+          title: "app.js renvoie le texte au navigateur",
+          description: "Le serveur récupère le texte du modèle et construit sa réponse JSON avec la propriété reply.",
+          payload: '{"reply":"J’ai créé un portfolio et un mini-chat."}',
+        },
+        {
+          node: "browser",
+          title: "chat.js affiche la réponse",
+          description: "Le navigateur lit le JSON et ajoute reply à la conversation. Il n’a jamais reçu la clé API.",
+          payload: "J’ai créé un portfolio et un mini-chat.",
+        },
+      ];
+      let index = 0;
+      const previous = document.querySelector("#previous");
+      const next = document.querySelector("#next");
+      function render() {
+        const step = steps[index];
+        document.querySelectorAll(".node").forEach((node) => {
+          node.toggleAttribute("data-active", node.id === step.node);
+        });
+        document.querySelector("#counter").textContent = "Étape " + (index + 1) + " / " + steps.length;
+        document.querySelector("#title").textContent = step.title;
+        document.querySelector("#description").textContent = step.description;
+        document.querySelector("#payload").textContent = step.payload;
+        previous.disabled = index === 0;
+        next.textContent = index === steps.length - 1 ? "Recommencer ↺" : "Suivant →";
+      }
+      previous.addEventListener("click", () => {
+        if (index > 0) index--;
+        render();
+      });
+      next.addEventListener("click", () => {
+        index = (index + 1) % steps.length;
+        render();
+      });
+    </script>
+  </body>
+</html>

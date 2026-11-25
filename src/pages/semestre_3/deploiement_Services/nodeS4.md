@@ -80,4 +80,4 @@ Un token est une petite unité de texte. Le fournisseur facture les tokens d’e
 
 Vous pouvez ajouter un avatar, un indicateur de chargement, un bouton d’effacement ou un historique court.
 
-**Pour la prochaine rencontre.** Terminez le projet. Préparez un projet Node.js/Express fonctionnel avec un README qui explique l’installation des dépendances, la configuration et le démarrage. Remettez uniquement le fichier d’exemple de configuration. En séance 5, vous montrerez le trajet d’un message, la lecture du corps, le rôle du prompt et l’emplacement de la clé.
+**Pour la séance 5.** Conservez votre projet et vos premiers essais. Le [TP final Alter Ego](/semestre_3/deploiement_Services/nodeS5) reprend ces briques avec des explications et vous accompagne pour créer une IA à votre image, à terminer à la maison. Préparez les informations de votre CV ou de votre portfolio que vous souhaitez lui donner : parcours, projets, compétences, personnalité et moyen de contact.

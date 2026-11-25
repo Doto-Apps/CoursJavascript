@@ -29,8 +29,10 @@ Les QCM d’Intégration et de Développement web permettent de réviser les not
 | 2 | [Algorithmique PHP : données, décisions et traces](/semestre_1/developpement_Web/PHP_inter) | TD | 2 h |
 | 3 | [TP PHP : calculer un tarif et tester les limites](/semestre_1/developpement_Web/PHP_begin) | TP | 2 h |
 | 4 | [TP PHP : algorithmie, tableaux et affichage](/semestre_1/developpement_Web/phpVarTab) | TP | 2 h |
-| 5 | [TP PHP : formulaire de connexion et session](/semestre_1/developpement_Web/phpForm) | TP | 2 h |
+| 5 | [PHP : formulaires, sessions et fichiers texte](/semestre_1/developpement_Web/phpForm) | TD | 2 h |
 | 6 | [TP PHP : mini-chat, session et fichier texte](/semestre_1/developpement_Web/phpminichat2) | TP | 2 h |
+
+Dev 05 enseigne les formulaires, les sessions et les fichiers sur trois sujets distincts, avec des exemples exécutables. Le sujet Dev 06 est lu en fin de cours : le mini-chat est ensuite réalisé seul à la maison, avec un guide progressif, puis présenté et corrigé lors de la dernière séance.
 
 ## Produire un site Web
 

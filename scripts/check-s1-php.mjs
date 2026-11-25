@@ -11,13 +11,25 @@ const project = path.resolve('docs/corrections-s1/messagerie');
 for (const file of ['common.php', 'public/connexion.php', 'public/index.php', 'public/deconnexion.php', 'public/mini-chat.php']) {
   execFileSync(php, ['-l', path.join(project, file)], { stdio: 'pipe', windowsHide: true });
 }
-for (const name of ['phpVarTab', 'phpForm', 'phpminichat2']) {
+// Dev 04 reste autonome ; Dev 05 fournit des exemples complets et Dev 06 des fragments guidés.
+for (const name of ['phpVarTab']) {
   const course = fs.readFileSync(`src/pages/semestre_1/developpement_Web/${name}.md`, 'utf8');
-  const start = course.indexOf('<a id="' + (name === 'phpminichat2' ? 'tp-autonome' : 'exercices-autonomes') + '"></a>');
+  const start = course.indexOf('<a id="exercices-autonomes"></a>');
   assert(start >= 0, name + ' : section autonome absente');
   const exercise = course.slice(start);
   assert(!exercise.includes('```'), name + ' : code dans les exercices');
 }
+const teachingCourse = fs.readFileSync('src/pages/semestre_1/developpement_Web/phpForm.md', 'utf8').replaceAll('\r\n', '\n');
+assert.equal([...teachingCourse.matchAll(/^## [123]\./gm)].length, 3, 'Dev 05 : trois parties attendues');
+for (const name of ['inscription.php', 'preferences.php', 'lecture.php', 'carnet.php']) {
+  const file = path.resolve('public/exemples/s1/ateliers-php', name);
+  execFileSync(php, ['-l', file], { stdio: 'pipe', windowsHide: true });
+  const code = fs.readFileSync(file, 'utf8').replaceAll('\r\n', '\n').trimEnd();
+  assert(teachingCourse.includes('```php\n' + code + '\n```'), name + ' : exemple différent entre cours et téléchargement');
+}
+const guidedCourse = fs.readFileSync('src/pages/semestre_1/developpement_Web/phpminichat2.md', 'utf8');
+assert(guidedCourse.includes('<a id="tp-autonome"></a>'), 'Dev 06 : sujet autonome absent');
+assert(guidedCourse.includes('// TODO'), 'Dev 06 : fragments à compléter absents');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'mmi-s1-chat-'));
 const data = path.join(temporary, 'stockage');
 fs.mkdirSync(data);
@@ -106,7 +118,7 @@ try {
     assert(failure.text.includes('Non enregistré'));
   } finally { fs.renameSync(path.join(temporary, 'stockage-indisponible'), data); }
   assert.equal(fs.readFileSync(storage, 'utf8'), beforeFailure);
-  console.log('PHP S1 : connexion, sessions distinctes, contrôle d’accès, fichiers, validation, affichage et déconnexion vérifiés. Exercices sans code de départ.');
+  console.log('PHP S1 : exemples du cours synchronisés et syntaxe valide ; référence connexion, sessions, fichiers, validation, affichage et déconnexion vérifiée.');
 } catch (error) {
   console.error(logs.slice(-2500));
   throw error;

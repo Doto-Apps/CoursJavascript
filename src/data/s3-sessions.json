@@ -159,16 +159,17 @@
   {
     "id": "S3-DEP-05",
     "coursePath": "/semestre_3/deploiement_Services/nodeS5",
-    "title": "Évaluer et corriger le projet Alter Ego",
+    "title": "TP final Alter Ego — Créer une IA à votre image",
     "subject": "Déploiement de services",
     "order": 5,
     "type": "TP",
     "durationMinutes": 120,
     "planningDate": "Prochaine rencontre — date à préciser",
     "skills": [
-      "Présenter le projet et expliquer le trajet HTTP",
-      "Diagnostiquer un échec HTTP ou JSON",
-      "Valider les propriétés d’une réponse structurée"
+      "Assembler une interface de chat, Express et une API de modèle de langage",
+      "Définir une personnalité à partir de son parcours, ses projets et ses compétences",
+      "Tester la fidélité des informations et le maintien du cadre de l’IA",
+      "Expliquer son code et protéger la clé API fournie"
     ],
     "previousSession": "S3-DEP-04",
     "quizId": "s3-alter-ego",
@@ -176,29 +177,6 @@
       "type": "quiz",
       "quizId": "s3-alter-ego",
       "sourceSession": "S3-DEP-04",
-      "points": 10
-    }
-  },
-  {
-    "id": "S3-DEP-06",
-    "coursePath": "/semestre_3/deploiement_Services/nodeS6",
-    "title": "Créer un assistant de recommandations culturelles",
-    "subject": "Déploiement de services",
-    "order": 6,
-    "type": "TP",
-    "durationMinutes": 120,
-    "planningDate": "Prochaine rencontre — date à préciser",
-    "skills": [
-      "Envoyer les préférences issues d’un formulaire",
-      "Demander une sortie structurée au modèle",
-      "Afficher une recommandation et gérer l’échec"
-    ],
-    "previousSession": "S3-DEP-05",
-    "quizId": "s3-correction-alter-ego",
-    "entryActivity": {
-      "type": "quiz",
-      "quizId": "s3-correction-alter-ego",
-      "sourceSession": "S3-DEP-05",
       "points": 10
     }
   }
